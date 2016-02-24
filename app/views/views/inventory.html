@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+   		{% include path.head %}
+		{% include path.sweetalert %}
+	</head>
+    <body>
+        {% include path.scaffolding %}
+        <div id="content">
+            <div class="box material">
+				{% if enableBulk %}
+					<div class="h3">Bulk Upload - Experimental</div>
+					Bulk Upload currently supports an excel spreadsheet that has <b>two columns</b> <i>(A,B)(name,price)</i> 
+					<br>
+					<br>
+					<style>
+						.demo td {
+							text-align:right;
+							padding:4px;
+							border:1px solid #757575;
+						}
+					</style>
+					<table class="demo">
+						<tbody>
+							<tr>
+								<td><i>A</i></td>
+								<td><i>B</i></td>
+							</tr>
+							<tr>
+								<td>Chocolate Cake</td>
+								<td>5.66</td>
+							</tr>
+							<tr>
+								<td>Marshmellows</td>
+								<td>3.35</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<form method="post" enctype="multipart/form-data" action="{{path.root}}/post/inventory">
+						<input type="file" name="file" accept=".xlsx,.xls" bulk-file/>
+						<br>
+						<button type="submit" class="wolfe-btn" style="opacity: 0.5;cursor:default" disabled bulk-upload>Upload</button>
+					</form>
+					<hr>
+				</div>
+				{% endif %}
+				<div class="h3">Inventory</div>
+				<div style="width:276px">
+					<input id="name" type='text' name='name' placeholder='Name' class="input-big" style="width:150px" required/>
+					<input id="price" name='price' placeholder='$0.00' class="input-big" style='width:60px'/>
+					<div class="pull-right">
+						<button id="ajax" class="wolfe-btn">ADD</button>
+					</div>
+				</div>
+				<hr>
+				<ul class="inv">
+					{% for a in inv %}
+					<li data-id="{{a.invID}}">
+						<div class="item">
+							<input data-type="name" class="w1" value="{{a.name}}">
+							<input data-type="price" class="firm-right "value="{{a.price}}">
+						</div>
+						<div class="invremove">x</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+        </div>
+		{% include path.js with {
+			include: ['sweetalert']
+		}%}
+		<script>
+			$(function(){
+				var pw = new Paperwork;
+				{% if enableBulk %}
+				// Enable bulk upload button
+				$('[bulk-file]').change(function(){
+					if($(this).val()){
+						$('[bulk-upload]').css({
+							'opacity':1,
+							'cursor':'pointer'
+						});
+						$('[bulk-upload]').removeAttr('disabled');
+					}
+				});
+				
+				{% if bulk %}
+				// If page is posted to, prompt sweetalert
+				var bulk = {{bulk|raw}},
+					html = '';
+				$.each(bulk, function(a,b){
+					html += "<tr><td><input class=\"bulk-input\" b-name value=\""+a+"\"/></td><td><input class=\"bulk-input\" b-price value=\""+b+"\"/></td></tr>";
+				});
+				swal({
+					html: true,
+					title: 'Bulk Upload',
+					text: "This is what we found<br>"+
+						"<style>.bulk-input{display:block!important;}</style>"+
+						"<div bulk-upload style=\"height:500px;overflow-y:auto\">"+
+						"<table><tbody>"+html+"</tbody></table>"+
+						"</div>",
+					showCancelButton: true,
+					closeOnConfirm: false,
+					closeOnCancel: false,
+					showLoaderOnConfirm: true,
+				}, function(option){
+					if(!option){
+						window.location = '{{path.root}}/inventory';
+					}else{
+						var a = $('[bulk-upload]'),
+							b = [];
+						a.find('tr').each(function(){
+							var name = $(this).find('[b-name]').val(),
+								price = $(this).find('[b-price]').val();
+							
+							if(name != undefined){
+								price = price == undefined ? '0.00' : price;
+								b.push({
+									name: name,
+									price: price
+								});
+							}
+						});
+						$.post('{{path.root}}/post/inv', {
+							dump: b
+						}).done(function(data){
+							if(data == 'OK'){
+								swal({
+									title: 'Upload Successful',
+									type: 'success'
+								}, function(){
+									window.location = '{{path.root}}/inventory';
+								});
+							}
+						});
+					}
+				});
+				{% endif %}
+				{% endif %}
+				var inv = [{% for item in inv %}{ID:"{{item.invID}}", name:"{{item.name}}", price:"{{item.price}}"},{% endfor %}];
+				
+				// Check for inventory name/price change
+				$(document).on('change', '.inv input', function(){
+					if($(this).data('type') == 'name'){
+						var name	= $(this).val(),
+							price	= $(this).next().val(),
+							invID	= $(this).closest('li').data('id');
+					}else if($(this).data('type') == 'price'){
+						var price	= $(this).val(),
+							name	= $(this).prev().val(),
+							invID	= $(this).closest('li').data('id');
+					}
+					
+					if(name != undefined && price != undefined && invID != undefined){
+						if(name != '' && invID != ''){
+							$.post('{{path.root}}/put/inv', {
+								name: name,
+								price: price,
+								invID: invID
+							}).done(function(){
+								pw.saved();
+							});
+						}
+					}else{
+						console.log('fail: \n name:'+name+'\n price:'+price+'\n invID:'+invID)
+					}
+				});
+				
+				// Upload new inv item (single)
+				$('#ajax').click(function(){
+					if($('#name').val() != undefined && !isNaN($('#price').val())){
+						$.post('{{path.root}}/post/inv', {
+							name: $('#name').val(),
+							price: $('#price').val()
+						}).done(function(data){
+							console.log(data);
+							$('#name').val('');
+							$('#price').val('');
+							$('#name').focus();
+							pw.saved();
+						});
+					}
+				});
+				
+				// Delete inv item
+				$('.inv li').on('mouseover', function(){
+					$(this).find('.invremove').css('opacity', '1');
+				});
+				$('.inv li').on('mouseout', function(){
+					$(this).find('.invremove').css('opacity', '0');
+				});
+				$('.invremove').on('click', function(){
+					var th = $(this);
+					swal({
+						title: 'Are you sure you want to delete this item?',
+						text: 'You may add this inventory item again later',
+						showCancelButton: true,
+						closeOnConfirm: true,
+					}, function(){
+						$.post('{{path.root}}/delete/inv', {
+							invID: th.closest('li').attr('data-id')
+						}, function(data){
+							if(data !== '0') th.closest('li').remove();
+						});
+					});
+				});
+			});
+		</script>
+    </body>
+</html>

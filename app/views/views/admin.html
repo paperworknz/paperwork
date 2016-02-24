@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	{% include path.head %}
+		{% include path.sweetalert %}
+		{% include path.typeahead %}
+	</head>
+    <body>
+        {% include path.scaffolding %}
+		<div id="content" style="padding:15px;display:none">
+			<div class="tabs">
+				<ul class="wrapper">
+					<li data-tab="0" class="tab noselect">SQL</li>
+					<li data-tab="1" class="tab noselect">UAC</li>
+				</ul>
+			</div>
+			<div class="obj">
+				<div data-obj="0" class="box material im">
+					<div class="wrapper">
+						<br>
+						<div class="wrapper">
+							<input class="prompt" placeholder="SQL" />
+						</div>
+						<div console></div>
+					</div>
+				</div>
+				<div data-obj="1" class="box material im">
+					<div class="wrapper">
+						<div style="width:240px">
+							<div class="h3">Generate Password</div>
+							<input pw style="height:36px">
+							<div class="pull-right">
+								<button pw-get class="wolfe-btn">GET</button>
+							</div>
+						</div>
+						<div pw-console style="margin-top:15px"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% include path.js with {
+			include: ['Tab', 'sweetalert', 'react']
+		}%}
+		<script>
+			$(function(){
+				new Paperwork;
+				new Tab({
+					cookie: {
+						name: 'admin'
+					}
+				});
+				
+				function dump(obj) {
+					var out = '';
+					for (var i in obj) {
+						out += i + ": " + obj[i] + "\n";
+					}
+
+					$('[console]').append(
+						'<pre>'+
+							out+
+						'</pre>'
+					);
+				}
+				
+				$('.prompt').on('keydown', function(e){
+					if(e.keyCode == 13){
+						q = $(this).val();
+						if(q == 'clear'){
+							$('[console]').html('');
+							$(this).val('');
+						}else if(q != ''){
+							$('[console]').html('');
+							
+							if(q.toUpperCase() == 'users'.toUpperCase()) q = 'SELECT * FROM uac ORDER BY uacID DESC';
+							if(q.toUpperCase() == 'events'.toUpperCase()) q = 'SELECT * FROM events ORDER BY eventID DESC';
+							if(q.toUpperCase() == 'clear events'.toUpperCase()) q = 'DELETE from events';
+							
+							$.post('{{path.root}}/admin/post/query', {
+								'query': q
+							}).done(function(data){
+								if(data = JSON.parse(data)){
+									$.each(data, function(y,z){
+										dump(z);
+									});
+									$('.prompt').val('');
+								}
+							});
+						}
+					}
+				});
+				
+				$('[pw-get]').on('click', function(){
+					p = $('[pw]').val();
+					$.post('{{path.root}}/admin/get/password', {
+						pw: p
+					}).done(function(data){
+						$('[pw-console]').html('');
+						$('[pw-console]').html(data);
+					});
+				});
+			});
+		</script>
+    </body>
+</html>

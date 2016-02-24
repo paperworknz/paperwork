@@ -1,0 +1,51 @@
+<div class="wrapper form ib p0">
+	<div style="background-color:white;padding:30px">
+		<div form-blob>
+			{{ blob | raw }}
+		</div>
+	</div>
+	<div class="wrapper pr" style="margin-top:5px">
+		<div class="box pull-left" style="width:100px;margin-right:5px">
+			<div class="ac">
+				<button class="wolfe-btn" href="{{path.root}}/put/form" form-save-btn>SAVE</button>
+			</div>
+		</div>
+		<div class="box pull-left" style="width:100px;margin-right:5px">
+			<div class="ac">
+				<form method="post" action="{{path.root}}/post/pdf" form-pdf-form>
+					<input type="hidden" name="jobID" value="{{jobID}}" form-pdf-jobID />
+					<input type="hidden" name="file_name" form-pdf-name />
+					<input type="hidden" name="html" value="" form-pdf-html/>
+				</form>
+				<button class="wolfe-btn blue" type="submit" form-pdf-btn>PDF</button>
+			</div>
+		</div>
+		<!--
+		<div class="box pull-left" style="width:105px;margin-right:5px">
+			<div class="ac">
+				<form method="post" action="{{path.root}}/post/pdf" form-email-form>
+					<input type="hidden" name="data" value="" form-email-data/>
+					<input type="hidden" name="jobID" value="{{jobID}}" />
+					<input type="hidden" name="name" />
+					<input type="hidden" name="email" value="true" />
+				</form>
+				<button class="wolfe-btn blue" type="submit" form-email-btn>EMAIL</button>
+			</div>
+		</div> -->
+		<div class="box pull-left" style="width:125px;margin-right:5px">
+			<div class="ac">
+				<button class="wolfe-btn blue" form-copy-btn>COPY</button>
+			</div>
+		</div>
+		<div class="box pull-left" style="width:125px;margin-right:5px">
+			<div class="ac">
+				<button class="wolfe-btn blue" form-margin-btn>MARGIN</button>
+			</div>
+		</div>
+		<div class="box" style="right:0;position:absolute">
+			<div class="ac">
+				<button class="wolfe-btn delete" href="{{path.root}}/delete/form" form-del-btn>DELETE</button>
+			</div>
+		</div>
+	</div>
+</div>

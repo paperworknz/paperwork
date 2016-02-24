@@ -1,0 +1,24 @@
+<div id="sidebar">
+    <div id="navbar">
+        <div class="ac noselect thumb" style="line-height:40px">Menu</div>
+        <ul id="menu" style="display:none">
+			{% set nav = {
+				0: 'app',
+				1: 'jobs',
+				2: 'clients',
+				3: 'inventory',
+				4: 'settings'
+			}%}
+			{% for item in nav %}
+			<a href="{{path.root}}/{{item}}">
+			<li>{% if item == "app" %}Home
+			{% elseif item =="settings" %}My Settings
+			{% else %}View {{item|capitalize}}
+			{% endif %}</li>
+			</a>
+			{% endfor %}
+        </ul>
+    </div>
+	<div class="navbar-hide"> < </div>
+</div>
+<div class="pw-notification" style="opacity: 0"></div>

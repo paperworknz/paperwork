@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include path.head %}
+	{% include path.sweetalert %}
+    <body>
+        {% include path.scaffolding %}
+        <div id="content" style="display:none">
+			<div class="tabs">
+				<ul class="wrapper">
+					<li data-tab="0" id="summarytab" class="tab noselect">Summary</li>
+					{% if job %}<li data-tab="1" id="jobstab" class="tab noselect">Jobs</li>{% endif %}
+				</ul>
+			</div>
+			<div class="obj">
+				<div data-obj="0" id="summary" class="box material im">
+					<div class="wrapper pr">
+						<div class="client-details pull-left">
+							<form method="post" name="" action="{{path.root}}/put/client-details">
+								<input class="h3" value="{{client.name}}" placeholder="Client name" client-name/>
+								<table class="w1">
+									<tbody>
+										<tr>
+											<td>Address</td>
+											<td><input class="h5" value="{{client.address}}" placeholder="..." client-address/></td>
+										</tr>
+										<tr>
+											<td>Email</td>
+											<td><input class="h5" value="{{client.email}}" placeholder="..." client-email/></td>
+										</tr>
+										<tr>
+											<td>Phone</td>
+											<td><input class="h5" value="{{client.phone}}" placeholder="..." client-phone/></td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+						<div class="pull-right h3">
+							<span class="firm-right">
+								<form method="get" action="{{path.root}}/jobs">
+									<input type="hidden" name="id" value="{{client.clientID}}" />
+									<button type="submit" class="wolfe-btn">
+										New Job
+									</button>
+								</form>
+							</span>
+						</div>
+					</div>
+					<br>
+					<div class="wrapper">
+						<form method="post" action="{{path.root}}/delete/client" client-del-form>
+							<input type="hidden" name="clientID" value="{{client.clientID}}" />
+						</form>
+						<button type="submit" class="wolfe-btn delete" client-del-btn>Delete Client</button>
+					</div>
+					<hr>
+					<div>
+						<div>
+							<span>Notes</span>
+							<span class="fr">
+								<div id="ajax" style="color:#888;font-style:italic">
+									
+								</div>
+							</span>
+						</div>
+						<textarea id="notes">{{client.notes | raw}}</textarea>
+					</div>
+				</div>
+				{% if job %}
+				<div data-obj="1" id="jobs" class="box material im h" style="padding-top:15px;">
+					{% include path.table with {
+						'data': job,
+						'head': {
+							'jobID': 'ID',
+							'name': 'Name',
+							'client.name': 'Client',
+							'status.name': 'Status'
+						},
+						'width': {
+							'Name': '260px',
+							'Client': '165px',
+							'Status': '111px'
+						}
+					}%}
+				</div>
+				{% endif %}
+			</div>
+        </div>
+		{% include path.js with {
+			include: ['Tab', 'Table', 'sweetalert']
+		}%}
+		<script>
+			$(function(){
+				var pw = new Paperwork;
+				{% if job %}
+				new Table({
+					defaultFilter: 'All',
+					width: {
+						Status:'111px',
+						Client:'165px',
+						Name:'260px'
+					},
+					cookie: true
+				})
+				{% endif %}
+				
+				new Tab({
+					cookie: {
+						name: 'client',
+						value: "{{client.clientID}}"
+					}
+				});
+				
+				// CLIENT DELETE
+				$(document).on('click', '[client-del-btn]', function(){
+					swal({
+						title: 'Are you sure you want to delete this client?',
+						text: 'Deleting this client will delete ALL jobs, quotes and invoices!',
+						showCancelButton: true,
+						closeOnConfirm: true,
+					}, function(){
+						$('[client-del-form]').submit();
+					});
+				});
+				
+				$('#notes').change(function(){
+					$('#ajax').css({'display':'block'});
+					$.post('{{path.root}}/put/client-details',
+						{
+							notes: $('#notes').val(),
+							clientID: {{client.clientID}}
+						}
+					).done(function(){
+						pw.saved();
+					});
+				});
+				
+				$('.client-details input').change(function(){
+					if($('[client-name]').val() != ''){
+						$('#ajax').css({'display':'block'});
+						$.post('{{path.root}}/put/client-details',
+							{
+								name: $('[client-name]').val(),
+								address: $('[client-address]').val(),
+								email: $('[client-email]').val(),
+								phone: $('[client-phone]').val(),
+								clientID: {{client.clientID}}
+							}
+						).done(function(){
+							pw.saved();
+						});
+					}
+				});
+				
+				// Resizable content material box - EXPERIMENTAL
+				interact('#jobs').resizable({
+					edges: {right: true}
+				}).on('resizemove', function(event){
+					var target = event.target;
+					target.style.width  = event.rect.width + 'px';
+				});
+			});
+		</script>
+    </body>
+</html>

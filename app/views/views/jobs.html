@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	{% include path.head %}
+		{% include path.typeahead %}
+	</head>
+    <body>
+        {% include path.scaffolding %}
+        <div id="content">
+			<div style="width:610px">{% include path.flash %}</div>
+            <div class="box material">
+                <div class="n-new center">
+					<div id="create-new" class="h4 ac w1 noselect">
+						New Job
+					</div>
+					<div id="new-content" style="display:none">
+						<form method="post" action="{{path.root}}/post/job">
+							<table>
+								<tbody>
+									<tr>
+										<td class="ar">
+											Job:
+										</td>
+										<td>
+											#{{ jobID }}
+											<input type="hidden" name="jobID" value="{{jobID}}"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="ar">
+											Client:
+										</td>
+										<td>
+											<div id="the-basics">
+												<input class="typeahead" name="client" placeholder="Quick Search" />
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="ar">
+											Job Name:
+										</td>
+										<td>
+											<input name="name" />
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td>
+											<button type="submit" class="wolfe-btn uc">CREATE</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				</div>
+				<hr>
+				{% if job %}
+					{% include path.table with {
+						'data': job,
+						'head': {
+							'jobID': 'ID',
+							'name': 'Name',
+							'client.name': 'Client',
+							'status.name': 'Status',
+						},
+						'width': {
+							'Name': '260px',
+							'Client': '165px',
+							'Status': '111px'
+						}
+					}%}
+				{% endif %}
+            </div>
+        </div>
+		{% include path.js with {
+			include: ['typeahead', 'Table', 'contextmenu']
+		}%}
+		<script>
+			$(function(){
+				
+				var src = [{% for item in client %} "{{item.name | raw}}", {% endfor %}];
+				
+				new Paperwork;
+				{% if job %}
+				new Table({
+					defaultFilter: 'Hide Completed',
+					width: {
+						Status:'111px',
+						Client:'165px',
+						Name:'260px',
+					},
+					cookie: true
+				});
+				{% endif %}
+				var ta = new Typeahead(src, {
+					hint: true,
+					highlight: true,
+					minLength: 1
+				}, {
+					name: 'Clients',
+					source: substringMatcher(src)
+				});
+				
+				// New object
+				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});
+				
+				ta.run($('#content'));
+				
+				// STATUS CHANGE
+				$('.wt-filter').on('change', function(){
+					var status = $(this).val();
+					status = status.split(' ').join('+');
+				});
+				
+				// Resizable content material box - EXPERIMENTAL
+				interact('.material').resizable({
+					edges: {right: true}
+				}).on('resizemove', function(event){
+					var target = event.target;
+					target.style.width  = event.rect.width + 'px';
+				});
+				
+				// Open new-content if a client name is provided w GET
+				{% if cname|length > 1 %}
+					$('#new-content').slideToggle(100);
+					$('.tt-input').val('{{cname | raw}}');
+					$("input[name='name']").focus();
+				{% endif %}
+				
+				// Right click context menu
+				$('.wt-wrap').contextMenu({
+					selector: '.wt-row',
+					callback: function(key){
+						if(key != 'cancel'){
+							var item = $(this).attr('data-row'),
+								jobID = $('[data-id="ID"]').find('[data-row="'+item+'"]').html();
+							if(jobID != undefined && key != undefined){
+								$.post('{{path.root}}/put/job-details', {
+									jobID: jobID,
+									status: key
+								}).done(function(data){
+									if(data != '0'){
+										$('[data-id="Status"]').find('[data-row="'+item+'"]').html(data);
+									}
+								});
+							}
+						}
+					},
+					items: {
+						status: {
+							name: 'Update Status',
+							items: {
+				{% for s in status %}
+				'{{s.name}}': {'name':'{{s.name}}'},
+				{% endfor %}
+							}
+						},
+						sep: '-',
+						cancel: {
+							name: 'Cancel'
+						}
+					}
+				});
+			});
+		</script>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<script src="{{path.root}}/inc/jquery/jquery-2.1.4.min.js"></script>
+<script src="{{path.root}}/services/Paperwork/Paperwork.1.2.js"></script>
+
+{% for link in include %}
+{% if link == 'typeahead' %}
+<script src="{{path.root}}/inc/typeahead/typeahead.js"></script>
+<script src="{{path.root}}/inc/typeahead/thebasics.js"></script>
+<script src="{{path.root}}/services/Typeahead/Typeahead.1.0.js"></script>
+{% elseif link == 'areyousure' %}
+<script src="{{path.root}}/inc/areyousure/jquery.are-you-sure.js"></script>
+{% elseif link == 'sweetalert' %}
+<script src="{{path.root}}/inc/sweetalert/sweetalert.min.js"></script>
+{% elseif link == 'Tab' %}
+<script src="{{path.root}}/services/Tab/Tab.1.2.js"></script>
+{% elseif link == 'Table' %}
+<script src="{{path.root}}/inc/tinysort/tinysort.js"></script>
+<script src="{{path.root}}/inc/sortable/sortable.js"></script>
+<script src="{{path.root}}/inc/interact/interact.js"></script>
+<script src="{{path.root}}/services/Table/Table.1.1.js"></script>
+{% elseif link == 'interact' %}
+<script src="{{path.root}}/inc/interact/interact.js"></script>
+{% elseif link == 'contextmenu' %}
+<script src="{{path.root}}/inc/contextmenu/jquery.contextMenu.js"></script>
+{% elseif link == 'react' %}
+<script src="{{path.root}}/inc/react/react.js"></script>
+<script src="{{path.root}}/inc/react/react-dom.js"></script>
+{% endif %}
+{% endfor %}

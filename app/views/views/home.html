@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include path.head %}
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="container buffer">
+				<div class="pull-right login-high">
+					<div class="login-container" login>
+						<div class="login-form">
+							<form login-form method="post" action="{{path.root}}/post/login">
+								<div login-fields>
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="text" class="login-input" name="username" autocomplete="off" value="" placeholder="Email" />
+										</div>
+									</div>
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="password" class="login-input" name="password" autocomplete="off" value="" placeholder="Password" />
+										</div>
+									</div>
+									{% include path.flash %}
+								</div>
+								<div class="login-wrap clearfix">
+									<button type="submit" class="btn btn-success login-action pull-right" >Login</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					{% if register %}
+					<div class="login-container h" register>
+						<div class="login-form">
+							<div register-fields style="display:none">
+								<form register-form method="post" action="{{path.root}}/post/register">
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="text" class="login-input" name="first" autocomplete="off" value="" placeholder="First Name" />
+										</div>
+									</div>
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="text" class="login-input" name="last" autocomplete="off" value="" placeholder="Last Name" />
+										</div>
+									</div>
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="text" class="login-input" name="company" autocomplete="off" value="" placeholder="Company Name" />
+										</div>
+									</div>
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="email" class="login-input" name="email" autocomplete="off" value="" placeholder="Email" />
+										</div>
+									</div>
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="text" class="login-input" name="username" autocomplete="off" value="" placeholder="Username" />
+										</div>
+									</div>
+									<div class="login-text-wrap">
+										<div class="login-wrap">
+											<input type="password" class="login-input" name="password" autocomplete="off" value="" placeholder="Password" />
+										</div>
+									</div>
+									{% include path.flash %}
+								</div>
+							</form>
+							<div class="login-wrap clearfix">
+								<button register-form-btn class="btn btn-success login-action pull-right" >Register</button>
+							</div>
+						</div>
+					</div>
+					<div class="login-container pull-right" style="margin-top:5px;width:180px">
+						<div class="login-form">
+							<button class="btn btn-info w1" btn-toggle>Sign Up</button>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% if register %}
+		{% include path.js %}
+		<script>
+			$(function(){
+				$('[btn-toggle]').on('click', function(){
+					if($(this).html() == 'Sign Up'){
+						$(this).html('Let me Login');
+						$('[register]').css('height', $('[login]').height());
+						$('[login]').addClass('h');
+						$('[register]').removeClass('h');
+						$('[register-fields]').fadeIn();
+						$('[register]').animate({
+							height: '318px'
+						}, 400);
+					}else{
+						$(this).html('Sign Up');
+						$('[register]').addClass('h');
+						$('[login]').removeClass('h');
+						$('[login-fields]').fadeIn();
+						$('[login]').animate({
+							height: '142px'
+						}, 400);
+					}
+				});
+				
+				$('[register-form-btn]').on('click', function(){
+					$('[register-form-btn]').prop('disabled', true);
+					$('[btn-toggle]').prop('disabled', true);
+					$('[register-form-btn]').html('Working on it...');
+					$.post('{{path.root}}/post/database', {
+						username: $('[register-fields] [name="username"]').val()
+					}).done(function(data){
+						if(data == 1){
+							$('[register-form]').submit();
+						}else{
+							console.log(data);
+						}
+					});
+				});
+			});
+		</script>
+		{% endif %}
+	</body>
+</html>

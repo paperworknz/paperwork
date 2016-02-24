@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	{% include path.head %}
+	</head>
+    <body>
+        {% include path.scaffolding %}
+        <div id="content" style="display:none">
+			<div class="tabs">
+				<ul class="wrapper">
+					<li data-tab="0" class="tab noselect">My Account</li>
+					<li data-tab="1" class="tab noselect">Job Status</li>
+				</ul>
+			</div>
+			<div class="obj">
+				<div data-obj="0" class="box material im" style="padding:30px">
+					<div class="uac">
+						<form method="post" action="{{path.root}}/put/settings">
+							<table>
+								<tbody>
+									<tr>
+										<td>First</td>
+										<td><input name="first" value="{{user.first}}" required></td>
+									</tr>
+										<td>Last</td>
+										<td><input name="last" value="{{user.last}}" required></td>
+									</tr>
+										<td>Username</td>
+										<td><input name="username" value="{{user.username}}" required></td>
+									</tr>
+										<td>Email</td>
+										<td><input name="email" type="email" value="{{user.email}}" required></td>
+									</tr>
+										<td>Company</td>
+										<td><input name="company" value="{{user.company}}" required></td>
+									</tr>
+										<td>Phone</td>
+										<td><input name="phone" value="{{user.phone}}" required></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td style="height:40px">
+											<input type="hidden" name="my">
+											<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				</div>
+				<div data-obj="1" class="box material im" style="padding:30px">
+					<div class="jobstatus">
+						<style scoped>
+							.kappa li {
+								margin-top:4px;
+							}
+						</style>
+						<ul class="kappa">
+							{% for item in status %}
+							<li><input type="text" data-id="{{item.statusID}}" value="{{item.name}}"/>{% if item.statusID == 1 %} <span>Default</span> {% endif %}</li>
+							{% endfor %}
+						</ul>
+						<a style="cursor:pointer;" new-status>New Status</a><br>
+						<button class="wolfe-btn" style="margin-top:7px;" job-status-btn>UPDATE</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% include path.js with {
+			include: ['Tab']
+		}%}
+		<script>
+			$(function(){
+				new Paperwork;
+				new Tab({
+					cookie: {
+						name: 'settings',
+						value: '{{user.first}}'
+					}
+				});
+				var j = $('.jobstatus ul');
+				$('[new-status]').click(function(){
+					j.append('<li><input type="text" placeholder="Status name" /></li>');
+				});
+				
+				$('[job-status-btn]').click(function(){
+					k = [];
+					j.find('input').each(function(){
+						if($(this).data('id') != undefined){
+							if($(this).val() != undefined){
+								k.push({
+									ID: $(this).data('id'),
+									name: $(this).val(),
+								});
+							}
+						}else if($(this).val() != undefined){
+							k.push({
+								name: $(this).val()
+							});
+						}
+					});
+					$.post('{{path.root}}/post/status', {
+						data: k
+					});
+				});
+			});
+		</script>
+    </body>
+</html>

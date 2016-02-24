@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	{% include path.head %}
+	</head>
+    <body>
+        {% include path.scaffolding %}
+        <div id="content">
+			<div class="box wrapper material">
+				<br>
+				<div class="alert alert-success">
+					<strong>Hi {{user.first}}</strong>
+				</div>
+				{% if user.username == 'admin' %}
+				<a href="{{path.root}}/admin">Admin</a><br><br>
+				{% endif %}
+				<a href="{{path.root}}/get/logout">Logout</a>
+				</div>
+			</div>
+        </div>
+		{% include path.js %}
+    </body>
+</html>

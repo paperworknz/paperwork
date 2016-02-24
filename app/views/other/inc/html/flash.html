@@ -1,0 +1,13 @@
+{% if flash.error is not empty %}
+<div class="alert alert-danger">
+	{{ flash.error | raw}}
+</div>
+{% elseif flash.success is not empty %}
+<div class="alert alert-success">
+	{{ flash.success | raw}}
+</div>
+{% elseif flash.info is not empty %}
+<div class="alert alert-info">
+	{{ flash.info | raw}}
+</div>
+{% endif %}

@@ -1,0 +1,9 @@
+<?php
+
+return [
+	'Form' => [
+		'current'	=> 'Form.1.7.js',
+		'rollback'	=> false,
+	],
+	'client_storage' => '../app/app/storage/clients',
+];

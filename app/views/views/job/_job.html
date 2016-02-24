@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include path.typeahead %}
+		{% include path.sweetalert %}
+		{% include path.head %}
+		<meta name="format-detection" content="telephone=no">
+	</head>
+	<body>
+		{% include path.scaffolding %}
+		<div id="content" style="display:none;padding:15px 0px 0px 15px">
+			<div style="width:100%">
+            	{% include path.flash %}
+			</div>
+			<div class="tabs">
+				<ul class="wrapper">
+					<li data-tab="0" id="summarytab" class="tab noselect">Summary</li>
+					{% set i = 0 %}
+					{% for tab in tabs %}
+						{% set i = i + 1 %}
+						<li data-tab="{{i}}" class="tab noselect">{{tab.name}}</li>
+					{% endfor %}
+					{% set i = i + 1 %}
+					<li data-tab="{{i}}" heir hidden></li>
+					<li data-tab="+" id="newtab" class="tab noselect">+</li>
+				</ul>
+			</div>
+			<div class="obj" style="display:inline-block;margin-bottom:5px">
+				<div data-obj="0" id="summary" class="tabobj box material">
+					<h3 style="margin-bottom:0">
+						<input class="jobName" name="jobName" value="{{job.name}}" placeholder="Job name"/>
+						<span class="pull-right" style="color:green">{{job.jobID}}</span>
+					</h3>
+					<hr>
+					<table class="clientdetails">
+						<tbody>
+							<tr>
+								<td>Name</td>
+								<td><a href="{{path.root}}/client/{{client.clientID}}" title="{{client.name}}'s Page">{{client.name}}</a></td>
+							</tr>
+							<tr>
+								<td>Address</td>
+								<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
+							</tr>
+							<tr>
+								<td>Phone</td>
+								<td><a href="tel:{{client.phone}}" title="Call {{client.name}}">{{client.phone}}</a></td>
+							</tr>
+							{% if job.date_created != '0000-00-00 00:00:00' %}
+							<tr>
+								<td>Started</td>
+								<td>
+									{{job.date_created}}
+									{% set difference = date().diff(date(job.date_created)) %}
+									{% if difference.days == 1 %}
+										 - {{ difference.days }} day ago
+									{% elseif difference.days > 1 %}
+										 - {{ difference.days }} days ago
+									{% endif %}
+								</td>
+							</tr>
+							{% endif %}
+							{% if job.date_invoiced != '0000-00-00 00:00:00' %}
+							<tr>
+								<td>Invoiced</td>
+								<td>
+									{{job.date_invoiced}}
+									 - {% set difference = date().diff(date(job.date_invoiced)) %}
+									{% if difference.days == 0 %}
+										Today
+									{% elseif difference.days == 1 %}
+										Yesterday
+									{% else %}
+										{{difference.days}} days ago
+									{% endif %}
+									
+								</td>
+							</tr>
+							{% endif %}
+							{% if job.date_completed != '0000-00-00 00:00:00' %}
+							<tr>
+								<td>Closed</td>
+								<td>
+									{{job.date_completed}}
+									 - {% set difference = date().diff(date(job.date_completed)) %}
+									{% if difference.days == 0 %}
+										Today
+									{% elseif difference.days == 1 %}
+										Yesterday
+									{% else %}
+										{{difference.days}} days ago
+									{% endif %}
+								</td>
+							</tr>
+							{% endif %}
+							<tr>
+								<td>Status</td>
+								<td>
+									<select job-status-select>
+										{% for item in status %}
+											{% if job.status.name == item.name %}
+											<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
+											{% else %}
+											<option value="{{item.name}}"/>{{item.name}}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="token pdf-title" style="vertical-align:top; padding-top:17px">
+									
+								</td>
+								<td style="padding-top:10px">
+									<div class="pdf-load"></div>
+									<div class="pdf-list"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="wrapper">
+						<form method="post" action="{{path.root}}/delete/job" job-del-form>
+							<input type="hidden" name="jobID" value="{{jobID}}"/>
+						</form>
+						<button class="wolfe-btn delete pull-right" job-del-btn>Delete Job</button>
+					</div>
+				</div>
+				{% set i = 0 %}
+				{% for a,b in tabs %}
+					{% set i = i + 1 %}
+					<div data-obj="{{i}}" data-formid="{{a}}" class="tabobj h">
+						{% include path.form with {
+							blob: b.blob
+						} %}
+					</div>
+				{% endfor %}
+				{% set i = i + 1 %}
+				<div data-obj="{{i}}" heir hidden></div>
+				<div data-obj="+" id="newtabscreen" class="tabobj box material h">
+					<table style="height:130px" form-templates>
+						<tbody>
+							<tr>
+								{% for a,b in templates %}
+								<td style="padding:5px;width:100px">
+									<button data-templateid="{{a}}" class="wolfe-btn" href="{{path.root}}/post/form" new-form-btn>{{b.name}}</button>
+								</td>
+								{% endfor %}
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div note-parent class="box wrapper" style="display:inline-block;vertical-align:top;padding:5px;">
+				<div style="color:#7f8c8d">
+					<span style="line-height:9pt;font-size:9pt">Notes</span>
+				</div>
+				<div note-wrapper style="width:250px;min-height:209px;border:1px solid #eee;cursor:text;min-width:30px;" class="wrapper" >
+					<div id="notes" style="padding:4px;min-width:30px;min-height:30px;outline:none" contenteditable>{{job.notes | raw}}</div>
+				</div>
+			</div>
+		</div>
+		{% include path.js with {
+			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu']
+		}%}
+		<script src="{{path.root}}/services/Form/{{job.formjs}}"></script>
+		<script>
+		$(function(){
+			
+			var inv = { {% for item in inv %}"{{item.name|raw}}":"{{item.price}}",{% endfor %} },
+				src = []; $.each(inv, function(a,b){src.push(a);});
+			
+			var pw = new Paperwork;
+			var tab = new Tab({
+				cookie: {
+					name:	'job',
+					value:	'{{jobID}}',
+				}
+			});
+			
+			// GET PDF
+			pw.wait($('.pdf-load'));
+			$.get('{{path.root}}/get/pdf-json/{{jobID}}')
+			.done(function(data){
+				if(data != '0'){
+					$('.pdf-load').remove();
+					$('.pdf-title').html('Paper');
+					data = JSON.parse(data);
+					$.each(data, function(a,b){
+						$('.pdf-list').append(
+							'<div style="height:24px;line-height:24px">'+
+								'<a href="{{path.root}}/get/pdf/{{jobID}}/'+b+'">'+b+'</a>'+
+							'</div>'
+						);
+					});
+				}else{
+					$('.pdf-load').closest('tr').remove();
+				}
+			});
+			
+			// JOB STATUS
+			$(document).on('change', '[job-status-select]', function(){
+				if($(this).val() != undefined){
+					$.post('{{path.root}}/put/job-details', {
+						jobID: '{{jobID}}',
+						status: $(this).val()
+					}).done(function(data){
+						if(data != '0'){
+							pw.saved();
+							if(data == 'Completed'){
+								location.reload();
+							}
+						}
+					});
+				}
+			});
+			
+			// NOTES CHANGE
+			var notes = $('#notes').html();
+			$('#notes').on('blur', function(){
+				if($(this).html() != notes){
+					$.post('{{path.root}}/put/job-details', {
+						notes: $(this).html(),
+						jobID: '{{job.jobID}}',
+					}).done(function(){
+						notes = $('#notes').html();
+						pw.saved();
+					});
+				}
+			});
+			
+			// NOTES FOCUS
+			$('[note-wrapper]').on('click', function(){
+				$('#notes').focus();
+			});
+			
+			// JOB NAME CHANGE
+			$('.jobName').change(function(){
+				if($('.jobName').val() !=''){
+					$.post('{{path.root}}/put/job-details', {
+						name: $('.jobName').val(),
+						jobID: '{{jobID}}',
+					}).done(function(){
+						pw.saved();
+					});
+				}
+			});
+			
+			// JOB DELETE
+			$(document).on('click', '[job-del-btn]', function(){
+				swal({
+					title: 'Are you sure you want to delete this job?',
+					text: 'Deleting this job will delete ALL quotes and invoices attached',
+					showCancelButton: true,
+					closeOnConfirm: true,
+				}, function(){
+					$('[job-del-form]').submit();
+				});
+			});
+			
+			// Right click context menu
+			$('.tabs').contextMenu({
+				selector: '.tab',
+				callback: function(key){
+					var item = $(this).attr('data-tab'),
+						formID = $('[data-obj="'+item+'"]').attr('data-formid');
+					
+					if(key != 'cancel' && formID != undefined){
+						swal({
+							title: 'New Name',
+							type: 'input',
+							showCancelButton: true,
+							closeOnConfirm: false,
+							showLoaderOnConfirm: true,
+						}, function(name){
+							if(name === false){
+								return false
+							}else if(name === ''){
+								swal.showInputError('You need to write something!');
+								return false;
+							}
+							$.post('{{path.root}}/put/rename-form', {
+								formID: formID,
+								name: name,
+							}).done(function(data){
+								data = JSON.parse(data);
+								if(data.type == 'success'){
+									swal({
+										title: 'Renamed Form!',
+										timer: '1000',
+										type: 'success',
+										showConfirmButton: false
+									});
+									$('[data-tab="'+item+'"]').html(data.name);
+								}
+							});
+						});
+					}
+				},
+				items: {
+					Rename: {
+						name: 'Rename'
+					},
+					sep: '-',
+					cancel: {
+						name: 'Cancel'
+					}
+				}
+			});
+			
+			// ################################ START FORM ################################
+			
+			var form = new Form({
+				typeahead: new Typeahead(src),
+				tab: tab,
+				inv: inv,
+				invPost: '{{path.root}}/post/inv',
+			});
+			
+			// FORM.POST()
+			$(document).on('click', '[new-form-btn]', function(){
+				var button = $(this),
+					name = $(this).html();
+				
+				pw.wait(button);
+				form.post({
+					url: button.attr('href'),
+					templateID: button.attr('data-templateid'),
+					clientID: '{{client.clientID}}',
+					jobID: '{{jobID}}',
+					templateName: name,
+				}, function(){
+					pw.ready(button, name);
+					$(form.s).find('.tt-input').focus();
+				});
+			});
+			
+			// FORM.PUT()
+			$(document).on('click', '[form-save-btn]', function(){
+				var button = $(this);
+				
+				pw.wait(button);
+				form.put({
+					url: button.attr('href'),
+					formID: $(form.s).attr('data-formid'),
+				}, function(){
+					pw.ready(button, 'SAVE');
+					pw.saved();
+				});
+			});
+			
+			// FORM.DELETE()
+			$(document).on('click', '[form-del-btn]', function(){
+				var button = $(this);
+				
+				pw.wait(button);
+				swal({
+					title: 'Are you sure you want to delete this?',
+					text: 'Deleting this will remove it forever',
+					showCancelButton: true,
+					closeOnConfirm: true,
+				}, function(){
+					form.delete({
+						url: button.attr('href'),
+						formID: $(form.s).attr('data-formid'),
+					}, function(){
+						var noteposition = $('[note-parent]').position(),
+							noteparent = $('[note-parent]').clone(),
+							tabID = $('.'+tab.activeTab).attr('data-tab');
+						$('[note-parent]').css({
+							'position':'absolute',
+							'top':noteposition.top,
+							'left':noteposition.left
+						});
+						$(form.s).slideUp('fast', function(){
+							$(form.s).remove();
+							$('.'+tab.tab+'.'+tab.activeTab).fadeOut('fast', function(){
+								tab.activate($('[data-tab="'+tabID+'"]').prev());
+								$('[note-parent]').replaceWith(noteparent);
+								$('[note-wrapper]').on('click', function(){
+									$('#notes').focus();
+								});
+								$(this).remove();
+							});
+						});
+					});
+				});
+			});
+			
+			// PDF
+			$(document).on('click', '[form-pdf-btn]', function(){
+				var button = $(this),
+					html = button.html();
+				
+				pw.wait(button);
+				form.pdf($(form.s).find('[form-blob]'), function(data){
+					$(form.s).find('[form-pdf-html]').val(data);
+					$(form.s).find('[form-pdf-jobID]').val('{{jobID}}');
+					$(form.s).find('[form-pdf-form]').submit();
+					window.onfocus = function(){
+						pw.ready(button, html);
+					};
+				});
+			});
+			
+			// COPY
+			$(document).on('click', '[form-copy-btn]', function(){
+				swal({
+					html: true,
+					title: 'Choose your template',
+					text: '{% for a,b in templates %}{{a}} for {{b.name}}<br> {% endfor %}',
+					showCancelButton: true,
+					type: 'input',
+					inputPlaceholder: 'Write something'
+				}, function(e){
+					var button = $(this),
+						post = $('[new-form-btn]').attr('href'),
+						templateID = 0,
+						templateName = '';
+					
+					{% for a,b in templates %}
+					if(e == {{a}}){
+						templateID = {{a}};
+						templateName = '{{b.name}}';
+					}
+					{% endfor %}
+					
+					var data = {
+						client:	$(form.s).find('[form-clientblob]').html(),
+						jobd:	$(form.s).find('[form-jobd]').html(),
+						items:	$(form.s).find('[form-itemlist]').clone(),
+						subt:	$(form.s).find('[form-subtotal]').html(),
+						tax:	$(form.s).find('[form-tax]').html(),
+						total:	$(form.s).find('[form-total]').html(),
+					};
+					
+					pw.wait(button);
+					form.post({
+						url: post,
+						templateID: templateID,
+						templateName: templateName,
+						clientID: '{{client.clientID}}',
+						jobID: '{{jobID}}',
+					}, function(){
+						$(form.s).find('[form-clientblob]').html(data.client);
+						$(form.s).find('[form-jobd]').html(data.jobd);
+						$(form.s).find('[form-itemlist]').replaceWith(data.items);
+						$(form.s).find('[form-subtotal]').html(data.subt);
+						$(form.s).find('[form-tax]').html(data.tax);
+						$(form.s).find('[form-total]').html(data.total);
+						pw.ready(button, 'COPY');
+					});
+				});
+			});
+			
+			// FORM.MARGIN()
+			$(document).on('click', '[form-margin-btn]', function(){
+				
+				form.dark($(form.s + ' [form-blob]')); // Turn off interaction
+				
+				var concern = $(form.s + ' [form-itemname]'),
+					button = $(this).closest($('.box'));
+				var ely = {
+					html: {
+						clone:		concern.clone(),
+						position:	concern.offset(),
+						width:		concern.outerWidth()
+					},
+					margin: {
+						clone: button.clone(),
+						position: button.offset(),
+						width: button.outerWidth(),
+					}
+				};
+				
+				// Darken page, then show the concern
+				$('#content').after('<div armadyl></div>');
+				$('[armadyl]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>')
+					.append(ely.html.clone.css({
+						'z-index':999,
+						'position':'absolute',
+						'top':ely.html.position.top,
+						'left':ely.html.position.left,
+						'width':ely.html.width,
+						'margin-top':0,
+						'background-color':'white',
+						'box-shadow': '0 0 20px rgba(0,0,0,.33)',
+						'opacity':0.0
+					}));
+				
+				
+				$('[fade]').animate({'opacity':0.5}, 150, function(){
+					$('[armadyl] [form-itemname]').animate({'opacity':1}, 100);
+				});
+				
+				// Remove contenteditable, replace delete with checkbox
+				$('[armadyl] .twig-remove').each(function(){
+					var a = $(this).closest('[data-item]').attr('data-item');
+					$(this).prev().removeAttr('contenteditable');
+					$(this).replaceWith('<input type="checkbox" class="twig-remove" style="width:15px;height:15px;margin-right:15px" data-item="'+a+'">');
+				});
+				
+				// Append slider
+				$('[armadyl] [form-itemname]').append(
+					'<div class="ac" style="padding:10px 10px 0px 10px;">'+
+						'<input cent style="width:60px;text-align:center" /> %'+
+					'</div>'+
+					'<div style="width:100%;padding:10px;">'+
+						'<input range type="range" style="width:200px;margin:0 auto">'+
+					'</div>'+
+					'<div class="wrapper" style="padding:10px">'+
+					'<button margin-apply class="wolfe-btn pull-right">APPLY</button>'+
+					'<button margin-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>'+
+					'</div>');
+				
+				$('[armadyl] [form-itemname] input').val(0);
+				
+				// Update [cent] from slider
+				$('[armadyl] [range]').on('input', function(){
+					$('[cent]').val($(this).val());
+				});
+				
+				// Replace cloned button with new listener
+				$('[armadyl] [form-margin-btn]').html('CONVERT');
+				
+				// Listen to convert
+				$('[armadyl] [margin-apply]').on('click', function(){
+					var map = [],
+						cent = (Number($('[cent]').val()) + 100) / 100;
+					
+					$('[armadyl] input[type=checkbox]').each(function(){
+						if($(this)[0].checked){
+							map.push($(this).attr('data-item'));
+						}
+					});
+					
+					form.refresh($(form.s + ' [form-blob]'));
+					
+					$(form.s + ' .qq-price').each(function(){
+						if(map.includes($(this).closest('[data-item]').attr('data-item'))){
+							var a = $(this).val().replace('$', '').replace(',', '') * cent;
+							$(this).val(a);
+						}
+						
+					});
+					
+					form.update();
+					$('[armadyl] [form-itemname]').fadeOut(100, function(){
+						$('[fade]').fadeOut(150, function(){
+							$('[armadyl]').off().unbind().remove();
+							
+						});
+					});
+					
+				});
+				
+				// Listen to cancel
+				$('[armadyl] [margin-cancel]').on('click', function(){
+					form.update();
+					$('[armadyl] [form-itemname]').fadeOut(100, function(){
+						$('[fade]').fadeOut(150, function(){
+							$('[armadyl]').off().unbind().remove();
+							form.update();
+						});
+					});
+				});
+				
+			});
+			
+			// ################################ END FORM ################################
+			
+		});
+		</script>
+	</body>
+</html>

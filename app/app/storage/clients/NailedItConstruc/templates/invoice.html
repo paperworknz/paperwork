@@ -1,0 +1,248 @@
+<link rel="stylesheet" href="http://localhost/wolfe/public/inc/bootstrap/bootstrap-3.3.2.css">
+<style>
+.wform {background-color:white;font-size:13px;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif}
+.wform > table {font-size:13px;background-color:white}
+.wform > table table {font-size:13px;background-color:white}
+.wform > table td {font-size:13px}
+.wform ul {-webkit-padding-start:0px!important;margin:0!important}
+.wform li {list-style-type:none!important}
+.ac {text-align:center}
+.al {text-align:left}
+.ar {text-align:right}
+.b {font-weight:600}
+.bb {border:1px solid #000}
+.bl {background-color:#39B0EB}
+.ib {display:inline-block}
+.w {width:100%}
+.pa {position:absolute}
+.pr {position:relative}
+.vb {vertical-align:bottom}
+.vt {vertical-align:top}
+.uc {text-transform:uppercase}
+.m15 {margin-top:15px}
+.f {font-size:13px}
+.f0 {font-size:0}
+
+.qq-item {line-height:22px;padding:0px 6px}
+.qq-qty, .qq-price {
+	width: 69px;
+	border: 1px solid white;
+	outline: none;
+	text-align: center;
+	line-height:22px;
+	height:22px;
+	padding:0;
+}
+.qq-total {
+	min-width: 70px;
+    border: 0;
+    outline: none;
+    text-align: center;
+    line-height: 22px;
+    height: 22px;
+}
+.ta {
+	position:absolute;
+	z-index:1;
+	margin-top:36px;
+	width:100%;
+	border-top:1px solid #333;
+	border-left:1px solid #333;
+	border-right:1px solid #333;
+}
+
+.tac {font-size:11px!important;margin-top:10px}
+.tac table,
+.tac table td {font-size:11px!important}
+.tt {border:none;outline:none;width:100%;padding:5px}
+.w7 {width: 70px}
+.br0 {border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black}
+.br {border-right:1px solid black}
+.ihead {min-width:70px;font-size:11px;line-height:20px;height:20px;font-weight:600}
+.p010 {padding:2px 10px}
+.m90 {margin-left:10px}
+.m90 td {min-width:105px;padding:2px 4px}
+.client {width:50%}
+</style>
+<div class="wform">
+	<table class="w pr">
+		<tbody>
+			<tr>
+				<td form-logo></td>
+				<td class="vb">
+					<div class="h2 ar" contenteditable form-type>INVOICE</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="al b" contenteditable>
+						Logan Rear<br>
+						027 5077 187<br>
+						40 Seddon Street<br>
+						Waikanae<br>
+						logan.rear@hotmail.co.nz
+					</div>
+				</td>
+				<td class="ar vt">
+					<table class="pull-right details">
+						<tbody>
+							<tr>
+								<td class="p010 ar">Date</td>
+								<td class="p010 bb ac" contenteditable form-date></td>
+							</tr>
+							<tr>
+								<td class="p010 ar">Reference#</td>
+								<td class="p010 bb ac" contenteditable form-jobID></td>
+							</tr>
+							<tr>
+								<td class="p010 ar">GST#</td>
+								<td class="p010 bb ac">73-232-678</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="w">
+					<table class="client m15">
+						<tbody>
+							<tr class="bl ac uc">
+								<td class="b bb">Customer</td>
+							</tr>
+							<tr>
+								<td class="bb">
+									<div class="ac w" style="padding:2px" contenteditable form-clientblob>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="w">
+					<table class="m15 w">
+						<tbody>
+							<tr>
+								<td colspan="2" class="b bb bl ac uc">
+									<span>Job Description</span>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="bb">
+									<div class="w" style="padding:5px" contenteditable form-jobd></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="w">
+					<div class="pr" form-inventory>
+						<div class="ta" form-typeahead>
+							<input class="typeahead tt" type="text" placeholder="Item"/>
+						</div>
+					</div>
+					<div class="wrapper f0 br0 m15" form-itemlist>
+						<table class="w">
+							<tbody>
+								<tr>
+									<td class="br">
+										<ul class="f" form-itemname>
+											<li class="ac uc bl ihead">CONTRACTORS & MATERIALS</li>
+											<li style="height:29px" form-itembuffer></li>
+										</ul>
+									</td>
+									<td class="w7 br">
+										<ul class="f" form-itemqty>
+											<li class="ac uc bl ihead">QTY UNIT</li>
+											<li style="height:29px" form-itembuffer></li>
+										</ul>
+									</td>
+									<td class="w7 br">
+										<ul class="f" form-itemprice>
+											<li class="ac uc bl ihead">UNIT PRICE</li>
+											<li style="height:29px" form-itembuffer></li>
+										</ul>
+									</td>
+									<td class="w7 br">
+										<ul class="f" form-itemtotal>
+											<li class="ac uc bl ihead">TOTAL</li>
+											<li style="height:29px" form-itembuffer></li>
+										</ul>
+									</td>
+							</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="tac" contenteditable>
+						<span class="b" style="font-style:italic">
+							<br>Details for Direct Crediting:<br>Bank Account Name: Logan Rear<br>Bank Account Number: 01 0731 0239789 00<br>Reference: LR<span form-jobID></span>
+						</span>
+						<table style="font-size:11px!important;background-color:white;margin-top:5px" >
+							<tbody>
+								<tr class="ac bl uc" style="text-align:center;background-color:#39B0EB;text-transform:uppercase;" >
+									<td class="bb w" style="border-width:1px;border-style:solid;border-color:#000;width:100%;font-size:11px!important;" >Terms and Conditions</td>
+								</tr>
+								<tr>
+									<td class="bb w" style="border-width:1px;border-style:solid;border-color:#000;width:100%;font-size:11px!important;padding:2px" >
+										<table style="font-size: 11px!important">
+											<tbody>
+												<tr>
+													<td style="vertical-align:top;padding-right:3px;">1.</td><td style="vertical-align:top">Payment must be made within seven working days from the invoice date</td>
+												</tr>
+												<tr>
+													<td style="vertical-align:top">2.</td><td style="vertical-align:top">Overdue accounts may incur a late interest fee.</td>
+												</tr>
+												<tr>
+													<td style="vertical-align:top">3.</td><td style="vertical-align:top">If payments have passed their due date, further work may be discontinued.</td>
+												</tr>
+												<tr>
+													<td style="vertical-align:top">4.</td><td style="vertical-align:top">Travel costs of 77 cents per km will be applied to work north of Otaki or south of Paraparaumu.</td>
+												</tr>
+												<tr>
+													<td style="vertical-align:top">5.</td><td style="vertical-align:top">Estimates will be invoiced fortnightly.</td>
+												</tr>
+												<tr>
+													<td style="vertical-align:top">6.</td><td style="vertical-align:top">Quotes in excess of $10,000 will require a 30% deposit prior to work commencing followed by monthly instalments.</td>
+												</tr>
+												<tr>
+													<td style="vertical-align:top">7.</td><td style="vertical-align:top">Quotes are valid for three months.</td>
+												</tr>
+												<tr>
+													<td style="vertical-align:top">8.</td><td style="vertical-align:top">Work in excess of $10,000 will require construction insurance that is to be paid by the client.</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</td>
+				<td class="vt">
+					<table class="ar m90" style="margin-top:10px">
+						<tbody>
+							<tr>
+								<td>Sub Total</td>
+								<td><div form-subtotal></div></td>
+							</tr>
+							<tr>
+								<td>GST</td>
+								<td><div form-tax></div></td>
+							</tr>
+							<tr>
+								<td class="b bb bl uc" style="font-size:12px;text-align:center">Total To Pay</td>
+								<td class="b bb" form-total></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include path.typeahead %}
+    	{% include path.head %}
+	</head>
+    <body>
+        {% include path.scaffolding %}
+        <div id="content">
+            <div style="width:610px">{% include path.flash %}</div>
+            <div class="box material">
+                <div class="n-new center">
+					<div id="create-new" class="h4 ac w1 noselect">
+						New Client
+					</div>
+					<div id="new-content" style="display:none">
+						<table>
+							<tbody>
+								<tr>
+									<td class="ar">
+										Full Name
+									</td>
+									<td>
+										<input type="text" client-name>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<button class="wolfe-btn uc" href="{{path.root}}/post/client" create-btn>CREATE</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<hr>
+				<div id="the-basics">
+					<input class="typeahead" placeholder="Quick Search" />
+				</div>
+            </div>
+        </div>
+		{% include path.js with {
+			include: ['typeahead']
+		}%}
+		<script>
+			$(function(){
+				var clients = { {% for item in client %} "{{item.name|raw}}" : "{{item.clientID}}", {% endfor %} },
+					src = []; $.each(clients, function(a,b){src.push(a);});
+					
+				var pw = new Paperwork;
+				var ta = new Typeahead(src, {
+					hint: true,
+					highlight: true,
+					minLength: 0
+				}, {
+					source: substringMatcher(src),
+					limit: 1000000
+				});
+				
+				var clientTypeahead = function(){
+					var go = function(){
+						window.location = "{{path.root}}/client/" + clients[$('.tt-input').val()];
+					}
+					ta.run($('#content'));
+					// Enter key to select the first suggestion
+					$('.typeahead').on('keydown', function(event) {
+						var e = jQuery.Event("keydown");
+						e.keyCode = e.which = 9; // 9 == tab
+						if (event.which == 13){ // if pressing enter
+							$('.typeahead').trigger(e); // trigger "tab" key - which works as "enter"
+							go();
+						}
+					});
+					
+					// Browse to client on typeahead selection
+					$('.typeahead').on('typeahead:beforeclose', function($e) { $e.preventDefault();});
+					$('input.typeahead').on('typeahead:selected', function(object, name){
+						go();
+					});
+					
+					// Give typeahead focus
+					$('.tt-input').focus();
+				};
+				
+				clientTypeahead();
+				
+				// New object
+				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});
+				
+				// New Client
+				$('[create-btn]').on('click', function(){
+					if($('[client-name]').val().length > 0){
+						$.post($(this).attr('href'), {
+							name: $('[client-name]').val()
+						}).done(function(data){
+							data = JSON.parse(data);
+							if(data.type == 'success'){
+								ta.src.unshift(data.client.name);
+								clients[data.client.name] = data.client.clientID;
+								$('#the-basics').html('<input class="typeahead" placeholder="Quick Search" />');
+								clientTypeahead();
+							}else{
+								$('#content').prepend('<div style="width:610px" class="alert alert-danger">'+data.message+'</div>');
+							}
+						});
+					}
+				});
+			});
+		</script>
+    </body>
+</html>
