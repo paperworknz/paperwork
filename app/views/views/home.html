@@ -63,7 +63,8 @@
 									<span>
 										Each Client gets their own page complete with important information, 
 										a notepad and a list of jobs. Everything you need and nothing you don't. 
-										You can even collect your own data, too.
+										You can even collect your own data, too.<br>
+										Click to restart.
 									</span>
 								</feature>
 								<feature>
@@ -80,7 +81,8 @@
 									<span>
 										A job is attached to a client and has a name and reference number. This is where 
 										you can easily build Quotes, Estimates, Invoices (or any type of form you like) and 
-										convert them to a PDF to send to your client.
+										convert them to a PDF to send to your client.<br>
+										Click to restart.
 									</span>
 								</feature>
 								<feature>
@@ -97,7 +99,8 @@
 									<span>
 										Your inventory is a list of items and prices. This list turbo-charges quotes 
 										and invoices. If you're adding an item to a quote that isn't in your inventory 
-										you have the option to save it for future use. The more you use Paperwork, the easier it gets.
+										you have the option to save it for future use. The more you use Paperwork, the easier it gets.<br>
+										Click to restart.
 									</span>
 								</feature>
 								<feature>
@@ -132,6 +135,7 @@
 		<script src="{{path.root}}/inc/jquery/jquery-2.1.4.min.js"></script>
 		<script>
 			$(function(){
+				// Nav
 				$('[features]').on('click', function(){
 					var a = $('[1]').offset();
 					$('html, body').animate({scrollTop: a.top}, 'slow');
@@ -142,6 +146,13 @@
 				});
 				$('[login]').on('click', function(){
 					window.location = '{{path.root}}/login';
+				});
+				
+				// Interaction
+				$('video').on('click', function(){
+					$(this).get(0).pause();
+					$(this).get(0).currentTime = '0';
+					$(this).get(0).play();
 				});
 			});
 		</script>
