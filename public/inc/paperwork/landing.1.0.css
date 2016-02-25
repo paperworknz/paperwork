@@ -149,7 +149,7 @@ feature {
 	opacity: 1;
 }
 
-.centered {text-align:center;}
+.centered {text-align:center;margin-bottom:150px}
 
 .large {
 	padding: 0px 10px;
