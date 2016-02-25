@@ -149,7 +149,7 @@ feature {
 	opacity: 1;
 }
 
-.centered {text-align:center;margin-bottom:150px}
+.centered {text-align:center}
 
 .large {
 	padding: 0px 10px;
@@ -203,3 +203,7 @@ video {
 	width: 30%;
 	padding-left:5px;
 }
+
+.foot {margin-bottom:150px}
+
+.top {margin-bottom:60px}
