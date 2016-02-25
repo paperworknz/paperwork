@@ -1,8 +1,8 @@
 <?php
 
 $app->post('/post/login', function() use ($app){
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+	$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 	
 	if($user = $app->sql->get('master.uac')->where('username', '=', $username)->run()){
 		if(!$user['disabled']){
