@@ -1,127 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include path.head %}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="date" content="{{date}}">
+		<title>Paperwork</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{{path.root}}/inc/bootstrap/bootstrap-3.3.2.css">
+		<link rel="stylesheet" type="text/css" href="{{path.css}}" />
 	</head>
 	<body>
-		<div class="wrap">
-			<div class="container buffer">
-				<div class="pull-right login-high">
-					<div class="login-container" login>
-						<div class="login-form">
-							<form login-form method="post" action="{{path.root}}/post/login">
-								<div login-fields>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="username" autocomplete="off" value="" placeholder="Email" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="password" class="login-input" name="password" autocomplete="off" value="" placeholder="Password" />
-										</div>
-									</div>
-									{% include path.flash %}
-								</div>
-								<div class="login-wrap clearfix">
-									<button type="submit" class="btn btn-success login-action pull-right" >Login</button>
-								</div>
-							</form>
-						</div>
-					</div>
-					{% if register %}
-					<div class="login-container h" register>
-						<div class="login-form">
-							<div register-fields style="display:none">
-								<form register-form method="post" action="{{path.root}}/post/register">
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="first" autocomplete="off" value="" placeholder="First Name" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="last" autocomplete="off" value="" placeholder="Last Name" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="company" autocomplete="off" value="" placeholder="Company Name" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="email" class="login-input" name="email" autocomplete="off" value="" placeholder="Email" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="username" autocomplete="off" value="" placeholder="Username" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="password" class="login-input" name="password" autocomplete="off" value="" placeholder="Password" />
-										</div>
-									</div>
-									{% include path.flash %}
-								</div>
-							</form>
-							<div class="login-wrap clearfix">
-								<button register-form-btn class="btn btn-success login-action pull-right" >Register</button>
-							</div>
-						</div>
-					</div>
-					<div class="login-container pull-right" style="margin-top:5px;width:180px">
-						<div class="login-form">
-							<button class="btn btn-info w1" btn-toggle>Sign Up</button>
-						</div>
-					</div>
-					{% endif %}
+		<header>
+			<div class="wrapper width">
+				<div class="nav">
+					<div class="logo">Paperwork</div>
+					<ul class="nav_list wrapper">
+						<li>
+							<span class="color_hint" features>Features</span>
+						</li>
+						<li>
+							<span class="color_hint" pricing>Pricing</span>
+						</li>
+						<li>
+							<span login>Log In</span>
+						</li>
+						<li>
+							<span class="special" pricing>Sign Up</span>
+						</li>
+					</ul>
 				</div>
 			</div>
-		</div>
-		{% if register %}
-		{% include path.js %}
+		</header>
+		<section>
+			<div class="width">
+				{% include path.flash %}
+				<div class="main centered">
+					<span class="main_title">Day-to-day work simplified. No paper required.</span>
+					<div style="position:relative">
+						<ul class="div_fade">
+							<li>Quoting</li>
+							<li>Estimating</li>
+							<li>Invoicing</li>
+							<li>Inventory</li>
+							<li>Margin Calculation</li>
+							<li>Job Management</li>
+							<li>Client Management</li>
+							<li>Notes</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section 1>
+			<div class="feature">
+				<div class="width">
+					<div class="main content_white">
+						<span class="main_title">Core Features</span>
+						<section>
+							<div class="wrapper">
+								<feature>
+									<span class="minor_title">Client Management</span>
+									<span>
+										Each Client gets their own page complete with important information, 
+										a notepad and a list of jobs. You can even collect your own data, too. 
+										Everything you need and nothing you don't.
+									</span>
+								</feature>
+								<feature>
+									<video class="spotlight" width="100%" autoplay loop>
+										<source src="inc/paperwork/client.webm" type="video/webm">
+									</video>
+								</feature>
+							</div>
+						</section>
+						<section>
+							<div class="wrapper">
+								<feature>
+									<span class="minor_title">Job Management</span>
+									<span>
+										A job is attached to a client and has a name and reference number. This is where 
+										you can easily build Quotes, Estimates, Invoices (or any type of form you like) and 
+										convert them to a PDF to send to your client. Jobs can be filtered by your own statuses 
+										and collect and update helpful data automatically.
+									</span>
+								</feature>
+								<feature>
+									<video class="spotlight" width="100%" autoplay loop>
+										<source src="inc/paperwork/job.webm" type="video/webm">
+									</video>
+								</feature>
+							</div>
+						</section>
+						<section>
+							<div class="wrapper">
+								<feature>
+									<span class="minor_title">Inventory</span>
+									<span>
+										Your inventory is a list of items and prices. This list turbo-charges quotes 
+										and invoices as it's available when adding items. If you're adding an 
+										item that isn't in your inventory you have the option to save it for 
+										future use - the more you use Paperwork, the easier it gets.
+									</span>
+								</feature>
+								<feature>
+									<video class="spotlight" width="100%" autoplay loop>
+										<source src="inc/paperwork/inventory.webm" type="video/webm">
+									</video>
+								</feature>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section 2>
+			<div class="width">
+				<div class="main">
+					<div class="centered wrapper">
+						<span class="main_title">We're Not Public Yet</span>
+						<div>Pop your email in below and we'll let you know when Paperwork is available.</div>
+						<form method="post" action="{{path.root}}/post/email-register">
+						<div class="wrapper form">
+							<input type="email" name="email" class="form_input facade large pull-left" placeholder="hello@domain.com">
+							<div class="form_button wrapper pull-left">
+								<button class="facade wolfe-btn large" style="width:100%">SIGN UP</button>
+							</div>
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="http://localhost/paperwork/public/inc/jquery/jquery-2.1.4.min.js"></script>
 		<script>
 			$(function(){
-				$('[btn-toggle]').on('click', function(){
-					if($(this).html() == 'Sign Up'){
-						$(this).html('Let me Login');
-						$('[register]').css('height', $('[login]').height());
-						$('[login]').addClass('h');
-						$('[register]').removeClass('h');
-						$('[register-fields]').fadeIn();
-						$('[register]').animate({
-							height: '318px'
-						}, 400);
-					}else{
-						$(this).html('Sign Up');
-						$('[register]').addClass('h');
-						$('[login]').removeClass('h');
-						$('[login-fields]').fadeIn();
-						$('[login]').animate({
-							height: '142px'
-						}, 400);
-					}
+				$('[features]').on('click', function(){
+					var a = $('[1]').offset();
+					$('html, body').animate({scrollTop: a.top}, 'slow');
 				});
-				
-				$('[register-form-btn]').on('click', function(){
-					$('[register-form-btn]').prop('disabled', true);
-					$('[btn-toggle]').prop('disabled', true);
-					$('[register-form-btn]').html('Working on it...');
-					$.post('{{path.root}}/post/database', {
-						username: $('[register-fields] [name="username"]').val()
-					}).done(function(data){
-						if(data == 1){
-							$('[register-form]').submit();
-						}else{
-							console.log(data);
-						}
-					});
+				$('[pricing]').on('click', function(){
+					var a = $('[2]').offset();
+					$('html, body').animate({scrollTop: a.top}, 'slow');
+				});
+				$('[login]').on('click', function(){
+					window.location = '{{path.root}}/login';
 				});
 			});
 		</script>
-		{% endif %}
 	</body>
 </html>
