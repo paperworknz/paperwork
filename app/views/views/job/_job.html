@@ -195,6 +195,136 @@
 		<script>var form = new Form</script>
 		<script>
 		$(function(){
+			// AJAX CALL FOR PDFS
+			pw.wait($('.pdf-load'));
+			$.get('{{path.root}}/get/pdf-json/{{jobID}}')
+			.done(function(data){
+				if(data != '0'){
+					$('.pdf-load').remove();
+					$('.pdf-title').html('Paper');
+					data = JSON.parse(data);
+					$.each(data, function(a,b){
+						$('.pdf-list').append(
+							'<div style="height:24px;line-height:24px">'+
+								'<a href="{{path.root}}/get/pdf/{{jobID}}/'+b+'">'+b+'</a>'+
+							'</div>'
+						);
+					});
+				}else{
+					$('.pdf-load').closest('tr').remove();
+				}
+			});
+			
+			// JOB STATUS
+			$(document).on('change', '[job-status-select]', function(){
+				if($(this).val() != undefined){
+					$.post('{{path.root}}/put/job-details', {
+						jobID: '{{jobID}}',
+						status: $(this).val()
+					}).done(function(data){
+						if(data != '0'){
+							pw.saved();
+							if(data == 'Completed'){
+								location.reload();
+							}
+						}
+					});
+				}
+			});
+			
+			// NOTES FOCUS
+			$('[note-wrapper]').on('click', function(){
+				$('#notes').focus();
+			});
+			
+			// NOTES CHANGE
+			var notes = $('#notes').html();
+			$('#notes').on('blur', function(){
+				if($(this).html() != notes){
+					$.post('{{path.root}}/put/job-details', {
+						notes: $(this).html(),
+						jobID: '{{job.jobID}}',
+					}).done(function(){
+						notes = $('#notes').html();
+						pw.saved();
+					});
+				}
+			});
+			
+			// JOB NAME CHANGE
+			$('.jobName').change(function(){
+				if($('.jobName').val() !=''){
+					$.post('{{path.root}}/put/job-details', {
+						name: $('.jobName').val(),
+						jobID: '{{jobID}}',
+					}).done(function(){
+						pw.saved();
+					});
+				}
+			});
+			
+			// JOB DELETE
+			$(document).on('click', '[job-del-btn]', function(){
+				swal({
+					title: 'Are you sure you want to delete this job?',
+					text: 'Deleting this job will delete ALL quotes and invoices attached',
+					showCancelButton: true,
+					closeOnConfirm: true,
+				}, function(){
+					$('[job-del-form]').submit();
+				});
+			});
+			
+			// Right click context menu
+			$('.tabs').contextMenu({
+				selector: '.tab',
+				callback: function(key){
+					var item = $(this).attr('data-tab'),
+						formID = $('[data-obj="'+item+'"]').attr('data-formid');
+					
+					if(key != 'cancel' && formID != undefined){
+						swal({
+							title: 'New Name',
+							type: 'input',
+							showCancelButton: true,
+							closeOnConfirm: false,
+							showLoaderOnConfirm: true,
+						}, function(name){
+							if(name === false){
+								return false
+							}else if(name === ''){
+								swal.showInputError('You need to write something!');
+								return false;
+							}
+							$.post('{{path.root}}/put/rename-form', {
+								formID: formID,
+								name: name,
+							}).done(function(data){
+								data = JSON.parse(data);
+								if(data.type == 'success'){
+									swal({
+										title: 'Renamed Form!',
+										timer: '1000',
+										type: 'success',
+										showConfirmButton: false
+									});
+									$('[data-tab="'+item+'"]').html(data.name);
+								}
+							});
+						});
+					}
+				},
+				items: {
+					Rename: {
+						name: 'Rename'
+					},
+					sep: '-',
+					cancel: {
+						name: 'Cancel'
+					}
+				}
+			});
+			
 			// FORM.POST()
 			$(document).on('click', '[new-form-btn]', function(){
 				var button = $(this),
@@ -297,6 +427,7 @@
 				form.copy($(form.s+' [form-blob]'));
 			});
 			
+			// MARGIN
 			$(document).on('click', '[form-margin-btn]', function(){
 				form.margin($(form.s+' [form-blob]'));
 			});
