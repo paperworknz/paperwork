@@ -24,9 +24,10 @@ Paperwork.prototype.ready = function(ele, html, func){
 	if(func != undefined) func();
 };
 
-Paperwork.prototype.saved = function(a){
+Paperwork.prototype.saved = function(a, length){
 	var ele = $('.pw-notification');
 	if(a === undefined) a = 'Saved';
+	if(length === undefined) length = 1000;
 	ele.html(a);
 	
 	ele.animate({
@@ -35,8 +36,10 @@ Paperwork.prototype.saved = function(a){
 	setTimeout(function(){
 		ele.animate({
 			opacity: 0
-		}, 1000);
-	}, 1000);
+		}, 1000, function(){
+			ele.html(' ');
+		});
+	}, length);
 	});
 };
 

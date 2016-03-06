@@ -5,16 +5,15 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="padding:15px 0px 0px 15px">
-			<div class="box" style="background-color:white;width:712px">
+        <div id="content">
+			<div class="box" style="background-color:white;width:712px;padding-top:5px">
 				<div class="h3">Templates</div>
-				No saving yet. Experimental.<br>
 				{% for a in templates %}
 					<a data-template="{{a.templateID}}">{{a.name}}</a><br>
 				{% endfor %}
-				<div style="background-color:white;padding:15px">
-					<div class="template" template>
-						<div style="text-align:center;margin:45px 0px">Pick a template!</div>
+				<div style="padding:15px">
+					<div class="template">
+						<div style="text-align:center;padding:45px 0px">Pick a template!</div>
 					</div>
 				</div>
 			</div>
@@ -24,10 +23,7 @@
 		}%}
 		<script>
 			$(function(){
-				new Paperwork;
-				var els = [
-					'img', 'div', 'span', 'tr'
-				];
+				var pw = new Paperwork;
 				
 				$('[data-template]').on('click', function(){
 					var id = $(this).attr('data-template');
@@ -36,26 +32,8 @@
 					}).done(function(data){
 						if(data != '0'){
 							data = JSON.parse(data);
-							$('[template]').html(data.content);
+							$('.template').html(data.content);
 							
-							$.each(els, function(a,b){
-								$('.wform').find(b).each(function(){
-									var item = $(this)[0].tagName;
-									
-									interact(item).resizable({
-										edges: {
-											top:true,
-											right:true,
-											bottom:true,
-											left:true
-										}
-									}).on('resizemove', function(event){
-										var target = event.target;
-										target.style.width  = event.rect.width + 'px';
-										target.style.height  = event.rect.height + 'px';
-									});
-								});
-							});
 						}
 					});
 				});

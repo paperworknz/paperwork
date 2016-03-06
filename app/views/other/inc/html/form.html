@@ -1,7 +1,7 @@
 <div class="wrapper form ib p0">
 	<div style="background-color:white;padding:30px">
-		<div form-blob>
-			{{ blob | raw }}
+		<div data-formid="{{formID}}" style="pointer-events:none;opacity:0.25" form-blob>
+			{{ html | raw }}
 		</div>
 	</div>
 	<div class="wrapper pr" style="margin-top:5px">

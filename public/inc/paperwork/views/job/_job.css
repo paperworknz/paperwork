@@ -24,8 +24,6 @@ textarea {width:100%;max-width:610px;height:100px;border:1px solid #999;padding:
 	height:24px;
 }
 .clientdetails {width:70%}
-.twitter-typeahead {border-bottom:1px dashed #999}
-.typeahead {border:1px solid white}
 
 .pdf-load {
 	width:52px;
@@ -52,4 +50,9 @@ textarea {width:100%;max-width:610px;height:100px;border:1px solid #999;padding:
 	color:#7f8c8d;
 	padding:0px 10px;
 	width:50px;
+}
+
+.twitter-typeahead {
+	border: 1px solid black;
+	border-bottom:1px dashed #999
 }
