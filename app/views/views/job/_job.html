@@ -280,7 +280,7 @@
 				selector: '.tab',
 				callback: function(key){
 					var item = $(this).attr('data-tab'),
-						formID = $('[data-obj="'+item+'"]').attr('data-formid');
+						formID = $('[data-obj="'+item+'"]').find(form.form).attr('data-formid');
 					
 					if(key != 'cancel' && formID != undefined){
 						swal({
