@@ -10,29 +10,27 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 	
 	/* Construction */
 	$cacheID = $form->cache(); // Update job_cache if necessary
-	if($job = $app->sql->get('job')->where('jobID', '=', $a)->by('jobID DESC')->run()){
+	if($job = $app->sql->get('job')->where('jobID', '=', $a)->run()){
 		if($job['cache']){
-			$client		= $app->sql->get('client')->where('clientID', '=', $job['client']['clientID'])->run();
-			$inv		= $app->sql->get('inv')->by('name ASC')->all()->run();
-			$status		= $app->sql->get('job_status')->all()->run();
+			$client	= $app->sql->get('client')->where('clientID', '=', $job['client']['clientID'])->run();
+			$status	= $app->sql->get('job_status')->all()->run();
 			
 			// TABS PART ONE //
-			$tabs = [];
+			$forms = [];
 			/* $tabs = [
 				[formID] => [
 					'blob' => '<html>....</html>',
 					'name' => 'Quote',
-					'path' => 'storage/clients/x/x.pdf'
 				],
 				[formID] => [...]
 			]; */
 			
 			// TABS => FORMS //
-			if($forms = $app->sql->get('job_form')->where('jobID', '=', $a)->all()->run()){
-				foreach($forms as $item){
-					$tabs[$item['formID']] = [
-						'blob'	=> $item['content'],
-						'name'	=> $item['name']
+			if($form = $app->sql->get('job_form')->where('jobID', '=', $a)->all()->run()){
+				foreach($form as $item){
+					$forms[$item['formID']] = [
+						'name'	=> $item['name'],
+						'html'	=> $item['html'],
 					];
 				}
 			}
@@ -48,11 +46,10 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			return $app->build->page($html, [
 				'jobID'		=> $a,
 				'job'		=> $job,
-				'templates'	=> $templates,
 				'client'	=> $client,
+				'templates'	=> $templates,
 				'status'	=> $status,
-				'inv'		=> $inv,
-				'tabs'		=> $tabs,
+				'forms'		=> $forms,
 			]);
 		}else{
 			$app->sql->put('job')->with([

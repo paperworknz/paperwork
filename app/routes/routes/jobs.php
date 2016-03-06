@@ -7,7 +7,7 @@ $app->get('/jobs', 'uac', function() use ($app){
 	$ID = new ID;
 	
 	/* Construction */
-	$jobs = $app->sql->get('job')->by('date_created DESC')->all()->run();
+	$jobs = $app->sql->get('job')->by('jobID DESC')->all()->run();
 	
 	$app->build->page('views/jobs.html', [
 		'jobID'		=> $ID->newJobID(),

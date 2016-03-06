@@ -1,0 +1,98 @@
+<style>
+	.qq-item {padding:0px 6px}
+	.qq-qty, .qq-price, .qq-total {
+		width: 70px;
+		text-align: center;
+		height:24px;
+		line-height:24px;
+		outline:0
+	}
+	.blob_item {border-right: 1px solid black;border-left: 1px solid black;line-height:24px;height:24px;}
+	.blob_item, .blob_item div {page-break-inside:avoid!important;}
+	@media print {.blob_item, .blob_item div {page-break-inside:avoid!important}}
+	.qq-left {border-left: 1px solid black;}
+	.ta {z-index:1;width:100%;border-top:1px solid #333;border-left:1px solid #333;border-right:1px solid #333;}
+	.typeahead {border:1px solid white;width:100%;outline:0}
+	.twitter-typeahead {border-bottom:1px dashed #999}
+</style>
+<section class="pw-form" style="position:relative;background-color:white;font-size:13px;" >
+	<header style="width:100%;display:table;" >
+		<div  form-logo style="float:left;" ><img src="logo.png" alt=""></div>
+		<div style="float:right;" >
+			<div class="h2"  contenteditable form-type style="padding-left:10px;" >QUOTE</div>
+		</div>
+	</header>
+	<header style="width:100%;display:table;" >
+		<div style="float:left;" >
+			<div  contenteditable style="font-weight:600;min-width:160px;" >
+				Logan Rear<br>
+				027 5077 187<br>
+				40 Seddon Street<br>
+				Waikanae<br>
+				logan.rear@hotmail.co.nz
+			</div>
+		</div>
+		<div style="float:right;" >
+			<section>
+				<ul style="float:left;text-align:right;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;" >
+					<li  contenteditable style="padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;list-style-type:none;" >Date</li>
+					<li  contenteditable style="padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;list-style-type:none;" >Reference</li>
+				</ul>
+				<ul style="float:left;text-align:right;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;" >
+					<li  contenteditable form-date style="border-width:1px;border-style:solid;border-color:black;padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;text-align:center;min-width:86px;list-style-type:none;" ></li>
+					<li  contenteditable form-jobID style="border-width:1px;border-style:solid;border-color:black;border-top-style:none;padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;text-align:center;min-width:86px;list-style-type:none;" ></li>
+				</ul>
+			</section>
+		</div>
+	</header>
+	<section style="width:50%;padding-top:15px;" >
+		<header style="width:100%;display:table;" >
+			<span  contenteditable style="text-align:center;width:100%;display:block;background-color:#39B0EB;font-weight:600;border-width:1px;border-style:solid;border-color:black;" >CUSTOMER</span>
+		</header>
+		<section  contenteditable form-clientblob style="width:100%;border-width:1px;border-style:solid;border-color:black;border-top-style:none;text-align:center;padding-top:2px;padding-bottom:2px;padding-right:2px;padding-left:2px;display:block;" >
+			<br><br>
+		</section>
+	</section>
+	<section style="width:100%;padding-top:15px;" >
+		<header style="width:100%;display:table;" >
+			<span  contenteditable style="text-align:center;width:100%;display:block;background-color:#39B0EB;font-weight:600;border-width:1px;border-style:solid;border-color:black;" >JOB DESCRIPTION</span>
+		</header>
+		<section  contenteditable form-jobd style="width:100%;border-width:1px;border-style:solid;border-color:black;border-top-style:none;text-align:left;padding-top:5px;padding-bottom:5px;padding-right:5px;padding-left:5px;display:block;" >
+			<br>
+		</section>
+	</section>
+	<section style="width:100%;padding-top:15px;" >
+		<div style="border-width:1px;border-style:solid;border-color:black;font-size:11px;font-weight:600;" >
+			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left-width:1px;border-left-style:solid;border-left-color:black;height:20px;line-height:20px;" >TOTAL</div>
+			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left-width:1px;border-left-style:solid;border-left-color:black;height:20px;line-height:20px;" >UNIT PRICE</div>
+			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left-width:1px;border-left-style:solid;border-left-color:black;height:20px;line-height:20px;" >QTY UNIT</div>
+			<div style="text-align:center;background-color:#39B0EB;width:auto;overflow:hidden;height:20px;line-height:20px;" >CONTRACTORS & MATERIALS</div>
+		</div>
+		<div  form-inventory style="position:relative;margin-top:-1px;" ></div>
+		<div form-content></div>
+	</section>
+	<footer style="width:100%;padding-top:15px;display:table;" >
+		<div style="float:left;width:410px;font-size:11px;" >
+			<header style="width:100%;display:table;" >
+				<span  contenteditable style="text-align:center;width:100%;display:block;background-color:#39B0EB;border-width:1px;border-style:solid;border-color:black;" >TERMS & CONDITIONS</span>
+			</header>
+			<section  contenteditable style="width:100%;border-width:1px;border-style:solid;border-color:black;border-top-style:none;text-align:left;padding-top:2px;padding-bottom:2px;padding-right:2px;padding-left:2px;display:block;" >
+				<div form-terms><br></div>
+			</section>
+		</div>
+		<div style="float:right;margin-top:10px;margin-bottom:0px;margin-right:0px;margin-left:10px;" >
+			<section>
+				<ul style="float:left;text-align:right;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;" >
+					<li  contenteditable style="padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;list-style-type:none;" >Sub Total</li>
+					<li  contenteditable style="padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;list-style-type:none;" >GST</li>
+					<li  contenteditable style="padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;font-weight:600;background-color:#39B0EB;border-width:1px;border-style:solid;border-color:black;list-style-type:none;" >TOTAL TO PAY</li>
+				</ul>
+				<ul style="float:left;text-align:right;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;" >
+					<li  form-subtotal style="padding-top:2px;padding-bottom:2px;padding-right:4px;padding-left:4px;text-align:right;height:22px;min-width:100px;list-style-type:none;" ></li>
+					<li  form-tax style="padding-top:2px;padding-bottom:2px;padding-right:4px;padding-left:4px;text-align:right;height:22px;list-style-type:none;" ></li>
+					<li  form-total style="border-width:1px;border-style:solid;border-color:black;border-left-style:none;padding-top:2px;padding-bottom:2px;padding-right:4px;padding-left:4px;text-align:right;height:24px;font-weight:600;list-style-type:none;" ></li>
+				</ul>
+			</section>
+		</div>
+	</footer>
+</section>

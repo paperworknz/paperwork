@@ -1,3 +1,10 @@
+/*
+
+Form.1.7.js relies on tab.activeTab being the active tab,
+having the attribute [data-tab], and the direct html content
+of this ele should be text and equal to the form's name.
+
+*/
 var Tab = function(data){
 	this.activeTab	= data.activeTab != undefined ? data.activeTab : 'active';
 	this.activeObj	= data.activeObj != undefined ? data.activeObj : 'tabopen';
