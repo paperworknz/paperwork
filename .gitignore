@@ -1,3 +1,4 @@
 /app/app/.environment
 /app/app/storage/clients/*/pdf/*
 /public/.htaccess
+/node_modules

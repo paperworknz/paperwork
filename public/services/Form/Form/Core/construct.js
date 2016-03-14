@@ -1,12 +1,9 @@
 Form.prototype.construct = function(form){
 	/*
-	This layer refreshes jQuery listeners
+	This layer constructs the form from it's parts
 	*/
 	var a= this,
 		formID= form.attr('data-formid');
-	
-	// Zamorak
-	if(a.p.flush != undefined) a.p.flush(form);
 	
 	// Listeners
 	a.dark(form); // Remove jQuery listeners
