@@ -15,8 +15,7 @@ var Form = function(){
 	$.get(environment.root+'/get/inv', function(data){
 		$.get(environment.root+'/get/form/'+environment.jobID, function(items){
 			var src = [],
-				map = JSON.parse(items),
-				flag = true; // True for Zamorak
+				map = JSON.parse(items);
 			
 			a.inv = JSON.parse(data); // Inventory
 			$.each(a.inv, function(a,b){src.push(a)}); // Typeahead array of inventory
@@ -26,60 +25,153 @@ var Form = function(){
 				var form = $(this),
 					formID= form.attr('data-formid');
 				
-				if(map[formID] != undefined || map[formID] != null){
-					a.map[formID] = map[formID];
-					flag = false; // JSON exists, so it's Armadyl
-				}else{
-					a.crawl(form);
-				}
-				
-				if(!flag){ // If armadyl
-					a.construct(form);
-				}
+				map[formID] != undefined || map[formID] != null ? a.map[formID] = map[formID] :	a.crawl(form);
+				a.construct(form);
 			});
-			
-			if(a.p.is == 'Zamorak'){
-				if(flag){ // json hasn't been saved before
-					$.each(a.map, function(key, pair){ // Save maps
-						a.put({
-							url: environment.root+'/put/form-json',
-							formID: key,
-							json: JSON.stringify(pair)
-						});
-					});
-				}
-				
-				if(flag && !$.isEmptyObject(a.map)){ // New map, existing forms
-					location.reload();
-				}
-				
-				if($.isEmptyObject(a.map)){ // No forms, upgrade to army
-					$.post(environment.root+'/post/army', {
-						jobID: environment.jobID
-					}, function(){
-						location.reload();
-					});
-				}
-				
-				if(!flag){
-					$(a.form).each(function(){
-						var form= $(this),
-							formID= form.attr('data-formid');
-						a.put({
-							url: environment.root+'/put/form',
-							formID: formID,
-						});
-					});
-					
-					$.post(environment.root+'/post/army', {
-						jobID: environment.jobID
-					}, function(){
-						location.reload();
-					});
-				}
-			}
 		});
 	});
+};
+Form.prototype.append = function(form, item, quantity, price){
+	var a		= this,
+		item	= item !== undefined ? item : '',
+		quantity= quantity !== undefined ? quantity : '',
+		price	= price !== undefined ? price : '',
+		formID	= $(form).attr('data-formid'),
+		itemID	= a.p.get('latest-item-id', form),
+		flag	= quantity === undefined ? false : true; // Flag changes if item is not in inv
+	
+	// Prep
+	if(itemID === undefined) itemID = 0;
+	itemID = Number(itemID) + 1;
+	
+	if(a.inv[item] && price === '') price = flag = a.inv[item]; // If item is in inventory get price
+	if(!item) item = price = ''; // If item is not entered
+	if(price == '0.00') price = ''; // If price is set, but is 0.00, std to empty
+	
+	// Append item to DOM
+	a.p.append(form, {
+		itemID: itemID,
+		item: item,
+		quantity: quantity,
+		price: price
+	});
+	
+	// Detect a new inventory item, depends on SweetAlert
+	if(event.which == 13) event.preventDefault(); // Prevent enter auto submitting swal
+	if(flag === false && item != undefined){
+		swal({
+			html: true,
+			title: 'Add '+item+' to your inventory?',
+			text: 'If you save this item you can use it again in future.',
+			showCancelButton: true,
+			closeOnConfirm: true,
+			cancelButtonText: 'No',
+			confirmButtonText: 'Yes',
+		}, function(){ // Add inventory
+			// Add item to server
+			$.post(environment.root+'/post/inv', {
+				name: item,
+				price: '0.00',
+			});
+		});
+	}
+	
+	// Housekeep
+	$('.typeahead').typeahead('val', ''); // Clear typeahead input
+	a.p.do('focus-last-item-quantity', form); // Focus on quantity input
+	a.update(form);
+};
+Form.prototype.construct = function(form){
+	/*
+	This layer constructs the form from it's parts
+	*/
+	var a= this,
+		formID= form.attr('data-formid');
+	
+	// Listeners
+	a.dark(form); // Remove jQuery listeners
+	$(a.tab.objParent).on('change', function(){ a.update(form) });
+	a.p.on('qty', $(a.tab.objParent), 'input', function(){ a.update(form) });
+	a.p.on('price', $(a.tab.objParent), 'blur', function(){ a.update(form) });
+	a.p.on('price', $(a.tab.objParent), 'input', function(event){
+		if(event.event.keyCode == 13){
+			event.event.preventDefault();
+			event.element.blur();
+		}
+	});
+	form.on('click', '.twig-remove', function(){
+		a.p.do('this-remove-item', $(this));
+		a.update(form);
+	});
+	
+	// Typeahead
+	a.p.initialiseTypeahead(form, function(){ a.typeahead.run(form) });
+	form.bind('typeahead:select', '.typeahead', function(){
+		if(event.which == 13){ // Ignore enter key
+			return;
+		}else{ // Run as intended
+			a.append(form, $(a.s).find('.tt-input').val());
+			return;
+		}
+	});
+	form.on('keydown', '.typeahead', function(){
+		if(event.which == 13){
+			a.append(form, $(a.s).find('.tt-input').val());
+		}
+	});
+	
+	// Update form-pdf-name
+	var tabID = $('.'+a.tab.activeTab).attr(a.tab.tabhook),
+		tname = $('.'+a.tab.activeTab).html();
+	form.closest('.'+a.tab.obj).find('[form-pdf-name]').val(tabID+'-'+tname.toLowerCase());
+	
+	// Append map to DOM
+	$.each(a.map[formID].items, function(key, val){
+		a.p.append(form, {
+			itemID: val.itemID,
+			item: val.item,
+			quantity: val.quantity,
+			price: val.price
+		});
+	});
+	a.update(form);
+	
+	// Fade form in, allow mouse interaction
+	form.css('pointer-events', 'auto');
+	form.animate({
+		opacity: 1
+	}, 500);
+};
+Form.prototype.crawl = function(form){
+	/*
+	Map a form
+	*/
+	
+	var a=this,
+		formID= form.attr('data-formid');
+	
+	// Reset map for this form
+	a.map[formID] = {
+		items: {},
+		subtotal: 0,
+		tax: 0,
+		total: 0,
+	};
+	
+	// Populate map
+	a.p.each('item', form, function(event){
+		if(a.map[formID].items[event.itemID] === undefined) a.map[formID].items[event.itemID] = {};
+		a.map[formID].items[event.itemID].itemID = event.itemID;
+		a.map[formID].items[event.itemID].item = event.item;
+		a.map[formID].items[event.itemID].quantity = event.quantity;
+		a.map[formID].items[event.itemID].price = event.price;
+		a.map[formID].items[event.itemID].total = event.total;
+	});
+	
+	// Update subtotal, tax, total
+	a.map[formID].subtotal = a.p.get('subtotal', form);
+	a.map[formID].tax = a.p.get('tax', form);
+	a.map[formID].total = a.p.get('total', form);
 };
 Form.prototype.dark = function(form){
 	/*
@@ -152,279 +244,207 @@ Form.prototype.update = function(form){
 	// Painter layer
 	if (a.p.update != undefined) a.p.update(form);
 };
-Form.prototype.construct = function(form){
-	/*
-	This layer refreshes jQuery listeners
-	*/
+Form.prototype.copy = function(form){
 	var a= this,
 		formID= form.attr('data-formid');
 	
-	// Zamorak
-	if(a.p.flush != undefined) a.p.flush(form);
-	
-	// Listeners
-	a.dark(form); // Remove jQuery listeners
-	$(a.tab.objParent).on('change', function(){ a.update(form) });
-	a.p.on('qty', $(a.tab.objParent), 'input', function(){ a.update(form) });
-	a.p.on('price', $(a.tab.objParent), 'blur', function(){ a.update(form) });
-	a.p.on('price', $(a.tab.objParent), 'input', function(event){
-		if(event.event.keyCode == 13){
-			event.event.preventDefault();
-			event.element.blur();
-		}
-	});
-	form.on('click', '.twig-remove', function(){
-		a.p.do('this-remove-item', $(this));
-		a.update(form);
-	});
-	
-	// Typeahead
-	a.p.initialiseTypeahead(form, function(){ a.typeahead.run(form) });
-	form.bind('typeahead:select', '.typeahead', function(){
-		if(event.which == 13){ // Ignore enter key
-			return;
-		}else{ // Run as intended
-			a.append(form, $(a.s).find('.tt-input').val());
-			return;
-		}
-	});
-	form.on('keydown', '.typeahead', function(){
-		if(event.which == 13){
-			a.append(form, $(a.s).find('.tt-input').val());
-		}
-	});
-	
-	// Update form-pdf-name
-	var tabID = $('.'+a.tab.activeTab).attr(a.tab.tabhook),
-		tname = $('.'+a.tab.activeTab).html();
-	form.closest('.'+a.tab.obj).find('[form-pdf-name]').val(tabID+'-'+tname.toLowerCase());
-	
-	// Append map to DOM
-	$.each(a.map[formID].items, function(key, val){
-		a.p.append(form, {
-			itemID: val.itemID,
-			item: val.item,
-			quantity: val.quantity,
-			price: val.price
-		});
-	});
-	a.update(form);
-	
-	// Fade form in, allow mouse interaction
-	form.css('pointer-events', 'auto');
-	form.animate({
-		opacity: 1
-	}, 500);
-};
-Form.prototype.append = function(form, item, quantity, price){
-	var a		= this,
-		item	= item !== undefined ? item : '',
-		quantity= quantity !== undefined ? quantity : '',
-		price	= price !== undefined ? price : '',
-		formID	= $(form).attr('data-formid'),
-		itemID	= a.p.get('latest-item-id', form),
-		flag	= quantity === undefined ? false : true; // Flag changes if item is not in inv
-	
-	// Prep
-	if(itemID === undefined) itemID = 0;
-	itemID = Number(itemID) + 1;
-	
-	if(a.inv[item] && price === '') price = flag = a.inv[item]; // If item is in inventory get price
-	if(!item) item = price = ''; // If item is not entered
-	if(price == '0.00') price = ''; // If price is set, but is 0.00, std to empty
-	
-	// Append item to DOM
-	a.p.append(form, {
-		itemID: itemID,
-		item: item,
-		quantity: quantity,
-		price: price
-	});
-	
-	// Detect a new inventory item, depends on SweetAlert
-	if(event.which == 13) event.preventDefault(); // Prevent enter auto submitting swal
-	if(flag === false && item != undefined){
-		swal({
-			html: true,
-			title: 'Add '+item+' to your inventory?',
-			text: 'If you save this item you can use it again in future.',
-			showCancelButton: true,
-			closeOnConfirm: true,
-			cancelButtonText: 'No',
-			confirmButtonText: 'Yes',
-		}, function(){ // Add inventory
-			// Add item to server
-			$.post(environment.root+'/post/inv', {
-				name: item,
-				price: '0.00',
+	swal({
+		title: 'Choose your template',
+		text: '1 for Quote, 2 for Invoice',
+		type: 'input',
+		inputPlaceholder: 'Write something',
+		showCancelButton: true,
+		html: true,
+	}, function(e){
+		if(e != false){ // User hasn't clicked cancel
+			var button= $(this),
+				input= e,
+				templateName= 'Invoice';
+			
+			if(input == 1){
+				templateName = 'Quote';
+			}else if(input == 2){
+				templateName = 'Invoice';
+			}else{
+				templateName = 'Invoice';
+			}
+			
+			var data = {
+				client: a.p.get('client', form),
+				jobd: a.p.get('jobd', form),
+				content: a.map[formID],
+			};
+			
+			pw.wait(button);
+			a.post({
+				url: environment.root+'/post/form',
+				templateID: input,
+				templateName: templateName,
+				clientID: environment.clientID,
+				jobID: environment.jobID,
+			}, function(newForm){
+				
+				// Append item to DOM
+				$.each(a.map[formID].items, function(y,z){
+					a.p.append(newForm, {
+						itemID: z.itemID,
+						item: z.item,
+						quantity: z.quantity,
+						price: z.price
+					});
+				});
+				
+				// Populate new form
+				var newFormID = newForm.attr('data-formid');
+				a.p.set('client', newForm, data.client);
+				a.p.set('jobd', newForm, data.jobd);
+				a.construct(newForm);
+				a.put({
+					url: environment.root+'/put/form',
+					formID: newFormID,
+				}, function(){
+					pw.ready(button, 'COPY');
+				});
 			});
-		});
-	}
-	
-	// Housekeep
-	$('.typeahead').typeahead('val', ''); // Clear typeahead input
-	a.p.do('focus-last-item-quantity', form); // Focus on quantity input
-	a.update(form);
+		}
+	});
 };
-Form.prototype.crawl = function(form){
+Form.prototype.margin = function(form){
+	
 	/*
-	Map a form
+	Listen. We have a.map so we don't need to dice around with DOM cloning to get this done.
+	This can easily break depending on the form provided.
+	We should build a generic element from a.map instead of cloning.
 	*/
 	
-	var a=this,
-		formID= form.attr('data-formid');
+	var a= this,
+		formID= form.attr('data-formid'),
+		map = [];
 	
-	// Reset map for this form
-	a.map[formID] = {
-		items: {},
-		subtotal: 0,
-		tax: 0,
-		total: 0,
+	a.dark(form); // Turn off interaction
+	
+	var concern = form.find($(a.p.get('form-content', form))),
+		button = $(this).closest($('.box'));
+	
+	var ely = {
+		html: {
+			clone:		concern.clone(),
+			position:	concern.offset(),
+			width:		concern.outerWidth()
+		},
+		margin: {
+			clone:		button.clone(),
+			position:	button.offset(),
+			width:		button.outerWidth(),
+		}
 	};
 	
-	// Populate map
-	a.p.each('item', form, function(event){
-		if(a.map[formID].items[event.itemID] === undefined) a.map[formID].items[event.itemID] = {};
-		a.map[formID].items[event.itemID].itemID = event.itemID;
-		a.map[formID].items[event.itemID].item = event.item;
-		a.map[formID].items[event.itemID].quantity = event.quantity;
-		a.map[formID].items[event.itemID].price = event.price;
-		a.map[formID].items[event.itemID].total = event.total;
+	// Darken page, then show the concern
+	$('#content').after('<div margin></div>'); // Append margin container
+	$('[margin]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>')
+		.append(ely.html.clone.css({
+			'z-index':999,
+			'position':'absolute',
+			'top':ely.html.position.top,
+			'left':ely.html.position.left,
+			'width':ely.html.width,
+			'margin-top':0,
+			'background-color':'white',
+			'box-shadow':'0 0 20px rgba(0,0,0,.33)',
+			'opacity':0.0
+		}));
+	
+	// Fade in
+	$('[fade]').animate({'opacity':0.5}, 150, function(){
+		$('[margin] [form-content]').animate({'opacity':1}, 100);
 	});
 	
-	// Update subtotal, tax, total
-	a.map[formID].subtotal = a.p.get('subtotal', form);
-	a.map[formID].tax = a.p.get('tax', form);
-	a.map[formID].total = a.p.get('total', form);
-};
-Form.prototype.copy = function(form){
-	var a= this,
-		formID= form.attr('data-formid');
+	// Append slider
+	$('[margin] [form-content]').append(
+		'<div class="ac" style="padding:10px 10px 0px 10px;">'+
+			'<input cent style="width:60px;text-align:center" /> %'+
+		'</div>'+
+		'<div style="width:100%;padding:10px;">'+
+			'<input range type="range" style="width:200px;margin:0 auto">'+
+		'</div>'+
+		'<div class="wrapper" style="padding:10px">'+
+		'<button margin-apply class="wolfe-btn pull-right">APPLY</button>'+
+		'<button margin-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>'+
+		'</div>');
 	
-	swal({
-		title: 'Choose your template',
-		text: '1 for Quote, 2 for Invoice',
-		type: 'input',
-		inputPlaceholder: 'Write something',
-		showCancelButton: true,
-		html: true,
-	}, function(e){
-		if(e != false){ // User hasn't clicked cancel
-			var button= $(this),
-				input= e,
-				templateName= 'Invoice';
-			
-			if(input == 1){
-				templateName = 'Quote';
-			}else if(input == 2){
-				templateName = 'Invoice';
-			}else{
-				templateName = 'Invoice';
-			}
-			
-			var data = {
-				client: a.p.get('client', form),
-				jobd: a.p.get('jobd', form),
-				content: a.map[formID],
-			};
-			
-			pw.wait(button);
-			a.post({
-				url: environment.root+'/post/form',
-				templateID: input,
-				templateName: templateName,
-				clientID: environment.clientID,
-				jobID: environment.jobID,
-			}, function(newForm){
-				
-				// Append item to DOM
-				$.each(a.map[formID].items, function(y,z){
-					a.p.append(newForm, {
-						itemID: z.itemID,
-						item: z.item,
-						quantity: z.quantity,
-						price: z.price
-					});
-				});
-				
-				// Populate new form
-				var newFormID = newForm.attr('data-formid');
-				a.p.set('client', newForm, data.client);
-				a.p.set('jobd', newForm, data.jobd);
-				a.construct(newForm);
-				a.put({
-					url: environment.root+'/put/form',
-					formID: newFormID,
-				}, function(){
-					pw.ready(button, 'COPY');
-				});
-			});
-		}
+	// Set input to 0
+	$('[margin] [form-content] input').val(0);
+	
+	// ********* FORMDOM ********* //
+	
+	var remDOM = a.p.get('remove'),
+		current = [],
+		priceDOM = a.p.get('item-price');
+		
+	var std = function(x){return x.toFixed(2);};
+	var comma = function(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");};
+	
+	// Remove contenteditable, replace delete with checkbox
+	$('[margin] '+remDOM).each(function(){
+		var itemID = a.p.get('this-item-id', $(this));
+		$(this).prev().removeAttr('contenteditable'); // This is formDOM manipulation, BUT formDOM that is appended.. Marginal..
+		$(this).replaceWith('<input type="checkbox" class="twig-remove" style="width:15px;height:15px;margin-right:15px" data-item="'+itemID+'">');
 	});
-};
-Form.prototype.copy = function(form){
-	var a= this,
-		formID= form.attr('data-formid');
 	
-	swal({
-		title: 'Choose your template',
-		text: '1 for Quote, 2 for Invoice',
-		type: 'input',
-		inputPlaceholder: 'Write something',
-		showCancelButton: true,
-		html: true,
-	}, function(e){
-		if(e != false){ // User hasn't clicked cancel
-			var button= $(this),
-				input= e,
-				templateName= 'Invoice';
-			
-			if(input == 1){
-				templateName = 'Quote';
-			}else if(input == 2){
-				templateName = 'Invoice';
-			}else{
-				templateName = 'Invoice';
+	// List of current prices on form
+	$('[margin] '+priceDOM).each(function(){
+		var itemID = a.p.get('this-item-id', $(this));
+		current[itemID] = $(this).html();
+	});
+	
+	// Update [cent] from slider
+	$('[margin] [range]').on('input', function(){
+		
+		$('[cent]').val($(this).val()); // Update input to value of slider
+		var cent = (Number($('[cent]').val()) + 100) / 100; // Get std cent value - must come after val is set
+		
+		// Put data-item into map if checkbox is checked
+		$('[margin] input[type=checkbox]').each(function(){
+			if($(this)[0].checked) map.push($(this).attr('data-item'));
+		});
+		
+		// Update price in real time
+		$('[margin] '+priceDOM).each(function(){
+			var itemID = a.p.get('this-item-id', $(this));
+			if(map.includes(itemID)){
+				var price = Number(current[itemID].replace('$', '').replace(',', ''));
+				$(this).html('$'+comma(std(price * cent)));
 			}
-			
-			var data = {
-				client: a.p.get('client', form),
-				jobd: a.p.get('jobd', form),
-				content: a.map[formID],
-			};
-			
-			pw.wait(button);
-			a.post({
-				url: environment.root+'/post/form',
-				templateID: input,
-				templateName: templateName,
-				clientID: environment.clientID,
-				jobID: environment.jobID,
-			}, function(newForm){
-				
-				// Append item to DOM
-				$.each(a.map[formID].items, function(y,z){
-					a.p.append(newForm, {
-						itemID: z.itemID,
-						item: z.item,
-						quantity: z.quantity,
-						price: z.price
-					});
-				});
-				
-				// Populate new form
-				var newFormID = newForm.attr('data-formid');
-				a.p.set('client', newForm, data.client);
-				a.p.set('jobd', newForm, data.jobd);
-				a.construct(newForm);
-				a.put({
-					url: environment.root+'/put/form',
-					formID: newFormID,
-				}, function(){
-					pw.ready(button, 'COPY');
-				});
+		});
+	});
+	
+	// Listen to convert
+	$('[margin] [margin-apply]').on('click', function(){
+		// Update a.map with new values then update();
+		form.find(priceDOM).each(function(){
+			var itemID = a.p.get('this-item-id', $(this));
+			$(this).html($('[margin] [data-item="'+itemID+'"] '+priceDOM).html());
+		});
+		a.update(form);
+		
+		$('[margin] [form-content]').fadeOut(100, function(){
+			$('[fade]').fadeOut(150, function(){
+				$('[margin]').off().unbind().remove();
 			});
-		}
+		});
+	});
+	
+	// ********* ******** ********* //
+	
+	// Listen to cancel
+	$('[margin] [margin-cancel]').on('click', function(){
+		a.update(form);
+		$('[margin] [form-content]').fadeOut(100, function(){
+			$('[fade]').fadeOut(150, function(){
+				$('[margin]').off().unbind().remove();
+				a.update(form);
+			});
+		});
 	});
 };
 Form.prototype.pdf = function(form, callback){
