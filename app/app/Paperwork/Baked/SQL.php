@@ -92,7 +92,7 @@ class SQL {
 				$this->runPost($app);
 				if($app->user['username'] == 'admin'){
 					if($_ENV['MODE'] == 'prod'){
-						exec('mysqldump -uroot -p'.$_ENV['DB_PASSWORD'].' '.$_ENV['DB_PREFIX'].$app->user['username'].' > /var/local/mysqldump/NailedItConstruc/logan.sql');
+						exec('mysqldump -uroot -p'.$_ENV['DB_PASSWORD'].' '.$_ENV['DB_PREFIX'].$app->user['username'].' > /var/www/paperwork/app/app/storage/clients/NailedItConstruc/sql');
 					}
 				}
 				break;
