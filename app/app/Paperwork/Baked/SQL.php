@@ -1,7 +1,8 @@
 <?php
 
 namespace Paperwork\Baked;
-use \PDO;
+use \PDO,
+	Paperwork\Extended\Mysqldump;
 
 class SQL {
 	
@@ -81,6 +82,7 @@ class SQL {
 	
 	public function run(){
 		$app = \Slim\Slim::getInstance();
+		$mysqldump = new Mysqldump;
 		
 		if(strpos($this->query['table'], '.') !== false){ // Assume user is interrogating master
 			$this->query['db'] = 'master';
@@ -92,7 +94,7 @@ class SQL {
 				$this->runPost($app);
 				if($app->user['username'] == 'admin'){
 					if($_ENV['MODE'] == 'prod'){
-						exec('mysqldump -uroot -p'.$_ENV['DB_PASSWORD'].' '.$_ENV['DB_PREFIX'].$app->user['username'].' > /var/www/paperwork/app/app/storage/clients/NailedItConstruc/sql');
+						$mysqldump->backup();
 					}
 				}
 				break;
