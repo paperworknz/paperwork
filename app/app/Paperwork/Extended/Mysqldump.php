@@ -16,7 +16,7 @@ class Mysqldump {
 		$app = \Slim\Slim::getInstance();
 		
 		$db = $_ENV['DB_PREFIX'].$app->user['username'];
-		die(
+		exec(
 			'mysqldump'
 			.' -u '.$this->username
 			.' -p'.$this->password
