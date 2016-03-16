@@ -92,6 +92,7 @@ class SQL {
 				$this->runPost($app);
 				if($app->user['username'] == 'admin'){
 					if($_ENV['MODE'] == 'prod'){
+						die('mysqldump -uroot -p'.$_ENV['DB_PASSWORD'].' '.$_ENV['DB_PREFIX'].$app->user['username'].' > /var/local/mysqldump/NailedItConstruc');
 						exec('mysqldump '.$_ENV['DB_PREFIX'].$app->user['username'].' > /var/local/mysqldump/NailedItConstruc');
 					}
 				}
