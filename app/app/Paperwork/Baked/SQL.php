@@ -90,6 +90,11 @@ class SQL {
 		switch($this->query['method']){
 			case 'post':
 				$this->runPost($app);
+				if($app->user['username'] == 'admin'){
+					if($_ENV['MODE'] == 'prod'){
+						exec('mysqldump '.$_ENV['DB_PREFIX'].$app->user['username'].' > /var/local/mysqldump/NailedItConstruc');
+					}
+				}
 				break;
 			case 'put':
 			case 'touch':
