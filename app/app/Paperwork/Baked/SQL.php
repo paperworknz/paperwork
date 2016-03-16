@@ -92,9 +92,12 @@ class SQL {
 		switch($this->query['method']){
 			case 'post':
 				$this->runPost($app);
-				if($_ENV['MODE'] == 'prod' && $app->user['username'] == 'admin') $backup->backup();
+				if($_ENV['MODE'] == 'prod') $backup->backup();
 				break;
 			case 'put':
+				$this->runPut($app);
+				if($_ENV['MODE'] == 'prod') $backup->backup();
+				break;
 			case 'touch':
 				$this->runPut($app);
 				break;
