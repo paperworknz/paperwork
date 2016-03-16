@@ -2,7 +2,7 @@
 
 namespace Paperwork\Baked;
 use \PDO,
-	Paperwork\Extended\Mysqldump;
+	Paperwork\Extended\SQLBackup;
 
 class SQL {
 	
@@ -82,7 +82,7 @@ class SQL {
 	
 	public function run(){
 		$app = \Slim\Slim::getInstance();
-		$mysqldump = new Mysqldump;
+		$backup = new SQLBackup;
 		
 		if(strpos($this->query['table'], '.') !== false){ // Assume user is interrogating master
 			$this->query['db'] = 'master';
@@ -92,11 +92,7 @@ class SQL {
 		switch($this->query['method']){
 			case 'post':
 				$this->runPost($app);
-				if($app->user['username'] == 'admin'){
-					if($_ENV['MODE'] == 'prod'){
-						$mysqldump->backup();
-					}
-				}
+				if($_ENV['MODE'] == 'prod' && $app->user['username'] == 'admin') $backup->backup();
 				break;
 			case 'put':
 			case 'touch':
