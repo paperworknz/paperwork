@@ -215,7 +215,7 @@ return array(
     'Paperwork\\Extended\\Form' => $baseDir . '/../app/app/Paperwork/Extended/Form.php',
     'Paperwork\\Extended\\ID' => $baseDir . '/../app/app/Paperwork/Extended/ID.php',
     'Paperwork\\Extended\\Mail' => $baseDir . '/../app/app/Paperwork/Extended/Mail.php',
-    'Paperwork\\Extended\\Mysqldump' => $baseDir . '/../app/app/Paperwork/Extended/Mysqldump.php',
+    'Paperwork\\Extended\\SQLBackup' => $baseDir . '/../app/app/Paperwork/Extended/SQLBackup.php',
     'RecursiveCallbackFilterIterator' => $vendorDir . '/symfony/polyfill-php54/Resources/stubs/RecursiveCallbackFilterIterator.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/polyfill-php54/Resources/stubs/SessionHandlerInterface.php',
     'SlimFlashTest' => $vendorDir . '/slim/slim/tests/Middleware/FlashTest.php',
