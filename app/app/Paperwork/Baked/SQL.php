@@ -95,9 +95,11 @@ class SQL {
 				if($_ENV['MODE'] == 'prod') $backup->backup();
 				break;
 			case 'put':
-			case 'touch':
 				$this->runPut($app);
 				if($_ENV['MODE'] == 'prod') $backup->backup();
+				break;
+			case 'touch':
+				$this->runPut($app);
 				break;
 			case 'get':
 				$this->runGet($app);
