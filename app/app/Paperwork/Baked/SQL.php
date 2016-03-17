@@ -17,6 +17,9 @@ class SQL {
 			'argument'	=> false,
 			'order'		=> false,
 			'all'		=> false,
+			'soft'		=> false,
+			'softonly'	=> false,
+			'purge'		=> false,
 		];
 	}
 	
@@ -80,11 +83,26 @@ class SQL {
 		return $this;
 	}
 	
+	public function soft(){
+		$this->query['soft'] = true;
+		return $this;
+	}
+	
+	public function softOnly(){
+		$this->query['softonly'] = true;
+		return $this;
+	}
+	
+	public function purge(){
+		$this->query['purge'] = true;
+		return $this;
+	}
+	
 	public function run(){
 		$app = \Slim\Slim::getInstance();
 		$backup = new SQLBackup;
 		
-		if(strpos($this->query['table'], '.') !== false){ // Assume user is interrogating master
+		if(strpos($this->query['table'], '.') !== false){ // If a dot is found, the user is now using table master
 			$this->query['db'] = 'master';
 			$this->query['table'] = str_replace('master.', '', $this->query['table']);
 		}
@@ -116,6 +134,9 @@ class SQL {
 			'argument'	=> false,
 			'order'		=> false,
 			'all'		=> false,
+			'soft'		=> false,
+			'softonly'	=> false,
+			'purge'		=> false,
 		];
 		if(isset($this->result)) return $this->result;
 	}
@@ -185,7 +206,7 @@ class SQL {
 		}
 	}
 	
-	protected function runDelete($app){
+	/*protected function runDelete($app){
 		$db = $this->query['db'];
 		$column = $this->query['argument']['column'];
 		$operator = $this->query['argument']['operator'];
@@ -204,6 +225,29 @@ class SQL {
 		}catch(Exception $e){
 			return;
 		}
+	}*/
+	
+	protected function runDelete($app){
+		$db = $this->query['db'];
+		$column = $this->query['argument']['column'];
+		$operator = $this->query['argument']['operator'];
+		$value = $this->query['argument']['value'];
+		
+		$sql = 'UPDATE ';
+		$sql .= $this->query['table'];
+		$sql .= ' SET date_deleted="'.date("Y-m-d H:i:s").'"';
+		$sql .= ',date_touched="'.date("Y-m-d H:i:s").'"';
+		
+		try {
+			$sql .= " 
+			WHERE 
+			{$column} {$operator} '{$value}'";
+			$stmt = $app->pdo->$db->prepare($sql);
+			$stmt->execute();
+			return;
+		}catch(Exception $e){
+			die($e);
+		}
 	}
 	
 	protected function runGet($app){
@@ -212,31 +256,30 @@ class SQL {
 		$param	= $this->query['argument'] ? true : false;
 		$order	= $this->query['order'] ? $this->query['order'] : '';
 		
-		/** Phase 1: Create an Array of the database table **/
-		if($param == false){ // $param is in the format of key:key, eg. jobID:1005
-			$data = $app->pdo->$db->query("
-				SELECT
-				*
-				FROM
-				{$table}
-				{$order}
-			")->fetchAll(PDO::FETCH_ASSOC); // No special args so Fetch All
-		}else{
+		if($param){
 			$column = $this->query['argument']['column'];
 			$operator = $this->query['argument']['operator'];
 			$value = $this->query['argument']['value'];
-			
-			// Use $data to get all from db $table
-			$data = $app->pdo->$db->query("
-				SELECT
-				*
-				FROM
-				{$table}
-				WHERE
-				{$column} {$operator} '{$value}'
-				{$order}
-			")->fetchAll(PDO::FETCH_ASSOC); // Fetch from array where operator = value
 		}
+		
+		/** Phase 1: Create an Array of the database table **/
+		$sql = "SELECT * FROM {$table} ";
+		
+		if(!$this->query['soft'] && !$this->query['softonly']){ // No soft/softOnly flag so return without soft
+			// return selected or all, excluding softs
+			$sql .= $param ? "WHERE {$column} {$operator} '{$value}' AND date_deleted='0000-00-00 00:00:00' " : "WHERE date_deleted='0000-00-00 00:00:00' ";
+		}else{ // Soft or softOnly flag
+			if($this->query['soft']){ // Include softs
+				if($param) $sql .= "WHERE {$column} {$operator} '{$value}' "; // Return all = don't exclude softs
+			}
+			if($this->query['softonly']){
+				// return selected or all, only where soft date has been set
+				$sql .= $param ? "WHERE {$column} {$operator} '{$value}' AND date_deleted<>'0000-00-00 00:00:00' " : "WHERE date_deleted<>'0000-00-00 00:00:00' ";
+			}
+		}
+		
+		$sql .= $order;
+		$data = $app->pdo->$db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 		
 		
 		/** Phase 2: Iterate through the array and find any foreign keys that needs translating **/

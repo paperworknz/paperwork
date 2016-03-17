@@ -33,6 +33,7 @@ $_schema = [
 '/put/inv' => '../app/routes/other/put/inv.php',
 '/put/job-details' => '../app/routes/other/put/job-details.php',
 '/put/rename-form' => '../app/routes/other/put/rename-form.php',
+'/put/restore' => '../app/routes/other/put/restore.php',
 '/put/settings' => '../app/routes/other/put/settings.php',
 '/admin' => '../app/routes/routes/admin.php',
 '/app' => '../app/routes/routes/app.php',
