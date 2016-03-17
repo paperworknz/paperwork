@@ -10,7 +10,7 @@
 				<ul class="wrapper">
 					<li data-tab="0" class="tab noselect">My Account</li>
 					<li data-tab="1" class="tab noselect">Job Status</li>
-					<li data-tab="2" class="tab noselect">My T&C</li>
+					<li data-tab="2" class="tab noselect">Trash</li>
 				</ul>
 			</div>
 			<div class="obj">
@@ -67,7 +67,33 @@
 					</div>
 				</div>
 				<div data-obj="2" class="box material im" style="padding:30px">
-					<div style="border:1px solid #eee;width:100%;white-space:pre" contenteditable tandc><br></div>
+					<div class="trash">
+						{% if (jobs is not empty) or (forms is not empty) or (clients is not empty) or (inv is not empty) %}
+						<div class="h4">Jobs</div>
+						{% for job in jobs %}
+						<div>{{job.jobID}} - {{job.name}} - <span style="color:#999">{{job.client.name}}</span>&nbsp&nbsp<a href="#" data-jobid="{{job.jobID}}">Undo</a></div>
+						{% endfor %}
+						<hr>
+						<div class="h4">Job Forms</div>
+						{% for form in forms %}
+						<div>{{form.job.jobID}} - {{form.name}} - <span style="color:#999">{{form.client.name}}</span>&nbsp&nbsp<a href="#" data-formid="{{form.formID}}">Undo</a></div>
+						{% endfor %}
+						<hr>
+						<div class="h4">Clients</div>
+						{% for client in clients %}
+						<div>{{client.clientID}} - {{client.name}}&nbsp&nbsp<a href="#" data-clientid="{{client.clientID}}">Undo</a></div>
+						{% endfor %}
+						<hr>
+						<div class="h4">Inventory</div>
+						{% for item in inv %}
+						<div>{{item.name}} - {{item.price}}&nbsp&nbsp<a href="#" data-invid="{{item.invID}}">Undo</a></div>
+						{% endfor %}
+						<hr>
+						<div class="ac"><i>Items older than 30 days will be cleaned automatically</i></div>
+						{% else %}
+						<div class="ac h3">Trash is empty :)</div>
+						{% endif %}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -109,37 +135,39 @@
 					});
 				});
 				
-				$(document).delegate('[tandc]', 'keydown', function(e) {
-					var keyCode = e.keyCode || e.which;
-
-					if (keyCode == 9) {
-						e.preventDefault();
-						$(this).append('\t');
-						placeCaretAtEnd($('[tandc]').get(0));
-					}else if (keyCode == 13){
-						e.preventDefault();
-						$(this).append('\n');
-						placeCaretAtEnd($('[tandc]').get(0));
-					}
+				$('.trash').on('click', 'a', function(){
+					rmv($(this));
 				});
 				
-				function placeCaretAtEnd(el) {
-					el.focus();
-					if (typeof window.getSelection != "undefined"
-							&& typeof document.createRange != "undefined") {
-						var range = document.createRange();
-						range.selectNodeContents(el);
-						range.collapse(false);
-						var sel = window.getSelection();
-						sel.removeAllRanges();
-						sel.addRange(range);
-					} else if (typeof document.body.createTextRange != "undefined") {
-						var textRange = document.body.createTextRange();
-						textRange.moveToElementText(el);
-						textRange.collapse(false);
-						textRange.select();
+				rmv = function(element, callback){
+					var type = id = 0;
+					$('.trash').css('opacity', '0.5');
+					if(element.attr('data-jobid') != undefined){
+						type = 'jobID',
+						id = element.attr('data-jobid');
 					}
-				}
+					if(element.attr('data-formid') != undefined){
+						type = 'formID',
+						id = element.attr('data-formid');
+					}
+					if(element.attr('data-clientid') != undefined){
+						type = 'clientID',
+						id = element.attr('data-clientid');
+					}
+					if(element.attr('data-invid') != undefined){
+						type = 'invID',
+						id = element.attr('data-invid');
+					}
+					
+					$.post('{{path.root}}/put/restore', {
+						type: type,
+						id: id
+					}).done(function(data){
+						element.parent().remove();
+						callback === undefined ? location.reload() : callback();
+					});
+				};
+				
 			});
 		</script>
     </body>
