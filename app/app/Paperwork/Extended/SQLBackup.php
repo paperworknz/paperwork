@@ -25,7 +25,7 @@ class SQLBackup {
 			
 			$db = $_ENV['DB_PREFIX'].$app->user['username'];
 			
-			$start = microtime(true);
+			//$start = microtime(true);
 			
 			exec(
 				'mysqldump'.
@@ -35,14 +35,16 @@ class SQLBackup {
 				' > '.$this->path
 			);
 			
-			$end = microtime(true);
+			//$end = microtime(true);
 			
 			$app->event->log([
 				'title' => 'mysqldump for '.$app->user['username'],
-				'text' => 'This took: '.($end - $start).' seconds to complete',
+				'text' => 'This took: seconds to complete',
 				'uacID' => $app->user['uacID']
 			]);
 		}
 	}
 	
 }
+
+// '.($end - $start).'
