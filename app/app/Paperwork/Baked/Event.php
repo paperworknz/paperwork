@@ -8,9 +8,11 @@ class Event {
 		$app = \Slim\Slim::getInstance();
 		
 		$default = [
-			'level' => 'Information',
+			'title' => 'Event',
 			'text' => '',
-			'uacID' => 'N/A'
+			'number' => 0,
+			'level' => 'Information',
+			'uacID' => 'N/A',
 		];
 		
 		$data = array_merge($default, $event);

@@ -110,11 +110,11 @@ class SQL {
 		switch($this->query['method']){
 			case 'post':
 				$this->runPost($app);
-				if($_ENV['MODE'] == 'prod') $backup->backup();
+				if($_ENV['MODE'] == 'prod' && $app->user['username'] == 'admin') $backup->backup();
 				break;
 			case 'put':
 				$this->runPut($app);
-				if($_ENV['MODE'] == 'prod') $backup->backup();
+				if($_ENV['MODE'] == 'prod' && $app->user['username'] == 'admin') $backup->backup();
 				break;
 			case 'touch':
 				$this->runPut($app);
@@ -206,6 +206,7 @@ class SQL {
 		}
 	}
 	
+	// PERMANENT DELETE
 	/*protected function runDelete($app){
 		$db = $this->query['db'];
 		$column = $this->query['argument']['column'];
@@ -233,10 +234,15 @@ class SQL {
 		$operator = $this->query['argument']['operator'];
 		$value = $this->query['argument']['value'];
 		
-		$sql = 'UPDATE ';
-		$sql .= $this->query['table'];
-		$sql .= ' SET date_deleted="'.date("Y-m-d H:i:s").'"';
-		$sql .= ',date_touched="'.date("Y-m-d H:i:s").'"';
+		if($this->query['purge']){
+			$sql = 'DELETE FROM ';
+			$sql .= $this->query['table'];
+		}else{
+			$sql = 'UPDATE ';
+			$sql .= $this->query['table'];
+			$sql .= ' SET date_deleted="'.date("Y-m-d H:i:s").'"';
+			$sql .= ',date_touched="'.date("Y-m-d H:i:s").'"';
+		}
 		
 		try {
 			$sql .= " 
