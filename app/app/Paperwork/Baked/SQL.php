@@ -111,7 +111,7 @@ class SQL {
 		switch($this->query['method']){
 			case 'post':
 				$this->runPost($app);
-				if($this->query['db'] != 'master') $backup->backup(); // backup(true) for dev testing
+				if($this->query['db'] != 'master') $backup->backup(); // use backup(true) for dev testing
 				break;
 			case 'put':
 				$this->runPut($app);
