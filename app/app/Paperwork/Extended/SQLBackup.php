@@ -18,7 +18,7 @@ class SQLBackup {
 		$this->path = "/var/www/paperwork/app/app/storage/clients/{$easy}/sql/{$user}.sql";
 	}
 	
-	public function backup($env){
+	public function backup($env = false){
 		$app = \Slim\Slim::getInstance();
 		
 		// SQLBackup can only run in production OR if backup(true)
