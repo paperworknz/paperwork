@@ -107,14 +107,15 @@ class SQL {
 			$this->query['table'] = str_replace('master.', '', $this->query['table']);
 		}
 		
+		// SQLBackup only if this change is for a user's database
 		switch($this->query['method']){
 			case 'post':
 				$this->runPost($app);
-				//if($_ENV['MODE'] == 'prod') $backup->backup();
+				if($this->query['db'] != 'master') $backup->backup(); // backup(true) for dev testing
 				break;
 			case 'put':
 				$this->runPut($app);
-				//if($_ENV['MODE'] == 'prod') $backup->backup();
+				if($this->query['db'] != 'master') $backup->backup();
 				break;
 			case 'touch':
 				$this->runPut($app);
@@ -124,6 +125,7 @@ class SQL {
 				break;
 			case 'delete':
 				$this->runDelete($app);
+				if($this->query['db'] != 'master') $backup->backup();
 				break;
 		}
 		$this->query = [

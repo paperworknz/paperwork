@@ -18,24 +18,28 @@ class SQLBackup {
 		$this->path = "/var/www/paperwork/app/app/storage/clients/{$easy}/sql/{$user}.sql";
 	}
 	
-	public function backup(){
+	public function backup($env){
 		$app = \Slim\Slim::getInstance();
 		
-		$db = $_ENV['DB_PREFIX'].$app->user['username'];
-		exec(
-			'mysqldump'.
-			' -u '.$this->username.
-			' -p'.$this->password.
-			' '.$db.
-			' > '.$this->path
-		);
-		
-		$app->event->log([
-			'title' => 'mysqldump for '.$app->user['username'],
-			'text' => 'Time tracking is currently turned off.',
-			'uacID' => $app->user['uacID'],
-			'number' => 3000 
-		]);
+		// SQLBackup can only run in production OR if backup(true)
+		if($_ENV['MODE'] == 'prod' || $env){
+			$db = $_ENV['DB_PREFIX'].$app->user['username'];
+			$start = microtime(true);
+			exec(
+				'mysqldump'.
+				' -u '.$this->username.
+				' -p'.$this->password.
+				' '.$db.
+				' > '.$this->path
+			);
+			$end = microtime(true);
+			$app->event->log([
+				'title' => 'mysqldump for '.$app->user['username'],
+				'text' => 'This took '.round($end - $start, 2).' seconds to run',
+				'uacID' => $app->user['uacID'],
+				'number' => 3000 
+			]);
+		}
 	}
 	
 }
