@@ -21,30 +21,14 @@ class SQLBackup {
 	public function backup(){
 		$app = \Slim\Slim::getInstance();
 		
-		if(!strncasecmp(PHP_OS, 'WIN', 3) == 0){ // Not Windows
-			
-			$db = $_ENV['DB_PREFIX'].$app->user['username'];
-			
-			//$start = microtime(true);
-			
-			exec(
-				'mysqldump'.
-				' -u '.$this->username.
-				' -p'.$this->password.
-				' '.$db.
-				' > '.$this->path
-			);
-			
-			//$end = microtime(true);
-			
-			$app->event->log([
-				'title' => 'mysqldump for '.$app->user['username'],
-				'text' => 'This took: seconds to complete',
-				'uacID' => $app->user['uacID']
-			]);
-		}
+		$db = $_ENV['DB_PREFIX'].$app->user['username'];
+		exec(
+			'mysqldump'.
+			' -u '.$this->username.
+			' -p'.$this->password.
+			' '.$db.
+			' > '.$this->path
+		);
 	}
 	
 }
-
-// '.($end - $start).'
