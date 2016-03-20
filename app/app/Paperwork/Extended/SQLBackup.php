@@ -29,6 +29,13 @@ class SQLBackup {
 			' '.$db.
 			' > '.$this->path
 		);
+		
+		$app->event->log([
+			'title' => 'mysqldump for '.$app->user['username'],
+			'text' => 'Time tracking is currently turned off.',
+			'uacID' => $app->user['uacID'],
+			'number' => 3000 
+		]);
 	}
 	
 }
