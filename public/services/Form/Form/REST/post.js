@@ -34,8 +34,7 @@ Form.prototype.post = function(data, callback){
 				a.put({
 					url: environment.root+'/put/form',
 					formID: json.formID,
-				}, function(data){
-					console.log(data);
+				}, function(){
 					a.construct(form);
 					callback(form);
 				});
