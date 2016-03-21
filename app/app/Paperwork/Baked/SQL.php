@@ -168,11 +168,13 @@ class SQL {
 		try {
 			$stmt = $app->pdo->$db->prepare($sql);
 			$stmt->execute($values);
+			$this->result = $app->pdo->$db->lastInsertID();
 		}catch(Exception $e){
 			return false;
 		}
 		
-		$this->result = $app->pdo->$db->lastInsertID();
+		//$this->result = $app->pdo->$db->lastInsertID();
+		//$this->result = $app->sql->get($this->query['table'])->by('ORDER BY ')->run();
 		return;
 	}
 	
