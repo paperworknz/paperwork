@@ -21,7 +21,7 @@ class SQLBackup {
 	public function backup($env = false){
 		$app = \Slim\Slim::getInstance();
 		
-		// SQLBackup can only run in production OR if backup(true)
+		// SQLBackup can only run in production OR if backup(true) 
 		if($_ENV['MODE'] == 'prod' || $env){
 			$db = $_ENV['DB_PREFIX'].$app->user['username'];
 			$start = microtime(true);
