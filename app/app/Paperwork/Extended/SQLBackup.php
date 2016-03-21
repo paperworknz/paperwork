@@ -15,13 +15,13 @@ class SQLBackup {
 		$user = $app->user['username'];
 		$this->username = $_ENV['DB_USER'];
 		$this->password = $_ENV['DB_PASSWORD'];
-		$this->path = "/var/www/paperwork/app/app/storage/clients/{$easy}/sql/{$user}.sql";
+		$this->path = "/var/www/Dropbox/Paperwork/{$easy}/sql/{$user}.sql";
 	}
 	
 	public function backup($env = false){
 		$app = \Slim\Slim::getInstance();
 		
-		// SQLBackup can only run in production OR if backup(true)
+		// SQLBackup can only run in production OR if backup(true) 
 		if($_ENV['MODE'] == 'prod' || $env){
 			$db = $_ENV['DB_PREFIX'].$app->user['username'];
 			$start = microtime(true);

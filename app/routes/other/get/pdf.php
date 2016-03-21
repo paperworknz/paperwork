@@ -13,7 +13,7 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 	$path = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$a}/{$b}";
 	if(file_exists($path)){
 		// DOWNLOAD //
-		$response = new Response(file_get_contents($total), 200, [
+		$response = new Response(file_get_contents($path), 200, [
 			'Content-Description'	=> 'File Transfer',
 			'Content-Disposition'	=> 'inline; filename="'.$b.'"',
 			'Content-Transfer-Encoding' => 'binary',
