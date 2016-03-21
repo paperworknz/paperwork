@@ -10,7 +10,7 @@ $app->post('/put/form', 'uac', function() use ($app){
 		$json = $_POST['json'];
 		$app->sql->put('job_form')->where('formID', '=', $formID)->with([
 			'html' => $html,
-			'json' => $json,
+			//'json' => $json,
 		])->run();
 		echo $html;
 	}else{
