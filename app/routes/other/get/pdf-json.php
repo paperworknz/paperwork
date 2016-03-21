@@ -20,7 +20,7 @@ $app->get('/get/pdf-json/:a', 'uac', function($a) use($app){
 			}
 		}
 		
-		echo strlen($app->parse->arrayToJson($pdfs)) > 0 ? $app->parse->arrayToJson($pdfs) : 0;
+		echo count($pdfs) > 0 ? $app->parse->arrayToJson($pdfs) : 0;
 	}else{
 		echo '0';
 	}
