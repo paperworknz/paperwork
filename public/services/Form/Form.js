@@ -524,7 +524,8 @@ Form.prototype.post = function(data, callback){
 				a.put({
 					url: environment.root+'/put/form',
 					formID: json.formID,
-				}, function(){
+				}, function(data){
+					console.log(data);
 					a.construct(form);
 					callback(form);
 				});
