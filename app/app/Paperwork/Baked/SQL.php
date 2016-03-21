@@ -135,10 +135,14 @@ class SQL {
 			'softonly'	=> false,
 			'purge'		=> false,
 		];
+		
+		// Return result (post returns the posted ID)
 		if(isset($this->result)) return $this->result;
 		
-		// SQLBackup after result is returned to avoid post returning the
-		// subsequent eventID's ID! (SQLBackup logs an event as a sql->post)
+		// SQLBackup AFTER result is returned because:
+		// SQLBackup logs an event with sql->post
+		// If this was run after post in the above switch statement, this class
+		// would return the event logs ID
 		switch($this->query['method']){
 			case 'post':
 			case 'put':

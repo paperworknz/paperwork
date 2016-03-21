@@ -18,7 +18,7 @@ gulp.task('form-min', function(){
 	return gulp.src(['public/services/Form/Form/Core/Core.js', 'public/services/Form/Form/**/*.js'])
 		.pipe(concat('Form.js'))
 		.pipe(gulp.dest('public/services/Form/'))
-		.pipe(rename('Form.a.js'))
+		.pipe(rename('Form.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/services/Form/'));
 });
