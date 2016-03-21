@@ -4,7 +4,8 @@ $app->get('/get/pdf-json/:a', 'uac', function($a) use($app){
 	/* Methods */
 	
 	/* Construction */
-	$path = '../app/app/storage/clients/'.$app->user['easy'].'/pdf/'.$a;
+	$easy = $app->user['easy'];
+	$path = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$a}";
 	$pdfs = [];
 	
 	if(file_exists($path)){
