@@ -111,12 +111,8 @@ class SQL {
 		switch($this->query['method']){
 			case 'post':
 				$this->runPost($app);
-				if($this->query['db'] != 'master') $backup->backup(); // use backup(true) for dev testing
 				break;
 			case 'put':
-				$this->runPut($app);
-				if($this->query['db'] != 'master') $backup->backup();
-				break;
 			case 'touch':
 				$this->runPut($app);
 				break;
@@ -125,7 +121,6 @@ class SQL {
 				break;
 			case 'delete':
 				$this->runDelete($app);
-				if($this->query['db'] != 'master') $backup->backup();
 				break;
 		}
 		$this->query = [
@@ -141,6 +136,17 @@ class SQL {
 			'purge'		=> false,
 		];
 		if(isset($this->result)) return $this->result;
+		
+		// SQLBackup after result is returned to avoid post returning the
+		// subsequent eventID's ID! (SQLBackup logs an event as a sql->post)
+		switch($this->query['method']){
+			case 'post':
+			case 'put':
+			case 'delete':
+				// use backup(true) for dev testing
+				if($this->query['db'] != 'master') $backup->backup();
+				break;
+		}
 	}
 	
 	protected function runPost($app){
@@ -173,8 +179,6 @@ class SQL {
 			return false;
 		}
 		
-		//$this->result = $app->pdo->$db->lastInsertID();
-		//$this->result = $app->sql->get($this->query['table'])->by('ORDER BY ')->run();
 		return;
 	}
 	
