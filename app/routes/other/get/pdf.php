@@ -61,4 +61,4 @@ $app->get('/get/test/:a/:b', 'uac', function($a, $b) use ($app){
 		$app->redirect($app->root.'/job/'.$a);
 	}
 	
-});
+}); //
