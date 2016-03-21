@@ -182,7 +182,7 @@
 		<script>var form = new Form</script>
 		<script>
 		$(function(){
-			// AJAX CALL FOR PDFS
+			// AJAX CALL FOR PDFS //
 			pw.wait($('.pdf-load'));
 			$.get('{{path.root}}/get/pdf-json/{{jobID}}')
 			.done(function(data){
