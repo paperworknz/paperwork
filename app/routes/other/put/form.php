@@ -12,7 +12,7 @@ $app->post('/put/form', 'uac', function() use ($app){
 			'html' => $html,
 			'json' => $json,
 		])->run();
-		echo $json;
+		echo $formID;
 	}else{
 		echo '0';
 	}
