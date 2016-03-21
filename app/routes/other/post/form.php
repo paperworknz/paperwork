@@ -11,8 +11,8 @@ $app->post('/post/form', 'uac', function() use ($app){
 		// Vars
 		$jobID		= $_POST['jobID'];
 		$clientID	= $_POST['clientID'];
-		$job = $app->sql->get('job')->where('jobID', '=', $jobID)->run(); // Job array
-		$templates = $app->parse->jsonToArray($job['cache']['content']); // Templates array
+		$job		= $app->sql->get('job')->where('jobID', '=', $jobID)->run(); // Job array
+		$templates	= $app->parse->jsonToArray($job['cache']['content']); // Templates array
 		
 		// Attempt to use the given templateID
 		if($template = $templates[$_POST['templateID']]){
