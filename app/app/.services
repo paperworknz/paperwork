@@ -4,6 +4,5 @@ return [
 	'Form' => [
 		'current'	=> 'Armadyl.js',
 		'rollback'	=> false,
-	],
-	'client_storage' => '../app/app/storage/clients',
+	]
 ];

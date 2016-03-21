@@ -15,8 +15,8 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	$html	= $_POST['html'];
 	
 	// Directory and file
-	$path = $app->services['client_storage'].'/'.$app->user['easy'].'/pdf'; // ../app/app/storage/{easy}/pdf
-	$dir = $path.'/'.$jobID; // .../{jobID}
+	$easy = $app->user['easy'];
+	$path = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$jobID}";
 	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for jobID if it doesn't exist
 	$file = $jobID.'_'.$name.'.pdf'; // 1000_ . $_POST['file_name'] . .pdf=> "1000_1-quote.pdf"
 	
