@@ -551,11 +551,10 @@ Form.prototype.put = function(data, callback){
 			formID: formID, // User defined or current
 			html: html,
 			json: JSON.stringify(a.map[formID]),
-		}).done(function(data){
+		}).done(function(){
 			if(data != '0'){
 				//a.refresh(form);
 				//document.cookie = 'autosave.'+$(a.s).attr('data-formid')+'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-				console.log(data);
 				if(callback != undefined) callback(true); // Callback
 			}else{
 				if(callback != undefined) callback(false); // Callback
