@@ -186,7 +186,6 @@
 			pw.wait($('.pdf-load'));
 			$.get('{{path.root}}/get/pdf-json/{{jobID}}')
 			.done(function(data){
-				console.log(data);
 				if(data != '0'){
 					$('.pdf-load').remove();
 					$('.pdf-title').html('Paper');
