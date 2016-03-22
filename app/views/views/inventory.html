@@ -173,8 +173,7 @@
 						$.post('{{path.root}}/post/inv', {
 							name: $('#name').val(),
 							price: $('#price').val()
-						}).done(function(data){
-							console.log(data);
+						}).done(function(){
 							$('#name').val('');
 							$('#price').val('');
 							$('#name').focus();

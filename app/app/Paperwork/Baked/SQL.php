@@ -1,12 +1,11 @@
 <?php
 
 namespace Paperwork\Baked;
+
 use \PDO,
 	Paperwork\Extended\SQLBackup;
 
 class SQL {
-	
-	private $result;
 	
 	public function __construct(){
 		$this->query = [
@@ -20,32 +19,31 @@ class SQL {
 			'soft'		=> false,
 			'softonly'	=> false,
 			'purge'		=> false,
+			'log'		=> false,
 		];
+		
+		$this->SQLBackup = new SQLBackup;
 	}
 	
 	public function post($table){
-		// Need to run $table through a whitelist array provided by Astral
 		$this->query['method'] = 'post';
 		$this->query['table'] = $table;
 		return $this;
 	}
 	
 	public function put($table){
-		// Need to run $table through a whitelist array provided by Astral
 		$this->query['method'] = 'put';
 		$this->query['table'] = $table;
 		return $this;
 	}
 	
 	public function get($table){
-		// Need to run $table through a whitelist array provided by Astral
 		$this->query['method'] = 'get';
 		$this->query['table'] = $table;
 		return $this;
 	}
 	
 	public function delete($table){
-		// Need to run $table through a whitelist array provided by Astral
 		$this->query['method'] = 'delete';
 		$this->query['table'] = $table;
 		return $this;
@@ -58,13 +56,11 @@ class SQL {
 	}
 	
 	public function with($data){
-		// Need to run $column through a whitelist array provided by Astral
 		$this->query['data'] = $data;
 		return $this;
 	}
 	
 	public function where($column, $operator, $value){
-		// Need to run $key, $operator through a whitelist array provided by Astral
 		$this->query['argument'] = [
 			'column' => $column,
 			'operator' => $operator,
@@ -73,8 +69,8 @@ class SQL {
 		return $this;
 	}
 	
-	public function by($table){
-		$this->query['order'] = 'ORDER BY '.$table;
+	public function by($what){
+		$this->query['order'] = 'ORDER BY '.$what;
 		return $this;
 	}
 	
@@ -98,31 +94,44 @@ class SQL {
 		return $this;
 	}
 	
+	public function log(){
+		$this->query['log'] = true;
+		return $this;
+	}
+	
 	public function run(){
 		$app = \Slim\Slim::getInstance();
-		$backup = new SQLBackup;
 		
-		if(strpos($this->query['table'], '.') !== false){ // If a dot is found, the user is now using table master
-			$this->query['db'] = 'master';
+		// Instantiate the result variable
+		$result = false;
+		$db 	= $this->query['db']; // Cache db
+		$method	= $this->query['method']; // Cache method
+		$log 	= $this->query['log']; // Cache log
+		
+		// If a dot is found, the user is now using table master
+		if(strpos($this->query['table'], '.') !== false){
+			$this->query['db'] = $db = 'master'; // Update db prop and cache
 			$this->query['table'] = str_replace('master.', '', $this->query['table']);
 		}
 		
-		// SQLBackup only if this change is for a user's database
+		// Run appropriate function using $this->query
 		switch($this->query['method']){
+			case 'get':
+				$result = $this->runGet($app); // sets $result as array of result
+				break;
 			case 'post':
-				$this->runPost($app);
+				$result = $this->runPost($app); // sets $result as new ID number
 				break;
 			case 'put':
 			case 'touch':
-				$this->runPut($app);
-				break;
-			case 'get':
-				$this->runGet($app);
+				$this->runPut($app); // does not set $result
 				break;
 			case 'delete':
-				$this->runDelete($app);
+				$this->runDelete($app); // does not set $result
 				break;
 		}
+		
+		// Reset query
 		$this->query = [
 			'db'		=> 'user',
 			'method'	=> false,
@@ -134,23 +143,21 @@ class SQL {
 			'soft'		=> false,
 			'softonly'	=> false,
 			'purge'		=> false,
+			'log'		=> false,
 		];
 		
-		// Return result (post returns the posted ID)
-		if(isset($this->result)) return $this->result;
-		
-		// SQLBackup AFTER result is returned because:
-		// SQLBackup logs an event with sql->post
-		// If this was run after post in the above switch statement, this class
-		// would return the event logs ID
-		switch($this->query['method']){
-			case 'post':
-			case 'put':
-			case 'delete':
-				// use backup(true) for dev testing
-				if($this->query['db'] != 'master') $backup->backup();
-				break;
+		// Return result
+		if($result !== false && $log == false){
+			return $result;
+		}elseif($db != 'master'){ // Do not backup master db
+			switch($method){
+				case 'post':
+				case 'put':
+				case 'delete':
+					$this->SQLBackup->backup();
+			}
 		}
+		
 	}
 	
 	protected function runPost($app){
@@ -175,15 +182,9 @@ class SQL {
 		$p = trim($p, ',');
 		$sql .= "({$p}) VALUES ({$b})";
 		
-		try {
-			$stmt = $app->pdo->$db->prepare($sql);
-			$stmt->execute($values);
-			$this->result = $app->pdo->$db->lastInsertID();
-		}catch(Exception $e){
-			return false;
-		}
-		
-		return;
+		$stmt = $app->pdo->$db->prepare($sql);
+		$stmt->execute($values);
+		return $app->pdo->$db->lastInsertID(); // Return post ID
 	}
 	
 	protected function runPut($app){
@@ -208,37 +209,11 @@ class SQL {
 		$p = trim($p, ','); // Remove trailing comma
 		
 		$sql .= "{$p} WHERE {$column} {$operator} '{$value}'";
-		
-		try {
-			$stmt = $app->pdo->$db->prepare($sql);
-			$stmt->execute($values);
-			return;
-		}catch(Exception $e){
-			return;
-		}
+
+		$stmt = $app->pdo->$db->prepare($sql);
+		$stmt->execute($values);
+		return; // Return nothing
 	}
-	
-	// PERMANENT DELETE
-	/*protected function runDelete($app){
-		$db = $this->query['db'];
-		$column = $this->query['argument']['column'];
-		$operator = $this->query['argument']['operator'];
-		$value = $this->query['argument']['value'];
-		
-		$sql = 'DELETE FROM ';
-		$sql .= $this->query['table'];
-		
-		try {
-			$sql .= " 
-			WHERE 
-			{$column} {$operator} '{$value}'";
-			$stmt = $app->pdo->$db->prepare($sql);
-			$stmt->execute();
-			return;
-		}catch(Exception $e){
-			return;
-		}
-	}*/
 	
 	protected function runDelete($app){
 		$db = $this->query['db'];
@@ -252,20 +227,15 @@ class SQL {
 		}else{
 			$sql = 'UPDATE ';
 			$sql .= $this->query['table'];
-			$sql .= ' SET date_deleted="'.date("Y-m-d H:i:s").'"';
-			$sql .= ',date_touched="'.date("Y-m-d H:i:s").'"';
+			$sql .= ' SET date_deleted="'.date("Y-m-d H:i:s").'" ';
+			$sql .= ',date_touched="'.date("Y-m-d H:i:s").'" ';
 		}
 		
-		try {
-			$sql .= " 
-			WHERE 
-			{$column} {$operator} '{$value}'";
-			$stmt = $app->pdo->$db->prepare($sql);
-			$stmt->execute();
-			return;
-		}catch(Exception $e){
-			die($e);
-		}
+		$sql .= "WHERE {$column} {$operator} '{$value}'";
+		
+		$stmt = $app->pdo->$db->prepare($sql);
+		$stmt->execute();
+		return; // Return nothing
 	}
 	
 	protected function runGet($app){
@@ -338,8 +308,7 @@ class SQL {
 			}
 		}
 		
-		$this->result = $data;
-		return;
+		return $data; // Return data array
 	}
 	
 }

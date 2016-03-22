@@ -16,7 +16,7 @@ class Event {
 		];
 		
 		$data = array_merge($default, $event);
-		$app->sql->post('master.events')->with($data)->run();
+		$app->sql->post('master.events')->with($data)->log()->run();
 		
 	}
 	
