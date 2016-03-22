@@ -26,7 +26,7 @@ class SQLBackup {
 			$db = $_ENV['DB_PREFIX'].$app->user['username'];
 			
 			$start = microtime(true);
-			$name = date("Y-m-d_H:i:s").'.sql';
+			$name = date("Y-m-d_His").'.sql';
 			exec(
 				'mysqldump'.
 				' -u '.$this->username.
