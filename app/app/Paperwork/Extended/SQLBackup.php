@@ -21,22 +21,18 @@ class SQLBackup {
 	public function backup($env = false){
 		$app = \Slim\Slim::getInstance();
 		
-		$app->event->log([
-			'title' => 'test'
-		]);
-		
 		// SQLBackup can only run in production OR if backup(true) 
 		if($_ENV['MODE'] == 'prod' || $env){
 			$db = $_ENV['DB_PREFIX'].$app->user['username'];
 			
 			$start = microtime(true);
-			$name = date("Y-m-d_His").'.sql';
+			//$name = date("Y-m-d_His").'.sql';
 			exec(
 				'mysqldump'.
 				' -u '.$this->username.
 				' -p'.$this->password.
 				' '.$db.
-				' > "'.$this->path.$name.'"'
+				' > "'.$this->path.'test.sql"'
 			);
 			$end = microtime(true);
 			
