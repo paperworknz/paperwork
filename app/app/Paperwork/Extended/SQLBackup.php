@@ -21,6 +21,10 @@ class SQLBackup {
 	public function backup($env = false){
 		$app = \Slim\Slim::getInstance();
 		
+		$app->event->log([
+			'title' => 'test'
+		]);
+		
 		// SQLBackup can only run in production OR if backup(true) 
 		if($_ENV['MODE'] == 'prod' || $env){
 			$db = $_ENV['DB_PREFIX'].$app->user['username'];
