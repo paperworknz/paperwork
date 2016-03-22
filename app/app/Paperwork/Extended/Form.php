@@ -1,7 +1,6 @@
 <?php
 
 namespace Paperwork\Extended;
-use \PDO;
 
 class Form {
 	

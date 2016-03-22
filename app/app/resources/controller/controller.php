@@ -12,7 +12,7 @@ $app->hook('slim.before.dispatch', function() use ($app){ // User authentication
 	if(isset($_COOKIE['@'])){
 		if($user = $app->sql->get('master.uac')->where('cookie', '=', $_COOKIE['@'])->run()){ // Valid Cookie
 			$app->cookie->session($_COOKIE['@'], $user); // Re/start session
-			$app->pdo->data = new PDO( // User is authenticated OK, DB access
+			$app->pdo->user = new PDO( // User is authenticated OK, DB access
 				$_ENV['PDO_DRIVER'].':host='.$_ENV['DB_HOST'].';dbname='.$_ENV['DB_PREFIX'].$user['username'],
 				$_ENV['DB_USER'],
 				$_ENV['DB_PASSWORD']
@@ -48,6 +48,7 @@ function app(){
 }
 
 // Include {uri}.php from schema array or special routes if {uri}.php doesn't exist
-isset($app->schema['filearray'][$app->request->getResourceUri()]) ?
-	include $app->schema['filearray'][$app->request->getResourceUri()] :
-	include 'special.php';
+include 
+	isset($app->schema['filearray'][$app->request->getResourceUri()]) ? 
+		$app->schema['filearray'][$app->request->getResourceUri()] :
+		'special.php';

@@ -10,7 +10,7 @@ class SQL {
 	
 	public function __construct(){
 		$this->query = [
-			'db'		=> 'data',
+			'db'		=> 'user',
 			'method'	=> false,
 			'table'		=> false,
 			'data'		=> false,
@@ -124,7 +124,7 @@ class SQL {
 				break;
 		}
 		$this->query = [
-			'db'		=> 'data',
+			'db'		=> 'user',
 			'method'	=> false,
 			'table'		=> false,
 			'data'		=> false,

@@ -1,5 +1,5 @@
 <?php
-$_schema = [
+return [
 'filearray' => [
 '/admin/get/events' => '../app/routes/other/admin/get/events.php',
 '/admin/get/password' => '../app/routes/other/admin/get/password.php',
@@ -15,7 +15,6 @@ $_schema = [
 '/get/pdf-json' => '../app/routes/other/get/pdf-json.php',
 '/get/pdf' => '../app/routes/other/get/pdf.php',
 '/get/template' => '../app/routes/other/get/template.php',
-'/post/army' => '../app/routes/other/post/army.php',
 '/post/client' => '../app/routes/other/post/client.php',
 '/post/database' => '../app/routes/other/post/database.php',
 '/post/email-register' => '../app/routes/other/post/email-register.php',

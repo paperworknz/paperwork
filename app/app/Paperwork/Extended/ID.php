@@ -22,28 +22,17 @@ class ID {
 		/** Phase 2: Translate the query **/
 		$value = $ID['ID'];
 		$table = $ID['table'];
-		$a = $app->pdo->data->query("
-			SELECT
-			*
-			FROM
-			{$table}
-			WHERE
-			name = '{$have}'
-		")->fetch(PDO::FETCH_ASSOC);
 		
-		if($a){
-			return $value = reset($a); // Return the first item of $a which is what the user wants
-		}else{
-			return false;
-		}
+		$a = $app->sql->get($table)->where('name', '=', $have)->run();
 		
+		return $a ? reset($a) : false; // Return the first item of $a
 	}
 	
 	public function newJobID(){
 		$app = \Slim\Slim::getInstance();
 		
 		// Use $data to get the latest JobID from db job
-		$data = $app->pdo->data->query("
+		$data = $app->pdo->user->query("
 			SELECT
 			jobID
 			FROM
