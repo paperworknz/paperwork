@@ -20,12 +20,12 @@ class Schema_builder {
 		
 		################################################
 		
-		$file = '../app/app/resources/schema/schema.php';
+		$file = '../app/app/.schema';
 		
 		$new = fopen($file, 'w') or die("Can't open schema.php");
 		fwrite($new, '<?php');
 		fwrite($new, PHP_EOL);
-		fwrite($new, '$_schema = [');
+		fwrite($new, 'return [');
 		fwrite($new, PHP_EOL);
 		
 		###### Appending contents of patharray and filearray
