@@ -12,10 +12,17 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 	$easy = $app->user['easy'];
 	$path = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$a}/{$b}";
 	if(file_exists($path)){
+		// Log event
+		$app->event->log([
+			'number' => 76,
+			'title' => $app->user['username'].' looked at PDF '.$b,
+			'text' => $path,
+			'uacID' => $app->user['uacID']
+		]);
 		// DOWNLOAD //
 		$response = new Response(file_get_contents($path), 200, [
 			'Content-Description'	=> 'File Transfer',
-			'Content-Disposition'	=> 'inline; filename="'.$b.'"',
+			'Content-Disposition'	=> "inline; filename='{$b}'",
 			'Content-Transfer-Encoding' => 'binary',
 			'Content-Type'	=> 'application/pdf'
 		]);

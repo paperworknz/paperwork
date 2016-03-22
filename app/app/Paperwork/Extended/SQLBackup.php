@@ -15,7 +15,7 @@ class SQLBackup {
 		$user = $app->user['username'];
 		$this->username = $_ENV['DB_USER'];
 		$this->password = $_ENV['DB_PASSWORD'];
-		$this->path = "/var/www/Dropbox/Paperwork/{$easy}/sql/{$user}.sql";
+		$this->path = "/var/www/Dropbox/Paperwork/{$easy}/sql/";
 	}
 	
 	public function backup($env = false){
@@ -24,15 +24,18 @@ class SQLBackup {
 		// SQLBackup can only run in production OR if backup(true) 
 		if($_ENV['MODE'] == 'prod' || $env){
 			$db = $_ENV['DB_PREFIX'].$app->user['username'];
+			
 			$start = microtime(true);
+			$name = date("Y-m-d_H:i:s").'.sql';
 			exec(
 				'mysqldump'.
 				' -u '.$this->username.
 				' -p'.$this->password.
 				' '.$db.
-				' > '.$this->path
+				' > "'.$this->path.$name.'"'
 			);
 			$end = microtime(true);
+			
 			$app->event->log([
 				'title' => 'mysqldump for '.$app->user['username'],
 				'text' => 'This took '.round($end - $start, 2).' seconds to run',
