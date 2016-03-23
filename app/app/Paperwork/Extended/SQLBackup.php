@@ -11,17 +11,17 @@ class SQLBackup {
 	protected $username;
 	protected $password;
 	protected $path;
+	protected $upper;
 	
 	public function __construct(){
 		$app = \Slim\Slim::getInstance();
 		
 		$easy = $app->user['easy'];
-		$user = $app->user['username'];
 		$this->username = $_ENV['DB_USER'];
 		$this->password = $_ENV['DB_PASSWORD'];
 		
 		if($_ENV['MODE'] == 'prod'){
-			$this->path = "/var/www/Dropbox/Paperwork/{$easy}/sql/";
+			$this->path = '/var/www/Dropbox/Paperwork/';
 			$this->upper = 100000000; // Retention file size before files start getting removed (100Mb)
 			// Rationale is 100 users get 100Mb each = 10Gb
 		}else{
@@ -38,6 +38,7 @@ class SQLBackup {
 			$start = microtime(true); // Start clock
 			
 			$db = $_ENV['DB_PREFIX'].$app->user['username']; // Database name
+			$path = $this->path.$app->user['easy'].'/sql/'; // Save path
 			$name = date("Y-m-d_His").'.sql'; // Name of sql file
 			
 			if($_ENV['MODE'] == 'prod'){
@@ -45,8 +46,9 @@ class SQLBackup {
 					'mysqldump'.
 					' -u '.$this->username.
 					' -p'.$this->password.
-					' '.$db.
-					' > "'.$this->path.$name.'"'
+					' app_logan'.
+					' > '.
+					$path.$name
 				);
 			}else{
 				$test = fopen($this->path.$name, 'w');
@@ -55,8 +57,8 @@ class SQLBackup {
 				fclose($test);
 			}
 			
-			$this->gzCompress($this->path.$name); // gz compress file
-			$this->retention(); // Apply retention
+			//$this->gzCompress($this->path.$name); // gz compress file
+			//$this->retention(); // Apply retention
 			
 			$end = microtime(true); // End clock
 			
