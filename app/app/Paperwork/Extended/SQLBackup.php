@@ -91,6 +91,7 @@ class SQLBackup {
 		}
 		
 		if($bytes > $this->upper){
+			natsort($files);
 			unlink($path.reset($files));
 		}
 	}
