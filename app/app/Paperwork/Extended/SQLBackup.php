@@ -58,7 +58,7 @@ class SQLBackup {
 			}
 			
 			//$this->gzCompress($this->path.$name); // gz compress file
-			//$this->retention(); // Apply retention
+			$this->retention(); // Apply retention
 			
 			$end = microtime(true); // End clock
 			
@@ -75,25 +75,23 @@ class SQLBackup {
 		$app = \Slim\Slim::getInstance();
 		
 		$files = [];
+		$path = $this->path.$app->user['easy'].'/sql/';
 		
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path)) as $filename => $file) {
-			$file = str_replace($this->path, '', $file);
-			$file = str_replace('\\', '/', $file);
-			$file = str_replace('/..', '/', $file);
-			$file = str_replace('/.', '/', $file);
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $filename => $file) {
+			$file = str_replace($path, '', $file);
 			if(substr($file, -1) != '/'){
-				$file = str_replace($this->path, '', $file);
+				$file = str_replace($path, '', $file);
 				$files[] = $file;
 			}
 		}
 		
 		$bytes = 0;
-		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path, FilesystemIterator::SKIP_DOTS)) as $object){
+		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $object){
 			$bytes += filesize($object);
 		}
 		
 		if($bytes > $this->upper){
-			unlink($this->path.reset($files));
+			unlink($path.reset($files));
 		}
 	}
 	
