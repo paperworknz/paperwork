@@ -6,6 +6,7 @@
     <body>
         {% include path.scaffolding %}
         <div id="content" style="display:none">
+			{% include path.flash %}
 			<div class="tabs">
 				<ul class="wrapper">
 					<li data-tab="0" class="tab noselect">My Account</li>
@@ -23,20 +24,47 @@
 										<td>First</td>
 										<td><input name="first" value="{{user.first}}" required></td>
 									</tr>
+									<tr>
 										<td>Last</td>
-										<td><input name="last" value="{{user.last}}" required></td>
+										<td><input name="last" value="{{user.last}}"></td>
 									</tr>
-										<td>Username</td>
-										<td><input name="username" value="{{user.username}}" required></td>
-									</tr>
+									<tr>
 										<td>Email</td>
 										<td><input name="email" type="email" value="{{user.email}}" required></td>
 									</tr>
+									<tr>
 										<td>Company</td>
 										<td><input name="company" value="{{user.company}}" required></td>
 									</tr>
+									<tr>
 										<td>Phone</td>
-										<td><input name="phone" value="{{user.phone}}" required></td>
+										<td><input name="phone" value="{{user.phone}}"></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td style="height:40px">
+											<input type="hidden" name="my">
+											<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+						<hr>
+						<form method="post" action="{{path.root}}/put/password">
+							<table>
+								<tbody>
+									<tr>
+										<td>Password</td>
+										<td><input name="oldpw" type="password" placeholder="Old Password"></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><input name="newpw" type="password" placeholder="New Password"></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><input name="confirmpw" type="password" placeholder="Confirm New Password"></td>
 									</tr>
 									<tr>
 										<td></td>
