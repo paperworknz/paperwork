@@ -18,14 +18,13 @@ $app->post('/put/settings', 'uac', function() use ($app){
 		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 		$first = filter_var($_POST['first'], FILTER_SANITIZE_STRING);
 		$last = filter_var($_POST['last'], FILTER_SANITIZE_STRING);
-		$username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
 		$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
 		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
+		
 		$app->sql->put('master.uac')->with([
 			'email'		=> $email,
 			'first'		=> $first,
 			'last'		=> $last,
-			'username'	=> $username,
 			'company'	=> $company,
 			'phone'		=> $phone,
 		])->where('uacID', '=', $app->user['uacID'])->run();

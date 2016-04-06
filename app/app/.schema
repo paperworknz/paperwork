@@ -31,6 +31,7 @@ return [
 '/put/form' => '../app/routes/other/put/form.php',
 '/put/inv' => '../app/routes/other/put/inv.php',
 '/put/job-details' => '../app/routes/other/put/job-details.php',
+'/put/password' => '../app/routes/other/put/password.php',
 '/put/rename-form' => '../app/routes/other/put/rename-form.php',
 '/put/restore' => '../app/routes/other/put/restore.php',
 '/put/settings' => '../app/routes/other/put/settings.php',
