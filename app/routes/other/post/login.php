@@ -47,7 +47,7 @@ $app->post('/post/login', function() use ($app){
 				'user' => $user['uacID']
 			]);
 			$app->flash('error', 'This account is currently disabled. Please contact us if you think this is in error.');
-			$app->redirect($app->root);
+			$app->redirect($app->root.'/login');
 		}
 	}
 	$app->event->log([
@@ -56,5 +56,5 @@ $app->post('/post/login', function() use ($app){
 		'text' => 'Username: "'.$username.'" does not exist.',
 	]);
 	$app->flash('error', 'Your username or password was incorrect.');
-	$app->redirect($app->root);
+	$app->redirect($app->root.'/login');
 });
