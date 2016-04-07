@@ -11,6 +11,7 @@ $app->post('/post/login', function() use ($app){
 					$user['password'] = password_hash($password, PASSWORD_DEFAULT);
 				}
 				
+				
 				$cookie = $user['cookie'];
 				
 				// If cookie is real
