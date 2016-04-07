@@ -38,7 +38,7 @@ Form.prototype.append = function(form, item, quantity, price){
 		price	= price !== undefined ? price : '',
 		formID	= $(form).attr('data-formid'),
 		itemID	= a.p.get('latest-item-id', form),
-		flag	= quantity === undefined ? false : true; // Flag changes if item is not in inv
+		flag	= false; // Flag changes if item is not in inv
 	
 	// Prep
 	if(itemID === undefined) itemID = 0;

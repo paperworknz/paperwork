@@ -21,10 +21,13 @@
 		{% include path.js with {
 			include: ['interact']
 		}%}
+		<script src="{{path.root}}/services/Paint/Paint.js"></script>
+		<script>var paint = new Paint;</script>
 		<script>
 			$(function(){
 				var pw = new Paperwork;
 				
+				// Ajax call to load the template
 				$('[data-template]').on('click', function(){
 					var id = $(this).attr('data-template');
 					$.get('{{path.root}}/get/template', {
@@ -33,10 +36,16 @@
 						if(data != '0'){
 							data = JSON.parse(data);
 							$('.template').html(data.content);
-							
 						}
 					});
 				});
+				
+				$('body').on('keydown', '[contenteditable]', function(){
+					if($(this).find('td')){
+						console.log('kappa');
+					}
+				});
+				
 			});
 		</script>
     </body>
