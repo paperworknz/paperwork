@@ -4,7 +4,13 @@ $app->get('/', 'app', function() use($app){
 	/* Methods */
 	
 	/* Construction */
-	$IP = $_SERVER['REMOTE_ADDR'];
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		$IP = $_SERVER['HTTP_CLIENT_IP'];
+	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$IP = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} else {
+		$IP = $_SERVER['REMOTE_ADDR'];
+	}
 	
 	if($IP != '::1'){
 		$app->event->log([
