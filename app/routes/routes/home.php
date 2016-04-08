@@ -12,7 +12,7 @@ $app->get('/', 'app', function() use($app){
 		$IP = $_SERVER['REMOTE_ADDR'];
 	}
 	
-	if($IP != '::1'){
+	if($IP != '::1' && $IP != '127.0.0.1'){
 		$app->event->log([
 			'number' => 0,
 			'title' => 'Landing Page',

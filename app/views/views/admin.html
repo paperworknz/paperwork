@@ -73,7 +73,7 @@
 							$('[console]').html('');
 							
 							if(q.toUpperCase() == 'users'.toUpperCase()) q = 'SELECT * FROM uac ORDER BY uacID DESC';
-							if(q.toUpperCase() == 'events'.toUpperCase()) q = 'SELECT * FROM events ORDER BY eventID DESC';
+							if(q.toUpperCase() == 'events'.toUpperCase()) q = 'SELECT * FROM events WHERE uacID<>1 ORDER BY eventID DESC';
 							if(q.toUpperCase() == 'clear events'.toUpperCase()) q = 'DELETE from events';
 							
 							$.post('{{path.root}}/admin/post/query', {
@@ -99,6 +99,9 @@
 						$('[pw-console]').html(data);
 					});
 				});
+				
+				// SOCKETS
+				var SOcket = new WebSocket()
 			});
 		</script>
     </body>
