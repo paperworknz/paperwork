@@ -5,6 +5,11 @@ $app->post('/post/email-register', function() use ($app){
 	
 	/* Construction */
 	$email = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
+	$app->event->log([
+		'number' => 89,
+		'title' => 'Email Registration',
+		'text' => 'Email: '.$email
+	]);
 	$app->sql->post('master.email')->with([
 		'email' => $email
 	])->run();
