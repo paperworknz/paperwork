@@ -57,7 +57,7 @@ class SQLBackup {
 				fclose($test);
 			}
 			
-			gzcompress($this->path.$name, 9); // gz compress file
+			// gzCompress($this->path.$name, 9); // gz compress file --> Doesn't seem to work atm
 			$this->retention(); // Apply retention
 			
 			$end = microtime(true); // End clock
