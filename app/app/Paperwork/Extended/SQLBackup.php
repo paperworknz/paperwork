@@ -39,7 +39,7 @@ class SQLBackup {
 			
 			$db = $_ENV['DB_PREFIX'].$app->user['username']; // Database name
 			$path = $this->path.$app->user['easy'].'/sql/'; // Save path
-			$name = date("Y-m-d_His").'.sql.gz'; // Name of sql file
+			$name = date("Y-m-d_His").'.sql'; // Name of sql file
 			
 			if($_ENV['MODE'] == 'prod'){
 				exec(
