@@ -25,7 +25,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for jobID if it doesn't exist
 	$file = $jobID.'_'.$name.'.pdf'; // 1000_ . $_POST['file_name'] . .pdf=> "1000_1-quote.pdf"
 	
-	// PDF
+	// Create PDF
 	phptopdf([
 		'page_orientation'	=> 'portrait',
 		'page_size'			=> 'A4',
