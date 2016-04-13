@@ -18,14 +18,14 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	$easy = $app->user['easy'];
 	
 	if($_ENV['MODE'] == 'dev'){
-		$dir = "../app/app/storage/clients/{$easy}/pdf{$jobID}";
+		$dir = "../app/app/storage/clients/{$easy}/pdf/{$jobID}";
 	}else{
-		$dir = "/var/www/Dropbox/Paperwork/{$easy}/pdf{$jobID}";
+		$dir = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$jobID}";
 	}
 	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for jobID if it doesn't exist
 	$file = $jobID.'_'.$name.'.pdf'; // 1000_ . $_POST['file_name'] . .pdf=> "1000_1-quote.pdf"
 	
-	// PDF
+	// Create PDF
 	phptopdf([
 		'page_orientation'	=> 'portrait',
 		'page_size'			=> 'A4',
