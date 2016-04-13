@@ -46,7 +46,7 @@ class SQLBackup {
 					'mysqldump'.
 					' -u '.$this->username.
 					' -p'.$this->password.
-					' app_logan'.
+					' '.$db.
 					' > '.
 					$path.$name
 				);
