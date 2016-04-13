@@ -9,8 +9,8 @@ $app->post('/post/register', function() use ($app){
 		$first = filter_var($_POST['first'], FILTER_SANITIZE_STRING);
 		$last = filter_var($_POST['last'], FILTER_SANITIZE_STRING);
 		$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
-		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 		$username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 		$easy = str_replace(' ', '', $company);
 		$easy = substr($easy, 0, 16); // Return first 16 chars
 		
@@ -45,27 +45,50 @@ $app->post('/post/register', function() use ($app){
 			]);
 			
 			// Create storage directories
-			mkdir('../app/app/storage/clients/'.$easy, 0777);
-			mkdir('../app/app/storage/clients/'.$easy.'/pdf', 0777);
+			if($_ENV['MODE'] == 'dev'){
+				$dir = '../app/app/storage/clients/'.$easy;
+			}else{
+				$dir = '/var/www/Dropbox/Paperwork/'.$easy;
+			}
+			
+			mkdir($dir, 0777);
+			mkdir($dir.'/pdf', 0777);
+			mkdir($dir.'/sql', 0777);
 			
 			$app->event->log([
 				'number' => 900,
-				'title' => 'Database and storage directories made for '.$username,
+				'title' => 'Storage directories created for '.$username,
 			]);
-
-			// Log the user in
-			$user = $app->sql->get('master.uac')->where('uacID', '=', $uacID)->run();
-			// Generate new cookie, sign user in, flag as logged_in, redirect to home page
-			$cookie = bin2hex(random_bytes(32));
-			setcookie('@', $cookie, time() + 31536000, '/');
-			$app->sql->put('master.uac')->where('username', '=', $user['username'])->with([
-				'cookie'	=> $cookie
-			])->run();
-			$app->cookie->session($cookie, $user);
+			
+			// Create user database
+			$raw = file_get_contents('../app/app/resources/db_schema/app_default.sql'); // Load SQL structure script
+			$raw = str_replace('{{database}}', $_ENV['DB_PREFIX'].$username, $raw); // Replace placeholder with `app_$username`
+			
+			try{
+				$app->pdo->master->exec($raw);
+			}catch(PDOException $e){
+				echo $e;
+			}
+			
 			$app->event->log([
 				'number' => 903,
-				'title' => 'User '.$username.' created successfully.',
+				'title' => 'Database created: '.$_ENV['DB_PREFIX'].$username,
 			]);
+			
+			// Get user
+			$user = $app->sql->get('master.uac')->where('uacID', '=', $uacID)->run();
+			
+			// Generate new cookie
+			$cookie = bin2hex(random_bytes(32));
+			setcookie('@', $cookie, time() + 31536000, '/');
+			
+			// Update cookie
+			$app->sql->put('master.uac')->where('uacID', '=', $uacID)->with([
+				'cookie' => $cookie
+			])->run();
+			
+			// Log user in
+			$app->cookie->session($cookie, $user);
 			$app->redirect($app->root.'/jobs');
 		}
 		

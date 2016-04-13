@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="date" content="{{date}}">
+		<title>Paperwork</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/paperwork/landing.1.2.css" rel='stylesheet' type="text/css">
+	</head>
+	<body>
+		<header>
+			<div class="wrapper width">
+				<div class="nav">
+					<div class="logo">Paperwork</div>
+					<ul class="nav_list wrapper">
+						<li>
+							<span class="color_hint" home>Home</span>
+						</li>
+						<li>
+							<span login>Log In</span>
+						</li>
+						<li>
+							<span class="special" login>Sign Up</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<section>
+			<div class="width">
+				<div class="main top">
+					<span class="main_title">Privacy Policy</span>
+					<div>
+						<b>Information that is gathered from visitors</b><br>
+						Log files are saved on our webserver saving details such as the vistor's IP address, browser type, referring page and time of visit. 
+						Vistors may choose to submit their email address to be saved on our webserver. 
+						
+						<br><br>
+						<b>How visitor information is used</b><br>
+						E-mail may be sent to inform you of news of our services or offers by us or our affiliates. 
+						E-mail addresses will not be sold, rented or leased to 3rd parties. 
+						
+						<br><br>
+						<b>Information that is gathered from users</b><br>
+						Users must provide their name, company name, email address and a password to use our service. 
+						Passwords are stored in such a way as to be meaningless to ourselves, this means we can not view a password and be able to read the contents. 
+						Users may choose to provide their phone number and address to assist in communication. 
+						Users may input data such as, but not limited to, their customer information, job information, and other 
+						user generated information. This information is saved on our webserver. 
+						User activity may generate log files that are saved on our webserver, saving details that provide us with information to help make 
+						Paperwork a better service. This data serves as an activity log to provide insight into how a user may use the service. This data may 
+						include the time of which a user logs in/out, when a user saves or deletes data and so on. 
+						All user data is owned in an unlimited fashion by Paperwork. User data will be anonymized where possible. 
+						We reserve the right to manipulate user data if necessary in upgrading our service. We reserve the right to use log information (data about your data) with the intention 
+						of improving our service. 
+						
+						<br><br>
+						<b>Cookies</b><br>
+						Cookies are small digital signature files that are stored by your web browser that allow your preferences to be recorded when visiting the website. 
+						They may also be used to track your return visits to the website and your preferences.
+						
+						<br><br>
+						<b>3rd Party</b><br>
+						No 3rd Party advertising companies or similar with interest in user data are utilized by Paperwork.<br>No user generated data will be sold, disclosed or otherwise entertained to any 3rd Party company or person. 
+						
+						<br><br>
+						<i>Last updated 11/04/2016</i>
+					</div>
+				</div>
+				
+			</div>
+		</section>
+		<script src="{{path.root}}/inc/jquery/jquery.2.1.4.js"></script>
+		<script>
+			$(function(){
+				// Nav
+				$('[home]').on('click', function(){
+					window.location = '{{path.root}}';
+				});
+				$('[login]').on('click', function(){
+					window.location = '{{path.root}}/login';
+				});
+				
+				// Interaction
+				$('video').on('click', function(){
+					$(this).get(0).pause();
+					$(this).get(0).currentTime = '0';
+					$(this).get(0).play();
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -31,26 +31,30 @@ class ID {
 	public function newJobID(){
 		$app = \Slim\Slim::getInstance();
 		
-		// Use $data to get the latest JobID from db job
-		$data = $app->pdo->user->query("
-			SELECT
-			jobID
-			FROM
-			job
-			ORDER BY 
-			jobID DESC
-			LIMIT 1
-		")->fetchColumn();
+		// Get all jobs
+		$job = $app->sql->get('job')->by('jobID ASC')->soft()->run();
 		
-		if($data){
-			// Strip away any non-numeric characters to get the jobID
-			// Increase jobID by one and patch it back together
-			preg_match_all('!\d+!', $data, $jobID);
-			$jobID = $jobID[0][0] + 1;
-			return $jobID;
+		if($job){
+			if(isset($job[0])){
+				$jobID = $job[0]['jobID'] + 1;
+			}else{
+				$jobID = $job['jobID'] + 1;
+			}
 		}else{
-			return $jobID = '1000'; // <------------------------------ STATIC!
+			$jobID = $app->user['job_reference'];
 		}
+		
+		// update uac.job_reference if necessary
+		if($jobID > $app->user['job_reference']){
+			$app->sql->put('master.uac')->where('uacID', '=', $app->user['uacID'])->with([
+				'job_reference' => $jobID
+			])->run();
+		}else{
+			$jobID = $app->user['job_reference'];
+		}
+		
+		return $jobID;
+		
 	}
 	
 }
