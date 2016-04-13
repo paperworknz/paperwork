@@ -78,7 +78,7 @@ $app->post('/post/register', function() use ($app){
 			// Should re-use login class to log the user in here and redirect to /app
 			
 			// Redirect to login
-			$app->flash('success', 'Success! Please log in.');
+			$app->flash('success', 'Account created successfully.');
 			$app->redirect($app->root.'/login');
 		}
 		

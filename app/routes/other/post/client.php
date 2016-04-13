@@ -28,6 +28,6 @@ $app->post('/post/client', 'uac', function() use ($app){
 			echo $app->build->error('<a href="'.$app->root.'/client/'.$client['clientID'].'">'.$name.'</a> already exists!');
 		}
 	}else{
-		echo $app->build->error('There was a problem reading the client\'s name, please enter a valid name.');
+		echo $app->build->error('There was a problem with the client\'s name, please enter a valid name.');
 	}
 });
