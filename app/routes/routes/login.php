@@ -20,6 +20,6 @@ $app->get('/login', 'app', function() use ($app){
 		]);
 	}
 	$app->build->page('views/login.html', [
-		'register' => true
+		'register' => false
 	]);
 });
