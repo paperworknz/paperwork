@@ -57,7 +57,7 @@ class SQLBackup {
 				fclose($test);
 			}
 			
-			gzencode($this->path.$name, 9); // gz compress file
+			gzcompress($this->path.$name, 9); // gz compress file
 			$this->retention(); // Apply retention
 			
 			$end = microtime(true); // End clock
