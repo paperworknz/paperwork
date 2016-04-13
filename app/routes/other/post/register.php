@@ -29,7 +29,7 @@ $app->post('/post/register', function() use ($app){
 			$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 			
 			// Add user to uac
-			$uacID = $app->sql->post('master.uac')->with([
+			$app->sql->post('master.uac')->with([
 				'email'		=> $email,
 				'username'	=> $username,
 				'password'	=> $password,
@@ -75,21 +75,11 @@ $app->post('/post/register', function() use ($app){
 				'title' => 'Database created: '.$_ENV['DB_PREFIX'].$username,
 			]);
 			
-			// Get user
-			$user = $app->sql->get('master.uac')->where('uacID', '=', $uacID)->run();
+			// Should re-use login class to log the user in here and redirect to /app
 			
-			// Generate new cookie
-			$cookie = bin2hex(random_bytes(32));
-			setcookie('@', $cookie, time() + 31536000, '/');
-			
-			// Update cookie
-			$app->sql->put('master.uac')->where('uacID', '=', $uacID)->with([
-				'cookie' => $cookie
-			])->run();
-			
-			// Log user in
-			$app->cookie->session($cookie, $user);
-			$app->redirect($app->root.'/jobs');
+			// Redirect to login
+			$app->flash('success', 'Success! Please log in.');
+			$app->redirect($app->root.'/login');
 		}
 		
 	}else{
