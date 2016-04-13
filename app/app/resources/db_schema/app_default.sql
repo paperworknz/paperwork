@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Mar 20, 2016 at 04:24 PM
+-- Generation Time: Apr 10, 2016 at 08:42 PM
 -- Server version: 5.6.26
 -- PHP Version: 7.0.0
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `app_default`
+-- Database: `{{database}}`
 --
-CREATE DATABASE IF NOT EXISTS `{{schema}}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `{{schema}}`;
+CREATE DATABASE IF NOT EXISTS `{{database}}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `{{database}}`;
 
 -- --------------------------------------------------------
 
@@ -137,6 +137,14 @@ CREATE TABLE `job_status` (
   `date_deleted` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `job_status`
+--
+
+INSERT INTO `job_status` (`statusID`, `name`, `date_created`, `date_touched`, `date_deleted`) VALUES
+(0, 'Completed', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(1, 'New', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -220,12 +228,12 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT for table `inv`
 --
 ALTER TABLE `inv`
-  MODIFY `invID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=495;
+  MODIFY `invID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=496;
 --
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `jobID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1037;
+  MODIFY `jobID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1044;
 --
 -- AUTO_INCREMENT for table `job_cache`
 --
@@ -235,7 +243,7 @@ ALTER TABLE `job_cache`
 -- AUTO_INCREMENT for table `job_form`
 --
 ALTER TABLE `job_form`
-  MODIFY `formID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+  MODIFY `formID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 --
 -- AUTO_INCREMENT for table `job_form_templates`
 --
@@ -245,7 +253,7 @@ ALTER TABLE `job_form_templates`
 -- AUTO_INCREMENT for table `job_status`
 --
 ALTER TABLE `job_status`
-  MODIFY `statusID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `statusID` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `settings`
 --

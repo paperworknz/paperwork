@@ -64,12 +64,15 @@
 											<input type="password" class="login-input" name="password" autocomplete="off" value="" placeholder="Password" />
 										</div>
 									</div>
+									<div class="login-text-wrap">
+										By registering you agree to our <a href="{{path.root}}/privacy-policy">Privacy Policy</a>
+									</div>
 									{% include path.flash %}
 								</div>
+								<div class="login-wrap clearfix">
+									<button register-form-btn class="btn btn-success login-action pull-right" >Register</button>
+								</div>
 							</form>
-							<div class="login-wrap clearfix">
-								<button register-form-btn class="btn btn-success login-action pull-right" >Register</button>
-							</div>
 						</div>
 					</div>
 					<div class="login-container pull-right" style="margin-top:5px;width:180px">
@@ -93,7 +96,7 @@
 						$('[register]').removeClass('h');
 						$('[register-fields]').fadeIn();
 						$('[register]').animate({
-							height: '318px'
+							height: '348px'
 						}, 400);
 					}else{
 						$(this).html('Sign Up');
@@ -106,7 +109,7 @@
 					}
 				});
 				
-				$('[register-form-btn]').on('click', function(){
+				/*$('[register-form-btn]').on('click', function(){
 					$('[register-form-btn]').prop('disabled', true);
 					$('[btn-toggle]').prop('disabled', true);
 					$('[register-form-btn]').html('Working on it...');
@@ -119,7 +122,7 @@
 							console.log(data);
 						}
 					});
-				});
+				});*/
 			});
 		</script>
 		{% endif %}

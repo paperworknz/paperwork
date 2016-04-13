@@ -19,5 +19,7 @@ $app->get('/login', 'app', function() use ($app){
 			'text' => 'IP: '.$IP
 		]);
 	}
-	$app->build->page('views/login.html');
+	$app->build->page('views/login.html', [
+		'register' => true
+	]);
 });
