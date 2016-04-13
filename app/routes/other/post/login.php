@@ -7,10 +7,10 @@ $app->post('/post/login', function() use ($app){
 	if($user = $app->sql->get('master.uac')->where('username', '=', $username)->run()){
 		if(!$user['disabled']){
 			if(password_verify($password, $user['password'])){
+				
 				if(password_needs_rehash($user['password'], PASSWORD_DEFAULT)){
 					$user['password'] = password_hash($password, PASSWORD_DEFAULT);
 				}
-				
 				
 				$cookie = $user['cookie'];
 				
@@ -29,12 +29,19 @@ $app->post('/post/login', function() use ($app){
 					])->run();
 				}
 				
+				// Log
 				$app->event->log([
 					'number' => 15,
 					'title' => $username.' logged in',
 					'uacID' => $user['uacID']
 				]);
+				
+				// Not necessary, but fixes redundant logging (user logged in, user resumed session)
+				$_SESSION['user'] = $user;
+				
+				// Re/start session
 				$app->cookie->session($cookie, $user);
+				
 				if($user['username'] == 'admin'){
 					$app->redirect($app->root.'/admin');
 				}
@@ -45,7 +52,6 @@ $app->post('/post/login', function() use ($app){
 				'number' => 2,
 				'title' => 'Disabled Account Login Attempt',
 				'text' => $username.' is disabled and has tried to log in.',
-				'user' => $user['uacID']
 			]);
 			$app->flash('error', 'This account is currently disabled. Please contact us if you think this is in error.');
 			$app->redirect($app->root.'/login');
@@ -54,7 +60,7 @@ $app->post('/post/login', function() use ($app){
 	$app->event->log([
 		'number' => 1,
 		'title' => 'Failed Login Attempt',
-		'text' => 'Username: "'.$username.'" does not exist.',
+		'text' => 'Using username: "'.$username.'"',
 	]);
 	$app->flash('error', 'Your username or password was incorrect.');
 	$app->redirect($app->root.'/login');

@@ -17,8 +17,10 @@ $app->hook('slim.before.dispatch', function() use ($app){ // User authentication
 				$_ENV['DB_USER'],
 				$_ENV['DB_PASSWORD']
 			);
+			// -> continue to route
 		}else{
 			$app->cookie->destroy(); // Invalid cookie
+			// cookie.destroy redirects to home
 		}
 	}else{
 		if(isset($_SESSION['user'])) $app->cookie->destroy(); // No cookie but an active session

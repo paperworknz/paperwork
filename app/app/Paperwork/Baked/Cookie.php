@@ -24,6 +24,7 @@ class Cookie {
 		
 		setcookie('@', '', -1, '/');
 		session_destroy();
+		
 		$app->redirect($app->root);
 	}
 	
