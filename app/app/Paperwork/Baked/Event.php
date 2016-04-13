@@ -12,7 +12,7 @@ class Event {
 			'text' => '',
 			'number' => 0,
 			'level' => 'Information',
-			'uacID' => 'N/A',
+			'uacID' => isset($app->user['uacID']) ? $app->user['uacID'] : 'Guest',
 		];
 		
 		$data = array_merge($default, $event);
