@@ -11,9 +11,12 @@ class Form {
 		'formjs'	=> ''
 	];
 	
+	private $current = 'Armadyl.js';
+	private $rollback = false;
+	
 	public function __construct(){
 		$app = \Slim\Slim::getInstance();
-		$this->cache['formjs'] = $app->services['Form']['current'];
+		$this->cache['formjs'] = $this->current;
 	}
 	
 	public function newCache(){
@@ -44,7 +47,7 @@ class Form {
 						$this->cache['cacheID'] = $latest['cacheID'];		// No difference, cache is valid, use it
 						break;												// Found what we came for, break out of loop
 					}else{	// formjs is the same but templates have changed
-						if($app->services['Form']['rollback'] == false){
+						if($this->rollback == false){
 							$app->sql->put('job_cache')->with([		// We aren't rolling back so update templates
 								'content' => $this->cache['json']
 							])->where('cacheID', '=', $latest['cacheID'])->run();

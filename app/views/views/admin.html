@@ -12,6 +12,7 @@
 				<ul class="wrapper">
 					<li data-tab="0" class="tab noselect">SQL</li>
 					<li data-tab="1" class="tab noselect">UAC</li>
+					<li data-tab="2" class="tab noselect">Maintenance</li>
 				</ul>
 			</div>
 			<div class="obj">
@@ -36,14 +37,23 @@
 						<div pw-console style="margin-top:15px"></div>
 					</div>
 				</div>
+				<div data-obj="2" class="box material im">
+					<div style="width:249px">
+						<div class="h3">Toggle Maintenance</div>
+						<input style="height:36px" man-pw type="password" placeholder="Password">
+						<div class="pull-right">
+							<button man class="wolfe-btn">POST</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		{% include path.js with {
-			include: ['Tab', 'sweetalert', 'react']
+			include: ['Tab', 'sweetalert']
 		}%}
 		<script>
 			$(function(){
-				new Paperwork;
+				var paper = new Paperwork;
 				new Tab({
 					cookie: {
 						name: 'admin'
@@ -100,8 +110,20 @@
 					});
 				});
 				
-				// SOCKETS
-				var SOcket = new WebSocket()
+				$('[man]').on('click', function(){
+					p = $('[man-pw]').val();
+					$.post('{{path.root}}/admin/post/maintenance', {
+						password: p
+					}).done(function(data){
+						if(data == 0){
+							paper.saved('Maintenance OFF');
+						}else if(data == 1){
+							paper.saved('Maintenance ON');
+						}else{
+							paper.saved('Error');
+						}
+					});
+				});
 			});
 		</script>
     </body>

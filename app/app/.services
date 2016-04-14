@@ -1,8 +1,0 @@
-<?php
-
-return [
-	'Form' => [
-		'current'	=> 'Armadyl.js',
-		'rollback'	=> false,
-	]
-];

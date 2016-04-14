@@ -17,6 +17,12 @@ class Cookie {
 		}
 		
 		$_SESSION['user'] = $app->user = $user; // Start new session from $user
+		
+		// Maintenance Mode
+		if($app->env['maintenance'] == 1 && $app->user['username'] != 'admin'){
+			$app->flash('info', "We're currently offline for maintenance and will be back up as soon as we can. Sorry about this!");
+			$this->destroy();
+		}
 	}
 	
 	public function destroy(){
