@@ -4,6 +4,7 @@ return [
 '/admin/get/events' => '../app/routes/other/admin/get/events.php',
 '/admin/get/password' => '../app/routes/other/admin/get/password.php',
 '/admin/get/users' => '../app/routes/other/admin/get/users.php',
+'/admin/post/maintenance' => '../app/routes/other/admin/post/maintenance.php',
 '/admin/post/query' => '../app/routes/other/admin/post/query.php',
 '/delete/client' => '../app/routes/other/delete/client.php',
 '/delete/form' => '../app/routes/other/delete/form.php',
@@ -16,7 +17,6 @@ return [
 '/get/pdf' => '../app/routes/other/get/pdf.php',
 '/get/template' => '../app/routes/other/get/template.php',
 '/post/client' => '../app/routes/other/post/client.php',
-'/post/database' => '../app/routes/other/post/database.php',
 '/post/email-register' => '../app/routes/other/post/email-register.php',
 '/post/form' => '../app/routes/other/post/form.php',
 '/post/inv' => '../app/routes/other/post/inv.php',
@@ -69,5 +69,6 @@ return [
 'statusID' => 'job_status',
 'cacheID' => 'job_cache',
 'eventID' => 'events',
+'switchID' => 'switch',
 ],
 ];

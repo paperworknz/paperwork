@@ -19,7 +19,8 @@ $app->get('/login', 'app', function() use ($app){
 			'text' => 'IP: '.$IP
 		]);
 	}
+	
 	$app->build->page('views/login.html', [
-		'register' => false
+		'register' => $app->env['user_registration']
 	]);
 });

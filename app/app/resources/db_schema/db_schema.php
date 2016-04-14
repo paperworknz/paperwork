@@ -11,5 +11,6 @@ $db_schema = [
 	'settingsID'	=> 'settings',
 	'statusID'		=> 'job_status',
 	'cacheID'		=> 'job_cache',
-	'eventID'		=> 'events'
+	'eventID'		=> 'events',
+	'switchID'		=> 'switch',
 ];

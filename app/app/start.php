@@ -20,7 +20,6 @@ $app->event		= new \Paperwork\Baked\Event;	// $app->event: Log to master.events 
 $app->parse		= new \Paperwork\Baked\Parse;	// $app->parse: Parse json <-> php array
 $app->cookie	= new \Paperwork\Baked\Cookie;	// $app->cookie: Refreshing and removing php sessions
 $app->schema	= require '.schema';			// Schema is an Astral array of indexes
-$app->services	= require '.services';			// Micro-services array
 $app->root		= $_ENV['ROOT'];				// $app->root is the document root as a string. From .environment
 
 $app->view->setTemplatesDirectory('../app/views');
