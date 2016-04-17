@@ -49,48 +49,19 @@
 							{% if job.date_created != '0000-00-00 00:00:00' %}
 							<tr>
 								<td>Started</td>
-								<td>
-									{{job.date_created}}
-									{% set difference = date().diff(date(job.date_created)) %}
-									{% if difference.days == 1 %}
-										 - {{ difference.days }} day ago
-									{% elseif difference.days > 1 %}
-										 - {{ difference.days }} days ago
-									{% endif %}
-								</td>
+								<td>{{job.date_created}}</td>
 							</tr>
 							{% endif %}
 							{% if job.date_invoiced != '0000-00-00 00:00:00' %}
 							<tr>
 								<td>Invoiced</td>
-								<td>
-									{{job.date_invoiced}}
-									 - {% set difference = date().diff(date(job.date_invoiced)) %}
-									{% if difference.days == 0 %}
-										Today
-									{% elseif difference.days == 1 %}
-										Yesterday
-									{% else %}
-										{{difference.days}} days ago
-									{% endif %}
-									
-								</td>
+								<td>{{job.date_invoiced}}</td>
 							</tr>
 							{% endif %}
 							{% if job.date_completed != '0000-00-00 00:00:00' %}
 							<tr>
 								<td>Closed</td>
-								<td>
-									{{job.date_completed}}
-									 - {% set difference = date().diff(date(job.date_completed)) %}
-									{% if difference.days == 0 %}
-										Today
-									{% elseif difference.days == 1 %}
-										Yesterday
-									{% else %}
-										{{difference.days}} days ago
-									{% endif %}
-								</td>
+								<td>{{job.date_completed}}</td>
 							</tr>
 							{% endif %}
 							<tr>
