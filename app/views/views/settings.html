@@ -168,6 +168,8 @@
 					});
 					$.post('{{path.root}}/post/status', {
 						data: k
+					}).done(function(){
+						location.reload();
 					});
 				});
 				
