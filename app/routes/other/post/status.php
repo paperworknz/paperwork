@@ -6,6 +6,7 @@ $app->post('/post/status', 'uac', function() use ($app){
 	/* Construction */
 	if(isset($_POST['data'])){
 		$k = $_POST['data'];
+		$statuses = $app->sql->get('job_status')->all()->run();
 		
 		foreach($k as $a => $b){
 			if(isset($b['ID'])){
@@ -15,10 +16,18 @@ $app->post('/post/status', 'uac', function() use ($app){
 					])->where('statusID', '=', $b['ID'])->run();
 				}
 			}else if(isset($b['name'])){
+				$ok = true;
 				if($b['name'] != ''){
-					$app->sql->post('job_status')->with([
-						'name' => $b['name']
-					])->run();
+					foreach($statuses as $status){
+						if($status['name'] == $b['name']){
+							$ok = false;
+						}
+					}
+					if($ok){
+						$app->sql->post('job_status')->with([
+							'name' => $b['name']
+						])->run();
+					}
 				}
 			}
 		}
