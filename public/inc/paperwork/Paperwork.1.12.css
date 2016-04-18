@@ -2,10 +2,12 @@
 html, body {width:100%!important;height:100%!important;padding:0!important;background-color:#e8e8e8!important}
 ul {-webkit-padding-start:0px!important;margin:0!important}
 li {list-style-type:none!important}
-input, select, input[type=number] {
+input, select, input[type=number], input[type=text] {
 	padding:4px;
 	border:1px solid #ccc;
 	border-radius: 0px !important;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 	-webkit-border-radius: 0 !important;
 	-moz-border-radius: 0 !important;
 	-webkit-transition: border-color 0.3s ease;

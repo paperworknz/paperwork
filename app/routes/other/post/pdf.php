@@ -55,4 +55,5 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	]);
 	
 	$response->send();
+	
 });
