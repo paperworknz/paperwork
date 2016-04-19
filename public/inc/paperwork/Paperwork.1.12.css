@@ -6,8 +6,6 @@ input, select, input[type=number], input[type=text] {
 	padding:4px;
 	border:1px solid #ccc;
 	border-radius: 0px !important;
-	-webkit-appearance: none;
-	-moz-appearance: none;
 	-webkit-border-radius: 0 !important;
 	-moz-border-radius: 0 !important;
 	-webkit-transition: border-color 0.3s ease;
@@ -15,6 +13,10 @@ input, select, input[type=number], input[type=text] {
            -o-transition: border-color 0.3s ease;
           -ms-transition: border-color 0.3s ease;
               transition: border-color 0.3s ease;
+}
+input[type=text] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
 }
 select { outline:none; }
 
