@@ -17,6 +17,16 @@ input, select, input[type=number], input[type=text] {
 input[type=text] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
+	padding:4px;
+	border:1px solid #ccc;
+	border-radius: 0px !important;
+	-webkit-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	-webkit-transition: border-color 0.3s ease;
+         -moz-transition: border-color 0.3s ease;
+           -o-transition: border-color 0.3s ease;
+          -ms-transition: border-color 0.3s ease;
+              transition: border-color 0.3s ease;
 }
 select { outline:none; }
 
