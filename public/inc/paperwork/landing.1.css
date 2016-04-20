@@ -109,11 +109,7 @@ section:after{
 	top: 0;
 	background: linear-gradient(transparent 100px, white);
 	background: -moz-linear-gradient(transparent 100px, white); /* FF3.6+ */
-	background: -webkit-gradient(linear, transparent 100px, white); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(transparent 100px, white); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(transparent 100px, white); /* Opera 11.10+ */
-	background: -ms-linear-gradient(transparent 100px, white); /* IE10+ */
-	background: linear-gradient(transparent 100px, white); /* W3C */
+	background: -webkit-linear-gradient(transparent 100px, white); /* Chrome,Safari */
 }
 
 .feature {
