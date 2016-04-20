@@ -14,7 +14,7 @@ input, select {
           -ms-transition: border-color 0.3s ease;
               transition: border-color 0.3s ease;
 }
-input[type=text], input[type=email], input[type=number] {
+input[type=text], input[type=email], input[type=number], input[type=password] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 }
