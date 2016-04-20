@@ -36,7 +36,7 @@
 				</div>
 				<hr>
 				<div id="the-basics">
-					<input class="typeahead" placeholder="Quick Search" />
+					<input type="text" class="typeahead" placeholder="Quick Search" />
 				</div>
             </div>
         </div>
@@ -98,7 +98,7 @@
 							if(data.type == 'success'){
 								ta.src.unshift(data.client.name);
 								clients[data.client.name] = data.client.clientID;
-								$('#the-basics').html('<input class="typeahead" placeholder="Quick Search" />');
+								$('#the-basics').html('<input type="text" class="typeahead" placeholder="Quick Search" />');
 								clientTypeahead();
 							}else{
 								$('#content').prepend('<div style="width:610px" class="alert alert-danger">'+data.message+'</div>');

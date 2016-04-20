@@ -48,7 +48,7 @@
 				<div class="h3">Inventory</div>
 				<div style="width:276px">
 					<input id="name" type='text' name='name' placeholder='Name' class="input-big" style="width:150px" required/>
-					<input id="price" name='price' placeholder='$0.00' class="input-big" style='width:60px'/>
+					<input id="price" type="text" name='price' placeholder='$0.00' class="input-big" style='width:60px'/>
 					<div class="pull-right">
 						<button id="ajax" class="wolfe-btn">ADD</button>
 					</div>
@@ -58,8 +58,8 @@
 					{% for a in inv %}
 					<li data-id="{{a.invID}}">
 						<div class="item">
-							<input data-type="name" class="w1" value="{{a.name}}">
-							<input data-type="price" class="firm-right "value="{{a.price}}">
+							<input type="text" data-type="name" class="w1" value="{{a.name}}">
+							<input type="text" data-type="price" class="firm-right "value="{{a.price}}">
 						</div>
 						<div class="invremove">x</div>
 					</li>
@@ -90,7 +90,7 @@
 				var bulk = {{bulk|raw}},
 					html = '';
 				$.each(bulk, function(a,b){
-					html += "<tr><td><input class=\"bulk-input\" b-name value=\""+a+"\"/></td><td><input class=\"bulk-input\" b-price value=\""+b+"\"/></td></tr>";
+					html += "<tr><td><input type=\"text\" class=\"bulk-input\" b-name value=\""+a+"\"/></td><td><input type=\"text\" class=\"bulk-input\" b-price value=\""+b+"\"/></td></tr>";
 				});
 				swal({
 					html: true,
