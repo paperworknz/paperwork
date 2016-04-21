@@ -132,7 +132,7 @@
 			</div>
 		</div>
 		{% include path.js with {
-			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu']
+			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu', 'selection']
 		}%}
 		<script>
 			var environment = {
@@ -150,7 +150,7 @@
 		</script>
 		<script src="{{path.root}}/services/Form/Painter/{{job.formjs}}"></script>
 		<script src="{{path.root}}/services/Form/Form.min.js"></script>
-		<script>var form = new Form</script>
+		<script>var form = new Form;</script>
 		<script>
 		$(function(){
 			// AJAX CALL FOR PDFS
