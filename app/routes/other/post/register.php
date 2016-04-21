@@ -10,9 +10,10 @@ $app->post('/post/register', function() use ($app){
 		$last = filter_var($_POST['last'], FILTER_SANITIZE_STRING);
 		$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
 		$username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+		$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 		$easy = str_replace(' ', '', $company);
-		$easy = substr($easy, 0, 16); // Return first 16 chars
+		$easy = substr($easy, 0, 16); // Return first 16 chars of compressed company name
 		
 		if($app->sql->get('master.uac')->where('company', '=', $_POST['company'])->run()){
 			$app->flash('error', '<b>'.$company.'</b> is already signed up! Please contact support if you can\'t access your account.');
@@ -25,8 +26,11 @@ $app->post('/post/register', function() use ($app){
 			$app->redirect($app->root);
 		}else{
 			
-			// Password hashing
+			// Hash password
 			$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+			
+			// Generate cookie
+			$cookie = bin2hex(random_bytes(32));
 			
 			// Add user to uac
 			$app->sql->post('master.uac')->with([
@@ -37,7 +41,11 @@ $app->post('/post/register', function() use ($app){
 				'easy'		=> $easy,
 				'first'		=> $first,
 				'last'		=> $last,
+				'cookie'	=> $cookie,
 			])->run();
+			
+			// Get user
+			$user = $app->sql->get('master.uac')->where('username', '=', $username)->run();
 			
 			$app->event->log([
 				'number' => 901,
@@ -64,21 +72,13 @@ $app->post('/post/register', function() use ($app){
 			$raw = file_get_contents('../app/app/resources/db_schema/app_default.sql'); // Load SQL structure script
 			$raw = str_replace('{{database}}', $_ENV['DB_PREFIX'].$username, $raw); // Replace placeholder with `app_$username`
 			
-			try{
-				$app->pdo->master->exec($raw);
-			}catch(PDOException $e){
-				echo $e;
-			}
+			$app->pdo->master->query($raw);
 			
-			$app->event->log([
-				'number' => 903,
-				'title' => 'Database created: '.$_ENV['DB_PREFIX'].$username,
-			]);
+			// Log user in and redirect to /app
+			// Not working. God knows why.
+			//$app->auth->login($_POST['username'], $_POST['password']); // Using un-hashed password
 			
-			// Should re-use login class to log the user in here and redirect to /app
-			
-			// Redirect to login
-			$app->flash('success', 'Account created successfully.');
+			$app->flash('success', 'Congratulations! Please sign in to your new account');
 			$app->redirect($app->root.'/login');
 		}
 		
