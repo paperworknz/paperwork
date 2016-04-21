@@ -9,5 +9,6 @@ $app->get('/get/logout', function() use ($app){
 		'title' => $app->user['username'].' logged out',
 		'uacID' => $app->user['uacID']
 	]);
-	$app->cookie->destroy();
+	
+	$app->auth->logout();
 });
