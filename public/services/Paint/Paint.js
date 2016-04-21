@@ -1,5 +1,7 @@
 var Paint = function(){
 	var a= this;
 	
-	a.s= '.template'; // Parent element
+	a.s= '.tabopen'; // Parent element
+	
+	console.log($('[form-type]').textrange('get', 'start'));
 };

@@ -418,6 +418,8 @@ Form.prototype.margin = function(form){
 		});
 	});
 	
+	// ********* ******** ********* //
+	
 	// Listen to convert
 	$('[margin] [margin-apply]').on('click', function(){
 		// Update a.map with new values then update();
@@ -434,10 +436,19 @@ Form.prototype.margin = function(form){
 		});
 	});
 	
-	// ********* ******** ********* //
-	
 	// Listen to cancel
 	$('[margin] [margin-cancel]').on('click', function(){
+		a.update(form);
+		$('[margin] [form-content]').fadeOut(100, function(){
+			$('[fade]').fadeOut(150, function(){
+				$('[margin]').off().unbind().remove();
+				a.update(form);
+			});
+		});
+	});
+	
+	// Cancel on click out of focus
+	$('[fade]').on('click', function(){
 		a.update(form);
 		$('[margin] [form-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
