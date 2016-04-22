@@ -62,7 +62,7 @@ Form.prototype.margin = function(form){
 		'</div>');
 	
 	// Set input to 0
-	$('[margin] [form-content] input').val(0);
+	$('[margin] [cent], [margin] [range]').val(0);
 	
 	// ********* FORMDOM ********* //
 	
@@ -76,7 +76,7 @@ Form.prototype.margin = function(form){
 	// Remove contenteditable, replace delete with checkbox
 	$('[margin] '+remDOM).each(function(){
 		var itemID = a.p.get('this-item-id', $(this));
-		$(this).prev().removeAttr('contenteditable'); // This is formDOM manipulation, BUT formDOM that is appended.. Marginal..
+		$(this).prev().removeAttr('contenteditable'); // This is formDOM manipulation, BUT formDOM that is appended
 		$(this).replaceWith('<input type="checkbox" class="twig-remove" style="width:15px;height:15px;margin-right:15px" data-item="'+itemID+'">');
 	});
 	
@@ -87,9 +87,10 @@ Form.prototype.margin = function(form){
 	});
 	
 	// Update [cent] from slider
-	$('[margin] [range]').on('input', function(){
+	$('[margin] [range], [margin] [cent]').on('input', function(){
 		
-		$('[cent]').val($(this).val()); // Update input to value of slider
+		$('[margin] [cent]').val($(this).val()); // Update input to value of slider
+		$('[margin] [range]').val($(this).val());
 		var cent = (Number($('[cent]').val()) + 100) / 100; // Get std cent value - must come after val is set
 		
 		// Put data-item into map if checkbox is checked

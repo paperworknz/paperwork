@@ -244,6 +244,106 @@ Form.prototype.update = function(form){
 	// Painter layer
 	if (a.p.update != undefined) a.p.update(form);
 };
+Form.prototype.delete = function(data, callback){
+	var a = this;
+	
+	// Delete form
+	if(data.url != undefined && data.formID != undefined){
+		$.post(data.url, {
+			formID: data.formID
+		}).done(function(data){
+			if(data != '0'){
+				if(callback != undefined) callback(true); // Callback
+			}else{
+				if(callback != undefined) callback(false); // Callback
+				console.log('Form delete failed with Slim 0');
+			}
+		}).fail(function(){
+			if(callback != undefined) callback(false); // Callback
+			console.log('Internal Server Error');
+		});
+	}
+};
+Form.prototype.post = function(data, callback){
+	var a= this;
+	
+	// Post form
+	if(data.url != undefined && data.templateID != undefined &&
+		data.clientID != undefined && data.jobID != undefined){
+		$.post(data.url, {
+			templateID:	data.templateID,
+			clientID:	data.clientID,
+			jobID:		data.jobID
+		}).done(function(json){
+			var json	= JSON.parse(json),
+				obj		= a.tab.objParent,
+				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook));
+			
+			// Create new obj
+			$(obj).find('['+a.tab.heir+']').before('<div '+a.tab.objhook+'="'+objID+'" class="'+a.tab.obj+' h">'+json.html+'</div>');
+			$(obj).find('['+a.tab.heir+']').replaceWith('<div '+a.tab.objhook+'="'+(objID + 1)+'" '+a.tab.heir+' hidden></div>');
+			
+			// Update data-formid on form-blob
+			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', json.formID);
+			
+			// Update a.map
+			var form = $('[data-formid="'+json.formID+'"]');
+			a.crawl(form);
+			
+			// Create new tab
+			a.tab.append(data.templateName, function(){
+				a.populate(form, {
+					jobID: data.jobID,
+					date: json.date,
+					client: json.client,
+				});
+				a.put({
+					url: environment.root+'/put/form',
+					formID: json.formID,
+				}, function(){
+					a.construct(form);
+					callback(form);
+				});
+			});
+		}).fail(function(){
+			if(callback != undefined) callback(false); // Callback
+			console.log('Internal Server Error');
+		});
+	}
+};
+Form.prototype.put = function(data, callback){
+	var a= this,
+		formID= data.formID,
+		form= $('[data-formid="'+formID+'"]'),
+		save= form.clone();
+	
+	// Flush html items
+	a.p.do('flush-items', save);
+	var html= a.strip(save); // Remove interactive tools, returns html
+	
+	// Put form
+	if(data.url != undefined && formID != undefined){
+		$.post(data.url, {
+			formID: formID, // User defined or current
+			html: html,
+			json: JSON.stringify(a.map[formID]),
+		}).done(function(){
+			if(data != '0'){
+				//a.refresh(form);
+				//document.cookie = 'autosave.'+$(a.s).attr('data-formid')+'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+				if(callback != undefined) callback(true); // Callback
+			}else{
+				if(callback != undefined) callback(false); // Callback
+				console.log('Form put failed with Slim 0');
+			}
+		}).fail(function(){
+			if(callback != undefined) callback(false); // Callback
+			console.log('Internal Server Error');
+		});
+	}else{
+		console.log('URL or formID not supplied, form not saved.');
+	}
+};
 Form.prototype.copy = function(form){
 	var a= this,
 		formID= form.attr('data-formid');
@@ -373,7 +473,7 @@ Form.prototype.margin = function(form){
 		'</div>');
 	
 	// Set input to 0
-	$('[margin] [form-content] input').val(0);
+	$('[margin] [cent], [margin] [range]').val(0);
 	
 	// ********* FORMDOM ********* //
 	
@@ -387,7 +487,7 @@ Form.prototype.margin = function(form){
 	// Remove contenteditable, replace delete with checkbox
 	$('[margin] '+remDOM).each(function(){
 		var itemID = a.p.get('this-item-id', $(this));
-		$(this).prev().removeAttr('contenteditable'); // This is formDOM manipulation, BUT formDOM that is appended.. Marginal..
+		$(this).prev().removeAttr('contenteditable'); // This is formDOM manipulation, BUT formDOM that is appended
 		$(this).replaceWith('<input type="checkbox" class="twig-remove" style="width:15px;height:15px;margin-right:15px" data-item="'+itemID+'">');
 	});
 	
@@ -398,9 +498,10 @@ Form.prototype.margin = function(form){
 	});
 	
 	// Update [cent] from slider
-	$('[margin] [range]').on('input', function(){
+	$('[margin] [range], [margin] [cent]').on('input', function(){
 		
-		$('[cent]').val($(this).val()); // Update input to value of slider
+		$('[margin] [cent]').val($(this).val()); // Update input to value of slider
+		$('[margin] [range]').val($(this).val());
 		var cent = (Number($('[cent]').val()) + 100) / 100; // Get std cent value - must come after val is set
 		
 		// Put data-item into map if checkbox is checked
@@ -478,104 +579,4 @@ Form.prototype.pdf = function(form, callback){
 	
 	// Callback function
 	callback(page);
-};
-Form.prototype.delete = function(data, callback){
-	var a = this;
-	
-	// Delete form
-	if(data.url != undefined && data.formID != undefined){
-		$.post(data.url, {
-			formID: data.formID
-		}).done(function(data){
-			if(data != '0'){
-				if(callback != undefined) callback(true); // Callback
-			}else{
-				if(callback != undefined) callback(false); // Callback
-				console.log('Form delete failed with Slim 0');
-			}
-		}).fail(function(){
-			if(callback != undefined) callback(false); // Callback
-			console.log('Internal Server Error');
-		});
-	}
-};
-Form.prototype.post = function(data, callback){
-	var a= this;
-	
-	// Post form
-	if(data.url != undefined && data.templateID != undefined &&
-		data.clientID != undefined && data.jobID != undefined){
-		$.post(data.url, {
-			templateID:	data.templateID,
-			clientID:	data.clientID,
-			jobID:		data.jobID
-		}).done(function(json){
-			var json	= JSON.parse(json),
-				obj		= a.tab.objParent,
-				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook));
-			
-			// Create new obj
-			$(obj).find('['+a.tab.heir+']').before('<div '+a.tab.objhook+'="'+objID+'" class="'+a.tab.obj+' h">'+json.html+'</div>');
-			$(obj).find('['+a.tab.heir+']').replaceWith('<div '+a.tab.objhook+'="'+(objID + 1)+'" '+a.tab.heir+' hidden></div>');
-			
-			// Update data-formid on form-blob
-			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', json.formID);
-			
-			// Update a.map
-			var form = $('[data-formid="'+json.formID+'"]');
-			a.crawl(form);
-			
-			// Create new tab
-			a.tab.append(data.templateName, function(){
-				a.populate(form, {
-					jobID: data.jobID,
-					date: json.date,
-					client: json.client,
-				});
-				a.put({
-					url: environment.root+'/put/form',
-					formID: json.formID,
-				}, function(){
-					a.construct(form);
-					callback(form);
-				});
-			});
-		}).fail(function(){
-			if(callback != undefined) callback(false); // Callback
-			console.log('Internal Server Error');
-		});
-	}
-};
-Form.prototype.put = function(data, callback){
-	var a= this,
-		formID= data.formID,
-		form= $('[data-formid="'+formID+'"]'),
-		save= form.clone();
-	
-	// Flush html items
-	a.p.do('flush-items', save);
-	var html= a.strip(save); // Remove interactive tools, returns html
-	
-	// Put form
-	if(data.url != undefined && formID != undefined){
-		$.post(data.url, {
-			formID: formID, // User defined or current
-			html: html,
-			json: JSON.stringify(a.map[formID]),
-		}).done(function(){
-			if(data != '0'){
-				//a.refresh(form);
-				//document.cookie = 'autosave.'+$(a.s).attr('data-formid')+'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-				if(callback != undefined) callback(true); // Callback
-			}else{
-				if(callback != undefined) callback(false); // Callback
-				console.log('Form put failed with Slim 0');
-			}
-		}).fail(function(){
-			if(callback != undefined) callback(false); // Callback
-			console.log('Internal Server Error');
-		});
-	}else{
-		console.log('URL or formID not supplied, form not saved.');
-	}
 };
