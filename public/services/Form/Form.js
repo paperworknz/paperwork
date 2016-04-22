@@ -388,7 +388,7 @@ Form.prototype.margin = function(form){
 		$('[margin-parent]').append(
 			'<div class="margin-item wrapper lowlight" item-id="'+a+'">'+
 				'<input type="checkbox" style="float:left;margin-left:5px">'+
-				'<div style="float:left;width:290px;overflow:hidden;white-space:nowrap;position:relative;margin:0px 10px;height:24px;line-height:24px">'+b.item+'</div>'+
+				'<div style="float:left;width:285px;overflow:hidden;white-space:nowrap;position:relative;margin:0px 10px;height:24px;line-height:24px">'+b.item+'</div>'+
 				'<div margin-qty style="float:left;width:50px;border-left:1px solid black;padding:0px 5px;text-align:center;height:24px;line-height:24px">'+b.quantity+'</div>'+
 				'<div style="float:left;border-left:1px solid black;padding:0px 5px;width:240px;text-align:center;height:24px;line-height:24px;">$'+comma(std(pricemap[a].original)) + ' > <span margin-price style="font-weight:600">'+b.price+'</span></div>'+
 				'<div margin-total style="float:left;border-left:1px solid black;width:70px;text-align:center;height:24px;line-height:24px">'+b.total+'</div>'+
