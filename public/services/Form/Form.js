@@ -375,7 +375,8 @@ Form.prototype.margin = function(form){
 		width:'710px',
 		'background-color':'white',
 		border:'none',
-		'min-height':'50px'
+		'min-height':'50px',
+		opacity: '0.00'
 	});
 	$('[margin-content]').html('<div margin-parent></div>');
 	$('[margin-parent]').css({
@@ -390,7 +391,9 @@ Form.prototype.margin = function(form){
 				'<input type="checkbox" style="float:left;margin-left:5px">'+
 				'<div style="float:left;width:285px;overflow:hidden;white-space:nowrap;position:relative;margin:0px 10px;height:24px;line-height:24px">'+b.item+'</div>'+
 				'<div margin-qty style="float:left;width:50px;border-left:1px solid black;padding:0px 5px;text-align:center;height:24px;line-height:24px">'+b.quantity+'</div>'+
-				'<div style="float:left;border-left:1px solid black;padding:0px 5px;width:230px;text-align:center;height:24px;line-height:24px;">$'+comma(std(pricemap[a].original)) + ' > <span margin-price style="font-weight:600">'+b.price+'</span></div>'+
+				'<div style="float:left;border-left:1px solid black;padding:0px 5px;width:230px;text-align:center;height:24px;line-height:24px;">'+
+					'$'+comma(std(pricemap[a].original)) + ' > <span margin-price style="font-weight:600">'+b.price+'</span><span margin-percent> (+'+((b.margin * 100) - 100).toFixed(1)+'%)</span>'+
+				'</div>'+
 				'<div margin-total style="float:left;border-left:1px solid black;width:85px;text-align:center;height:24px;line-height:24px">'+b.total+'</div>'+
 			'</div>'
 		);
@@ -433,7 +436,8 @@ Form.prototype.margin = function(form){
 				var price = pricemap[itemID].original,
 					qty = $(this).find('[margin-qty]').html().replace('$', '').replace(',', '');
 				
-				$(this).find('span').html('$'+comma(std(price * cent)));
+				$(this).find('[margin-price]').html('$'+comma(std(price * cent)));
+				$(this).find('[margin-percent]').html(' (+'+Number(((cent*100)-100)).toFixed(1)+'%)');
 				$(this).find('[margin-total]').html('$'+comma(std((price * cent) * qty)));
 				
 				// Update a.map margin property 
