@@ -15,7 +15,16 @@ var Form = function(){
 	$.get(environment.root+'/get/inv', function(data){
 		$.get(environment.root+'/get/form/'+environment.jobID, function(items){
 			var src = [],
-				map = JSON.parse(items);
+				map = JSON.parse(items);//
+			
+			// Add margin property to each item in json
+			$.each(map, function(a, b){
+				$.each(b.items, function(c,d){
+					if(d.margin == undefined || d.margin == 0){
+						map[a].items[c].margin = '1';
+					}
+				});
+			});
 			
 			a.inv = JSON.parse(data); // Inventory
 			$.each(a.inv, function(a,b){src.push(a)}); // Typeahead array of inventory

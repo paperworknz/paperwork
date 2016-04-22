@@ -21,11 +21,18 @@ Form.prototype.update = function(form){
 		i += Number(total);
 		
 		// Standardize data
-		price = nprice > 0.00 ? nprice : price;
+		price = nprice > 0.00 ? nprice : price;//
 		
 		// Update DOM
 		a.p.do('price-by-ID', form, {itemID:itemID, val:'$'+comma(price)});
 		a.p.do('total-by-ID', form, {itemID:itemID, val:'$'+comma(total)});
+		
+		// 
+		if(a.map[formID].items[itemID] != undefined){
+			if(price != a.map[formID].items[itemID].price.replace('$', '').replace(',', '') && $('[margin]').length == 0){
+				a.map[formID].items[itemID].margin = 1;
+			}
+		}
 	});
 	
 	
