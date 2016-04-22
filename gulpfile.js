@@ -11,6 +11,7 @@ gulp.task('watch', function(){
 	form.on('change', function(){
 		gulp.start('form-min');
 	});
+	gulp.start('form-min');
 });
 
 // Form minification, run on change

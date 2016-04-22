@@ -1,55 +1,63 @@
 Form.prototype.margin = function(form){
 	
-	/*
-	Listen. We have a.map so we don't need to dice around with DOM cloning to get this done.
-	This can easily break depending on the form provided.
-	We should build a generic element from a.map instead of cloning.
-	*/
-	
 	var a= this,
 		formID= form.attr('data-formid'),
-		map = [];
+		remDOM = a.p.get('remove'),
+		pricemap = {},
+		priceDOM = a.p.get('item-price'),
+		formcontent = form.find($(a.p.get('form-content', form)));
+		
+	var std = function(x){return x.toFixed(2);};
+	var comma = function(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");};
 	
 	a.dark(form); // Turn off interaction
 	
-	var concern = form.find($(a.p.get('form-content', form))),
-		button = $(this).closest($('.box'));
-	
-	var ely = {
-		html: {
-			clone:		concern.clone(),
-			position:	concern.offset(),
-			width:		concern.outerWidth()
-		},
-		margin: {
-			clone:		button.clone(),
-			position:	button.offset(),
-			width:		button.outerWidth(),
-		}
-	};
+	// List of current prices on form, and the original price via math
+	$.each(a.map[formID].items, function(a,b){
+		var itemID = a,
+			margin = b.margin;
+		
+		pricemap[itemID] = { 
+			'current': b.price,
+			'original': Number(b.price.replace('$', '').replace(',', '')) / margin,
+		};
+	});
 	
 	// Darken page, then show the concern
 	$('#content').after('<div margin></div>'); // Append margin container
-	$('[margin]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>')
-		.append(ely.html.clone.css({
-			'z-index':999,
-			'position':'absolute',
-			'top':ely.html.position.top,
-			'left':ely.html.position.left,
-			'width':ely.html.width,
-			'margin-top':0,
-			'background-color':'white',
-			'box-shadow':'0 0 20px rgba(0,0,0,.33)',
-			'opacity':0.0
-		}));
+	$('[margin]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>');
+	$('[fade]').after('<div margin-content></div>');
+	$('[margin-content]').css({
+		position:'absolute',
+		'z-index':999,
+		top:formcontent.offset().top - 51,
+		left:formcontent.offset().left - 30,
+		width:'710px',
+		'background-color':'white',
+		border:'none',
+		'min-height':'50px'
+	});
+	$('[margin-content]').html('<div margin-parent></div>');
+	$('[margin-parent]').css({
+		margin:'10px',
+		'border': '1px solid black'
+	});
 	
-	// Fade in
-	$('[fade]').animate({'opacity':0.5}, 150, function(){
-		$('[margin] [form-content]').animate({'opacity':1}, 100);
+	// Append items 
+	$.each(a.map[formID].items, function(a,b){
+		$('[margin-parent]').append(
+			'<div class="margin-item wrapper lowlight" item-id="'+a+'">'+
+				'<input type="checkbox" style="float:left;margin-left:5px">'+
+				'<div style="float:left;width:290px;overflow:hidden;white-space:nowrap;position:relative;margin:0px 10px;height:24px;line-height:24px">'+b.item+'</div>'+
+				'<div margin-qty style="float:left;width:50px;border-left:1px solid black;padding:0px 5px;text-align:center;height:24px;line-height:24px">'+b.quantity+'</div>'+
+				'<div style="float:left;border-left:1px solid black;padding:0px 5px;width:240px;text-align:center;height:24px;line-height:24px;">$'+comma(std(pricemap[a].original)) + ' > <span margin-price style="font-weight:600">'+b.price+'</span></div>'+
+				'<div margin-total style="float:left;border-left:1px solid black;width:70px;text-align:center;height:24px;line-height:24px">'+b.total+'</div>'+
+			'</div>'
+		);
 	});
 	
 	// Append slider
-	$('[margin] [form-content]').append(
+	$('[margin] [margin-content]').append(
 		'<div class="ac" style="padding:10px 10px 0px 10px;">'+
 			'<input cent style="width:60px;text-align:center" /> %'+
 		'</div>'+
@@ -62,49 +70,47 @@ Form.prototype.margin = function(form){
 		'</div>');
 	
 	// Set input to 0
-	$('[margin] [form-content] input').val(0);
+	$('[margin] [cent], [margin] [range]').val(0);
+	
+	// Fade in 
+	$('[fade]').animate({'opacity':0.5}, 150, function(){
+		$('[margin] [margin-content]').animate({'opacity':1}, 100);
+	});
 	
 	// ********* FORMDOM ********* //
 	
-	var remDOM = a.p.get('remove'),
-		current = [],
-		priceDOM = a.p.get('item-price');
-		
-	var std = function(x){return x.toFixed(2);};
-	var comma = function(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");};
-	
-	// Remove contenteditable, replace delete with checkbox
-	$('[margin] '+remDOM).each(function(){
-		var itemID = a.p.get('this-item-id', $(this));
-		$(this).prev().removeAttr('contenteditable'); // This is formDOM manipulation, BUT formDOM that is appended.. Marginal..
-		$(this).replaceWith('<input type="checkbox" class="twig-remove" style="width:15px;height:15px;margin-right:15px" data-item="'+itemID+'">');
-	});
-	
-	// List of current prices on form
-	$('[margin] '+priceDOM).each(function(){
-		var itemID = a.p.get('this-item-id', $(this));
-		current[itemID] = $(this).html();
-	});
-	
 	// Update [cent] from slider
-	$('[margin] [range]').on('input', function(){
+	$('[margin] [range], [margin] [cent]').on('input', function(){
 		
-		$('[cent]').val($(this).val()); // Update input to value of slider
+		$('[margin] [cent]').val($(this).val()); // Update input to value of slider
+		$('[margin] [range]').val($(this).val());
 		var cent = (Number($('[cent]').val()) + 100) / 100; // Get std cent value - must come after val is set
 		
-		// Put data-item into map if checkbox is checked
-		$('[margin] input[type=checkbox]').each(function(){
-			if($(this)[0].checked) map.push($(this).attr('data-item'));
-		});
-		
-		// Update price in real time
-		$('[margin] '+priceDOM).each(function(){
-			var itemID = a.p.get('this-item-id', $(this));
-			if(map.includes(itemID)){
-				var price = Number(current[itemID].replace('$', '').replace(',', ''));
-				$(this).html('$'+comma(std(price * cent)));
+		// Update price and pricemap in real time 
+		$('[margin] [item-id]').each(function(){
+			var itemID = $(this).attr('item-id');
+			if($(this).find('input[type=checkbox]')[0].checked){
+				var price = pricemap[itemID].original,
+					qty = $(this).find('[margin-qty]').html().replace('$', '').replace(',', '');
+				
+				$(this).find('span').html('$'+comma(std(price * cent)));
+				$(this).find('[margin-total]').html('$'+comma(std((price * cent) * qty)));
+				
+				// Update a.map margin property 
+				a.map[formID].items[itemID].margin = cent;
 			}
 		});
+	});
+	
+	// Highlight item if checked
+	$('input:checkbox').on('change', function(){
+		var item = $(this).closest('[item-id]');
+		
+		if(item.hasClass('lowlight')){
+			item.removeClass('lowlight');
+		}else{
+			item.addClass('lowlight');
+		}
 	});
 	
 	// ********* ******** ********* //
@@ -114,11 +120,11 @@ Form.prototype.margin = function(form){
 		// Update a.map with new values then update();
 		form.find(priceDOM).each(function(){
 			var itemID = a.p.get('this-item-id', $(this));
-			$(this).html($('[margin] [data-item="'+itemID+'"] '+priceDOM).html());
+			$(this).html($('[margin] [item-id="'+itemID+'"] span').html());
 		});
 		a.update(form);
 		
-		$('[margin] [form-content]').fadeOut(100, function(){
+		$('[margin] [margin-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
 				$('[margin]').off().unbind().remove();
 			});
@@ -128,7 +134,7 @@ Form.prototype.margin = function(form){
 	// Listen to cancel
 	$('[margin] [margin-cancel]').on('click', function(){
 		a.update(form);
-		$('[margin] [form-content]').fadeOut(100, function(){
+		$('[margin] [margin-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
 				$('[margin]').off().unbind().remove();
 				a.update(form);
@@ -139,11 +145,12 @@ Form.prototype.margin = function(form){
 	// Cancel on click out of focus
 	$('[fade]').on('click', function(){
 		a.update(form);
-		$('[margin] [form-content]').fadeOut(100, function(){
+		$('[margin] [margin-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
 				$('[margin]').off().unbind().remove();
 				a.update(form);
 			});
 		});
 	});
+	
 };
