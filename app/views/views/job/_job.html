@@ -12,7 +12,7 @@
 			<div style="width:100%">
             	{% include path.flash %}
 			</div>
-			<div class="tabs">
+			<div class="tabs-job">
 				<ul class="wrapper">
 					<li data-tab="0" id="summarytab" class="tab noselect">Summary</li>
 					{% set i = 0 %}
@@ -25,8 +25,8 @@
 					<li data-tab="+" id="newtab" class="tab noselect">+</li>
 				</ul>
 			</div>
-			<div class="obj" style="display:inline-block;margin-bottom:5px">
-				<div data-obj="0" id="summary" class="tabobj box material">
+			<div class="obj" style="display:inline-block;margin-bottom:15px">
+				<div data-obj="0" id="summary" class="tabobj box job-material">
 					<h3 style="margin-bottom:0">
 						<input type="text" class="jobName" name="jobName" value="{{job.name}}" placeholder="Job name"/>
 						<span class="pull-right" style="color:green">{{job.jobID}}</span>
@@ -108,7 +108,7 @@
 				{% endfor %}
 				{% set i = i + 1 %}
 				<div data-obj="{{i}}" heir hidden></div>
-				<div data-obj="+" id="newtabscreen" class="tabobj box material h">
+				<div data-obj="+" id="newtabscreen" class="tabobj box job-material h">
 					<table style="height:130px" form-templates>
 						<tbody>
 							<tr>
@@ -122,11 +122,11 @@
 					</table>
 				</div>
 			</div>
-			<div note-parent class="box wrapper" style="display:inline-block;vertical-align:top;padding:5px;">
+			<div note-parent class="box wrapper note-parent" style="display:inline-block;vertical-align:top;padding:5px;">
 				<div style="color:#7f8c8d">
 					<span style="line-height:9pt;font-size:9pt">Notes</span>
 				</div>
-				<div note-wrapper style="width:250px;min-height:209px;border:1px solid #eee;cursor:text;min-width:30px;" class="wrapper" >
+				<div note-wrapper class="note-wrapper" style="width:250px;min-height:209px;border:1px solid #eee;cursor:text;min-width:30px;" class="wrapper" >
 					<div id="notes" style="padding:4px;min-width:30px;min-height:30px;outline:none" contenteditable>{{job.notes | raw}}</div>
 				</div>
 			</div>
@@ -142,6 +142,7 @@
 			};
 			var pw	= new Paperwork;
 			var tab	= new Tab({
+				tabParent: '.tabs-job',
 				cookie: {
 					name:	'job',
 					value:	'{{jobID}}',
@@ -234,7 +235,7 @@
 			});
 			
 			// Right click context menu
-			$('.tabs').contextMenu({
+			$('.tabs-job').contextMenu({
 				selector: '.tab',
 				callback: function(key){
 					var item = $(this).attr('data-tab'),
