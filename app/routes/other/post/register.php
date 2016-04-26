@@ -11,19 +11,19 @@ $app->post('/post/register', function() use ($app){
 		$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
 		$username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
 		$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+		$confirm = filter_var($_POST['confirm'], FILTER_SANITIZE_STRING);
 		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 		$easy = str_replace(' ', '', $company);
 		$easy = substr($easy, 0, 16); // Return first 16 chars of compressed company name
 		
 		if($app->sql->get('master.uac')->where('company', '=', $_POST['company'])->run()){
-			$app->flash('error', '<b>'.$company.'</b> is already signed up! Please contact support if you can\'t access your account.');
-			$app->redirect($app->root);
+			echo $app->build->error('<b>'.$company.'</b> is already signed up! Please contact support if you can\'t access your account.');
 		}else if($app->sql->get('master.uac')->where('email', '=', $_POST['email'])->run()){
-			$app->flash('error', '<b>'.$_POST['email'].'</b> is already registered. Please contact support if you can\'t access your account.');
-			$app->redirect($app->root);
+			echo $app->build->error('<b>'.$_POST['email'].'</b> is already registered. Please contact support if you can\'t access your account.');
 		}else if($app->sql->get('master.uac')->where('username', '=', $_POST['username'])->run()){
-			$app->flash('error', 'Sorry, the username <b>'.$_POST['username'].'</b> is taken. Please try something else.');
-			$app->redirect($app->root);
+			echo $app->build->error('Sorry, the username <b>'.$_POST['username'].'</b> is taken. Please try something else.');
+		}else if($password != $confirm){
+			echo $app->build->error('Sorry, the passwords your entered did not match.');
 		}else{
 			
 			// Hash password
@@ -74,12 +74,10 @@ $app->post('/post/register', function() use ($app){
 			
 			$app->pdo->master->query($raw);
 			
-			// Log user in and redirect to /app
-			// Not working. God knows why.
-			//$app->auth->login($_POST['username'], $_POST['password']); // Using un-hashed password
-			
-			$app->flash('success', 'Congratulations! Please sign in to your new account');
-			$app->redirect($app->root.'/login');
+			// Return
+			echo $app->build->success([
+				'message' => 'Registration Successful'
+			]);
 		}
 		
 	}else{

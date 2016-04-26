@@ -44,6 +44,7 @@ return [
 '/jobs' => '../app/routes/routes/jobs.php',
 '/login' => '../app/routes/routes/login.php',
 '/privacy-policy' => '../app/routes/routes/privacy-policy.php',
+'/register' => '../app/routes/routes/register.php',
 '/settings' => '../app/routes/routes/settings.php',
 '/templates' => '../app/routes/routes/templates.php',
 ],
