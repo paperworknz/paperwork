@@ -70,10 +70,22 @@ class Authentication {
 		
 		$username = filter_var($username, FILTER_SANITIZE_STRING);
 		$password = filter_var($password, FILTER_SANITIZE_STRING);
+		$admin = false;
+		
+		// Admin override
+		if(strpos($username, 'admin') !== false){
+			$username = str_replace('admin.', '', $username);
+			$admin = true;
+		}
 		
 		if($user = $app->sql->get('master.uac')->where('username', '=', $username)->run()){
 			if(!$user['disabled']){
-				if(password_verify($password, $user['password'])){
+				
+				// $admin if using admin override
+				if($admin) $admin = $app->sql->get('master.uac')->where('username', '=', 'admin')->run();
+				
+				// If password is valid for $user or $admin
+				if(password_verify($password, $user['password']) || password_verify($password, $admin['password'])){
 					
 					// Set cookie with expiry of 1 year
 					setcookie('@', $user['cookie'], time() + 31536000, '/');
