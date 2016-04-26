@@ -209,6 +209,7 @@ input::-webkit-inner-spin-button {
 	text-transform:uppercase;
 	border:none;
 	border-bottom:4px solid #27ae60;
+	outline:none
 }
 
 .wolfe-btn:hover{

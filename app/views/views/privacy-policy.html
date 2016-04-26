@@ -4,17 +4,17 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="date" content="{{date}}">
-		<title>Paperwork</title>
+		<title>Paperwork - Privacy Policy</title>
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
 		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
-		<link href="{{path.root}}/inc/paperwork/landing.1.css" rel='stylesheet' type="text/css">
+		<link href="{{path.root}}/inc/paperwork/Public.css" rel='stylesheet' type="text/css">
 	</head>
 	<body>
 		<header>
 			<div class="wrapper width">
 				<div class="nav">
 					<div class="logo">Paperwork</div>
-					<ul class="nav_list wrapper">
+					<ul class="nav_list_less wrapper">
 						<li>
 							<span class="color_hint" home>Home</span>
 						</li>
@@ -22,7 +22,7 @@
 							<span login>Log In</span>
 						</li>
 						<li>
-							<span class="special" login>Sign Up</span>
+							<span class="special" register>Sign Up</span>
 						</li>
 					</ul>
 				</div>
@@ -81,6 +81,9 @@
 				});
 				$('[login]').on('click', function(){
 					window.location = '{{path.root}}/login';
+				});
+				$('[register]').on('click', function(){
+					window.location = '{{path.root}}/register';
 				});
 				
 				// Interaction

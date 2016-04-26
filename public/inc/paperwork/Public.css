@@ -1,3 +1,5 @@
+/* Infrastructure */
+
 body {font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif}
 ul {-webkit-padding-start:0px!important;margin:0!important}
 li {list-style-type:none!important}
@@ -11,7 +13,7 @@ li {list-style-type:none!important}
 	min-width: 343px;
 }
 
-.nav_list span {
+.nav_list span, .nav_list_less span {
 	-webkit-touch-callout: none; /* iOS Safari */
 	-webkit-user-select: none;   /* Chrome/Safari/Opera */
 	-khtml-user-select: none;    /* Konqueror */
@@ -20,7 +22,7 @@ li {list-style-type:none!important}
 	user-select: none;
 	background-color:white;
 }
-	
+
 @media screen and (max-width:921px){
 	feature {width: 100%!important}
 }
@@ -28,14 +30,40 @@ li {list-style-type:none!important}
 @media screen and (max-width:700px){
 	.logo {float: none!important;text-align:center}
 	.nav_list {float: none!important;width:315px;margin: 0 auto!important;}
+	.nav_list_less {float: none!important;width:220px;margin: 0 auto!important;}
 }
 
 @media screen and (max-width:500px){
 	.width {padding: 0px!important;}
 	video {min-width: 330px!important}
 	feature {padding-left: 5px!important;padding-right: 5px!important}
-	.wolfe-btn {font-size: 15px!important;line-height:15px!important;height:55px}
 	.feature .main_title {text-align:center}
+	.form {min-width:330px!important}
+	.large {font-size:18px!important}
+}
+
+input[type=text], input[type=email], input[type=password] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border:1px solid #ccc;
+	border-radius: 0px !important;
+	-webkit-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	-webkit-transition: border-color 0.3s ease;
+         -moz-transition: border-color 0.3s ease;
+           -o-transition: border-color 0.3s ease;
+          -ms-transition: border-color 0.3s ease;
+              transition: border-color 0.3s ease;
+}
+
+.no-click{
+	pointer-events:none!important;
+	cursor: default;
+}
+
+.disable {
+	color: #999;
+	cursor: default;
 }
 
 /* Structure */
@@ -64,12 +92,12 @@ section:after{
 	padding-bottom: 30px;
 }
 
-.nav_list {
+.nav_list, .nav_list_less {
 	display: block;
 	float: right;
 }
 
-.nav_list li {
+.nav_list li, .nav_list_less li {
 	float: left;
 	margin: 20px 15px;
 	cursor: pointer;
@@ -157,6 +185,7 @@ feature {
 	text-transform:uppercase;
 	border:none;
 	border-bottom:4px solid #27ae60;
+	outline:none
 }
 
 .wolfe-btn:hover{
@@ -166,7 +195,7 @@ feature {
 
 .wolfe-btn:active{
 	border:none;
-	margin-top:14px;
+	margin-top:4px;
 	outline:0;
 }
 
@@ -191,6 +220,8 @@ video {
 
 .form_input {
 	width: 70%;
+	padding-top: 1px;
+	padding-bottom: 1px;
 }
 
 .form_button {
@@ -200,3 +231,39 @@ video {
 
 .top {padding-bottom:120px}
 .foot {padding-bottom:200px}
+
+/* Login/Registration */
+
+.user-information td:nth-child(odd) {
+	color: #999;
+	text-align: right;
+}
+
+.user-information td:nth-child(even) {
+	font-size: 20px;
+}
+
+.user-information td {
+	padding: 5px 10px;
+}
+
+.user-information input, .user-information button {padding:8px}
+
+.login input, .login button {
+	display:block;
+	margin: 15px 0px;
+	font-size:16px;
+	padding: 15px;
+	width:100%;
+	height:53px;
+}
+
+.wolfe-btn-wait{
+	padding:7px!important;
+	opacity:0.5!important;
+	pointer-events:none!important;
+}
+
+.wolfe-btn-wait .wait {
+	margin: auto;
+}

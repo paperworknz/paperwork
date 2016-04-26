@@ -1,135 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include path.head %}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="date" content="{{date}}">
+		<title>Paperwork - Login</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/paperwork/Public.css" rel='stylesheet' type="text/css">
+		{% include path.sweetalert %}
 	</head>
 	<body>
-		<div class="wrap">
-			<div class="container buffer">
-				<div class="pull-right login-high">
-					<div class="login-container" login>
-						<div class="login-form">
-							<form login-form method="post" action="{{path.root}}/post/login">
-								<div login-fields>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="username" autocomplete="off" value="" placeholder="Email" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="password" class="login-input" name="password" autocomplete="off" value="" placeholder="Password" />
-										</div>
-									</div>
-									{% include path.flash %}
-									{% if maintenance %}
-									<div class="alert alert-info" style="margin-bottom:10px;">
-										We're currently offline for maintenance and will be back up as soon as we can. Sorry about this!
-									</div>
-									{% endif %}
-								</div>
-								<div class="login-wrap clearfix">
-									<button type="submit" class="btn btn-success login-action pull-right" >Login</button>
-								</div>
-							</form>
-						</div>
-					</div>
-					{% if register %}
-					<div class="login-container h" register>
-						<div class="login-form">
-							<div register-fields style="display:none">
-								<form register-form method="post" action="{{path.root}}/post/register">
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="first" autocomplete="off" value="" placeholder="First Name" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="last" autocomplete="off" value="" placeholder="Last Name" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="company" autocomplete="off" value="" placeholder="Company Name" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="email" class="login-input" name="email" autocomplete="off" value="" placeholder="Email" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="text" class="login-input" name="username" autocomplete="off" value="" placeholder="Username" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										<div class="login-wrap">
-											<input type="password" class="login-input" name="password" autocomplete="off" value="" placeholder="Password" />
-										</div>
-									</div>
-									<div class="login-text-wrap">
-										By registering you agree to our <a href="{{path.root}}/privacy-policy">Privacy Policy</a>
-									</div>
-									{% include path.flash %}
-								</div>
-								<div class="login-wrap clearfix">
-									<button register-form-btn class="btn btn-success login-action pull-right" >Register</button>
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="login-container pull-right" style="margin-top:5px;width:180px">
-						<div class="login-form">
-							<button class="btn btn-info w1" btn-toggle>Sign Up</button>
-						</div>
-					</div>
-					{% endif %}
+		<header>
+			<div class="wrapper width">
+				<div class="nav">
+					<div class="logo">Paperwork</div>
+					<ul class="nav_list_less wrapper">
+						<li>
+							<span class="color_hint" home>Home</span>
+						</li>
+						<li class="disable no-click">
+							<span login>Log In</span>
+						</li>
+						<li>
+							<span class="special" register>Sign Up</span>
+						</li>
+					</ul>
 				</div>
 			</div>
-		</div>
-		{% if register %}
+		</header>
+		<section>
+			<div class="width">
+				<div class="main top centered">
+					<div style="display:inline-block;width:30%;min-width:280px">
+						<div class="login user-information">
+							<input type="text" name="username" placeholder="Username">
+							<input type="password" name="password" placeholder="Password">
+							<button class="wolfe-btn next-step">LOGIN</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 		{% include path.js %}
+		<script>var pw = new Paperwork;</script>
 		<script>
 			$(function(){
-				$('[btn-toggle]').on('click', function(){
-					if($(this).html() == 'Sign Up'){
-						$(this).html('Let me Login');
-						$('[register]').css('height', $('[login]').height());
-						$('[login]').addClass('h');
-						$('[register]').removeClass('h');
-						$('[register-fields]').fadeIn();
-						$('[register]').animate({
-							height: '348px'
-						}, 400);
-					}else{
-						$(this).html('Sign Up');
-						$('[register]').addClass('h');
-						$('[login]').removeClass('h');
-						$('[login-fields]').fadeIn();
-						$('[login]').animate({
-							height: '142px'
-						}, 400);
-					}
+				// Nav
+				$('[home]').on('click', function(){
+					window.location = '{{path.root}}';
+				});
+				$('[login]').on('click', function(){
+					window.location = '{{path.root}}/login';
+				});
+				$('[register]').on('click', function(){
+					window.location = '{{path.root}}/register';
 				});
 				
-				/*$('[register-form-btn]').on('click', function(){
-					$('[register-form-btn]').prop('disabled', true);
-					$('[btn-toggle]').prop('disabled', true);
-					$('[register-form-btn]').html('Working on it...');
-					$.post('{{path.root}}/post/database', {
-						username: $('[register-fields] [name="username"]').val()
+				$('.next-step').on('click', function(){
+					
+					pw.wait($(this));
+					// Front-end validation //
+					
+					$.post('{{path.root}}/post/login', {
+						username: $('input[name=username]').val(),
+						password: $('input[name=password]').val(),
 					}).done(function(data){
-						if(data == 1){
-							$('[register-form]').submit();
+						data = JSON.parse(data);
+						if(data.type == 'success'){
+							window.location = data.location;
 						}else{
-							console.log(data);
+							if($('.alert').length > 0){
+								$('.alert').html(data.message);
+							}else{
+								$('.next-step').before('<div class="alert alert-danger">'+data.message+'</div>');
+							}
+							pw.ready($('.next-step'), 'NEXT STEP');
 						}
 					});
-				});*/
+				})
 			});
 		</script>
-		{% endif %}
 	</body>
 </html>

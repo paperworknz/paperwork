@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="date" content="{{date}}">
+		<title>Paperwork - Register</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/paperwork/Public.css" rel='stylesheet' type="text/css">
+		{% include path.sweetalert %}
+	</head>
+	<body>
+		<header>
+			<div class="wrapper width">
+				<div class="nav">
+					<div class="logo">Paperwork</div>
+					<ul class="nav_list_less wrapper">
+						<li>
+							<span class="color_hint" home>Home</span>
+						</li>
+						<li>
+							<span login>Log In</span>
+						</li>
+						<li class="disable no-click">
+							<span>Sign Up</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<section>
+			<div class="width">
+				<div class="main top centered">
+					<span class="main_title">Welcome to Paperwork</span>
+					<div style="padding-bottom:20px;">Please fill in the boxes below</div>
+					<div style="display:inline-block">
+						<table class="user-information">
+							<tbody>
+								<tr>
+									<td>
+										First Name
+									</td>
+									<td>
+										<input type="text" name="first" placeholder="">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Last Name
+									</td>
+									<td>
+										<input type="text" name="last" placeholder="">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Company/Trade Name
+									</td>
+									<td>
+										<input type="text" name="company" placeholder="">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Email
+									</td>
+									<td>
+										<input type="email" name="email" placeholder="">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Username
+									</td>
+									<td>
+										<input type="text" name="username" placeholder="">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Password
+									</td>
+									<td>
+										<input type="password" name="password" placeholder="">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Confirm Password
+									</td>
+									<td>
+										<input type="password" name="confirm" placeholder="">
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td style="font-size: 11px;text-align:left;padding-bottom:10px">By registering you agree to our <a href="{{path.root}}/privacy-policy">Privacy Policy</a></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<button class="wolfe-btn next-step" style="float:left;outline:none">NEXT STEP</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% include path.js %}
+		<script>var pw = new Paperwork;</script>
+		<script>
+			$(function(){
+				// Nav
+				$('[home]').on('click', function(){
+					window.location = '{{path.root}}';
+				});
+				$('[login]').on('click', function(){
+					window.location = '{{path.root}}/login';
+				});
+				
+				$('.next-step').on('click', function(){
+					
+					if(!$(this).hasClass('wolfe-btn-wait')){
+						pw.wait($(this));
+						
+						$.post('{{path.root}}/post/register', {
+							first: $('input[name=first]').val(),
+							last: $('input[name=last]').val(),
+							company: $('input[name=company]').val(),
+							email: $('input[name=email]').val(),
+							username: $('input[name=username]').val(),
+							password: $('input[name=password]').val(),
+							confirm: $('input[name=confirm]').val(), 
+						}).done(function(a){
+							a = JSON.parse(a);
+							console.log(a);
+							if(a.type == 'success'){
+								$.post('{{path.root}}/post/login', {
+									username: $('input[name=username]').val(),
+									password: $('input[name=password]').val(),
+								}).done(function(data){
+									data = JSON.parse(data);
+									if(data.type == 'success'){
+										window.location = '{{path.root}}/app';
+									}else{
+										$('table').before('<div class="alert alert-danger">'+data.message+'</div>');
+									}
+								});
+							}else{
+								if($('.alert').length > 0){
+									$('.alert').html(a.message);
+								}else{
+									$('table').before('<div class="alert alert-danger">'+a.message+'</div>');
+								}
+								pw.ready($('.next-step'), 'NEXT STEP');
+							}
+						});
+					}
+				});
+				
+			});
+		</script>
+	</body>
+</html>

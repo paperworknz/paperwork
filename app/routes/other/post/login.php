@@ -16,8 +16,7 @@ $app->post('/post/login', function() use ($app){
 				'title' => 'Wrong Password',
 				'text' => 'Using username: "'.$username.'"',
 			]);
-			$app->flash('error', 'Your username or password was incorrect.');
-			$app->redirect($app->root.'/login');
+			echo $app->build->error('Your username or password was incorrect.');
 			break;
 		
 		case 'User Disabled':
@@ -26,18 +25,23 @@ $app->post('/post/login', function() use ($app){
 				'title' => 'Disabled Account Login Attempt',
 				'text' => $username.' is disabled and has tried to log in.',
 			]);
-			$app->flash('error', 'This account is currently disabled. Please contact us if you think this is in error.');
-			$app->redirect($app->root.'/login');
+			echo $app->build->error('This account is currently disabled. Please contact us if you think this is in error.');
 			break;
 		
 		case 'User Does Not Exist':
 			$app->event->log([
 				'number' => 2,
 				'title' => 'Unknown Login Attempt',
-				'text' => 'Using username: "'.$username.'" and password: "'.$password.'"',
+				'text' => 'Using username: "'.$username.'"',
 			]);
-			$app->flash('error', 'Your username or password was incorrect.');
-			$app->redirect($app->root.'/login');
+			echo $app->build->error('Your username or password was incorrect.');
+			break;
+		
+		case 'Authenticated Successfully':
+			
+			echo $app->build->success([
+				'location' => $app->root.'/jobs'
+			]);
 			break;
 	}
 	

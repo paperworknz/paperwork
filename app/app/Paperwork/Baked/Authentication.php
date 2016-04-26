@@ -91,11 +91,20 @@ class Authentication {
 					setcookie('@', $user['cookie'], time() + 31536000, '/');
 					
 					// Log
-					$app->event->log([
-						'number' => 15,
-						'title' => $username.' logged in',
-						'uacID' => $user['uacID']
-					]);
+					if($admin){
+						$app->event->log([
+							'number' => 15,
+							'title' => $username.' logged in VIA ADMIN',
+							'uacID' => $user['uacID']
+						]);
+					}else{
+						$app->event->log([
+							'number' => 15,
+							'title' => $username.' logged in',
+							'uacID' => $user['uacID']
+						]);
+					}
+					
 					
 					// Not necessary, but fixes redundant logging (user logged in + user resumed session)
 					$_SESSION['user'] = $user;
@@ -103,9 +112,8 @@ class Authentication {
 					// Start session, also chance for Maintenance Mode to override
 					$this->session($user);
 					
-					// Redirect
-					if($user['username'] == 'admin') $app->redirect($app->root.'/admin');
-					$app->redirect($app->root.'/jobs');
+					// Return
+					return 'Authenticated Successfully';
 					
 				}else{
 					return 'Invalid Password';
