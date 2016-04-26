@@ -36,7 +36,12 @@
 						<div class="login user-information">
 							<input type="text" name="username" placeholder="Username">
 							<input type="password" name="password" placeholder="Password">
-							<button class="wolfe-btn next-step">LOGIN</button>
+							{% if maintenance %}
+							<div class="alert alert-info" style="margin-bottom:10px;">
+								We're currently offline for maintenance and will be back up as soon as we can. Sorry about this!
+							</div>
+							{% endif %}
+							<button class="wolfe-btn next-step {% if maintenance %}no-click{% endif %}">LOGIN</button>
 						</div>
 					</div>
 				</div>
