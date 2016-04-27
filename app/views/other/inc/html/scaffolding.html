@@ -12,8 +12,8 @@
 			{% for item in nav %}
 			<a href="{{path.root}}/{{item}}">
 			<li>{% if item == "app" %}Home
-			{% elseif item =="settings" %}My Settings
-			{% else %}View {{item|capitalize}}
+			{% elseif item =="settings" %}Settings
+			{% else %}{{item|capitalize}}
 			{% endif %}</li>
 			</a>
 			{% endfor %}
