@@ -22,7 +22,9 @@
 						<div class="wrapper">
 							<input type="text" class="prompt" placeholder="SQL" />
 						</div>
-						<div console></div>
+						<a events style="cursor:pointer">Events</a>
+						<a clear-events style="cursor:pointer;float:right">Clear Events</a>
+						<div console style="padding-top:10px"></div>
 					</div>
 				</div>
 				<div data-obj="1" class="box material im">
@@ -82,6 +84,39 @@
 						'</pre>'
 					);
 				}
+				
+				$('[events]').on('click', function(){
+					var q = 'SELECT * FROM events WHERE uacID<>1 ORDER BY eventID DESC';
+					
+					$('[console]').html('');
+					
+					$.post('{{path.root}}/admin/post/query', {
+						'query': q
+					}).done(function(data){
+						if(data = JSON.parse(data)){
+							$.each(data, function(y,z){
+								dump(z);
+							});
+							$('.prompt').val('');
+						}
+					});
+				});
+				
+				$('[clear-events]').on('click', function(){
+					var q = 'DELETE from events';
+					
+					$.post('{{path.root}}/admin/post/query', {
+						'query': q
+					}).done(function(data){
+						if(data = JSON.parse(data)){
+							$('[console]').html('');
+							$.each(data, function(y,z){
+								dump(z);
+							});
+							$('.prompt').val('');
+						}
+					});
+				});
 				
 				$('.prompt').on('keydown', function(e){
 					if(e.keyCode == 13){
