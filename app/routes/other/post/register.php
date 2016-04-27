@@ -42,6 +42,8 @@ $app->post('/post/register', function() use ($app){
 				'first'		=> $first,
 				'last'		=> $last,
 				'cookie'	=> $cookie,
+				'job_reference' => 1,
+				'disabled' => 0,
 			])->run();
 			
 			// Get user
