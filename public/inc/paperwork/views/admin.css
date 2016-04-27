@@ -26,3 +26,18 @@
 	outline:none;
 	margin-bottom:15px
 }
+
+.toggle-table td:nth-child(odd) {
+	color: #999;
+	text-align: right;
+}
+
+.toggle-table td:nth-child(even) {
+	padding: 5px 10px;
+}
+
+.toggle-table img {
+	cursor: pointer;
+}
+
+.fade {opacity:0.25}

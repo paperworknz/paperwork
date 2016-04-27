@@ -6,6 +6,7 @@ return [
 '/admin/get/users' => '../app/routes/other/admin/get/users.php',
 '/admin/post/maintenance' => '../app/routes/other/admin/post/maintenance.php',
 '/admin/post/query' => '../app/routes/other/admin/post/query.php',
+'/admin/post/switch' => '../app/routes/other/admin/post/switch.php',
 '/delete/client' => '../app/routes/other/delete/client.php',
 '/delete/form' => '../app/routes/other/delete/form.php',
 '/delete/inv' => '../app/routes/other/delete/inv.php',

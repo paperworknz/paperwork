@@ -5,6 +5,6 @@ $app->get('/admin', 'admin', function() use ($app){
 
 	/* Construction */
 	$app->build->page('views/admin.html', [
-		'user_registration'	=> $app->env['user_registration'],
+		'switch' => $app->env
 	]);
 });
