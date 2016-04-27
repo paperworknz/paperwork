@@ -12,7 +12,7 @@
 				<ul class="wrapper">
 					<li data-tab="0" class="tab noselect">SQL</li>
 					<li data-tab="1" class="tab noselect">UAC</li>
-					<li data-tab="2" class="tab noselect">Maintenance</li>
+					<li data-tab="2" class="tab noselect">Switches</li>
 				</ul>
 			</div>
 			<div class="obj">
@@ -38,13 +38,25 @@
 					</div>
 				</div>
 				<div data-obj="2" class="box material im">
-					<div style="width:249px">
-						<div class="h3">Toggle Maintenance</div>
-						<input style="height:36px" man-pw type="password" placeholder="Password">
-						<div class="pull-right">
-							<button man class="wolfe-btn">POST</button>
-						</div>
-					</div>
+					<br>
+					<table class="toggle-table">
+						<tbody>
+							{% for a,b in switch %}
+							<tr>
+								<td>
+									{{a}}
+								</td>
+								<td>
+									{% if b %}
+									<img src="{{path.root}}/inc/paperwork/toggle-on.png" data-name="{{a}}" data-value="{{b}}" height="26" />
+									{% else %}
+									<img src="{{path.root}}/inc/paperwork/toggle-off.png" data-name="{{a}}" data-value="{{b}}" height="26" />
+									{% endif %}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -121,6 +133,35 @@
 							paper.saved('Maintenance ON');
 						}else{
 							paper.saved('Error');
+						}
+					});
+				});
+				
+				// Switches
+				$('.toggle-table img').on('click', function(){
+					var name = $(this).attr('data-name'),
+						value = $(this).attr('data-value'),
+						ele = $(this),
+						src = null;
+					
+					$(this).addClass('fade');
+					
+					$.post('{{path.root}}/admin/post/switch', {
+						name: name
+					}).done(function(data){
+						if(data == 'Success'){
+							if(value == 0){
+								src = '{{path.root}}/inc/paperwork/toggle-on.png';
+								value = 1;
+							}else{
+								src = '{{path.root}}/inc/paperwork/toggle-off.png';
+								value = 0;
+							}
+							ele.attr('src', src);
+							ele.attr('data-value', value);
+							ele.removeClass('fade');
+						}else{
+							console.log(data);
 						}
 					});
 				});
