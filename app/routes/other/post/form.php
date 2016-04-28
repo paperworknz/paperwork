@@ -24,6 +24,14 @@ $app->post('/post/form', 'uac', function() use ($app){
 				'html'		=> $template['content']
 			])->run();
 			
+			foreach($app->user as $key => $value){
+				if(strpos($template['content'], '{{user.'.$key.'}}') === false){
+					$template['content'] = str_replace('{{user.'.$key.'}}', '', $template['content']);
+				}else{
+					$template['content'] = str_replace('{{user.'.$key.'}}', $value, $template['content']);
+				}
+			}
+			
 			$client = $app->sql->get('client')->where('clientID', '=', $clientID)->run();
 			$html	= $app->build->page('other/inc/html/form.html', ['html' => $template['content']], false);
 			$json = [

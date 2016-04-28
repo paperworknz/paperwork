@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="date" content="{{date}}">
+		<title>Paperwork - Register</title>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
+		<link href="{{path.root}}/inc/paperwork/Public.css" rel='stylesheet' type="text/css">
+		<link href="{{path.root}}/inc/paperwork/views/register-settings.css" rel='stylesheet' type="text/css">
+		{% include path.sweetalert %}
+	</head>
+	<body>
+		<header>
+			<div class="wrapper width">
+				<div class="nav">
+					<div class="logo">Paperwork</div>
+					<ul class="nav_list_less wrapper">
+						<li>
+							<span class="color_hint" home>Home</span>
+						</li>
+						<li>
+							<span login>Log In</span>
+						</li>
+						<li class="disable no-click">
+							<span>Sign Up</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<section>
+			<div class="width">
+				<div class="centered" style="padding-top:50px">
+					<span class="main_title">Template Editor</span>
+					<div info-text style="padding-bottom:20px;">Hello {{user.first}}!<br>On your free trail you have two templates. Please name these templates (or leave default)</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="width">
+				<div class="centered">
+					<div class="interest">
+						<ul class="template-list user-information">
+							<li><input type="text" placeholder="Template Name" value="Quote"></li>
+							<li><input type="text" placeholder="Template Name" value="Invoice"></li>
+						</ul>
+					</div>
+					<button class="wolfe-btn large next-step" style="margin-top:30px;">NEXT STEP</button>
+				</div>
+			</div>
+		</section>
+		{% include path.js %}
+		<script>var pw = new Paperwork;</script>
+		<script>
+			$(function(){
+				// Nav
+				$('[home]').on('click', function(){
+					window.location = '{{path.root}}';
+				});
+				$('[login]').on('click', function(){
+					window.location = '{{path.root}}/login';
+				});
+				
+				var templates = [];
+				var update = function(){
+					
+					templates = [];
+					
+					$('.template-list input').each(function(){
+						var temp = $(this).val().trim();
+						
+						if(temp != ''){
+							if(templates.indexOf(temp) === -1){
+								templates.push(temp);
+								$(this).addClass('ok');
+								$(this).removeClass('not-ok');
+							}else{
+								$(this).addClass('not-ok');
+								$(this).removeClass('ok');
+							}
+						}else{
+							$(this).addClass('not-ok');
+							$(this).removeClass('ok');
+						}
+						
+					});
+				};
+				
+				$('.template-list').on('blur', 'input', function(){
+					update();
+				});
+				
+				$('.next-step').on('click', function(){
+					update();
+					$('.next-step').addClass('no-click');
+					$('.next-step').addClass('spotlight');
+					
+					$('[info-text]').animate({
+						opacity: 0
+					}, 'fast', function(){
+						$('[info-text]').html('These are your default templates for now.<br>As a paid user you may edit these or get an existing template created. You can also create as many as you need.');
+						$('[info-text]').animate({
+							opacity: 1
+						}, 'fast');
+					});
+					
+					$('.interest').parent('.centered').animate({
+						opacity: 0,
+						marginLeft: '-200px'
+					}, 'fast', function(){
+						
+						$(this).html(
+							'<div class="interest wrapper">'+
+								'<div class="template template-first">'+
+									'<img src="{{path.root}}/inc/paperwork/template-1.png" height="400px">'+
+								'</div>'+
+								'<div class="template template-last">'+
+									'<img src="{{path.root}}/inc/paperwork/template-2.png" height="400px">'+
+								'</div>'+
+							'</div>'
+						);
+						$('.interest').after('<button class="wolfe-btn large last-step" style="margin-top:30px;">DONE</button>');
+						$(this).css('margin-left', 0);
+						$(this).animate({
+							opacity: 1
+						}, 'fast');
+					});
+				});
+				
+				$('body').on('click', '.last-step', function(){
+					$.post('{{path.root}}/post/template-name', {
+						multiple: true,
+						data: JSON.stringify(templates),
+					}).done(function(){
+						window.location = '{{path.root}}/settings';
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

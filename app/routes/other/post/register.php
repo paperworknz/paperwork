@@ -73,6 +73,7 @@ $app->post('/post/register', function() use ($app){
 			// Create user database
 			$raw = file_get_contents('../app/app/resources/db_schema/app_default.sql'); // Load SQL structure script
 			$raw = str_replace('{{database}}', $_ENV['DB_PREFIX'].$username, $raw); // Replace placeholder with `app_$username`
+			$raw = str_replace('app_default', $_ENV['DB_PREFIX'].$username, $raw); // In case the placeholder was not put in the sql file
 			
 			$app->pdo->master->query($raw);
 			
