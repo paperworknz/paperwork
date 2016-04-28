@@ -36,7 +36,7 @@
 						<div class="login user-information">
 							<input type="text" name="username" placeholder="Username">
 							<input type="password" name="password" placeholder="Password">
-							{% if maintenance %}
+							{% if env.maintenance %}
 							<div class="alert alert-info" style="margin-bottom:10px;">
 								We're currently offline for maintenance and will be back up as soon as we can. Sorry about this!
 							</div>

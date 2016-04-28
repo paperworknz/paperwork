@@ -15,6 +15,7 @@ class Build {
 				'root'	=> $app->root,
 				'css'	=> $css,
 			],
+			'env'	=> $app->env,
 			'user'	=> $app->user,
 			'date'	=> date('d/m/Y'),
 		];
