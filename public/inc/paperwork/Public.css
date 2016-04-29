@@ -225,6 +225,14 @@ feature {
 
 .wolfe-btn:focus {
 	background-color:#40d47e;
+	animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+	0% { background-color: #40d47e; }
+	45% { background-color: #2ecc71; }
+	55% { background-color: #2ecc71; }
+	100% { background-color: #40d47e; }
 }
 
 .facade {
