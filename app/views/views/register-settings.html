@@ -7,7 +7,7 @@
 		<title>Paperwork - Register</title>
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
 		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
-		<link href="{{path.root}}/inc/paperwork/Public.css" rel='stylesheet' type="text/css">
+		<link href="{{path.root}}/inc/paperwork/Public.zaros.css" rel='stylesheet' type="text/css">
 		<link href="{{path.root}}/inc/paperwork/views/register-settings.css" rel='stylesheet' type="text/css">
 		{% include path.sweetalert %}
 	</head>
@@ -51,8 +51,11 @@
 				</div>
 			</div>
 		</section>
-		{% include path.js %}
+		{% include path.js with {
+			include: ['Validation']
+		}%}
 		<script>var pw = new Paperwork;</script>
+		<script>var v = new Validation;</script>
 		<script>
 			$(function(){
 				// Nav
@@ -63,37 +66,10 @@
 					window.location = '{{path.root}}/login';
 				});
 				
-				var templates = [];
-				var update = function(){
-					
-					templates = [];
-					
-					$('.template-list input').each(function(){
-						var temp = $(this).val().trim();
-						
-						if(temp != ''){
-							if(templates.indexOf(temp) === -1){
-								templates.push(temp);
-								$(this).addClass('ok');
-								$(this).removeClass('not-ok');
-							}else{
-								$(this).addClass('not-ok');
-								$(this).removeClass('ok');
-							}
-						}else{
-							$(this).addClass('not-ok');
-							$(this).removeClass('ok');
-						}
-						
-					});
-				};
-				
-				$('.template-list').on('blur', 'input', function(){
-					update();
-				});
+				// Validation for template-list input
+				v.input($('.template-list'), $('.next-step'), 'templates');
 				
 				$('.next-step').on('click', function(){
-					update();
 					$('.next-step').addClass('no-click');
 					$('.next-step').addClass('spotlight');
 					
@@ -129,10 +105,17 @@
 					});
 				});
 				
+				// Post template names
 				$('body').on('click', '.last-step', function(){
+					var data = [];
+					
+					$.each(v.data.templates, function(a,b){
+						data.push(b.val);
+					});
+					
 					$.post('{{path.root}}/post/template-name', {
 						multiple: true,
-						data: JSON.stringify(templates),
+						data: JSON.stringify(data),
 					}).done(function(){
 						window.location = '{{path.root}}/settings';
 					});

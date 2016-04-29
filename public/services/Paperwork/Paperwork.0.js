@@ -1,5 +1,6 @@
 var Paperwork = function(obj){
 	this.preventBackspace();
+	this.flow();
 };
 
 // ################################ TOGGLES ################################
@@ -9,6 +10,14 @@ Paperwork.prototype.preventBackspace = function(){
 		if (e.which === 8 && !$(e.target).is(exclusions)){
 			e.preventDefault();
 		}
+	});
+};
+
+Paperwork.prototype.flow = function(){
+	var elements = 'input[type=text], input[type=email], input[type=password]';
+	$(document).on('keydown', elements, function(e){
+		var code = e.keyCode || e.which;
+		if(code == 13) $(':input:eq(' + ($(':input').index(this) + 1) + ')').focus();
 	});
 };
 

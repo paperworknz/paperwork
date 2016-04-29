@@ -85,13 +85,7 @@
 					});
 				};
 				
-				// Focus next input on enter
-				$('input[type=text], input[type=email], input[type=password]').on('keydown', function(e){
-					var code = e.keyCode || e.which;
-					if(code == 13) $(':input:eq(' + ($(':input').index(this) + 1) + ')').focus();
-				});
-				
-				// Login on click (focusing also triggers this)
+				// Login on click (inputFlow triggers this)
 				$('.next-step').on('click', function(){
 					login();
 				});
