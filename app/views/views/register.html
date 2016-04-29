@@ -14,7 +14,7 @@
 		<header>
 			<div class="wrapper width">
 				<div class="nav">
-					<div class="logo">Paperwork</div>
+					<div class="logo" style="cursor:pointer" onclick="window.location= '{{path.root}}'">Paperwork</div>
 					<ul class="nav_list_less wrapper">
 						<li>
 							<span class="color_hint" home>Home</span>
@@ -121,10 +121,9 @@
 					window.location = '{{path.root}}/login';
 				});
 				
-				$('.next-step').on('click', function(){
-					
-					if(!$(this).hasClass('wolfe-btn-wait')){
-						pw.wait($(this));
+				var register = function(){
+					if(!$('.next-step').hasClass('wolfe-btn-wait')){
+						pw.wait($('.next-step'));
 						
 						$.post('{{path.root}}/post/register', {
 							first: $('input[name=first]').val(),
@@ -159,6 +158,17 @@
 							}
 						});
 					}
+				};
+				
+				// Focus next input on enter
+				$('input[type=text], input[type=email], input[type=password]').on('keydown', function(e){
+					var code = e.keyCode || e.which;
+					if(code == 13) $(':input:eq(' + ($(':input').index(this) + 1) + ')').focus();
+				});
+				
+				// Login on click (focusing also triggers this)
+				$('.next-step').on('click', function(){
+					register();
 				});
 				
 			});

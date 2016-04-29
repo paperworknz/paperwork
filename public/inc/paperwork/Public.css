@@ -203,7 +203,7 @@ feature {
 	line-height:51px;
 }
 
-.wolfe-btn{
+.wolfe-btn {
 	background-color:#2ecc71;
 	color:white;
 	text-transform:uppercase;
@@ -212,15 +212,19 @@ feature {
 	outline:none
 }
 
-.wolfe-btn:hover{
+.wolfe-btn:hover {
 	background-color:#40d47e;
 	cursor:pointer;
 }
 
-.wolfe-btn:active{
+.wolfe-btn:active {
 	border:none;
 	margin-top:4px;
 	outline:0;
+}
+
+.wolfe-btn:focus {
+	background-color:#40d47e;
 }
 
 .facade {
