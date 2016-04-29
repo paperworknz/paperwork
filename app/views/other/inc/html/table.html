@@ -1,4 +1,4 @@
-<div class="wt-table" style="display:none">
+<div class="wrapper">
 	<style scoped>
 		.wt-table {
 			overflow-x:auto;
@@ -50,35 +50,37 @@
 		}
 	</style>
 	<div class="wrapper" style="margin-bottom:5px">
-	<div class="pull-right">
-		<select class="wt-filter">
-			<option value="All">All</option>
-			<option value="Hide Completed">Hide Completed</option>
-			{% for s in status %}
-			<option value="{{s.name}}">{{s.name}}</option>
-			{% endfor %}
-		</select>
+		<div class="pull-right">
+			<select class="wt-filter">
+				<option value="All">All</option>
+				<option value="Hide Completed">Hide Completed</option>
+				{% for s in status %}
+				<option value="{{s.name}}">{{s.name}}</option>
+				{% endfor %}
+			</select>
+		</div>
 	</div>
-	</div>
-	<div id="sortable" class="wt-wrap">
-		{% set i = 0 %}
-		{% for a,b in head %}
-			{% if '.' in a %}
-				{% set z = a|split('.')%}
-			{% endif %}
-			<ul class="wt-column" data-id="{{b}}" {% if width %}{% for c,d in width %}{% if c == b %}style="width:{{d}}"{% endif %}{% endfor %}{% endif %}>
-			<li class="wt-head noselect" data-state="def"><div wt-head>{{b}}</div><div class="wt-head-handle"></div></li>
-			{% for e in data %}
-				{% if e[a] %}
-					{% set i = i + 1 %}
-					<li class="wt-row" href="{{path.root}}/job/{{e.jobID}}" data-row="{{i}}">{{e[a]}}</li>
-				{% elseif z %}
-					{% set i = i + 1 %}
-					<li class="wt-row" href="{{path.root}}/job/{{e.jobID}}" data-row="{{i}}">{{e[z[0]][z[1]]}}</li>
-				{% endif %}
-			{% endfor %}
+	<div class="wt-table" style="display:none">
+		<div id="sortable" class="wt-wrap">
 			{% set i = 0 %}
-			</ul>
-		{% endfor %}
+			{% for a,b in head %}
+				{% if '.' in a %}
+					{% set z = a|split('.')%}
+				{% endif %}
+				<ul class="wt-column" data-id="{{b}}" {% if width %}{% for c,d in width %}{% if c == b %}style="width:{{d}}"{% endif %}{% endfor %}{% endif %}>
+				<li class="wt-head noselect" data-state="def"><div wt-head>{{b}}</div><div class="wt-head-handle"></div></li>
+				{% for e in data %}
+					{% if e[a] %}
+						{% set i = i + 1 %}
+						<li class="wt-row" href="{{path.root}}/job/{{e.jobID}}" data-row="{{i}}">{{e[a]}}</li>
+					{% elseif z %}
+						{% set i = i + 1 %}
+						<li class="wt-row" href="{{path.root}}/job/{{e.jobID}}" data-row="{{i}}">{{e[z[0]][z[1]]}}</li>
+					{% endif %}
+				{% endfor %}
+				{% set i = 0 %}
+				</ul>
+			{% endfor %}
+		</div>
 	</div>
 </div>
