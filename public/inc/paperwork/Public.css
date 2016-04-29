@@ -56,6 +56,30 @@ input[type=text], input[type=email], input[type=password] {
               transition: border-color 0.3s ease;
 }
 
+/********** Scroll **************/
+::-webkit-scrollbar {
+	width: 10px;
+    height: 10px;
+    overflow: visible;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,.2);
+    min-height: 28px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #888;
+}
+
+body::-webkit-scrollbar-track, body::-webkit-scrollbar {
+	background-color:white; /* must be same as body background color */
+}
+
+::-webkit-scrollbar-track, ::-webkit-scrollbar {
+	background-color:transparent;
+}
+
 .no-click{
 	pointer-events:none!important;
 	cursor: default;
