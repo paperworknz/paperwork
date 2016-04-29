@@ -204,6 +204,14 @@
 						});
 					});
 				});
+				
+				$('.item').on('mouseover', function(){
+					$(this).find('input').addClass('item_hover');
+				});
+				
+				$('.item').on('mouseout', function(){
+					$(this).find('input').removeClass('item_hover');
+				});
 			});
 		</script>
     </body>

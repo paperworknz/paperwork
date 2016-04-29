@@ -337,31 +337,36 @@
 					text: 'Deleting this will remove it forever',
 					showCancelButton: true,
 					closeOnConfirm: true,
-				}, function(){
-					form.delete({
-						url: '{{path.root}}/delete/form',
-						formID: $(form.s).find('[form-blob]').attr('data-formid'),
-					}, function(){
-						var noteposition = $('[note-parent]').position(),
-							noteparent = $('[note-parent]').clone(),
-							tabID = $('.'+tab.activeTab).attr('data-tab');
-						$('[note-parent]').css({
-							'position':'absolute',
-							'top':noteposition.top,
-							'left':noteposition.left
-						});
-						$(form.s).slideUp('fast', function(){
-							$(form.s).remove();
-							$('.'+tab.tab+'.'+tab.activeTab).fadeOut('fast', function(){
-								tab.activate($('[data-tab="'+tabID+'"]').prev());
-								$('[note-parent]').replaceWith(noteparent);
-								$('[note-wrapper]').on('click', function(){
-									$('#notes').focus();
+				}, function(a){
+					if(a){
+						form.delete({
+							url: '{{path.root}}/delete/form',
+							formID: $(form.s).find('[form-blob]').attr('data-formid'),
+						}, function(){
+							var noteposition = $('[note-parent]').position(),
+								noteparent = $('[note-parent]').clone(),
+								tabID = $('.'+tab.activeTab).attr('data-tab');
+							$('[note-parent]').css({
+								'position':'absolute',
+								'top':noteposition.top,
+								'left':noteposition.left
+							});
+							$(form.s).slideUp('fast', function(){
+								$(form.s).remove();
+								$('.'+tab.tab+'.'+tab.activeTab).fadeOut('fast', function(){
+									tab.activate($('[data-tab="'+tabID+'"]').prev());
+									$('[note-parent]').replaceWith(noteparent);
+									$('[note-wrapper]').on('click', function(){
+										$('#notes').focus();
+									});
+									$(this).remove();
 								});
-								$(this).remove();
 							});
 						});
-					});
+					}else{
+						pw.ready(button, 'DELETE');
+					}
+					
 				});
 			});
 			

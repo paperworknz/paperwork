@@ -21,6 +21,10 @@
 	position:relative;
 }
 
+.item_hover {
+	background-color: #eee!important
+}
+
 .inv input {
 	border:none;
 }

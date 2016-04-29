@@ -1,5 +1,5 @@
 <script src="{{path.root}}/inc/jquery/jquery.2.1.4.js"></script>
-<script src="{{path.root}}/services/Paperwork/Paperwork.js"></script>
+<script src="{{path.root}}/services/Paperwork/Paperwork.0.js"></script>
 
 {% for link in include %}
 {% if link == 'typeahead' %}
@@ -26,5 +26,7 @@
 <script src="{{path.root}}/inc/react/react-dom.js"></script>
 {% elseif link == 'selection' %}
 <script src="{{path.root}}/inc/selection/src/jquery.selection.js"></script>
+{% elseif link == 'Validation' %}
+<script src="{{path.root}}/services/Validation/Validation.js"></script>
 {% endif %}
 {% endfor %}
