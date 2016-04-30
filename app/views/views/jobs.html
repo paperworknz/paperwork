@@ -83,17 +83,7 @@
 				var src = [{% for item in client %} "{{item.name | raw}}", {% endfor %}];
 				
 				new Paperwork;
-				{% if job %}
-				new Table({
-					defaultFilter: 'Hide Completed',
-					width: {
-						Status:'111px',
-						Client:'165px',
-						Name:'260px',
-					},
-					cookie: true
-				});
-				{% endif %}
+				new Table();
 				var ta = new Typeahead(src, {
 					hint: true,
 					highlight: true,
