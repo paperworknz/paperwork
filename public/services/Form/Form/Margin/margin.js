@@ -10,8 +10,6 @@ Form.prototype.margin = function(form){
 	var std = function(x){return x.toFixed(2);};
 	var comma = function(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");};
 	
-	a.dark(form); // Turn off interaction
-	
 	// List of current prices on form, and the original price via math
 	$.each(a.map[formID].items, function(a,b){
 		var itemID = a,
@@ -24,6 +22,8 @@ Form.prototype.margin = function(form){
 	});
 	
 	// Darken page, then show the concern
+	a.dark(form); // Turn off interaction
+	
 	$('#content').after('<div margin></div>'); // Append margin container
 	$('[margin]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>');
 	$('[fade]').after('<div margin-content></div>');
@@ -126,6 +126,7 @@ Form.prototype.margin = function(form){
 			var itemID = a.p.get('this-item-id', $(this));
 			$(this).html($('[margin] [item-id="'+itemID+'"] span').html());
 		});
+		a.refresh(form);
 		a.update(form);
 		
 		$('[margin] [margin-content]').fadeOut(100, function(){
@@ -141,6 +142,7 @@ Form.prototype.margin = function(form){
 		$('[margin] [margin-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
 				$('[margin]').off().unbind().remove();
+				a.refresh(form);
 				a.update(form);
 			});
 		});
@@ -152,6 +154,7 @@ Form.prototype.margin = function(form){
 		$('[margin] [margin-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
 				$('[margin]').off().unbind().remove();
+				a.refresh(form);
 				a.update(form);
 			});
 		});

@@ -97,42 +97,7 @@ Form.prototype.construct = function(form){
 	var a= this,
 		formID= form.attr('data-formid');
 	
-	// Listeners
-	a.dark(form); // Remove jQuery listeners
-	$(a.tab.objParent).on('change', function(){ a.update(form) });
-	a.p.on('qty', $(a.tab.objParent), 'input', function(){ a.update(form) });
-	a.p.on('price', $(a.tab.objParent), 'blur', function(){ a.update(form) });
-	a.p.on('price', $(a.tab.objParent), 'input', function(event){
-		if(event.event.keyCode == 13){
-			event.event.preventDefault();
-			event.element.blur();
-		}
-	});
-	form.on('click', '.twig-remove', function(){
-		a.p.do('this-remove-item', $(this));
-		a.update(form);
-	});
-	
-	// Typeahead
-	a.p.initialiseTypeahead(form, function(){ a.typeahead.run(form) });
-	form.bind('typeahead:select', '.typeahead', function(){
-		if(event.which == 13){ // Ignore enter key
-			return;
-		}else{ // Run as intended
-			a.append(form, $(a.s).find('.tt-input').val());
-			return;
-		}
-	});
-	form.on('keydown', '.typeahead', function(){
-		if(event.which == 13){
-			a.append(form, $(a.s).find('.tt-input').val());
-		}
-	});
-	
-	// Update form-pdf-name
-	var tabID = $('.'+a.tab.activeTab).attr(a.tab.tabhook),
-		tname = $('.'+a.tab.activeTab).html();
-	form.closest('.'+a.tab.obj).find('[form-pdf-name]').val(tabID+'-'+tname.toLowerCase());
+	a.refresh(form); // Refresh listeners
 	
 	// Append map to DOM
 	$.each(a.map[formID].items, function(key, val){
@@ -143,7 +108,8 @@ Form.prototype.construct = function(form){
 			price: val.price
 		});
 	});
-	a.update(form);
+	
+	a.update(form); // Update abstraction
 	
 	// Fade form in, allow mouse interaction
 	form.css('pointer-events', 'auto');
@@ -210,6 +176,46 @@ Form.prototype.populate = function(form, data){
 	a.p.set('jobID', form, data.jobID);
 	a.p.set('client', form, data.client);
 };
+Form.prototype.refresh = function(form){
+	var a= this;
+	
+	// Listeners
+	a.dark(form); // Remove jQuery listeners
+	$(a.tab.objParent).on('change', function(){ a.update(form) });
+	a.p.on('qty', $(a.tab.objParent), 'input', function(){ a.update(form) });
+	a.p.on('price', $(a.tab.objParent), 'blur', function(){ a.update(form) });
+	a.p.on('price', $(a.tab.objParent), 'input', function(event){
+		if(event.event.keyCode == 13){
+			event.event.preventDefault();
+			event.element.blur();
+		}
+	});
+	form.on('click', '.twig-remove', function(){
+		a.p.do('this-remove-item', $(this));
+		a.update(form);
+	});
+	
+	// Typeahead
+	a.p.initialiseTypeahead(form, function(){ a.typeahead.run(form) });
+	form.bind('typeahead:select', '.typeahead', function(){
+		if(event.which == 13){ // Ignore enter key
+			return;
+		}else{ // Run as intended
+			a.append(form, $(a.s).find('.tt-input').val());
+			return;
+		}
+	});
+	form.on('keydown', '.typeahead', function(){
+		if(event.which == 13){
+			a.append(form, $(a.s).find('.tt-input').val());
+		}
+	});
+	
+	// Update form-pdf-name
+	var tabID = $('.'+a.tab.activeTab).attr(a.tab.tabhook),
+		tname = $('.'+a.tab.activeTab).html();
+	form.closest('.'+a.tab.obj).find('[form-pdf-name]').val(tabID+'-'+tname.toLowerCase());
+};
 Form.prototype.strip = function(form){
 	/*
 	Remove interactive tools, return html. Form should be a.form
@@ -273,92 +279,6 @@ Form.prototype.update = function(form){
 	// Painter layer
 	if (a.p.update != undefined) a.p.update(form);
 };
-Form.prototype.copy = function(form){
-	var a= this,
-		formID= form.attr('data-formid');
-	
-	swal({
-		title: 'Choose your template',
-		text: '1 for Quote, 2 for Invoice',
-		type: 'input',
-		inputPlaceholder: 'Write something',
-		showCancelButton: true,
-		html: true,
-	}, function(e){
-		if(e != false){ // User hasn't clicked cancel
-			var button= $(this),
-				input= e,
-				templateName= 'Invoice';
-			
-			if(input == 1){
-				templateName = 'Quote';
-			}else if(input == 2){
-				templateName = 'Invoice';
-			}else{
-				templateName = 'Invoice';
-			}
-			
-			var data = {
-				client: a.p.get('client', form),
-				jobd: a.p.get('jobd', form),
-				content: a.map[formID],
-			};
-			
-			pw.wait(button);
-			a.post({
-				url: environment.root+'/post/form',
-				templateID: input,
-				templateName: templateName,
-				clientID: environment.clientID,
-				jobID: environment.jobID,
-			}, function(newForm){
-				
-				// Append item to DOM
-				$.each(a.map[formID].items, function(y,z){
-					a.p.append(newForm, {
-						itemID: z.itemID,
-						item: z.item,
-						quantity: z.quantity,
-						price: z.price
-					});
-				});
-				
-				// Populate new form
-				var newFormID = newForm.attr('data-formid');
-				a.p.set('client', newForm, data.client);
-				a.p.set('jobd', newForm, data.jobd);
-				a.construct(newForm);
-				a.put({
-					url: environment.root+'/put/form',
-					formID: newFormID,
-				}, function(){
-					pw.ready(button, 'COPY');
-				});
-			});
-		}
-	});
-};
-Form.prototype.pdf = function(form, callback){
-	var a= this,
-		html= form.clone();
-	
-	// Strip and get html
-	html = a.strip(html);
-	
-	// Build html string for PDF
-	var page = "<!DOCTYPE html>" + 
-		"<html lang='en'>" +
-		"<head>" + 
-		"<meta name='viewport' content='width=device-width,initial-scale=1.0'>" + 
-		"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' type='text/css'>" + 
-		"</head>" + 
-		"<body>" +
-		html + 
-		"</body>";
-	
-	// Callback function
-	callback(page);
-};
 Form.prototype.margin = function(form){
 	
 	var a= this,
@@ -370,8 +290,6 @@ Form.prototype.margin = function(form){
 		
 	var std = function(x){return x.toFixed(2);};
 	var comma = function(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");};
-	
-	a.dark(form); // Turn off interaction
 	
 	// List of current prices on form, and the original price via math
 	$.each(a.map[formID].items, function(a,b){
@@ -385,6 +303,8 @@ Form.prototype.margin = function(form){
 	});
 	
 	// Darken page, then show the concern
+	a.dark(form); // Turn off interaction
+	
 	$('#content').after('<div margin></div>'); // Append margin container
 	$('[margin]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>');
 	$('[fade]').after('<div margin-content></div>');
@@ -487,6 +407,7 @@ Form.prototype.margin = function(form){
 			var itemID = a.p.get('this-item-id', $(this));
 			$(this).html($('[margin] [item-id="'+itemID+'"] span').html());
 		});
+		a.refresh(form);
 		a.update(form);
 		
 		$('[margin] [margin-content]').fadeOut(100, function(){
@@ -502,6 +423,7 @@ Form.prototype.margin = function(form){
 		$('[margin] [margin-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
 				$('[margin]').off().unbind().remove();
+				a.refresh(form);
 				a.update(form);
 			});
 		});
@@ -513,13 +435,14 @@ Form.prototype.margin = function(form){
 		$('[margin] [margin-content]').fadeOut(100, function(){
 			$('[fade]').fadeOut(150, function(){
 				$('[margin]').off().unbind().remove();
+				a.refresh(form);
 				a.update(form);
 			});
 		});
 	});
 	
 };
-Form.prototype.marginold = function(form){
+Form.prototype.marginOLD = function(form){
 	
 	/*
 	Listen. We have a.map so we don't need to dice around with DOM cloning to get this done.
@@ -676,6 +599,92 @@ Form.prototype.marginold = function(form){
 			});
 		});
 	});
+};
+Form.prototype.copy = function(form){
+	var a= this,
+		formID= form.attr('data-formid');
+	
+	swal({
+		title: 'Choose your template',
+		text: '1 for Quote, 2 for Invoice',
+		type: 'input',
+		inputPlaceholder: 'Write something',
+		showCancelButton: true,
+		html: true,
+	}, function(e){
+		if(e != false){ // User hasn't clicked cancel
+			var button= $(this),
+				input= e,
+				templateName= 'Invoice';
+			
+			if(input == 1){
+				templateName = 'Quote';
+			}else if(input == 2){
+				templateName = 'Invoice';
+			}else{
+				templateName = 'Invoice';
+			}
+			
+			var data = {
+				client: a.p.get('client', form),
+				jobd: a.p.get('jobd', form),
+				content: a.map[formID],
+			};
+			
+			pw.wait(button);
+			a.post({
+				url: environment.root+'/post/form',
+				templateID: input,
+				templateName: templateName,
+				clientID: environment.clientID,
+				jobID: environment.jobID,
+			}, function(newForm){
+				
+				// Append item to DOM
+				$.each(a.map[formID].items, function(y,z){
+					a.p.append(newForm, {
+						itemID: z.itemID,
+						item: z.item,
+						quantity: z.quantity,
+						price: z.price
+					});
+				});
+				
+				// Populate new form
+				var newFormID = newForm.attr('data-formid');
+				a.p.set('client', newForm, data.client);
+				a.p.set('jobd', newForm, data.jobd);
+				a.construct(newForm);
+				a.put({
+					url: environment.root+'/put/form',
+					formID: newFormID,
+				}, function(){
+					pw.ready(button, 'COPY');
+				});
+			});
+		}
+	});
+};
+Form.prototype.pdf = function(form, callback){
+	var a= this,
+		html= form.clone();
+	
+	// Strip and get html
+	html = a.strip(html);
+	
+	// Build html string for PDF
+	var page = "<!DOCTYPE html>" + 
+		"<html lang='en'>" +
+		"<head>" + 
+		"<meta name='viewport' content='width=device-width,initial-scale=1.0'>" + 
+		"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' type='text/css'>" + 
+		"</head>" + 
+		"<body>" +
+		html + 
+		"</body>";
+	
+	// Callback function
+	callback(page);
 };
 Form.prototype.delete = function(data, callback){
 	var a = this;
