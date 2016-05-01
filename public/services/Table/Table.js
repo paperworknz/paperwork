@@ -180,8 +180,6 @@ Table.prototype.state = function(obj){
 		order.moveTo(d, 'end');
 	}
 	
-	console.log(order);
-	
 	// Update a.map based off order
 	$.each(a.map.columns, function(b,c){
 		var newPos = order.indexOf(b);
