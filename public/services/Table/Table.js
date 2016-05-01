@@ -62,7 +62,7 @@ Table.prototype.init = function(){
 		order[b.stateOrder] = a;
 	});
 	
-	order.sort(); // Sort from 0, 1, 2...
+	order.reverse(); // Sort 4, 3, 2...
 	
 	// Apply sort function in order from first to last
 	$.each(order, function(b,c){
@@ -165,7 +165,28 @@ Table.prototype.run = function(){
 Table.prototype.state = function(obj){
 	var a = this,
 		d = obj.closest('.wt-column').attr('data-id'),
-		state = obj.parent('.wt-head').attr('data-state');
+		state = obj.parent('.wt-head').attr('data-state'),
+		order = [];
+	
+	// Initialise (state)order
+	$.each(a.map.columns, function(a,b){
+		order[b.stateOrder] = a;
+	});
+	
+	// Move clicked item to front of sortOrder
+	if(state != 'desc'){
+		order.moveTo(d, 0);
+	}else{
+		order.moveTo(d, 'end');
+	}
+	
+	console.log(order);
+	
+	// Update a.map based off order
+	$.each(a.map.columns, function(b,c){
+		var newPos = order.indexOf(b);
+		a.map.columns[b].stateOrder = newPos;
+	});
 	
 	switch(state){
 		case 'asc':
@@ -248,7 +269,6 @@ Table.prototype.sort = function(ul, state){
 			break;
 	}
 	
-	
 	var order = [];
 	$(col+' .wt-row').each(function(){
 		order.push($(this).attr('data-row'));
@@ -269,4 +289,20 @@ Table.prototype.sort = function(ul, state){
 			}
 		}
 	});
+};
+
+Array.prototype.moveTo = function(item, to) {
+    var index = this.indexOf(item);
+    
+    if(index === -1) 
+        throw new Error("Element not found in array");
+    
+    if(to < 0) 
+        to = 0;
+	
+	if(to == 'end')
+		to = this.length + 1;
+        
+    this.splice(index,1);
+    this.splice(to,0,item);
 };
