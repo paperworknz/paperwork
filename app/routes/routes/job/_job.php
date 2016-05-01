@@ -43,6 +43,8 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			//$html = ($job['status']['statusID'] == 0) ? 'views/job/_archived.html' : 'views/job/_job.html';
 			$html = 'views/job/_job.html';
 			
+			$resources = $app->parse->jsonToArray(file_get_contents('../app/app/.resources'));
+			
 			return $app->build->page($html, [
 				'jobID'		=> $a,
 				'job'		=> $job,
@@ -50,6 +52,7 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 				'templates'	=> $templates,
 				'status'	=> $status,
 				'forms'		=> $forms,
+				'resources'	=> $resources,
 			]);
 		}else{
 			$app->sql->put('job')->with([
