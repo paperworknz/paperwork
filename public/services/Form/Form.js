@@ -84,7 +84,7 @@ Form.prototype.append = function(form, item, quantity, price){
 			});
 		});
 	}
-	
+	console.log('kappa');
 	// Housekeep
 	$('.typeahead').typeahead('val', ''); // Clear typeahead input
 	a.p.do('focus-last-item-quantity', form); // Focus on quantity input
