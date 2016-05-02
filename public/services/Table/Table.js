@@ -70,12 +70,12 @@ Table.prototype.init = function(){
 		
 		if(a.map.columns[c].state == 'asc'){
 			column.find('img').css('display', 'block');
-			column.find('img').attr('src', 'inc/paperwork/up.png');
+			column.find('img').attr('src', environment.root+'/inc/paperwork/up.png');
 			column.find('.wt-head').attr('data-state', 'asc');
 			a.sort(c, 'asc');
 		}else if(a.map.columns[c].state == 'desc'){
 			column.find('img').css('display', 'block');
-			column.find('img').attr('src', 'inc/paperwork/down.png');
+			column.find('img').attr('src', environment.root+'/inc/paperwork/down.png');
 			column.find('.wt-head').attr('data-state', 'desc');
 			a.sort(c, 'desc');
 		}else if(a.map.columns[c].state == 'def'){
@@ -190,7 +190,7 @@ Table.prototype.state = function(obj){
 		case 'asc':
 			a.map.columns[d].state = 'desc';
 			obj.find('img').css('display', 'block');
-			obj.find('img').attr('src', 'inc/paperwork/down.png');
+			obj.find('img').attr('src', environment.root+'/inc/paperwork/down.png');
 			obj.parent('.wt-head').attr('data-state', 'desc');
 			a.sort(d, 'desc');
 			break;
@@ -203,7 +203,7 @@ Table.prototype.state = function(obj){
 		case 'def':
 			a.map.columns[d].state = 'asc';
 			obj.find('img').css('display', 'block');
-			obj.find('img').attr('src', 'inc/paperwork/up.png');
+			obj.find('img').attr('src', environment.root+'/inc/paperwork/up.png');
 			obj.parent('.wt-head').attr('data-state', 'asc');
 			a.sort(d, 'asc');
 			break;

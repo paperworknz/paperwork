@@ -90,26 +90,31 @@
 			include: ['Tab', 'Table', 'sweetalert']
 		}%}
 		<script>
-			$(function(){
-				var pw = new Paperwork;
-				{% if job %}
-				new Table({
-					defaultFilter: 'All',
-					width: {
-						Status:'111px',
-						Client:'165px',
-						Name:'260px'
-					},
-					cookie: true
-				})
-				{% endif %}
+			var environment = {
+				root: '{{path.root}}',
 				
-				new Tab({
-					cookie: {
-						name: 'client',
-						value: "{{client.clientID}}"
-					}
-				});
+			};
+			var pw = new Paperwork;
+			{% if job %}
+			new Table({
+				defaultFilter: 'All',
+				width: {
+					Status:'111px',
+					Client:'165px',
+					Name:'260px'
+				},
+				cookie: true
+			})
+			{% endif %}
+			new Tab({
+				cookie: {
+					name: 'client',
+					value: "{{client.clientID}}"
+				}
+			});
+		</script>
+		<script>
+			$(function(){
 				
 				// CLIENT DELETE
 				$(document).on('click', '[client-del-btn]', function(){

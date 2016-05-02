@@ -78,12 +78,17 @@
 			include: ['typeahead', 'Table', 'contextmenu']
 		}%}
 		<script>
+			var environment = {
+				root: '{{path.root}}'
+			};
+			new Paperwork;
+			new Table();
+		</script>
+		<script>
 			$(function(){
 				
 				var src = [{% for item in client %} "{{item.name | raw}}", {% endfor %}];
 				
-				new Paperwork;
-				new Table();
 				var ta = new Typeahead(src, {
 					hint: true,
 					highlight: true,
