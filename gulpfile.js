@@ -27,13 +27,10 @@ gulp.task('form-min', function(){
 		return result;
 	}
 	
-	var name = 'Form.min.'+randomString(6)+'.js'; // Random name Form.min.xxxxxx.js
-	del(['public/services/Form/Form.min.*']); // Delete old minified version
-	
 	// Update .resources
 	gulp.src('app/app/.resources')
 		.pipe(jeditor(function(json){
-			json.form = name;
+			json.form = '?' + randomString(6);
 			return json;
 		}))
 		.pipe(gulp.dest('app/app/'));
@@ -42,9 +39,10 @@ gulp.task('form-min', function(){
 	gulp.src(['public/services/Form/Form/Core/Core.js', 'public/services/Form/Form/**/*.js'])
 		.pipe(concat('Form.js'))
 		.pipe(gulp.dest('public/services/Form/'))
-		.pipe(rename(name))
+		.pipe(rename('Form.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/services/Form/'));
+		
 });
 
 // Postponed job css/js minification tasks
