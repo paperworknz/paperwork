@@ -39,7 +39,7 @@ gulp.task('form-min', function(){
 		.pipe(gulp.dest('app/app/'));
 	
 	// Concat, minify Form/* using random name var
-	return gulp.src(['public/services/Form/Form/Core/Core.js', 'public/services/Form/Form/**/*.js'])
+	gulp.src(['public/services/Form/Form/Core/Core.js', 'public/services/Form/Form/**/*.js'])
 		.pipe(concat('Form.js'))
 		.pipe(gulp.dest('public/services/Form/'))
 		.pipe(rename(name))
