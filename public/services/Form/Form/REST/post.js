@@ -3,7 +3,7 @@ Form.prototype.post = function(data, callback){
 	
 	// Post form
 	if(data.url != undefined && data.template_id != undefined &&
-		data.client_id != undefined && data.job_id != undefined){
+		data.client_id != undefined && data.job_id != undefined && data.job_number != undefined){
 		$.post(data.url, {
 			template_id: data.template_id,
 			client_id: data.client_id,
@@ -28,7 +28,7 @@ Form.prototype.post = function(data, callback){
 			// Create new tab
 			a.tab.append(data.template_name, function(){
 				a.populate(form, {
-					job_id: data.job_id,
+					job_number: data.job_number,
 					date: json.date,
 					client: json.client,
 				});

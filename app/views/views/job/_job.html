@@ -300,6 +300,7 @@
 					template_id: button.attr('data-templateid'),
 					client_id: '{{client.id}}',
 					job_id: '{{job.id}}',
+					job_number: '{{job.job_number}}',
 				}, function(bool){
 					if(bool){
 						pw.ready(button, name);

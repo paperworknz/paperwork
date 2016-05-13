@@ -12,7 +12,7 @@
 					<strong>Hi {{user.first}}</strong>
 				</div>
 				<br><br>
-				{% if user.username == 'admin' %}
+				{% if user.admin %}
 				<a href="{{path.root}}/admin">Admin</a><br><br>
 				{% endif %}
 				<i>Email <a href="mailto:hello@paperwork.nz">hello@paperwork.nz</a> if you need help or to report an issue!</i><br><br>
