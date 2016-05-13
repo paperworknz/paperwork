@@ -45,7 +45,7 @@
 		}%}
 		<script>
 			$(function(){
-				var clients = { {% for item in client %} "{{item.name|raw}}" : "{{item.clientID}}", {% endfor %} },
+				var clients = { {% for client in clients %} "{{client.name|raw}}" : "{{client.client_number}}", {% endfor %} },
 					src = []; $.each(clients, function(a,b){src.push(a);});
 					
 				var pw = new Paperwork;
@@ -97,7 +97,7 @@
 							data = JSON.parse(data);
 							if(data.type == 'success'){
 								ta.src.unshift(data.client.name);
-								clients[data.client.name] = data.client.clientID;
+								clients[data.client.name] = data.client.client_number;
 								$('#the-basics').html('<input type="text" class="typeahead" placeholder="Quick Search" />');
 								clientTypeahead();
 							}else{

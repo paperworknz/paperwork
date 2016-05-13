@@ -5,7 +5,13 @@ $app->get('/get/pdf-json/:a', 'uac', function($a) use($app){
 	
 	/* Construction */
 	$easy = $app->user['easy'];
-	$path = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$a}"; // This is hardcoded in multiple places..
+	
+	if($_ENV['MODE'] == 'dev'){
+		$path = "../app/app/storage/clients/{$easy}/pdf/{$a}";
+	}elseif($_ENV['MODE'] == 'prod'){
+		$path = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$a}";
+	}
+	
 	$pdfs = [];
 	
 	if(file_exists($path)){

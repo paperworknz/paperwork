@@ -13,6 +13,7 @@
 					<li data-tab="0" class="tab noselect">SQL</li>
 					<li data-tab="1" class="tab noselect">UAC</li>
 					<li data-tab="2" class="tab noselect">Switches</li>
+					<li data-tab="3" class="tab noselect">Backup</li>
 				</ul>
 			</div>
 			<div class="obj">
@@ -22,8 +23,8 @@
 						<div class="wrapper">
 							<input type="text" class="prompt" placeholder="SQL" />
 						</div>
-						<a events style="cursor:pointer">Events</a>
-						<a clear-events style="cursor:pointer;float:right">Clear Events</a>
+						<a event style="cursor:pointer">Events</a>
+						<a clear-event style="cursor:pointer;float:right">Clear events</a>
 						<div console style="padding-top:10px"></div>
 					</div>
 				</div>
@@ -43,7 +44,7 @@
 					<br>
 					<table class="toggle-table">
 						<tbody>
-							{% for a,b in switch %}
+							{% for a,b in env %}
 							<tr>
 								<td>{{a}}</td>
 								<td>
@@ -57,6 +58,9 @@
 							{% endfor %}
 						</tbody>
 					</table>
+				</div>
+				<div data-obj="3" class="box material im">
+					<button pw-backup class="wolfe-btn" style="margin-top:15px">BACKUP</button>
 				</div>
 			</div>
 		</div>
@@ -85,8 +89,8 @@
 					);
 				}
 				
-				$('[events]').on('click', function(){
-					var q = 'SELECT * FROM events WHERE uacID<>1 ORDER BY eventID DESC';
+				$('[event]').on('click', function(){
+					var q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
 					
 					$('[console]').html('');
 					
@@ -102,8 +106,8 @@
 					});
 				});
 				
-				$('[clear-events]').on('click', function(){
-					var q = 'DELETE from events';
+				$('[clear-event]').on('click', function(){
+					var q = 'DELETE from event';
 					
 					$.post('{{path.root}}/admin/post/query', {
 						'query': q
@@ -127,9 +131,9 @@
 						}else if(q != ''){
 							$('[console]').html('');
 							
-							if(q.toUpperCase() == 'users'.toUpperCase()) q = 'SELECT * FROM uac ORDER BY uacID DESC';
-							if(q.toUpperCase() == 'events'.toUpperCase()) q = 'SELECT * FROM events WHERE uacID<>1 ORDER BY eventID DESC';
-							if(q.toUpperCase() == 'clear events'.toUpperCase()) q = 'DELETE from events';
+							if(q.toUpperCase() == 'users'.toUpperCase()) q = 'SELECT * FROM user ORDER BY user_id DESC';
+							if(q.toUpperCase() == 'event'.toUpperCase()) q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
+							if(q.toUpperCase() == 'clear event'.toUpperCase()) q = 'DELETE from event';
 							
 							$.post('{{path.root}}/admin/post/query', {
 								'query': q
@@ -155,22 +159,7 @@
 					});
 				});
 				
-				$('[man]').on('click', function(){
-					p = $('[man-pw]').val();
-					$.post('{{path.root}}/admin/post/maintenance', {
-						password: p
-					}).done(function(data){
-						if(data == 0){
-							paper.saved('Maintenance OFF');
-						}else if(data == 1){
-							paper.saved('Maintenance ON');
-						}else{
-							paper.saved('Error');
-						}
-					});
-				});
-				
-				// Switches
+				// Config toggles
 				$('.toggle-table img').on('click', function(){
 					var name = $(this).attr('data-name'),
 						value = $(this).attr('data-value'),
@@ -179,7 +168,7 @@
 					
 					$(this).addClass('fade');
 					
-					$.post('{{path.root}}/admin/post/switch', {
+					$.post('{{path.root}}/admin/post/config', {
 						name: name
 					}).done(function(data){
 						if(data == 'Success'){
@@ -196,6 +185,17 @@
 						}else{
 							console.log(data);
 						}
+					});
+				});
+				
+				// SQLBackup
+				$('[pw-backup]').on('click', function(){
+					var button = $(this);
+					
+					paper.wait(button);
+					$.post('{{path.root}}/admin/post/backup')
+					.done(function(data){
+						if(data == 'Success') paper.ready(button, 'BACKUP');
 					});
 				});
 			});

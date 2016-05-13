@@ -9,7 +9,7 @@
 	height:35px;
 	line-height:35px;
 	font-size:20px;
-	width:100%
+	width:100%;
 }
 
 .typeahead:hover {
@@ -29,5 +29,4 @@
 }
 
 .tt-hint {display:none!important}
-
 .tt-menu {box-shadow:none;}

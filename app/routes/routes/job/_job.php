@@ -9,11 +9,15 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 	$form = new Form;
 	
 	/* Construction */
-	$cacheID = $form->cache(); // Update job_cache if necessary
-	if($job = $app->sql->get('job')->where('jobID', '=', $a)->run()){
-		if($job['cache']){
-			$client	= $app->sql->get('client')->where('clientID', '=', $job['client']['clientID'])->run();
-			$status	= $app->sql->get('job_status')->all()->run();
+	$cache_id = $form->cache(); // Update job_cache if necessary
+	if($job = $app->sql->get('job')->where('job_number', '=', $a)->one()){
+		if(isset($job['job_cache'])){
+			
+			$app->sql->touch('job')->where('id', '=', $job['id'])->run();
+			
+			$client	= $job['client'];
+			$status	= $app->sql->get('job_status')->select(['name'])->all();
+			unset($job['client']);
 			
 			// TABS PART ONE //
 			$forms = [];
@@ -26,9 +30,9 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			]; */
 			
 			// TABS => FORMS //
-			if($form = $app->sql->get('job_form')->where('jobID', '=', $a)->all()->run()){
+			if($form = $app->sql->get('job_form')->where('job_id', '=', $job['id'])->all()){
 				foreach($form as $item){
-					$forms[$item['formID']] = [
+					$forms[$item['id']] = [
 						'name'	=> $item['name'],
 						'html'	=> $item['html'],
 					];
@@ -36,26 +40,29 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			}
 			
 			// TEMPLATES //
-			$templates = $app->parse->jsonToArray($job['cache']['content']);
-			$job['formjs'] = $job['cache']['formjs'];
+			$templates = $app->parse->jsonToArray($job['job_cache']['content']);
+			$job['painter'] = $job['job_cache']['painter'];
 			unset($job['cache']);
 			
-			//$html = ($job['status']['statusID'] == 0) ? 'views/job/_archived.html' : 'views/job/_job.html';
+			// $html = ($job['status']['statusID'] == 0) ? 'views/job/_archived.html' : 'views/job/_job.html';
 			$html = 'views/job/_job.html';
 			
+			// $resources = 'form.js?aBcdEf
+			$resources = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.resources'));
+			
 			return $app->build->page($html, [
-				'jobID'		=> $a,
+				'id'		=> $a,
 				'job'		=> $job,
 				'client'	=> $client,
 				'templates'	=> $templates,
 				'status'	=> $status,
 				'forms'		=> $forms,
-				'resources'	=> $app->parse->jsonToArray(file_get_contents('../app/app/.resources')),
+				'resources'	=> $resources,
 			]);
 		}else{
 			$app->sql->put('job')->with([
-				'cacheID' => $cacheID
-			])->where('jobID', '=', $job['jobID'])->run();
+				'job_cache_id' => $cache_id
+			])->where('id', '=', $job['id'])->run();
 			$app->flash('info', 'This job had to be repaired automatically.<br> If you experience any problems please <b>do not make any changes</b> and contact support. Thank you.');
 			$app->redirect($app->root.$app->request->getResourceUri());
 		}

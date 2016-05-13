@@ -3,41 +3,44 @@
 use Paperwork\Extended\ID;
 
 $app->post('/put/job-details', 'uac', function() use ($app){
+	/* Methods */
 	$ID = new ID;
 	
-	/* Contract */
-	/*
-		GET
-		jobID: int
-		status: int
-		
-		RETURN
-		
-	*/
-	
-	if(isset($_POST['notes']) && isset($_POST['jobID'])){
+	/* Construction */
+	if(isset($_POST['notes']) && isset($_POST['id'])){
 		$notes = $_POST['notes'];
-		$app->sql->put('job')->with(['notes' => $notes])->where('jobID', '=', $_POST['jobID'])->run();
+		$app->sql->put('job')->with([
+			'notes' => $notes
+		])->where('id', '=', $_POST['id'])->run();
 	}
-	if(isset($_POST['name']) && isset($_POST['jobID'])){
+	if(isset($_POST['name']) && isset($_POST['id'])){
 		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-		$app->sql->put('job')->with(['name' => $name])->where('jobID', '=', $_POST['jobID'])->run();
+		$app->sql->put('job')->with([
+			'name' => $name
+		])->where('id', '=', $_POST['id'])->run();
 	}
-	if(isset($_POST['status']) && isset($_POST['jobID'])){
-		$status = $ID->translateID('statusID', $_POST['status']);
+	if(isset($_POST['status']) && isset($_POST['id'])){
+		
+		$status = $app->sql->get('job_status')->where('name', '=', $_POST['status'])->one();
+		
 		if($_POST['status'] == 'Completed'){
+			
 			$app->sql->put('job')->with([
-				'statusID' => $status,
+				'job_status_id' => $status['id'],
 				'date_completed' => date("Y-m-d H:i:s")
-			])->where('jobID', '=', $_POST['jobID'])->run();
-		}else if($_POST['status'] == 'Invoiced Out'){
+			])->where('id', '=', $_POST['id'])->run();
+			
+		}elseif($_POST['status'] == 'Invoiced Out'){
 			$app->sql->put('job')->with([
-				'statusID' => $status,
+				'job_status_id' => $status['id'],
 				'date_invoiced' => date("Y-m-d H:i:s")
-			])->where('jobID', '=', $_POST['jobID'])->run();
+			])->where('id', '=', $_POST['id'])->run();
 		}else{
-			$app->sql->put('job')->with(['statusID' => $status])->where('jobID', '=', $_POST['jobID'])->run();
+			$app->sql->put('job')->with([
+				'job_status_id' => $status['id']
+			])->where('id', '=', $_POST['id'])->run();
 		}
 		echo $_POST['status'];
+		
 	}
 });

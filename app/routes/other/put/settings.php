@@ -2,6 +2,7 @@
 
 $app->post('/put/settings', 'uac', function() use ($app){
 	if(isset($_POST['smtp'])){
+		// Not updated in years mate
 		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 		$pw = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 		$smtp = filter_var($_POST['smtp'], FILTER_SANITIZE_STRING);
@@ -21,13 +22,14 @@ $app->post('/put/settings', 'uac', function() use ($app){
 		$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
 		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 		
-		$app->sql->put('master.uac')->with([
+		$app->sql->put('user')->with([
 			'email'		=> $email,
 			'first'		=> $first,
 			'last'		=> $last,
 			'company'	=> $company,
 			'phone'		=> $phone,
-		])->where('uacID', '=', $app->user['uacID'])->run();
+		])->where('id', '=', $app->user['id'])->god()->run();
 	}
+	$app->flash('success', 'Updated');
 	$app->redirect($app->root.'/settings');
 });

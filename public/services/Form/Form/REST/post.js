@@ -2,38 +2,39 @@ Form.prototype.post = function(data, callback){
 	var a= this;
 	
 	// Post form
-	if(data.url != undefined && data.templateID != undefined &&
-		data.clientID != undefined && data.jobID != undefined){
+	if(data.url != undefined && data.template_id != undefined &&
+		data.client_id != undefined && data.job_id != undefined){
 		$.post(data.url, {
-			templateID:	data.templateID,
-			clientID:	data.clientID,
-			jobID:		data.jobID
+			template_id: data.template_id,
+			client_id: data.client_id,
+			job_id: data.job_id
 		}).done(function(json){
 			var json	= JSON.parse(json),
 				obj		= a.tab.objParent,
-				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook));
+				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook)),
+				form_id	= json.id;
 			
 			// Create new obj
 			$(obj).find('['+a.tab.heir+']').before('<div '+a.tab.objhook+'="'+objID+'" class="'+a.tab.obj+' h">'+json.html+'</div>');
 			$(obj).find('['+a.tab.heir+']').replaceWith('<div '+a.tab.objhook+'="'+(objID + 1)+'" '+a.tab.heir+' hidden></div>');
 			
 			// Update data-formid on form-blob
-			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', json.formID);
+			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', form_id);
 			
 			// Update a.map
-			var form = $('[data-formid="'+json.formID+'"]');
+			var form = $('[data-formid="'+form_id+'"]');
 			a.crawl(form);
 			
 			// Create new tab
-			a.tab.append(data.templateName, function(){
+			a.tab.append(data.template_name, function(){
 				a.populate(form, {
-					jobID: data.jobID,
+					job_id: data.job_id,
 					date: json.date,
 					client: json.client,
 				});
 				a.put({
 					url: environment.root+'/put/form',
-					formID: json.formID,
+					id: form_id,
 				}, function(){
 					a.construct(form);
 					callback(form);

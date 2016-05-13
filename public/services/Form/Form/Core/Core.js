@@ -13,9 +13,9 @@ var Form = function(){
 	
 	// __construct()
 	$.get(environment.root+'/get/inv', function(data){
-		$.get(environment.root+'/get/form/'+environment.jobID, function(items){
+		$.get(environment.root+'/get/form/'+environment.job_id, function(items){
 			var src = [],
-				map = JSON.parse(items);//
+				map = JSON.parse(items);
 			
 			// Add margin property to each item in json
 			$.each(map, function(a, b){
@@ -32,9 +32,9 @@ var Form = function(){
 			
 			$(a.form).each(function(){
 				var form = $(this),
-					formID= form.attr('data-formid');
+					form_id= form.attr('data-formid');
 				
-				map[formID] != undefined || map[formID] != null ? a.map[formID] = map[formID] :	a.crawl(form);
+				map[form_id] != undefined || map[form_id] != null ? a.map[form_id] = map[form_id] :	a.crawl(form);
 				a.construct(form);
 			});
 		});

@@ -1,7 +1,6 @@
 Form.prototype.put = function(data, callback){
 	var a= this,
-		formID= data.formID,
-		form= $('[data-formid="'+formID+'"]'),
+		form= $('[data-formid="'+data.id+'"]'),
 		save= form.clone();
 	
 	// Flush html items
@@ -9,11 +8,11 @@ Form.prototype.put = function(data, callback){
 	var html= a.strip(save); // Remove interactive tools, returns html
 	
 	// Put form
-	if(data.url != undefined && formID != undefined){
+	if(data.url != undefined && data.id != undefined){
 		$.post(data.url, {
-			formID: formID, // User defined or current
+			id: data.id, // User defined or current
 			html: html,
-			json: JSON.stringify(a.map[formID]),
+			json: JSON.stringify(a.map[data.id]),
 		}).done(function(){
 			if(data != '0'){
 				//a.refresh(form);
@@ -28,6 +27,6 @@ Form.prototype.put = function(data, callback){
 			console.log('Internal Server Error');
 		});
 	}else{
-		console.log('URL or formID not supplied, form not saved.');
+		console.log('URL or data.id not supplied, form not saved.');
 	}
 };

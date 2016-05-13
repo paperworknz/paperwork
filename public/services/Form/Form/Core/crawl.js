@@ -4,12 +4,12 @@ Form.prototype.crawl = function(form){
 	*/
 	
 	var a=this,
-		formID= form.attr('data-formid'),
+		form_id= form.attr('data-formid'),
 		margin= {};
 	
 	// Cache margins for each item in margin object
-	if(a.map[formID] != undefined){
-		$.each(a.map[formID].items, function(a,b){
+	if(a.map[form_id] != undefined){
+		$.each(a.map[form_id].items, function(a,b){
 			if(b.margin !== undefined || b.margin == 0){
 				margin[a] = b.margin;
 			}else{
@@ -19,7 +19,7 @@ Form.prototype.crawl = function(form){
 	}
 	
 	// Reset map for this form
-	a.map[formID] = {
+	a.map[form_id] = {
 		items: {},
 		subtotal: 0,
 		tax: 0,
@@ -28,17 +28,17 @@ Form.prototype.crawl = function(form){
 	
 	// Populate map
 	a.p.each('item', form, function(event){
-		if(a.map[formID].items[event.itemID] === undefined) a.map[formID].items[event.itemID] = {};
-		a.map[formID].items[event.itemID].itemID = event.itemID;
-		a.map[formID].items[event.itemID].item = event.item;
-		a.map[formID].items[event.itemID].quantity = event.quantity;
-		a.map[formID].items[event.itemID].price = event.price;
-		a.map[formID].items[event.itemID].total = event.total;
-		if(margin[event.itemID] != undefined) a.map[formID].items[event.itemID].margin = margin[event.itemID]; // Add margin back in
+		if(a.map[form_id].items[event.itemID] === undefined) a.map[form_id].items[event.itemID] = {};
+		a.map[form_id].items[event.itemID].itemID = event.itemID;
+		a.map[form_id].items[event.itemID].item = event.item;
+		a.map[form_id].items[event.itemID].quantity = event.quantity;
+		a.map[form_id].items[event.itemID].price = event.price;
+		a.map[form_id].items[event.itemID].total = event.total;
+		if(margin[event.itemID] != undefined) a.map[form_id].items[event.itemID].margin = margin[event.itemID]; // Add margin back in
 	});
 	
 	// Update subtotal, tax, total
-	a.map[formID].subtotal = a.p.get('subtotal', form);
-	a.map[formID].tax = a.p.get('tax', form);
-	a.map[formID].total = a.p.get('total', form);
+	a.map[form_id].subtotal = a.p.get('subtotal', form);
+	a.map[form_id].tax = a.p.get('tax', form);
+	a.map[form_id].total = a.p.get('total', form);
 };

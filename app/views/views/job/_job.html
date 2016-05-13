@@ -14,7 +14,7 @@
 			</div>
 			<div class="tabs-job">
 				<ul class="wrapper">
-					<li data-tab="0" id="summarytab" class="tab noselect">Summary</li>
+					<li data-tab="0" id="summarytab" class="tab noselect">Job</li>
 					{% set i = 0 %}
 					{% for form in forms %}
 						{% set i = i + 1 %}
@@ -27,16 +27,20 @@
 			</div>
 			<div class="obj" style="display:inline-block;margin-bottom:15px">
 				<div data-obj="0" id="summary" class="tabobj box job-material">
-					<h3 style="margin-bottom:0">
-						<input type="text" class="jobName" name="jobName" value="{{job.name}}" placeholder="Job name"/>
-						<span class="pull-right" style="color:green">{{job.jobID}}</span>
-					</h3>
+					<div>
+						<input type="text" class="jobName h3" name="jobName" value="{{job.name}}" placeholder="Job name"/>
+						<span class="h3 pull-right" style="color:#7f8c8d">Job #{{job.job_number}}</span>
+					</div>
 					<hr>
 					<table class="clientdetails">
 						<tbody>
 							<tr>
-								<td>Name</td>
-								<td><a href="{{path.root}}/client/{{client.clientID}}" title="{{client.name}}'s Page">{{client.name}}</a></td>
+								<td>Client</td>
+								<td><a href="{{path.root}}/client/{{client.client_number}}" title="{{client.name}}'s Page">{{client.name}}</a></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><a href="mailto:{{client.email}}" title="Send Mail">{{client.email}}</a></td>
 							</tr>
 							<tr>
 								<td>Address</td>
@@ -69,7 +73,7 @@
 								<td>
 									<select job-status-select>
 										{% for item in status %}
-											{% if job.status.name == item.name %}
+											{% if job.job_status.name == item.name %}
 											<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
 											{% else %}
 											<option value="{{item.name}}"/>{{item.name}}</option>
@@ -79,9 +83,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="token pdf-title" style="vertical-align:top; padding-top:17px">
-									
-								</td>
+								<td class="token pdf-title" style="vertical-align:top; padding-top:17px"></td>
 								<td style="padding-top:10px">
 									<div class="pdf-load"></div>
 									<div class="pdf-list"></div>
@@ -91,7 +93,7 @@
 					</table>
 					<div class="wrapper">
 						<form method="post" action="{{path.root}}/delete/job" job-del-form>
-							<input type="hidden" name="jobID" value="{{jobID}}"/>
+							<input type="hidden" name="id" value="{{job.id}}"/>
 						</form>
 						<button class="wolfe-btn delete pull-right" job-del-btn>Delete Job</button>
 					</div>
@@ -101,7 +103,7 @@
 					{% set i = i + 1 %}
 					<div data-obj="{{i}}" class="tabobj h">
 						{% include path.form with {
-							formID: a,
+							id: a,
 							html: b.html
 						} %}
 					</div>
@@ -136,27 +138,29 @@
 		}%}
 		<script>
 			var environment = {
-				jobID: '{{jobID}}',
-				clientID: '{{client.clientID}}',
+				job_id: '{{job.id}}',
+				job_number: '{{job.job_number}}',
+				client_id: '{{client.id}}',
+				client_number: '{{client.client_number}}',
 				root: '{{path.root}}'
 			};
 			var pw	= new Paperwork;
 			var tab	= new Tab({
 				tabParent: '.tabs-job',
 				cookie: {
-					name:	'job',
-					value:	'{{jobID}}',
+					name: 'job',
+					value: '{{job.job_number}}',
 				}
 			});
 		</script>
-		<script src="{{path.root}}/services/Form/Painter/{{job.formjs}}"></script>
-		<script src="{{path.root}}/services/Form/Form.min.js{{resources.form}}"></script>
+		<script src="{{path.root}}/services/Form/Painter/{{job.painter}}"></script>
+		<script src="{{path.root}}/services/Form/Form.js{{resources.form}}"></script>
 		<script>var form = new Form;</script>
 		<script>
 		$(function(){
 			// AJAX CALL FOR PDFS
 			pw.wait($('.pdf-load'));
-			$.get('{{path.root}}/get/pdf-json/{{jobID}}')
+			$.get('{{path.root}}/get/pdf-json/{{job.job_number}}')
 			.done(function(data){
 				if(data != '0'){
 					$('.pdf-load').remove();
@@ -165,7 +169,7 @@
 					$.each(data, function(a,b){
 						$('.pdf-list').append(
 							'<div style="height:24px;line-height:24px">'+
-								'<a target="_blank" href="{{path.root}}/get/pdf/{{jobID}}/'+b+'">'+b+'</a>'+
+								'<a target="_blank" href="{{path.root}}/get/pdf/{{job.job_number}}/'+b+'">'+b+'</a>'+
 							'</div>'
 						);
 					});
@@ -178,7 +182,7 @@
 			$(document).on('change', '[job-status-select]', function(){
 				if($(this).val() != undefined){
 					$.post('{{path.root}}/put/job-details', {
-						jobID: '{{jobID}}',
+						id: '{{job.id}}',
 						status: $(this).val()
 					}).done(function(data){
 						if(data != '0'){
@@ -202,7 +206,7 @@
 				if($(this).html() != notes){
 					$.post('{{path.root}}/put/job-details', {
 						notes: $(this).html(),
-						jobID: '{{job.jobID}}',
+						id: '{{job.id}}',
 					}).done(function(){
 						notes = $('#notes').html();
 						pw.saved();
@@ -215,7 +219,7 @@
 				if($('.jobName').val() !=''){
 					$.post('{{path.root}}/put/job-details', {
 						name: $('.jobName').val(),
-						jobID: '{{jobID}}',
+						id: '{{job.id}}',
 					}).done(function(){
 						pw.saved();
 					});
@@ -239,9 +243,9 @@
 				selector: '.tab',
 				callback: function(key){
 					var item = $(this).attr('data-tab'),
-						formID = $('[data-obj="'+item+'"]').find(form.form).attr('data-formid');
+						id = $('[data-obj="'+item+'"]').find(form.form).attr('data-formid');
 					
-					if(key != 'cancel' && formID != undefined){
+					if(key != 'cancel' && id != undefined){
 						swal({
 							title: 'New Name',
 							type: 'input',
@@ -256,7 +260,7 @@
 								return false;
 							}
 							$.post('{{path.root}}/put/rename-form', {
-								formID: formID,
+								id: id,
 								name: name,
 							}).done(function(data){
 								data = JSON.parse(data);
@@ -292,10 +296,10 @@
 				pw.wait(button);
 				form.post({
 					url: '{{path.root}}/post/form',
-					templateName: name,
-					templateID: button.attr('data-templateid'),
-					clientID: '{{client.clientID}}',
-					jobID: '{{jobID}}',
+					template_name: name,
+					template_id: button.attr('data-templateid'),
+					client_id: '{{client.id}}',
+					job_id: '{{job.id}}',
 				}, function(bool){
 					if(bool){
 						pw.ready(button, name);
@@ -314,7 +318,7 @@
 				pw.wait(button);
 				form.put({
 					url: '{{path.root}}/put/form',
-					formID: $(form.s).find('[form-blob]').attr('data-formid'),
+					id: $(form.s).find('[form-blob]').attr('data-formid'),
 				}, function(bool){
 					if(bool){
 						pw.ready(button, 'SAVE');
@@ -341,11 +345,11 @@
 					if(a){
 						form.delete({
 							url: '{{path.root}}/delete/form',
-							formID: $(form.s).find('[form-blob]').attr('data-formid'),
+							form_id: $(form.s).find('[form-blob]').attr('data-formid'),
 						}, function(){
 							var noteposition = $('[note-parent]').position(),
 								noteparent = $('[note-parent]').clone(),
-								tabID = $('.'+tab.activeTab).attr('data-tab');
+								tab_id = $('.'+tab.activeTab).attr('data-tab');
 							$('[note-parent]').css({
 								'position':'absolute',
 								'top':noteposition.top,
@@ -354,7 +358,7 @@
 							$(form.s).slideUp('fast', function(){
 								$(form.s).remove();
 								$('.'+tab.tab+'.'+tab.activeTab).fadeOut('fast', function(){
-									tab.activate($('[data-tab="'+tabID+'"]').prev());
+									tab.activate($('[data-tab="'+tab_id+'"]').prev());
 									$('[note-parent]').replaceWith(noteparent);
 									$('[note-wrapper]').on('click', function(){
 										$('#notes').focus();
@@ -378,7 +382,7 @@
 				pw.wait(button);
 				form.pdf($(form.s).find('[form-blob]'), function(data){
 					$(form.s).find('[form-pdf-html]').val(data);
-					$(form.s).find('[form-pdf-jobID]').val('{{jobID}}');
+					$(form.s).find('[form-pdf-jobid]').val('{{job.job_number}}');
 					$(form.s).find('[form-pdf-form]').submit();
 					window.onfocus = function(){
 						pw.ready(button, html);

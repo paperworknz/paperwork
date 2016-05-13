@@ -11,7 +11,7 @@ $app->post('/post/template-name', 'uac', function() use ($app){
 		unset($templates[0]);
 		
 		foreach($templates as $key => $value){
-			$app->sql->put('job_form_templates')->where('templateID', '=', $key)->with([
+			$app->sql->put('job_form_template')->where('id', '=', $key)->with([
 				'name' => $value
 			])->run();
 		}

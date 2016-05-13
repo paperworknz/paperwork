@@ -7,38 +7,36 @@
         <div id="content" style="display:none">
 			<div class="tabs">
 				<ul class="wrapper">
-					<li data-tab="0" id="summarytab" class="tab noselect">Summary</li>
-					{% if job %}<li data-tab="1" id="jobstab" class="tab noselect">Jobs</li>{% endif %}
+					<li data-tab="0" id="summarytab" class="tab noselect">Client</li>
+					{% if jobs %}<li data-tab="1" id="jobstab" class="tab noselect">Jobs</li>{% endif %}
 				</ul>
 			</div>
 			<div class="obj">
 				<div data-obj="0" id="summary" class="box material im">
 					<div class="wrapper pr">
 						<div class="client-details pull-left">
-							<form method="post" name="" action="{{path.root}}/put/client-details">
-								<input type="text" class="h3" value="{{client.name}}" placeholder="Client name" client-name/>
-								<table class="w1">
-									<tbody>
-										<tr>
-											<td>Address</td>
-											<td><input type="text" class="h5" value="{{client.address}}" placeholder="..." client-address/></td>
-										</tr>
-										<tr>
-											<td>Email</td>
-											<td><input type="text" class="h5" value="{{client.email}}" placeholder="..." client-email/></td>
-										</tr>
-										<tr>
-											<td>Phone</td>
-											<td><input type="text" class="h5" value="{{client.phone}}" placeholder="..." client-phone/></td>
-										</tr>
-									</tbody>
-								</table>
-							</form>
+							<input type="text" class="h3" value="{{client.name}}" placeholder="Client name" client-name/>
+							<table class="w1">
+								<tbody>
+									<tr>
+										<td>Address</td>
+										<td><input type="text" class="h5" value="{{client.address}}" placeholder="..." client-address/></td>
+									</tr>
+									<tr>
+										<td>Email</td>
+										<td><input type="text" class="h5" value="{{client.email}}" placeholder="..." client-email/></td>
+									</tr>
+									<tr>
+										<td>Phone</td>
+										<td><input type="text" class="h5" value="{{client.phone}}" placeholder="..." client-phone/></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<div class="pull-right h3">
 							<span class="firm-right">
 								<form method="get" action="{{path.root}}/jobs">
-									<input type="hidden" name="id" value="{{client.clientID}}" />
+									<input type="hidden" name="id" value="{{client.client_number}}" />
 									<button type="submit" class="wolfe-btn">
 										New Job
 									</button>
@@ -49,7 +47,7 @@
 					<br>
 					<div class="wrapper">
 						<form method="post" action="{{path.root}}/delete/client" client-del-form>
-							<input type="hidden" name="clientID" value="{{client.clientID}}" />
+							<input type="hidden" name="id" value="{{client.id}}" />
 						</form>
 						<button type="submit" class="wolfe-btn delete" client-del-btn>Delete Client</button>
 					</div>
@@ -58,23 +56,22 @@
 						<div>
 							<span>Notes</span>
 							<span class="fr">
-								<div id="ajax" style="color:#888;font-style:italic">
-									
-								</div>
+								<div id="ajax" style="color:#888;font-style:italic"></div>
 							</span>
 						</div>
 						<textarea id="notes">{{client.notes | raw}}</textarea>
 					</div>
 				</div>
-				{% if job %}
+				{% if jobs %}
 				<div data-obj="1" id="jobs" class="box material im h" style="padding-top:15px;">
 					{% include path.table with {
-						'data': job,
+						'data': jobs,
 						'head': {
-							'jobID': 'ID',
+							'id': '_id',
+							'job_number': 'ID',
 							'name': 'Name',
 							'client.name': 'Client',
-							'status.name': 'Status'
+							'job_status.name': 'Status'
 						},
 						'width': {
 							'Name': '260px',
@@ -92,10 +89,9 @@
 		<script>
 			var environment = {
 				root: '{{path.root}}',
-				
 			};
 			var pw = new Paperwork;
-			{% if job %}
+			{% if jobs %}
 			new Table({
 				defaultFilter: 'All',
 				width: {
@@ -109,7 +105,7 @@
 			new Tab({
 				cookie: {
 					name: 'client',
-					value: "{{client.clientID}}"
+					value: "{{client.client_number}}"
 				}
 			});
 		</script>
@@ -130,12 +126,10 @@
 				
 				$('#notes').change(function(){
 					$('#ajax').css({'display':'block'});
-					$.post('{{path.root}}/put/client-details',
-						{
-							notes: $('#notes').val(),
-							clientID: {{client.clientID}}
-						}
-					).done(function(){
+					$.post('{{path.root}}/put/client-details', {
+						id: {{client.id}},
+						notes: $('#notes').val(),
+					}).done(function(){
 						pw.saved();
 					});
 				});
@@ -143,15 +137,13 @@
 				$('.client-details input').change(function(){
 					if($('[client-name]').val() != ''){
 						$('#ajax').css({'display':'block'});
-						$.post('{{path.root}}/put/client-details',
-							{
-								name: $('[client-name]').val(),
-								address: $('[client-address]').val(),
-								email: $('[client-email]').val(),
-								phone: $('[client-phone]').val(),
-								clientID: {{client.clientID}}
-							}
-						).done(function(){
+						$.post('{{path.root}}/put/client-details', {
+							id: {{client.id}},
+							name: $('[client-name]').val(),
+							address: $('[client-address]').val(),
+							email: $('[client-email]').val(),
+							phone: $('[client-phone]').val(),
+						}).done(function(){
 							pw.saved();
 						});
 					}

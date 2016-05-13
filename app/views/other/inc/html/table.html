@@ -62,10 +62,21 @@
 			<div id="sortable" class="wt-wrap">
 				{% set i = 0 %}
 				{% for a,b in head %}
+					{% set style = '' %}
 					{% if '.' in a %}
 						{% set z = a|split('.')%}
 					{% endif %}
-					<ul class="wt-column" data-id="{{b}}" {% if width %}{% for c,d in width %}{% if c == b %}style="width:{{d}}"{% endif %}{% endfor %}{% endif %}>
+					{% if '_' in b %}
+						{% set style = 'display:none;' %}
+					{% endif %}
+					{% if width %}
+						{% for c,d in width %}
+							{% if c == b %}
+								{% set style = style ~ 'width:' ~ d %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+					<ul class="wt-column" data-id="{{b}}" style="{{style}}">
 					<li class="wt-head noselect" data-state="def">
 						<div wt-head>
 							<span>{{b}}</span>
@@ -77,10 +88,10 @@
 					{% for e in data %}
 						{% if e[a] %}
 							{% set i = i + 1 %}
-							<li class="wt-row" href="{{path.root}}/job/{{e.jobID}}" data-row="{{i}}">{{e[a]}}</li>
+							<li class="wt-row" href="{{path.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[a]}}</li>
 						{% elseif z %}
 							{% set i = i + 1 %}
-							<li class="wt-row" href="{{path.root}}/job/{{e.jobID}}" data-row="{{i}}">{{e[z[0]][z[1]]}}</li>
+							<li class="wt-row" href="{{path.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[z[0]][z[1]]}}</li>
 						{% endif %}
 					{% endfor %}
 					{% set i = 0 %}

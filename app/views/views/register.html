@@ -135,13 +135,14 @@
 							confirm: $('input[name=confirm]').val(), 
 						}).done(function(a){
 							a = JSON.parse(a);
-							console.log(a);
+							
 							if(a.type == 'success'){
 								$.post('{{path.root}}/post/login', {
 									username: $('input[name=username]').val(),
 									password: $('input[name=password]').val(),
 								}).done(function(data){
 									data = JSON.parse(data);
+									
 									if(data.type == 'success'){
 										window.location = '{{path.root}}/register-settings';
 									}else{

@@ -1,10 +1,15 @@
 <?php
 
 $app->post('/delete/client', 'uac', function() use ($app){
-	if(isset($_POST['clientID'])){
-		$app->sql->delete('job_form')->where('clientID', '=', $_POST['clientID'])->run();
-		$app->sql->delete('job')->where('clientID', '=', $_POST['clientID'])->run();
-		$app->sql->delete('client')->where('clientID', '=', $_POST['clientID'])->run();
+	/* Methods */
+	$id = isset($_POST['id']) ? $_POST['id'] : false;
+	
+	/* Construction */
+	if($id){
+		$app->sql->delete('job_form')->where('client_id', '=', $id)->run();
+		$app->sql->delete('job')->where('client_id', '=', $id)->run();
+		$app->sql->delete('client')->where('id', '=', $id)->run();
 	}
+	
 	$app->redirect($app->root.'/clients');
 });

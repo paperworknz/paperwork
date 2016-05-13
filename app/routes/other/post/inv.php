@@ -1,50 +1,25 @@
 <?php
 
-use Paperwork\Extended\ID;
-
 $app->post('/post/inv', 'uac', function() use ($app){
 	/* Methods */
-	$ID = new ID;
-	
-	/* Contract */
-	/*
-		GET
-		dump: NOT FINISHED
-	*/
+	$name = isset($_POST['name']) ? $_POST['name'] : false;
+	$price = isset($_POST['price']) ? $_POST['price'] : false;
 	
 	/* Construction */
-	if(isset($_POST['name']) && isset($_POST['price'])){
-		$_POST['name'] = preg_replace('/\s+/', ' ',$_POST['name']);
-		if($app->sql->get('inv')->where('name', '=', $_POST['name'])->run()){
-			$app->sql->put('inv')->with([
-				'name' => $_POST['name'],
-				'price' => $_POST['price']
-			])->where('name', '=', $_POST['name'])->run();
+	if($name != '' && $price != ''){
+		
+		//$name = preg_replace('/\s+/', ' ', $name);
+		if($app->sql->get('inventory')->where('name', '=', $name)->one()){
+			$app->sql->put('inventory')->with([
+				'name' => $name,
+				'price' => $price,
+			])->where('name', '=', $name)->run();
 		}else{
-			$app->sql->post('inv')->with([
-				'name' => $_POST['name'],
-				'price' => $_POST['price']
+			$app->sql->post('inventory')->with([
+				'name' => $name,
+				'price' => $price,
 			])->run();
 		}
-	}else if(isset($_POST['dump'])){
-		$typeID = 1;
-		$dump = $_POST['dump'];
-		$blob = [];
-		
-		foreach($dump as $a){
-			$blob[$a['name']] = $a['price'];
-		}
-		
-		foreach($blob as $a => $b){
-			if(!$app->sql->get('inv')->where('name', '=', $a)->run()){
-				$app->sql->post('inv')->with([
-					'name' => $a,
-					'price' => $b
-				])->run();
-			}
-		}
-		
-		echo 'OK';
 	}else{
 		echo '0';
 	}

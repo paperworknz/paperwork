@@ -5,28 +5,27 @@ namespace Paperwork\Extended;
 class Form {
 	
 	private $cache = [
-		'cacheID'	=> '',
+		'id'		=> '',
 		'array'		=> [],
 		'json'		=> '',
-		'formjs'	=> ''
+		'painter'	=> ''
 	];
 	
-	private $current = 'Armadyl.js';
 	private $rollback = false;
 	
 	public function __construct(){
 		$app = \Slim\Slim::getInstance();
-		$this->cache['formjs'] = $this->current;
+		$this->cache['painter'] = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.resources'))['painter'];;
 	}
 	
-	public function newCache(){
+	protected function newCache(){
 		$app = \Slim\Slim::getInstance();
 		
-		$templates = $app->sql->get('job_form_templates')->all()->run();
-		foreach($templates as $item){
-			$this->cache['array'][$item['templateID']] = [
-				'name'		=> $item['name'],
-				'content'	=> $item['content']
+		$templates = $app->sql->get('job_form_template')->all();
+		foreach($templates as $template){
+			$this->cache['array'][$template['id']] = [
+				'name'		=> $template['name'],
+				'content'	=> $template['content']
 			];
 		}
 		
@@ -40,32 +39,32 @@ class Form {
 		$this->newCache();
 		
 		// Compare new cache with existing caches, update form.js if an incremental update is found
-		if($existing = $app->sql->get('job_cache')->by('cacheID DESC')->all()->run()){	// Get all caches from newest to oldest
+		if($existing = $app->sql->get('job_cache')->also('ORDER BY id DESC')->all()){ // Get all caches from newest to oldest
 			foreach($existing as $latest){
-				if($latest['formjs'] == $this->cache['formjs']){	// Check if the formjs versions are the same
-					if($latest['content'] == $this->cache['json']){		// Check if templates json are the same
-						$this->cache['cacheID'] = $latest['cacheID'];		// No difference, cache is valid, use it
-						break;												// Found what we came for, break out of loop
-					}else{	// formjs is the same but templates have changed
+				if($latest['painter'] == $this->cache['painter']){	// Check if the painter versions are the same
+					if($latest['content'] == $this->cache['json']){	// Check if templates json are the same
+						$this->cache['id'] = $latest['id'];		// No difference, cache is valid, use it
+						break;									// Found what we came for, break out of loop
+					}else{	// painter is the same but templates have changed
 						if($this->rollback == false){
-							$app->sql->put('job_cache')->with([		// We aren't rolling back so update templates
+							$app->sql->put('job_cache')->with([	// We aren't rolling back so update templates
 								'content' => $this->cache['json']
-							])->where('cacheID', '=', $latest['cacheID'])->run();
+							])->where('id', '=', $latest['id'])->run();
 						}
-						$this->cache['cacheID'] = $latest['cacheID'];	// Use this cache because it matches the public formjs
+						$this->cache['id'] = $latest['id'];	// Use this cache because it matches the public painter
 					}
 				}
 			}
 		}
 		
-		if($this->cache['cacheID'] == ''){
-			$this->cache['cacheID'] = $app->sql->post('job_cache')->with([
+		if($this->cache['id'] == ''){
+			$this->cache['id'] = $app->sql->post('job_cache')->with([
 				'content'	=> $this->cache['json'],
-				'formjs'	=> $this->cache['formjs']
+				'painter'	=> $this->cache['painter']
 			])->run();
 		}
 		
-		return $this->cache['cacheID'];
+		return $this->cache['id'];
 	}
 	
 }

@@ -19,20 +19,11 @@
 								<tbody>
 									<tr>
 										<td class="ar">
-											Job:
-										</td>
-										<td>
-											#{{ jobID }}
-											<input type="hidden" name="jobID" value="{{jobID}}"/>
-										</td>
-									</tr>
-									<tr>
-										<td class="ar">
 											Client:
 										</td>
 										<td>
 											<div id="the-basics">
-												<input type="text" class="typeahead" name="client" placeholder="Quick Search" />
+												<input type="text" class="typeahead" name="client_name" placeholder="Quick Search" />
 											</div>
 										</td>
 									</tr>
@@ -56,14 +47,15 @@
 					</div>
 				</div>
 				<hr>
-				{% if job %}
+				{% if jobs %}
 					{% include path.table with {
-						'data': job,
+						'data': jobs,
 						'head': {
-							'jobID': 'ID',
+							'id': '_id',
+							'job_number': 'ID',
 							'name': 'Name',
 							'client.name': 'Client',
-							'status.name': 'Status',
+							'job_status.name': 'Status',
 						},
 						'width': {
 							'Name': '260px',
@@ -71,6 +63,8 @@
 							'Status': '111px'
 						}
 					}%}
+				{% else %}
+				<div class="ac">Start your first job by hitting New Job!</div>
 				{% endif %}
             </div>
         </div>
@@ -82,12 +76,12 @@
 				root: '{{path.root}}'
 			};
 			new Paperwork;
-			new Table();
+			{% if jobs %}new Table();{% endif %}
 		</script>
 		<script>
 			$(function(){
 				
-				var src = [{% for item in client %} "{{item.name | raw}}", {% endfor %}];
+				var src = [{% for client in clients %} "{{client.name | raw}}", {% endfor %}];
 				
 				var ta = new Typeahead(src, {
 					hint: true,
@@ -124,16 +118,17 @@
 					$("input[name='name']").focus();
 				{% endif %}
 				
+				{% if jobs %}
 				// Right click context menu
 				$('.wt-wrap').contextMenu({
 					selector: '.wt-row',
 					callback: function(key){
 						if(key != 'cancel'){
 							var item = $(this).attr('data-row'),
-								jobID = $('[data-id="ID"]').find('[data-row="'+item+'"]').html();
-							if(jobID != undefined && key != undefined){
+								id = $('[data-id="_id"]').find('[data-row="'+item+'"]').html();
+							if(id != undefined && key != undefined){
 								$.post('{{path.root}}/put/job-details', {
-									jobID: jobID,
+									id: id,
 									status: key
 								}).done(function(data){
 									if(data != '0'){
@@ -147,8 +142,8 @@
 						status: {
 							name: 'Update Status',
 							items: {
-				{% for s in status %}
-				'{{s.name}}': {'name':'{{s.name}}'},
+				{% for item in status %}
+				'{{item.name}}': {'name':'{{item.name}}'},
 				{% endfor %}
 							}
 						},
@@ -158,6 +153,7 @@
 						}
 					}
 				});
+				{% endif %}
 			});
 		</script>
     </body>

@@ -16,42 +16,50 @@ $app->post('/post/register', function() use ($app){
 		$easy = str_replace(' ', '', $company);
 		$easy = substr($easy, 0, 16); // Return first 16 chars of compressed company name
 		
-		if($app->sql->get('master.uac')->where('company', '=', $_POST['company'])->run()){
+		if($app->sql->get('user')->where('company', '=', $_POST['company'])->god()->one()){
 			echo $app->build->error('<b>'.$company.'</b> is already signed up! Please contact support if you can\'t access your account.');
-		}else if($app->sql->get('master.uac')->where('email', '=', $_POST['email'])->run()){
+		}else if($app->sql->get('user')->where('email', '=', $_POST['email'])->god()->one()){
 			echo $app->build->error('<b>'.$_POST['email'].'</b> is already registered. Please contact support if you can\'t access your account.');
-		}else if($app->sql->get('master.uac')->where('username', '=', $_POST['username'])->run()){
+		}else if($app->sql->get('user')->where('username', '=', $_POST['username'])->god()->one()){
 			echo $app->build->error('Sorry, the username <b>'.$_POST['username'].'</b> is taken. Please try something else.');
 		}else if($password != $confirm){
 			echo $app->build->error('Sorry, the passwords your entered did not match.');
 		}else{
 			
 			// Hash password
-			$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+			$password = password_hash($password, PASSWORD_DEFAULT);
 			
 			// Generate cookie
 			$cookie = bin2hex(random_bytes(32));
 			
-			// Add user to uac
-			$app->sql->post('master.uac')->with([
-				'email'		=> $email,
+			// Add user to user table
+			$app->sql->post('user')->with([
 				'username'	=> $username,
-				'password'	=> $password,
-				'company'	=> $company,
-				'easy'		=> $easy,
 				'first'		=> $first,
 				'last'		=> $last,
+				'company'	=> $company,
+				'easy'		=> $easy,
+				'email'		=> $email,
+				'disabled'	=> 0,
+				'admin'		=> 0,
+				'password'	=> $password,
 				'cookie'	=> $cookie,
-				'job_reference' => 1,
-				'disabled' => 0,
-			])->run();
+			])->god()->run();
 			
 			// Get user
-			$user = $app->sql->get('master.uac')->where('username', '=', $username)->run();
+			$user = $app->sql->get('user')->where('username', '=', $username)->god()->one();
+			
+			// Add user to user_number
+			$app->sql->post('user_number')->with([
+				'user_id'			=> $user['id'],
+				'client_number'		=> 1,
+				'job_number'		=> 1,
+				'job_status_number'	=> 1,
+			])->god()->run();
 			
 			$app->event->log([
 				'number' => 901,
-				'title' => $username.' added to UAC.',
+				'title' => $username.' added to user table.',
 			]);
 			
 			// Create storage directories
@@ -63,19 +71,11 @@ $app->post('/post/register', function() use ($app){
 			
 			mkdir($dir, 0777);
 			mkdir($dir.'/pdf', 0777);
-			mkdir($dir.'/sql', 0777);
 			
 			$app->event->log([
 				'number' => 900,
 				'title' => 'Storage directories created for '.$username,
 			]);
-			
-			// Create user database
-			$raw = file_get_contents('../app/app/resources/db_schema/app_default.sql'); // Load SQL structure script
-			$raw = str_replace('{{database}}', $_ENV['DB_PREFIX'].$username, $raw); // Replace placeholder with `app_$username`
-			$raw = str_replace('app_default', $_ENV['DB_PREFIX'].$username, $raw); // In case the placeholder was not put in the sql file
-			
-			$app->pdo->master->query($raw);
 			
 			// Return
 			echo $app->build->success([

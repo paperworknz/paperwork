@@ -2,13 +2,14 @@
 
 $app->post('/put/form', 'uac', function() use ($app){
 	/* Methods */
+	$id = isset($_POST['id']) ? $_POST['id'] : false;
+	$html = isset($_POST['html']) ? $_POST['html'] : false;
+	$json = isset($_POST['json']) ? $_POST['json'] : false;
 	
 	/* Construction */
-	if(isset($_POST['formID']) && isset($_POST['html'])){
-		$formID = $_POST['formID'];
-		$html = trim($_POST['html']);
-		$json = $_POST['json'];
-		$app->sql->put('job_form')->where('formID', '=', $formID)->with([
+	if($id && $html && $json){
+		$html = trim($html);
+		$app->sql->put('job_form')->where('id', '=', $id)->with([
 			'html' => $html,
 			'json' => $json,
 		])->run();

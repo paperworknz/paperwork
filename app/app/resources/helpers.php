@@ -6,10 +6,10 @@ function dd($val){
 }
 
 function go(){
-	$_ENV['go'] = microtime();
+	$_ENV['go'] = microtime(true);
 }
 
 function stop(){
-	$stop = microtime();
-	die($stop - $_ENV['go']);
+	$stop = microtime(true);
+	return $stop - $_ENV['go'];
 }

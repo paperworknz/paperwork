@@ -2,11 +2,15 @@
 
 // Switch Service
 $temp	= []; // $app environment array
-$switch = $app->sql->get('master.switch')->all()->run();
+$config = $app->sql
+	->get('config')
+	->select(['name', 'value'])
+	->god()
+	->all();
 
-foreach($switch as $key){
-	$name 	= $key['name']; // Name
-	$value 	= $key['value']; // Value
+foreach($config as $item){
+	$name 	= $item['name']; // Name
+	$value 	= $item['value']; // Value
 	
 	switch($value){
 		case 'true':

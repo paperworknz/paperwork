@@ -10,9 +10,9 @@ $app->post('/post/email-register', function() use ($app){
 		'title' => 'Email Registration',
 		'text' => 'Email: '.$email
 	]);
-	$app->sql->post('master.email')->with([
+	$app->sql->post('email')->with([
 		'email' => $email
-	])->run();
+	])->god()->run();
 	$app->flash('success', 'Thank you for signing up!');
 	$app->redirect($app->root);
 });
