@@ -1,10 +1,7 @@
 <?php
 
-use Paperwork\Extended\ID;
-
 $app->post('/put/job-details', 'uac', function() use ($app){
 	/* Methods */
-	$ID = new ID;
 	
 	/* Construction */
 	if(isset($_POST['notes']) && isset($_POST['id'])){

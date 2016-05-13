@@ -15,7 +15,7 @@ function uac(){
 
 function admin(){
 	$app = \Slim\Slim::getInstance();
-	if($app->user['username'] != 'admin'){
+	if(!$app->user['admin']){
 		$app->redirect($app->root);
 	}
 }
