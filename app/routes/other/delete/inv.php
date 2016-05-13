@@ -2,12 +2,11 @@
 
 $app->post('/delete/inv', 'uac', function() use ($app){
 	/* Methods */
+	$id = isset($_POST['id']) ? $_POST['id'] : false;
 	
 	/* Construction */
-	if(isset($_POST['invID'])){
-		if($inv = $app->sql->get('inv')->where('invID', '=', $_POST['invID'])->run()){
-			$app->sql->delete('inv')->where('invID', '=', $_POST['invID'])->run();
-		}
+	if($id){
+		$app->sql->delete('inventory')->where('id', '=', $id)->run();
 	}else{
 		echo '0';
 	}

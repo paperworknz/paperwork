@@ -2,9 +2,9 @@ Form.prototype.delete = function(data, callback){
 	var a = this;
 	
 	// Delete form
-	if(data.url != undefined && data.formID != undefined){
+	if(data.url != undefined && data.form_id != undefined){
 		$.post(data.url, {
-			formID: data.formID
+			id: data.form_id
 		}).done(function(data){
 			if(data != '0'){
 				if(callback != undefined) callback(true); // Callback

@@ -3,13 +3,13 @@ Form.prototype.append = function(form, item, quantity, price){
 		item	= item !== undefined ? item : '',
 		quantity= quantity !== undefined ? quantity : '',
 		price	= price !== undefined ? price : '',
-		formID	= $(form).attr('data-formid'),
-		itemID	= a.p.get('latest-item-id', form),
+		form_id	= $(form).attr('data-formid'),
+		item_id	= a.p.get('latest-item-id', form),
 		flag	= false; // Flag changes if item is not in inv
 	
 	// Prep
-	if(itemID === undefined) itemID = 0;
-	itemID = Number(itemID) + 1;
+	if(item_id === undefined) item_id = 0;
+	item_id = Number(item_id) + 1;
 	
 	if(a.inv[item] && price === '') price = flag = a.inv[item]; // If item is in inventory get price
 	if(!item) item = price = ''; // If item is not entered
@@ -17,7 +17,7 @@ Form.prototype.append = function(form, item, quantity, price){
 	
 	// Append item to DOM
 	a.p.append(form, {
-		itemID: itemID,
+		itemID: item_id,
 		item: item,
 		quantity: quantity,
 		price: price

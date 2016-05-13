@@ -1,4 +1,4 @@
-.inv .firm-right {
+.inventory .firm-right {
 	position:absolute;
 	right:0px;
 	background-color:white;
@@ -7,11 +7,7 @@
 	text-align:right;
 }
 
-.inv li {
-	position:relative;
-}
-
-.inv {
+.inventory, .inventory li {
 	position:relative;
 }
 
@@ -25,7 +21,7 @@
 	background-color: #eee!important
 }
 
-.inv input {
+.inventory input {
 	border:none;
 }
 

@@ -6,5 +6,5 @@ $app->post('/admin/post/query', function() use ($app){
 	/* Construction */
 	$q = $_POST['query'];
 	
-	echo $app->parse->arrayToJson($app->pdo->master->query($q)->fetchAll(PDO::FETCH_ASSOC));
+	echo $app->parse->arrayToJson($app->sql->raw($q));
 });

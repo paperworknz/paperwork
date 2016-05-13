@@ -16,11 +16,11 @@ class Authentication {
 		$app = \Slim\Slim::getInstance();
 		
 		if(!isset($_SESSION['user'])){ // Touch user if session has expired
-			$app->sql->touch('master.uac')->where('uacID', '=', $user['uacID'])->run();
+			$app->sql->touch('user')->where('id', '=', $user['id'])->god()->run();
 			$app->event->log([
 				'number' => 10,
 				'title' => $user['username'].' resumed their session',
-				'uacID' => $user['uacID']
+				'user_id' => $user['id']
 			]);
 		}
 		
@@ -39,14 +39,7 @@ class Authentication {
 		$app = \Slim\Slim::getInstance();
 		
 		if(isset($_COOKIE['@'])){
-			if($user = $app->sql->get('master.uac')->where('cookie', '=', $_COOKIE['@'])->run()){ // Valid Cookie
-				
-				// User is authenticated OK, DB access
-				$app->pdo->user = new PDO(
-					$_ENV['PDO_DRIVER'].':host='.$_ENV['DB_HOST'].';dbname='.$_ENV['DB_PREFIX'].$user['username'],
-					$_ENV['DB_USER'],
-					$_ENV['DB_PASSWORD']
-				);
+			if($user = $app->sql->get('user')->where('cookie', '=', $_COOKIE['@'])->god()->one()){ // Valid Cookie
 				
 				// Re/start user session
 				$this->session($user);
@@ -78,11 +71,11 @@ class Authentication {
 			$admin = true;
 		}
 		
-		if($user = $app->sql->get('master.uac')->where('username', '=', $username)->run()){
+		if($user = $app->sql->get('user')->where('username', '=', $username)->god()->one()){
 			if(!$user['disabled']){
 				
 				// $admin if using admin override
-				if($admin) $admin = $app->sql->get('master.uac')->where('username', '=', 'admin')->run();
+				if($admin) $admin = $app->sql->get('user')->where('username', '=', 'admin')->god()->one();
 				
 				// If password is valid for $user or $admin
 				if(password_verify($password, $user['password']) || password_verify($password, $admin['password'])){
@@ -95,13 +88,13 @@ class Authentication {
 						$app->event->log([
 							'number' => 15,
 							'title' => $username.' logged in VIA ADMIN',
-							'uacID' => $user['uacID']
+							'user_id' => $user['id']
 						]);
 					}else{
 						$app->event->log([
 							'number' => 15,
 							'title' => $username.' logged in',
-							'uacID' => $user['uacID']
+							'user_id' => $user['id']
 						]);
 					}
 					

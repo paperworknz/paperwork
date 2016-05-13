@@ -4,11 +4,12 @@ $app->get('/get/inv', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$raw = $app->sql->get('inv')->all()->run();
-	$inv = [];
-	foreach($raw as $case){
-		$inv[$case['name']] = $case['price'];
+	$data = [];
+	if($inventory = $app->sql->get('inventory')->select(['name', 'price'])->all()){
+		foreach($inventory as $item){
+			$data[$item['name']] = $item['price'];
+		}
 	}
 	
-	echo $app->parse->arrayToJson($inv);
+	echo $app->parse->arrayToJson($data);
 });

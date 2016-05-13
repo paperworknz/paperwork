@@ -87,47 +87,54 @@
 						</style>
 						<ul class="kappa">
 							{% for item in status %}
-							<li><input type="text" data-id="{{item.statusID}}" value="{{item.name}}"/>{% if item.statusID == 1 %} <span>Default</span> {% endif %}</li>
+							<li><input type="text" data-id="{{item.id}}" value="{{item.name}}"/></li>
 							{% endfor %}
 						</ul>
-						<a style="cursor:pointer;" new-status>New Status</a><br>
+						<a style="cursor:pointer;" new-status>
+							{% if status is empty %}
+							New Status
+							{% else %}
+							Another One
+							{% endif %}
+						</a><br>
 						<button class="wolfe-btn" style="margin-top:7px;" job-status-btn>UPDATE</button>
 					</div>
 					<hr>
 					<div>
-						<form method="post" action="{{path.root}}/post/job-reference">
-							Next Job Number <input type="text" name="job_reference" value="{{jobID}}"><br>
+						<form method="post" action="{{path.root}}/post/job-n">
+							Next Job Number <input type="text" name="job_number" value="{{job_number}}"><br>
 							<button class="wolfe-btn" style="margin-top:7px;">UPDATE</button>
 						</form>
-						
 					</div>
+					<hr>
+					<a href="{{path.root}}/register-settings">Rename your templates</a>
 				</div>
 				<div data-obj="2" class="box material im" style="padding:30px">
 					<div class="trash">
-						{% if (jobs is not empty) or (forms is not empty) or (clients is not empty) or (inv is not empty) %}
+						{% if (jobs is not empty) or (forms is not empty) or (clients is not empty) or (inventory is not empty) %}
 						<div class="h4">Jobs</div>
 						{% for job in jobs %}
-						<div>{{job.jobID}} - {{job.name}} - <span style="color:#999">{{job.client.name}}</span>&nbsp&nbsp<a href="#" data-jobid="{{job.jobID}}">Undo</a></div>
+						<div>{{job.job_number}} - {{job.name}} - <span style="color:#999">{{job.client.name}}</span>&nbsp&nbsp<a href="#" data-jobid="{{job.id}}">Undo</a></div>
 						{% endfor %}
 						<hr>
 						<div class="h4">Job Forms</div>
 						{% for form in forms %}
-						<div>{{form.job.jobID}} - {{form.name}} - <span style="color:#999">{{form.client.name}}</span>&nbsp&nbsp<a href="#" data-formid="{{form.formID}}">Undo</a></div>
+						<div>{{form.job.job_number}} - {{form.name}} - <span style="color:#999">{{form.client.name}}</span>&nbsp&nbsp<a href="#" data-formid="{{form.id}}">Undo</a></div>
 						{% endfor %}
 						<hr>
 						<div class="h4">Clients</div>
 						{% for client in clients %}
-						<div>{{client.clientID}} - {{client.name}}&nbsp&nbsp<a href="#" data-clientid="{{client.clientID}}">Undo</a></div>
+						<div>{{client.client_number}} - {{client.name}}&nbsp&nbsp<a href="#" data-clientid="{{client.id}}">Undo</a></div>
 						{% endfor %}
 						<hr>
 						<div class="h4">Inventory</div>
-						{% for item in inv %}
-						<div>{{item.name}} - {{item.price}}&nbsp&nbsp<a href="#" data-invid="{{item.invID}}">Undo</a></div>
+						{% for item in inventory %}
+						<div>{{item.name}} - {{item.price}}&nbsp&nbsp<a href="#" data-inventoryid="{{item.id}}">Undo</a></div>
 						{% endfor %}
 						<hr>
 						<div class="ac"><i>Items older than 30 days will be cleaned automatically</i></div>
 						{% else %}
-						<div class="ac h3">Trash is empty :)</div>
+						<div class="ac h3">Trash is empty</div>
 						{% endif %}
 					</div>
 				</div>
@@ -156,7 +163,7 @@
 						if($(this).data('id') != undefined){
 							if($(this).val() != undefined){
 								k.push({
-									ID: $(this).data('id'),
+									id: $(this).data('id'),
 									name: $(this).val(),
 								});
 							}
@@ -169,7 +176,7 @@
 					$.post('{{path.root}}/post/status', {
 						data: k
 					}).done(function(){
-						//location.reload();
+						location.reload();
 					});
 				});
 				
@@ -181,20 +188,20 @@
 					var type = id = 0;
 					$('.trash').css('opacity', '0.5');
 					if(element.attr('data-jobid') != undefined){
-						type = 'jobID',
+						type = 'job',
 						id = element.attr('data-jobid');
 					}
 					if(element.attr('data-formid') != undefined){
-						type = 'formID',
+						type = 'form',
 						id = element.attr('data-formid');
 					}
 					if(element.attr('data-clientid') != undefined){
-						type = 'clientID',
+						type = 'client',
 						id = element.attr('data-clientid');
 					}
-					if(element.attr('data-invid') != undefined){
-						type = 'invID',
-						id = element.attr('data-invid');
+					if(element.attr('data-inventoryid') != undefined){
+						type = 'inventory',
+						id = element.attr('data-inventoryid');
 					}
 					
 					$.post('{{path.root}}/put/restore', {

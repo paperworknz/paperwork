@@ -1,9 +1,14 @@
 <?php
 
 $app->post('/delete/job', 'uac', function() use ($app){
-	if(isset($_POST['jobID'])){
-		$app->sql->delete('job_form')->where('jobID', '=', $_POST['jobID'])->run();
-		$app->sql->delete('job')->where('jobID', '=', $_POST['jobID'])->run();
+	/* Methods */
+	$id = isset($_POST['id']) ? $_POST['id'] : false;
+	
+	/* Construction */
+	if($id){
+		$app->sql->delete('job_form')->where('job_id', '=', $id)->run();
+		$app->sql->delete('job')->where('id', '=', $id)->run();
 	}
+	
 	$app->redirect($app->root.'/jobs');
 });

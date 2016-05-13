@@ -1,6 +1,6 @@
 <div class="wrapper form p0">
 	<div style="background-color:white;padding:30px">
-		<div data-formid="{{formID}}" style="pointer-events:none;opacity:0.25" form-blob>
+		<div data-formid="{{id}}" style="pointer-events:none;opacity:0.25" form-blob>
 			{{ html | raw }}
 		</div>
 	</div>
@@ -13,7 +13,7 @@
 		<div class="box pull-left" style="width:100px;margin-right:5px">
 			<div class="ac">
 				<form method="post" action="{{path.root}}/post/pdf" form-pdf-form>
-					<input type="hidden" name="jobID" value="{{jobID}}" form-pdf-jobID />
+					<input type="hidden" name="job_number" value="{{job.job_number}}" form-pdf-jobid />
 					<input type="hidden" name="file_name" form-pdf-name />
 					<input type="hidden" name="html" value="" form-pdf-html/>
 				</form>
@@ -25,7 +25,7 @@
 			<div class="ac">
 				<form method="post" action="{{path.root}}/post/pdf" form-email-form>
 					<input type="hidden" name="data" value="" form-email-data/>
-					<input type="hidden" name="jobID" value="{{jobID}}" />
+					<input type="hidden" name="id" value="{{job.id}}" />
 					<input type="hidden" name="name" />
 					<input type="hidden" name="email" value="true" />
 				</form>

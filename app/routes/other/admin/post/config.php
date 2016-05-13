@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/admin/post/switch', function() use ($app){
+$app->post('/admin/post/config', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
@@ -14,9 +14,9 @@ $app->post('/admin/post/switch', function() use ($app){
 		}
 	}
 	
-	$app->sql->put('master.switch')->where('name', '=', $name)->with([
+	$app->sql->put('config')->where('name', '=', $name)->with([
 		'value' => $value
-	])->run();
+	])->god()->run();
 	
 	echo 'Success';
 });

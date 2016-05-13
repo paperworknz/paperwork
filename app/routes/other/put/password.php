@@ -14,9 +14,9 @@ $app->post('/put/password', 'uac', function() use ($app){
 			$password = password_hash($new, PASSWORD_DEFAULT);
 			
 			// Update user's password
-			$app->sql->put('master.uac')->where('uacID', '=', $app->user['uacID'])->with([
+			$app->sql->put('user')->with([
 				'password' => $password
-			])->run();
+			])->where('id', '=', $app->user['id'])->god()->run();
 			
 			$app->flash('success', 'Password changed successfully!');
 			$app->redirect($app->root.'/settings');

@@ -31,4 +31,4 @@ function app(){
 include 
 	isset($app->schema['filearray'][$app->request->getResourceUri()]) ? 
 		$app->schema['filearray'][$app->request->getResourceUri()] :
-		'special.php';
+		'controller-special.php';

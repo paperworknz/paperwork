@@ -1,12 +1,10 @@
 <?php
 return [
 'filearray' => [
-'/admin/get/events' => '../app/routes/other/admin/get/events.php',
 '/admin/get/password' => '../app/routes/other/admin/get/password.php',
-'/admin/get/users' => '../app/routes/other/admin/get/users.php',
-'/admin/post/maintenance' => '../app/routes/other/admin/post/maintenance.php',
+'/admin/post/backup' => '../app/routes/other/admin/post/backup.php',
+'/admin/post/config' => '../app/routes/other/admin/post/config.php',
 '/admin/post/query' => '../app/routes/other/admin/post/query.php',
-'/admin/post/switch' => '../app/routes/other/admin/post/switch.php',
 '/delete/client' => '../app/routes/other/delete/client.php',
 '/delete/form' => '../app/routes/other/delete/form.php',
 '/delete/inv' => '../app/routes/other/delete/inv.php',
@@ -22,7 +20,7 @@ return [
 '/post/form' => '../app/routes/other/post/form.php',
 '/post/inv' => '../app/routes/other/post/inv.php',
 '/post/inventory' => '../app/routes/other/post/inventory.php',
-'/post/job-reference' => '../app/routes/other/post/job-reference.php',
+'/post/job-n' => '../app/routes/other/post/job-n.php',
 '/post/job' => '../app/routes/other/post/job.php',
 '/post/login' => '../app/routes/other/post/login.php',
 '/post/pdf' => '../app/routes/other/post/pdf.php',
@@ -61,18 +59,5 @@ return [
 'table' => '/other/inc/html/table.html',
 'typeahead' => '/other/inc/html/typeahead.html',
 'js' => '/other/inc/js.html',
-],
-'dbschema' => [
-'uacID' => 'uac',
-'clientID' => 'client',
-'invID' => 'inv',
-'jobID' => 'job',
-'formID' => 'job_form',
-'templateID' => 'job_form_templates',
-'settingsID' => 'settings',
-'statusID' => 'job_status',
-'cacheID' => 'job_cache',
-'eventID' => 'events',
-'switchID' => 'switch',
 ],
 ];

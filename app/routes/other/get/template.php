@@ -2,10 +2,11 @@
 
 $app->get('/get/template', function() use ($app){
 	/* Methods */
+	$id = isset($_POST['template_id']) ? $_POST['template_id'] : false;
 	
 	/* Construction */
-	if($templateID = $_GET['templateID']){
-		$template = $app->sql->get('job_form_templates')->where('templateID', '=', $templateID)->run();
+	if($id){
+		$template = $app->sql->get('job_form_template')->where('id', '=', $id)->one();
 		$template = $app->parse->arrayToJson($template);
 		echo $template;
 	}else{

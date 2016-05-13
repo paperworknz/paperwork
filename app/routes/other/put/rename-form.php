@@ -8,7 +8,7 @@ $app->post('/put/rename-form', 'uac', function() use ($app){
 		
 		$app->sql->put('job_form')->with([
 			'name' => $name,
-		])->where('formID', '=', $formID)->run();
+		])->where('id', '=', $formID)->run();
 		
 		echo $app->build->success([
 			'name' => $name

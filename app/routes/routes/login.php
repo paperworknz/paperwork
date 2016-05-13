@@ -20,8 +20,5 @@ $app->get('/login', 'app', function() use ($app){
 		]);
 	}
 	
-	$app->build->page('views/login.html', [
-		'register' => $app->env['user_registration'],
-		'maintenance' => $app->env['maintenance']
-	]);
+	$app->build->page('views/login.html');
 });

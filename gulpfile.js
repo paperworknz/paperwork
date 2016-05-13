@@ -10,7 +10,6 @@ var del		= require('del');
 // Continuous task to watch for changes in Form dir
 gulp.task('watch', function(){
 	var form = gulp.watch('public/services/Form/Form/**/*.js');
-	gulp.start('form-min');
 	form.on('change', function(){
 		gulp.start('form-min');
 	});
@@ -28,12 +27,12 @@ gulp.task('form-min', function(){
 	}
 	
 	// Update .resources
-	gulp.src('app/app/.resources')
+	gulp.src('app/app/resources/.resources')
 		.pipe(jeditor(function(json){
 			json.form = '?' + randomString(6);
 			return json;
 		}))
-		.pipe(gulp.dest('app/app/'));
+		.pipe(gulp.dest('app/app/resources'));
 	
 	// Concat, minify Form/* using random name var
 	gulp.src(['public/services/Form/Form/Core/Core.js', 'public/services/Form/Form/**/*.js'])

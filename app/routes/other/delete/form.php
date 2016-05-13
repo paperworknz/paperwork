@@ -2,12 +2,11 @@
 
 $app->post('/delete/form', 'uac', function() use ($app){
 	/* Methods */
+	$id = isset($_POST['id']) ? $_POST['id'] : false;
 	
 	/* Construction */
-	if(isset($_POST['formID'])){
-		if($form = $app->sql->get('job_form')->where('formID', '=', $_POST['formID'])->run()){
-			$app->sql->delete('job_form')->where('formID', '=', $_POST['formID'])->run();
-		}
+	if($id){
+		$app->sql->delete('job_form')->where('id', '=', $id)->run();
 	}else{
 		echo '0';
 	}

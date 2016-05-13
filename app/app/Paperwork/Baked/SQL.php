@@ -7,22 +7,67 @@ use \PDO,
 
 class SQL {
 	
+	protected static $config = [
+		'host'		=> '127.0.0.1',
+		'database'	=> 'paperwork',
+		'user'		=> 'root',
+		'password'	=> '',
+		'cache'		=> true,
+		'logging'	=> false,
+		'logger'	=> false,
+	];
+	
+	protected $pdo;
+	protected $query;
+	protected $statement = [];
+	
+	protected $cache = [];
+	protected $log = [
+		'query'	=> null,
+		'time'	=> null,
+	];
+	
 	public function __construct(){
+		$app = \Slim\Slim::getInstance();
+		
+		$this->pdo = new PDO(
+			'mysql:host='.self::$config['host'].';dbname='.self::$config['database'],
+			self::$config['user'],
+			self::$config['password']
+		);
+		
 		$this->query = [
-			'db'		=> 'user',
+			'god'		=> false,
 			'method'	=> false,
+			'select'	=> [],
+			'distinct'	=> false,
 			'table'		=> false,
-			'data'		=> false,
-			'argument'	=> false,
-			'order'		=> false,
-			'all'		=> false,
-			'soft'		=> false,
-			'softonly'	=> false,
+			'values'	=> false,
+			'where'		=> [],
+			'also'		=> [],
 			'purge'		=> false,
-			'log'		=> false,
+			'event'		=> false,
+			'return'	=> false,
+			'soft'		=> false,
+			'raw'		=> false,
 		];
 		
-		$this->SQLBackup = new SQLBackup;
+	}
+	
+	// CONFIGURE //
+	
+	public static function configure($array){
+		foreach($array as $a => $b){
+			self::$config[$a] = $b;
+		}
+	}
+	
+	// METHODS //
+	
+	public function get($table){
+		$this->query['method'] = 'get';
+		$this->query['table'] = $table;
+		return $this;
 	}
 	
 	public function post($table){
@@ -33,12 +78,6 @@ class SQL {
 	
 	public function put($table){
 		$this->query['method'] = 'put';
-		$this->query['table'] = $table;
-		return $this;
-	}
-	
-	public function get($table){
-		$this->query['method'] = 'get';
 		$this->query['table'] = $table;
 		return $this;
 	}
@@ -55,27 +94,67 @@ class SQL {
 		return $this;
 	}
 	
-	public function with($data){
-		$this->query['data'] = $data;
+	// SELECT //
+	
+	public function select($values){
+		if(is_array($values)){
+			$this->query['select'] = $values;
+		}else{
+			$this->query['select'] = [];
+			$this->query['select'][0] = $values;
+		}
 		return $this;
 	}
 	
-	public function where($column, $operator, $value){
-		$this->query['argument'] = [
+	// condition //
+	
+	public function where($column, $operator, $values, $conjunction = '*'){
+		
+		if(is_array($values)){
+			$string = '';
+			
+			foreach($values as $value){
+				if(is_string($value)){
+					$value = '"'.$value.'"';
+				}
+				$string .= $value.',';
+			}
+			
+			$string = '('.trim($string, ',').')';
+		}else{
+			
+			$par = substr_count($values, ')');
+			$values = str_replace(')', '', $values);
+			
+			if(is_string($values)) $values = '"'.$values.'"';
+			
+			for($i=0;$i<$par;$i++){
+				$values .= ')';
+			}
+			
+			$string = $values;
+			
+		}
+		
+		array_push($this->query['where'], [
+			'conjunction' => $conjunction,
 			'column' => $column,
 			'operator' => $operator,
-			'value' => $value
-		];
+			'values' => $string,
+		]);
+		
 		return $this;
 	}
 	
-	public function by($what){
-		$this->query['order'] = 'ORDER BY '.$what;
+	public function and($column, $operator, $values){
+		$conjunction = 'AND';
+		$this->where($column, $operator, $values, $conjunction);
 		return $this;
 	}
 	
-	public function all(){
-		$this->query['all'] = true;
+	public function or($column, $operator, $values){
+		$conjunction = 'OR';
+		$this->where($column, $operator, $values, $conjunction);
 		return $this;
 	}
 	
@@ -85,7 +164,28 @@ class SQL {
 	}
 	
 	public function softOnly(){
-		$this->query['softonly'] = true;
+		$this->query['soft'] = true;
+		$conjunction = '*';
+		$this->where('date_deleted', '<>', '0000-00-00 00:00:00', $conjunction);
+		return $this;
+	}
+	
+	// PUT VALUES //
+	
+	public function with($values){
+		$this->query['values'] = $values;
+		return $this;
+	}
+	
+	// MISC //
+	
+	public function distinct(){
+		$this->query['distinct'] = true;
+		return $this;
+	}
+	
+	public function also($what){
+		array_push($this->query['also'], $what);
 		return $this;
 	}
 	
@@ -94,25 +194,72 @@ class SQL {
 		return $this;
 	}
 	
-	public function log(){
-		$this->query['log'] = true;
+	public function event(){
+		$this->query['event'] = true;
 		return $this;
 	}
+	
+	public function god(){
+		$this->query['god'] = true;
+		return $this;
+	}
+	
+	public function raw($statement){
+		$this->query['raw'] = $statement;
+		return $this->run();
+	}
+	
+	// CONDITIONAL RUN //
+	
+	public function one(){
+		$this->query['return'] = 'one';
+		return $this->run();
+	}
+	
+	public function all(){
+		$this->query['return'] = 'all';
+		return $this->run();
+	}
+	
+	// RUN //
 	
 	public function run(){
 		$app = \Slim\Slim::getInstance();
 		
-		// Instantiate the result variable
-		$result = false;
-		$db 	= $this->query['db']; // Cache db
-		$method	= $this->query['method']; // Cache method
-		$log 	= $this->query['log']; // Cache log
-		
-		// If a dot is found, the user is now using table master
-		if(strpos($this->query['table'], '.') !== false){
-			$this->query['db'] = $db = 'master'; // Update db prop and cache
-			$this->query['table'] = str_replace('master.', '', $this->query['table']);
+		// Raw
+		if($this->query['raw']){
+			$this->log['query'] .= $this->query['raw'].PHP_EOL;	// Log SQL statement
+			$query = $this->pdo->query($this->query['raw']);	// Query SQL statement
+			
+			if(!$query){
+				dd($this->log); // If fail, die and dump the SQL log
+			}else{
+				$data = $query->fetchAll(PDO::FETCH_ASSOC); // Execute statement
+				return $data;
+			}
 		}
+		
+		
+		// Query over all users, or by user_id
+		if(!$this->query['god']){
+			if(isset($app->user['id'])){
+				if($this->query['method'] == 'post') $this->query['values']['user_id'] = $app->user['id'];
+				$this->where('user_id', '=', $app->user['id'], '*');
+			}else{
+				$this->log = 'ERROR: user_id is absent'; // @@@@@@@@@@@@@@@@ NEEDS HANDLING
+				echo $this->log;
+				die();
+			}
+		}
+		
+		// Soft delete
+		if(!$this->query['soft']) $this->where('date_deleted', '=', '0000-00-00 00:00:00', '*');
+		
+		// Instantiate the result variable
+		$start	= microtime(true); // Start clock
+		$result = false;
+		$method	= $this->query['method']; // Cache method
+		$event 	= $this->query['event']; // Cache log
 		
 		// Run appropriate function using $this->query
 		switch($this->query['method']){
@@ -131,178 +278,340 @@ class SQL {
 				break;
 		}
 		
-		// Reset query
+		$this->statement = [];
 		$this->query = [
-			'db'		=> 'user',
+			'god'		=> false,
 			'method'	=> false,
+			'select'	=> [],
+			'distinct'	=> false,
 			'table'		=> false,
-			'data'		=> false,
-			'argument'	=> false,
-			'order'		=> false,
-			'all'		=> false,
-			'soft'		=> false,
-			'softonly'	=> false,
+			'values'	=> false,
+			'where'		=> [],
+			'also'		=> [],
 			'purge'		=> false,
-			'log'		=> false,
+			'event'		=> false,
+			'return'	=> false,
+			'soft'		=> false,
+			'raw'		=> false,
+		];
+		
+		$end = microtime(true); // End clock
+		$this->log['time'] = round($end - $start, 2);
+		
+		if(self::$config['logging'] != false && is_callable(self::$config['logger'])){
+			call_user_func(self::$config['logger'], $this->log);
+		}
+		
+		$this->log = [
+			'query' => null,
+			'time' => null,
 		];
 		
 		// Return result
-		if($result !== false && $log == false){
-			return $result;
-		}elseif($db != 'master'){ // Do not backup master db
-			switch($method){
-				case 'post':
-				case 'put':
-				case 'delete':
-					$this->SQLBackup->backup();
+		if($result !== false && $event == false) return $result;
+		
+	}
+	
+	// QUERY BUILDER HELPER //
+	
+	private function add($shard){
+		array_push($this->statement, $shard);
+	}
+	
+	private function addConditions(){
+		// WHERE //
+		if($this->query['where']){
+			
+			// Cycle through all where arrays
+			foreach($this->query['where'] as $clause){
+				
+				// If a where.conjunction = * (soft, softOnly use * wildcard)
+				if($clause['conjunction'] == '*'){
+					$clause['conjunction'] = 'WHERE'; // Default to WHERE
+					foreach($this->statement as $shard){
+						if($shard === 'WHERE'){
+							$clause['conjunction'] = 'AND'; // Change to AND if a WHERE is present
+						}
+					}
+				}
+				
+				$this->add($clause['conjunction']);
+				$this->add($clause['column']);
+				$this->add($clause['operator']);
+				$this->add($clause['values']);
 			}
 		}
 		
+		// ALSO //
+		
+		if($this->query['also']){
+			foreach($this->query['also'] as $clause){
+				$this->add($clause);
+			}
+		}
 	}
 	
+	// QUERY BUILDER //
+	
 	protected function runPost($app){
-		$db = $this->query['db'];
-		$this->query['data']['date_created'] = date("Y-m-d H:i:s");
-		$this->query['data']['date_touched'] = date("Y-m-d H:i:s");
-		$data = $this->query['data'];
-		$values = [];
 		
-		$sql = 'INSERT INTO ';
-		$sql .= $this->query['table'];
-		$sql .= ' ';
+		$this->add('INSERT INTO');
+		$this->add($this->query['table']);
 		
-		$a = count($data);
-		$b = $p = '';
-		for($i = 0; $i<$a; $i++){$b .= '?,';}
-		foreach ($data as $key => $pair){
-			$p .= $key.',';
-			$values[] = $pair;
+		// VALUES //
+		
+		$this->query['values']['date_created'] = date("Y-m-d H:i:s");
+		$this->query['values']['date_touched'] = date("Y-m-d H:i:s");
+		$count = count($this->query['values']);
+		$columns = $values = '';
+		$data = [];
+		
+		// 'blue','red','purple',
+		foreach ($this->query['values'] as $key => $pair){
+			$columns .= $key.',';
+			$data[] = $pair;
 		}
-		$b = trim($b, ',');
-		$p = trim($p, ',');
-		$sql .= "({$p}) VALUES ({$b})";
 		
-		$stmt = $app->pdo->$db->prepare($sql);
-		$stmt->execute($values);
-		return $app->pdo->$db->lastInsertID(); // Return post ID
+		// ?,?,?,
+		for($i = 0; $i < $count; $i++){
+			$values .= '?,';
+		}
+		
+		$values = trim($values, ',');	// Remove trailing commas
+		$columns = trim($columns, ',');	// Remove trailing commas
+		
+		$this->add('('.$columns.')');
+		$this->add('VALUES');
+		$this->add('('.$values.')');
+		
+		// CONSTRUCT STATEMENT //
+		
+		$sql = '';
+		foreach($this->statement as $shard){
+			$sql .= trim($shard, ' ').' ';
+		}
+		
+		$this->log['query'] .= $sql.PHP_EOL;	// Log SQL statement
+		$query = $this->pdo->prepare($sql);		// Query SQL statement
+		
+		if(!$query){
+			dd($this->log); // If fail, die and dump the SQL log
+		}else{
+			$query->execute($data);
+		}
+		
+		return $this->pdo->lastInsertID(); // Return post ID
 	}
 	
 	protected function runPut($app){
-		$db = $this->query['db'];
-		$this->query['data']['date_touched'] = date("Y-m-d H:i:s");
-		$data = $this->query['data'];
-		$column = $this->query['argument']['column'];
-		$operator = $this->query['argument']['operator'];
-		$value = $this->query['argument']['value'];
 		
-		$sql = 'UPDATE ';
-		$sql .= $this->query['table'];
-		$sql .= ' SET ';
+		$this->add('UPDATE');
+		$this->add($this->query['table']);
+		$this->add('SET');
 		
-		$p = '';
-		$values = [];
-		foreach($data as $key => $pair){ // Create string for sql
+		// VALUES //
+		
+		$this->query['values']['date_touched'] = date("Y-m-d H:i:s");
+		$columns = '';
+		$data = [];
+		
+		foreach($this->query['values'] as $key => $pair){
 			$placeholder = ':'.$key; // :name, :address
-			$p .= $key.'='.$placeholder.','; // name=:name,address=:address,
-			$values[$placeholder] = $pair; // ':name' => 'Cade', ':address' => '105 Swamp Road'
+			$columns .= $key.'='.$placeholder.','; // name=:name,address=:address,
+			$data[$placeholder] = $pair; // ':name' => 'Cade', ':address' => '105 Swamp Road'
 		}
-		$p = trim($p, ','); // Remove trailing comma
 		
-		$sql .= "{$p} WHERE {$column} {$operator} '{$value}'";
-
-		$stmt = $app->pdo->$db->prepare($sql);
-		$stmt->execute($values);
+		$columns = trim($columns, ',');	// Remove trailing comma
+		$this->add($columns);			// name=:name,address=:address
+		$this->addConditions();			// WHERE, ALSO
+		
+		// CONSTRUCT STATEMENT //
+		
+		$sql = '';
+		foreach($this->statement as $shard){
+			$sql .= trim($shard, ' ').' ';
+		}
+		
+		$this->log['query'] .= $sql.PHP_EOL;	// Log SQL statement
+		$query = $this->pdo->prepare($sql);		// Query SQL statement
+		
+		if(!$query){
+			dd($this->log); // If fail, die and dump the SQL log
+		}else{
+			$query->execute($data);
+		}
+		
 		return; // Return nothing
 	}
 	
 	protected function runDelete($app){
-		$db = $this->query['db'];
-		$column = $this->query['argument']['column'];
-		$operator = $this->query['argument']['operator'];
-		$value = $this->query['argument']['value'];
 		
-		if($this->query['purge']){
-			$sql = 'DELETE FROM ';
-			$sql .= $this->query['table'];
-		}else{
-			$sql = 'UPDATE ';
-			$sql .= $this->query['table'];
-			$sql .= ' SET date_deleted="'.date("Y-m-d H:i:s").'" ';
-			$sql .= ',date_touched="'.date("Y-m-d H:i:s").'" ';
+		if(!$this->query['purge']){
+			$this->query['values'] = [
+				'date_deleted' => date("Y-m-d H:i:s"),
+				'date_touched' => date("Y-m-d H:i:s"),
+			];
+			return $this->runPut($app);
 		}
 		
-		$sql .= "WHERE {$column} {$operator} '{$value}'";
+		$this->add('DELETE FROM');
+		$this->add($this->query['table']);
+		$this->addConditions();
 		
-		$stmt = $app->pdo->$db->prepare($sql);
-		$stmt->execute();
+		// CONSTRUCT STATEMENT //
+		
+		$sql = '';
+		foreach($this->statement as $shard){
+			$sql .= trim($shard, ' ').' ';
+		}
+		
+		$this->log['query'] .= $sql.PHP_EOL;	// Log SQL statement
+		$query = $this->pdo->prepare($sql);		// Query SQL statement
+		
+		if(!$query){
+			dd($this->log);
+		}else{
+			$query->execute();
+		}
+		
 		return; // Return nothing
 	}
 	
 	protected function runGet($app){
-		$db		= $this->query['db'];
-		$table	= $this->query['table'];
-		$param	= $this->query['argument'] ? true : false;
-		$order	= $this->query['order'] ? $this->query['order'] : '';
-		
-		if($param){
-			$column = $this->query['argument']['column'];
-			$operator = $this->query['argument']['operator'];
-			$value = $this->query['argument']['value'];
-		}
 		
 		/** Phase 1: Create an Array of the database table **/
-		$sql = "SELECT * FROM {$table} ";
 		
-		if(!$this->query['soft'] && !$this->query['softonly']){ // No soft/softOnly flag so return without soft
-			// return selected or all, excluding softs
-			$sql .= $param ? "WHERE {$column} {$operator} '{$value}' AND date_deleted='0000-00-00 00:00:00' " : "WHERE date_deleted='0000-00-00 00:00:00' ";
-		}else{ // Soft or softOnly flag
-			if($this->query['soft']){ // Include softs
-				if($param) $sql .= "WHERE {$column} {$operator} '{$value}' "; // Return all = don't exclude softs
-			}
-			if($this->query['softonly']){
-				// return selected or all, only where soft date has been set
-				$sql .= $param ? "WHERE {$column} {$operator} '{$value}' AND date_deleted<>'0000-00-00 00:00:00' " : "WHERE date_deleted<>'0000-00-00 00:00:00' ";
-			}
+		// SELECT //
+		$this->add('SELECT');
+		
+		if($this->query['distinct']){
+			$this->add('DISTINCT');
 		}
 		
-		$sql .= $order;
-		$data = $app->pdo->$db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-		
-		
-		/** Phase 2: Iterate through the array and find any foreign keys that needs translating **/
-		$schema = $app->schema['dbschema'];
-		foreach($schema as $key => $value){
-			if($value == $table)
-				$self = [
-					'ID'	=> $key,
-					'table'	=> $value
-				]; // Create array 'self' to store the ID for the host table eg. 'ID' => jobID, 'table' => 'job' <--- this does not get translated
+		if(!$this->query['select']){
+			if(!$this->query['distinct']){
+				$this->add('*');
+			}
+			$this->add('FROM');
+			$this->add($this->query['table']);
+			
+		}else{
+			$list = '';
+			foreach($this->query['select'] as $select){
+				$list .= $select.',';
+			}
+			$list = trim($list, ','); // Remove trailing comma
+			
+			$this->add($list);
+			$this->add('FROM');
+			$this->add($this->query['table']);
 		}
-
+		
+		// WHERE, ALSO //
+		
+		$this->addConditions();
+		
+		// CONSTRUCT STATEMENT //
+		
+		$sql = '';
+		foreach($this->statement as $shard){
+			$sql .= trim($shard, ' ').' ';
+		}
+		$sql = trim($sql, ' ');
+		
+		$this->log['query'] .= $sql; // Log SQL statement
+		
+		$query = $this->pdo->query($sql); // Query SQL statement
+		
+		if(!$query){
+			dd($this->log); // If fail, die and dump the SQL log
+		}else{
+			$data = $query->fetchAll(PDO::FETCH_ASSOC); // Execute statement
+			$this->cache[$sql] = $data; // Cache the SQL statement + the data
+		}
+		
+		
+		/** Phase 2: Iterate through the array and audit foreign keys **/
+		$foreign = [];
+		
 		foreach($data as $key => $pair){ // Iterate through all arrays of data found
-			$temp = $key;
-			foreach($pair as $key => $pair){ // Iterate through each datum in each array
-				if(strpos($key, 'ID') && $key != $self['ID']){ // Find a key that has 'ID' in it, and is not the host root table
-					$suspect = $schema[$key]; // $suspect = $schema[$key] = $schema['jobID'] = 'job'
+			$index = $key; // cache root key
+			
+			foreach($pair as $a => $b){ // Iterate through each array of data
+				if(strpos($a, 'id') // column name contains 'id'
+					&& $a != 'id' // Ignore 'id' (primary key)
+						&& $a != 'user_id' // Ignore 'user_id'
+							&& $a != $this->query['table'].'_id'){ // ignore ::self_id
 					
-					$a = $app->pdo->$db->query("
-						SELECT
-						*
-						FROM
-						{$suspect}
-						WHERE
-						{$key} = {$pair}
-					")->fetch(PDO::FETCH_ASSOC); // Make an array of the ID to be translated
+					$column = $a;
+					$value = $b;
 					
-					$keylite = str_replace('ID', '', $key); // Remove 'ID' from the key 'clientID'
-					$data[$temp][$keylite] = $a; // Create new key with the natural name eg 'client' -> job['client']['clientID'] = 1;
-					unset($data[$temp][$key]); // Remove the old key which was equal to the ID number
+					if(!isset($foreign[$column])) $foreign[$column] = [];
+					array_push($foreign[$column], $value);
 				}
 			}
 		}
 		
-		if(!$this->query['all']){
+		/** Phase 3: Iterate through foreign key audit and build a query **/
+		
+		// Remove duplicates from foreign key audit
+		foreach($foreign as $column => $values){
+			$foreign[$column] = array_unique($foreign[$column]);
+		}
+		
+		// Iterate through foreign keys
+		foreach($foreign as $column => $values){
+			
+			$table = str_replace('_id', '', $column);
+			
+			$sql = "SELECT * FROM {$table} WHERE id IN (";
+			$list = '';
+			
+			foreach($values as $id){
+				$list .= $id.',';
+			}
+			
+			$list = trim($list, ',');
+			
+			$sql .= $list.')';
+			
+			if(!$this->query['god']){
+				if(isset($app->user['id'])){
+					$sql .= ' AND user_id='.$app->user['id'];
+				}
+			}
+			
+			$this->log['query'] .= PHP_EOL.' - '.$sql;
+			
+			$join = $this->pdo->query($sql); // Query SQL statement
+			
+			// Make an array of the ID to be translated
+			if(!$join){
+				dd('Foreign join failed: '.$join); // If fail, die and dump the SQL statement
+			}else{
+				$return = $join->fetchAll(PDO::FETCH_ASSOC); // Execute statement
+				//$this->cache[$sql] = $return; // Cache the SQL statement + the data
+			}
+			
+			foreach($data as $a => $b){
+				$id = $b[$column];
+				
+				foreach($return as $alien){
+					
+					if($alien['id'] == $id){
+						$data[$a][$table] = $alien;
+						unset($data[$a][$column]);
+					}
+					
+				}
+			}
+			
+		}
+		
+		if($this->query['return'] == 'one'){
+			if(count($this->query['select']) === 1){ // If selecting only ID
+				if(isset($data[0]))	$data = $data[0]; // Return single integer of ID
+			}
 			foreach($data as $datum){
 				$data = $datum;
 			}

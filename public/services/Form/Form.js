@@ -13,9 +13,9 @@ var Form = function(){
 	
 	// __construct()
 	$.get(environment.root+'/get/inv', function(data){
-		$.get(environment.root+'/get/form/'+environment.jobID, function(items){
+		$.get(environment.root+'/get/form/'+environment.job_id, function(items){
 			var src = [],
-				map = JSON.parse(items);//
+				map = JSON.parse(items);
 			
 			// Add margin property to each item in json
 			$.each(map, function(a, b){
@@ -32,9 +32,9 @@ var Form = function(){
 			
 			$(a.form).each(function(){
 				var form = $(this),
-					formID= form.attr('data-formid');
+					form_id= form.attr('data-formid');
 				
-				map[formID] != undefined || map[formID] != null ? a.map[formID] = map[formID] :	a.crawl(form);
+				map[form_id] != undefined || map[form_id] != null ? a.map[form_id] = map[form_id] :	a.crawl(form);
 				a.construct(form);
 			});
 		});
@@ -45,13 +45,13 @@ Form.prototype.append = function(form, item, quantity, price){
 		item	= item !== undefined ? item : '',
 		quantity= quantity !== undefined ? quantity : '',
 		price	= price !== undefined ? price : '',
-		formID	= $(form).attr('data-formid'),
-		itemID	= a.p.get('latest-item-id', form),
+		form_id	= $(form).attr('data-formid'),
+		item_id	= a.p.get('latest-item-id', form),
 		flag	= false; // Flag changes if item is not in inv
 	
 	// Prep
-	if(itemID === undefined) itemID = 0;
-	itemID = Number(itemID) + 1;
+	if(item_id === undefined) item_id = 0;
+	item_id = Number(item_id) + 1;
 	
 	if(a.inv[item] && price === '') price = flag = a.inv[item]; // If item is in inventory get price
 	if(!item) item = price = ''; // If item is not entered
@@ -59,7 +59,7 @@ Form.prototype.append = function(form, item, quantity, price){
 	
 	// Append item to DOM
 	a.p.append(form, {
-		itemID: itemID,
+		itemID: item_id,
 		item: item,
 		quantity: quantity,
 		price: price
@@ -95,12 +95,12 @@ Form.prototype.construct = function(form){
 	This layer constructs the form from it's parts
 	*/
 	var a= this,
-		formID= form.attr('data-formid');
+		form_id= form.attr('data-formid');
 	
 	a.refresh(form); // Refresh listeners
 	
 	// Append map to DOM
-	$.each(a.map[formID].items, function(key, val){
+	$.each(a.map[form_id].items, function(key, val){
 		a.p.append(form, {
 			itemID: val.itemID,
 			item: val.item,
@@ -123,12 +123,12 @@ Form.prototype.crawl = function(form){
 	*/
 	
 	var a=this,
-		formID= form.attr('data-formid'),
+		form_id= form.attr('data-formid'),
 		margin= {};
 	
 	// Cache margins for each item in margin object
-	if(a.map[formID] != undefined){
-		$.each(a.map[formID].items, function(a,b){
+	if(a.map[form_id] != undefined){
+		$.each(a.map[form_id].items, function(a,b){
 			if(b.margin !== undefined || b.margin == 0){
 				margin[a] = b.margin;
 			}else{
@@ -138,7 +138,7 @@ Form.prototype.crawl = function(form){
 	}
 	
 	// Reset map for this form
-	a.map[formID] = {
+	a.map[form_id] = {
 		items: {},
 		subtotal: 0,
 		tax: 0,
@@ -147,19 +147,19 @@ Form.prototype.crawl = function(form){
 	
 	// Populate map
 	a.p.each('item', form, function(event){
-		if(a.map[formID].items[event.itemID] === undefined) a.map[formID].items[event.itemID] = {};
-		a.map[formID].items[event.itemID].itemID = event.itemID;
-		a.map[formID].items[event.itemID].item = event.item;
-		a.map[formID].items[event.itemID].quantity = event.quantity;
-		a.map[formID].items[event.itemID].price = event.price;
-		a.map[formID].items[event.itemID].total = event.total;
-		if(margin[event.itemID] != undefined) a.map[formID].items[event.itemID].margin = margin[event.itemID]; // Add margin back in
+		if(a.map[form_id].items[event.itemID] === undefined) a.map[form_id].items[event.itemID] = {};
+		a.map[form_id].items[event.itemID].itemID = event.itemID;
+		a.map[form_id].items[event.itemID].item = event.item;
+		a.map[form_id].items[event.itemID].quantity = event.quantity;
+		a.map[form_id].items[event.itemID].price = event.price;
+		a.map[form_id].items[event.itemID].total = event.total;
+		if(margin[event.itemID] != undefined) a.map[form_id].items[event.itemID].margin = margin[event.itemID]; // Add margin back in
 	});
 	
 	// Update subtotal, tax, total
-	a.map[formID].subtotal = a.p.get('subtotal', form);
-	a.map[formID].tax = a.p.get('tax', form);
-	a.map[formID].total = a.p.get('total', form);
+	a.map[form_id].subtotal = a.p.get('subtotal', form);
+	a.map[form_id].tax = a.p.get('tax', form);
+	a.map[form_id].total = a.p.get('total', form);
 };
 Form.prototype.dark = function(form){
 	/*
@@ -173,7 +173,7 @@ Form.prototype.populate = function(form, data){
 	var a= this;
 	
 	a.p.set('date', form, data.date);
-	a.p.set('jobID', form, data.jobID);
+	a.p.set('jobID', form, data.job_id);
 	a.p.set('client', form, data.client);
 };
 Form.prototype.refresh = function(form){
@@ -229,7 +229,7 @@ Form.prototype.strip = function(form){
 };
 Form.prototype.update = function(form){
 	var a= this,
-		formID= $(form).attr('data-formID'),
+		form_id= $(form).attr('data-formid'),
 		i= 0.00;
 	
 	var std = function(x){return x.toFixed(2);};
@@ -257,9 +257,9 @@ Form.prototype.update = function(form){
 		a.p.do('total-by-ID', form, {itemID:itemID, val:'$'+comma(total)});
 		
 		// 
-		if(a.map[formID].items[itemID] != undefined){
-			if(price != a.map[formID].items[itemID].price.replace('$', '').replace(',', '') && $('[margin]').length == 0){
-				a.map[formID].items[itemID].margin = 1;
+		if(a.map[form_id].items[itemID] != undefined){
+			if(price != a.map[form_id].items[itemID].price.replace('$', '').replace(',', '') && $('[margin]').length == 0){
+				a.map[form_id].items[itemID].margin = 1;
 			}
 		}
 	});
@@ -281,7 +281,7 @@ Form.prototype.update = function(form){
 };
 Form.prototype.copy = function(form){
 	var a= this,
-		formID= form.attr('data-formid');
+		form_id= form.attr('data-formid');
 	
 	swal({
 		title: 'Choose your template',
@@ -294,34 +294,34 @@ Form.prototype.copy = function(form){
 		if(e != false){ // User hasn't clicked cancel
 			var button= $(this),
 				input= e,
-				templateName= 'Invoice';
+				template_name= 'Invoice';
 			
 			if(input == 1){
-				templateName = 'Quote';
+				template_name = 'Quote';
 			}else if(input == 2){
-				templateName = 'Invoice';
+				template_name = 'Invoice';
 			}else{
-				templateName = 'Invoice';
+				template_name = 'Invoice';
 			}
 			
 			var data = {
 				client: a.p.get('client', form),
 				jobd: a.p.get('jobd', form),
-				content: a.map[formID],
+				content: a.map[form_id],
 			};
 			
 			pw.wait(button);
 			a.post({
 				url: environment.root+'/post/form',
-				templateID: input,
-				templateName: templateName,
-				clientID: environment.clientID,
-				jobID: environment.jobID,
-			}, function(newForm){
+				template_id: input,
+				template_name: template_name,
+				client_id: environment.client_id,
+				job_id: environment.job_id,
+			}, function(new_form){
 				
 				// Append item to DOM
-				$.each(a.map[formID].items, function(y,z){
-					a.p.append(newForm, {
+				$.each(a.map[form_id].items, function(y,z){
+					a.p.append(new_form, {
 						itemID: z.itemID,
 						item: z.item,
 						quantity: z.quantity,
@@ -330,13 +330,13 @@ Form.prototype.copy = function(form){
 				});
 				
 				// Populate new form
-				var newFormID = newForm.attr('data-formid');
-				a.p.set('client', newForm, data.client);
-				a.p.set('jobd', newForm, data.jobd);
-				a.construct(newForm);
+				var new_form_id = new_form.attr('data-formid');
+				a.p.set('client', new_form, data.client);
+				a.p.set('jobd', new_form, data.jobd);
+				a.construct(new_form);
 				a.put({
 					url: environment.root+'/put/form',
-					formID: newFormID,
+					id: new_form_id,
 				}, function(){
 					pw.ready(button, 'COPY');
 				});
@@ -690,9 +690,9 @@ Form.prototype.delete = function(data, callback){
 	var a = this;
 	
 	// Delete form
-	if(data.url != undefined && data.formID != undefined){
+	if(data.url != undefined && data.form_id != undefined){
 		$.post(data.url, {
-			formID: data.formID
+			id: data.form_id
 		}).done(function(data){
 			if(data != '0'){
 				if(callback != undefined) callback(true); // Callback
@@ -710,38 +710,39 @@ Form.prototype.post = function(data, callback){
 	var a= this;
 	
 	// Post form
-	if(data.url != undefined && data.templateID != undefined &&
-		data.clientID != undefined && data.jobID != undefined){
+	if(data.url != undefined && data.template_id != undefined &&
+		data.client_id != undefined && data.job_id != undefined){
 		$.post(data.url, {
-			templateID:	data.templateID,
-			clientID:	data.clientID,
-			jobID:		data.jobID
+			template_id: data.template_id,
+			client_id: data.client_id,
+			job_id: data.job_id
 		}).done(function(json){
 			var json	= JSON.parse(json),
 				obj		= a.tab.objParent,
-				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook));
+				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook)),
+				form_id	= json.id;
 			
 			// Create new obj
 			$(obj).find('['+a.tab.heir+']').before('<div '+a.tab.objhook+'="'+objID+'" class="'+a.tab.obj+' h">'+json.html+'</div>');
 			$(obj).find('['+a.tab.heir+']').replaceWith('<div '+a.tab.objhook+'="'+(objID + 1)+'" '+a.tab.heir+' hidden></div>');
 			
 			// Update data-formid on form-blob
-			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', json.formID);
+			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', form_id);
 			
 			// Update a.map
-			var form = $('[data-formid="'+json.formID+'"]');
+			var form = $('[data-formid="'+form_id+'"]');
 			a.crawl(form);
 			
 			// Create new tab
-			a.tab.append(data.templateName, function(){
+			a.tab.append(data.template_name, function(){
 				a.populate(form, {
-					jobID: data.jobID,
+					job_id: data.job_id,
 					date: json.date,
 					client: json.client,
 				});
 				a.put({
 					url: environment.root+'/put/form',
-					formID: json.formID,
+					id: form_id,
 				}, function(){
 					a.construct(form);
 					callback(form);
@@ -755,8 +756,7 @@ Form.prototype.post = function(data, callback){
 };
 Form.prototype.put = function(data, callback){
 	var a= this,
-		formID= data.formID,
-		form= $('[data-formid="'+formID+'"]'),
+		form= $('[data-formid="'+data.id+'"]'),
 		save= form.clone();
 	
 	// Flush html items
@@ -764,11 +764,11 @@ Form.prototype.put = function(data, callback){
 	var html= a.strip(save); // Remove interactive tools, returns html
 	
 	// Put form
-	if(data.url != undefined && formID != undefined){
+	if(data.url != undefined && data.id != undefined){
 		$.post(data.url, {
-			formID: formID, // User defined or current
+			id: data.id, // User defined or current
 			html: html,
-			json: JSON.stringify(a.map[formID]),
+			json: JSON.stringify(a.map[data.id]),
 		}).done(function(){
 			if(data != '0'){
 				//a.refresh(form);
@@ -783,6 +783,6 @@ Form.prototype.put = function(data, callback){
 			console.log('Internal Server Error');
 		});
 	}else{
-		console.log('URL or formID not supplied, form not saved.');
+		console.log('URL or data.id not supplied, form not saved.');
 	}
 };

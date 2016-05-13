@@ -1,6 +1,6 @@
 Form.prototype.update = function(form){
 	var a= this,
-		formID= $(form).attr('data-formID'),
+		form_id= $(form).attr('data-formid'),
 		i= 0.00;
 	
 	var std = function(x){return x.toFixed(2);};
@@ -28,9 +28,9 @@ Form.prototype.update = function(form){
 		a.p.do('total-by-ID', form, {itemID:itemID, val:'$'+comma(total)});
 		
 		// 
-		if(a.map[formID].items[itemID] != undefined){
-			if(price != a.map[formID].items[itemID].price.replace('$', '').replace(',', '') && $('[margin]').length == 0){
-				a.map[formID].items[itemID].margin = 1;
+		if(a.map[form_id].items[itemID] != undefined){
+			if(price != a.map[form_id].items[itemID].price.replace('$', '').replace(',', '') && $('[margin]').length == 0){
+				a.map[form_id].items[itemID].margin = 1;
 			}
 		}
 	});

@@ -8,6 +8,7 @@ use \RecursiveIteratorIterator,
 
 class SQLBackup {
 	
+	protected $database;
 	protected $username;
 	protected $password;
 	protected $path;
@@ -17,16 +18,16 @@ class SQLBackup {
 		$app = \Slim\Slim::getInstance();
 		
 		$easy = $app->user['easy'];
+		$this->database = $_ENV['DATABASE'];
 		$this->username = $_ENV['DB_USER'];
 		$this->password = $_ENV['DB_PASSWORD'];
 		
 		if($_ENV['MODE'] == 'prod'){
-			$this->path = '/var/www/Dropbox/Paperwork/';
-			$this->upper = 100000000; // Retention file size before files start getting removed (100Mb)
-			// Rationale is 100 users get 100Mb each = 10Gb
+			$this->path = '/var/www/Dropbox/Paperwork/sql/';
+			$this->upper = 1000000000; // Retention file size before files start getting removed (1 Gb)
 		}else{
-			$this->path = '../app/app/storage/temp/';
-			$this->upper = 50000; // (50Kb)
+			$this->path = '../app/app/storage/temp/sql/';
+			$this->upper = 25000; // (25 Kb)
 		}
 	}
 	
@@ -37,8 +38,6 @@ class SQLBackup {
 		if($_ENV['MODE'] == 'prod' || $env){
 			$start = microtime(true); // Start clock
 			
-			$db = $_ENV['DB_PREFIX'].$app->user['username']; // Database name
-			$path = $this->path.$app->user['easy'].'/sql/'; // Save path
 			$name = date("Y-m-d_His").'.sql'; // Name of sql file
 			
 			if($_ENV['MODE'] == 'prod'){
@@ -46,13 +45,13 @@ class SQLBackup {
 					'mysqldump'.
 					' -u '.$this->username.
 					' -p'.$this->password.
-					' '.$db.
+					' '.$this->database.
 					' > '.
-					$path.$name
+					$this->path.$name
 				);
 			}else{
 				$test = fopen($this->path.$name, 'w');
-				$stuff = file_get_contents('../app/app/resources/db_schema/app_default.sql');
+				$stuff = file_get_contents('../app/app/bin/phpToPDF.php');
 				fwrite($test, $stuff);
 				fclose($test);
 			}
@@ -63,36 +62,34 @@ class SQLBackup {
 			$end = microtime(true); // End clock
 			
 			$app->event->log([
-				'title' => 'mysqldump for '.$app->user['username'],
+				'title' => 'SQL Backup. Started by '.$app->user['username'],
 				'text' => 'This took '.round($end - $start, 2).' seconds to run',
-				'uacID' => $app->user['uacID'],
 				'number' => 3000 
 			]);
+			
+			return 'Success';
 		}
+		
 	}
 	
 	private function retention(){
 		$app = \Slim\Slim::getInstance();
 		
 		$files = [];
-		$path = $this->path.$app->user['easy'].'/sql/';
 		
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $filename => $file) {
-			$file = str_replace($path, '', $file);
-			if(substr($file, -1) != '/'){
-				$file = str_replace($path, '', $file);
-				$files[] = $file;
-			}
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path, FilesystemIterator::SKIP_DOTS)) as $filename => $file) {
+			$file = realpath($file);
+			$files[] = $file;
 		}
 		
 		$bytes = 0;
-		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $object){
+		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path, FilesystemIterator::SKIP_DOTS)) as $object){
 			$bytes += filesize($object);
 		}
 		
 		if($bytes > $this->upper){
 			natsort($files);
-			unlink($path.reset($files));
+			unlink(reset($files));
 		}
 	}
 	

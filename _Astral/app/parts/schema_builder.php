@@ -14,13 +14,10 @@ class Schema_builder {
 	
 	public function run(){
 		$path = '../_Astral/app/temp';
-		################################################
-		
-		require_once '../app/app/resources/db_schema/db_schema.php';
 		
 		################################################
 		
-		$file = '../app/app/.schema';
+		$file = '../app/app/resources/.schema';
 		
 		$new = fopen($file, 'w') or die("Can't open schema.php");
 		fwrite($new, '<?php');
@@ -33,17 +30,6 @@ class Schema_builder {
 		fwrite($new, file_get_contents($path.'/filearray.php'));
 		fwrite($new, PHP_EOL);
 		fwrite($new, file_get_contents($path.'/patharray.php'));
-		fwrite($new, PHP_EOL);
-		
-		###### Dynamically writing the contents of array dbschema
-		
-		fwrite($new, "'dbschema' => [");
-		fwrite($new, PHP_EOL);
-		foreach($db_schema as $key => $pair){
-			fwrite($new, "'".$key."' => '".$pair."',");
-			fwrite($new, PHP_EOL);
-		}
-		fwrite($new, '],');
 		fwrite($new, PHP_EOL);
 		fwrite($new, '];');
 		

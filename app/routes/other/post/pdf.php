@@ -10,7 +10,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$jobID	= $_POST['jobID'];
+	$job_number	= $_POST['job_number'];
 	$name	= $_POST['file_name'];
 	$html	= $_POST['html'];
 	
@@ -18,12 +18,12 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	$easy = $app->user['easy'];
 	
 	if($_ENV['MODE'] == 'dev'){
-		$dir = "../app/app/storage/clients/{$easy}/pdf/{$jobID}";
+		$dir = "../app/app/storage/clients/{$easy}/pdf/{$job_number}";
 	}else{
-		$dir = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$jobID}";
+		$dir = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$job_number}";
 	}
-	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for jobID if it doesn't exist
-	$file = $jobID.'_'.$name.'.pdf'; // 1000_ . $_POST['file_name'] . .pdf=> "1000_1-quote.pdf"
+	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for job_number if it doesn't exist
+	$file = $job_number.'_'.$name.'.pdf'; // 1000_ . $_POST['file_name'] . .pdf=> "1000_1-quote.pdf"
 	
 	// Create PDF
 	phptopdf([
@@ -50,8 +50,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	$app->event->log([
 		'number' => 75,
 		'title' => $app->user['username'].' created a PDF',
-		'text' => 'For job '.$jobID,
-		'uacID' => $app->user['uacID'],
+		'text' => 'For job '.$job_number,
 	]);
 	
 	$response->send();

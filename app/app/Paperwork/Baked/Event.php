@@ -12,11 +12,11 @@ class Event {
 			'text' => '',
 			'number' => 0,
 			'level' => 'Information',
-			'uacID' => isset($app->user['uacID']) ? $app->user['uacID'] : 'Guest',
+			'user_id' => isset($app->user['id']) ? $app->user['id'] : 'Guest',
 		];
 		
 		$data = array_merge($default, $event);
-		$app->sql->post('master.events')->with($data)->log()->run();
+		$app->sql->post('event')->with($data)->event()->god()->run();
 		
 	}
 	
