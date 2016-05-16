@@ -132,6 +132,7 @@
 						<div>{{item.name}} - {{item.price}}&nbsp&nbsp<a href="#" data-inventoryid="{{item.id}}">Undo</a></div>
 						{% endfor %}
 						<hr>
+						<div class="ac empty">Empty Trash</div>
 						<div class="ac"><i>Items older than 30 days will be cleaned automatically</i></div>
 						{% else %}
 						<div class="ac h3">Trash is empty</div>
@@ -184,8 +185,19 @@
 					rmv($(this));
 				});
 				
+				$('.empty').on('click', function(){
+					$('.trash').addClass('no-click');
+					$('.trash').css('opacity', '0.5');
+					
+					$.post('{{path.root}}/post/empty-trash')
+					.done(function(data){
+						location.reload();
+					});
+				});
+				
 				rmv = function(element, callback){
 					var type = id = 0;
+					$('.trash').addClass('no-click');
 					$('.trash').css('opacity', '0.5');
 					if(element.attr('data-jobid') != undefined){
 						type = 'job',
@@ -209,6 +221,7 @@
 						id: id
 					}).done(function(data){
 						element.parent().remove();
+						$('.trash').removeClass('no-click');
 						callback === undefined ? location.reload() : callback();
 					});
 				};
