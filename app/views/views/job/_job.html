@@ -110,18 +110,12 @@
 				{% endfor %}
 				{% set i = i + 1 %}
 				<div data-obj="{{i}}" heir hidden></div>
-				<div data-obj="+" id="newtabscreen" class="tabobj box job-material h">
-					<table style="height:130px" form-templates>
-						<tbody>
-							<tr>
-								{% for a,b in templates %}
-								<td style="padding:5px;width:100px">
-									<button data-templateid="{{a}}" class="wolfe-btn" href="{{path.root}}/post/form" new-form-btn>{{b.name}}</button>
-								</td>
-								{% endfor %}
-							</tr>
-						</tbody>
-					</table>
+				<div data-obj="+" id="newtabscreen" class="tabobj box job-material h" style="padding-top:15px">
+					{% for a,b in templates %}
+					<div class="new-template" new-template data-templateid="{{a}}" href="{{path.root}}/post/form">
+						{{b.name}}
+					</div>
+					{% endfor %}
 				</div>
 			</div>
 			<div note-parent class="box wrapper note-parent" style="display:inline-block;vertical-align:top;padding:5px;">
@@ -289,7 +283,7 @@
 			});
 			
 			// FORM.POST()
-			$(document).on('click', '[new-form-btn]', function(){
+			$(document).on('click', '[new-template]', function(){
 				var button = $(this),
 					name = $(this).html();
 				
