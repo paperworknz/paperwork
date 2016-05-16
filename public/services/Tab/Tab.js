@@ -91,6 +91,6 @@ Tab.prototype.append = function(templateName, call){
 	$('['+a.tabhook+'="'+tabID+'"]').animate({width: 'toggle'}, 80, function(){
 		// Make tab active
 		a.activate($('['+a.tabhook+'="'+tabID+'"]'));
-		if(call != undefined) call();
+		if(call != undefined) call(tabID);
 	});
 };

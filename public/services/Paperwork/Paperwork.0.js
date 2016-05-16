@@ -89,6 +89,8 @@ $(document).click(function(e){
 });
 
 $('.navbar-hide').on('click', function(){
+	var date = new Date();
+	
 	if($(this).hasClass('small')){
 		$('.navbar-hide').html('<');
 		$('#sidebar').animate({
@@ -107,6 +109,9 @@ $('.navbar-hide').on('click', function(){
 				$(this).html($(this).attr('val'));
 			});
 		});
+		date.setFullYear(date.getFullYear() + 1);
+		c = 'nav=big;expires='+date.toGMTString()+';path=/;';
+		document.cookie = c; // Post/put cookie
 	}else{
 		var i = 0;
 		$('#sidebar li').each(function(){
@@ -133,5 +138,8 @@ $('.navbar-hide').on('click', function(){
 			$('.navbar-hide').html('>');
 			$('.navbar-hide').addClass('small');
 		});
+		date.setFullYear(date.getFullYear() + 1);
+		c = 'nav=small;expires='+date.toGMTString()+';path=/;';
+		document.cookie = c; // Post/put cookie
 	}
 });

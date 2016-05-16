@@ -23,4 +23,13 @@ foreach($config as $item){
 	$temp[$name] = $value; // Populate $temp
 }
 
+// Twig scaffolding nav bar
+if(!isset($temp['nav'])){
+	if(isset($_COOKIE['nav'])){
+		if($_COOKIE['nav'] === 'small' || $_COOKIE['nav'] === 'big'){
+			$temp['nav'] = $_COOKIE['nav'];
+		}
+	}
+}
+
 return $temp; // $app->env contains switches

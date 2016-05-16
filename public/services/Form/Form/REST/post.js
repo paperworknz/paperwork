@@ -26,7 +26,7 @@ Form.prototype.post = function(data, callback){
 			a.crawl(form);
 			
 			// Create new tab
-			a.tab.append(data.template_name, function(){
+			a.tab.append(data.template_name, function(tabID){
 				a.populate(form, {
 					job_number: data.job_number,
 					date: json.date,

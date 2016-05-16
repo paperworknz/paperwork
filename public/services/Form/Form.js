@@ -279,13 +279,20 @@ Form.prototype.update = function(form){
 	// Painter layer
 	if (a.p.update != undefined) a.p.update(form);
 };
-Form.prototype.copy = function(form){
+Form.prototype.copy = function(form, templates){
 	var a= this,
-		form_id= form.attr('data-formid');
+		form_id= form.attr('data-formid'),
+		message = '';
+	
+	$.each(templates, function(a,b){
+		message += a+' for '+b+',';
+	});
+	
+	message = message.replace(/,+$/, "");
 	
 	swal({
 		title: 'Choose your template',
-		text: '1 for Quote, 2 for Invoice',
+		text: message,
 		type: 'input',
 		inputPlaceholder: 'Write something',
 		showCancelButton: true,
@@ -294,15 +301,7 @@ Form.prototype.copy = function(form){
 		if(e != false){ // User hasn't clicked cancel
 			var button= $(this),
 				input= e,
-				template_name= 'Invoice';
-			
-			if(input == 1){
-				template_name = 'Quote';
-			}else if(input == 2){
-				template_name = 'Invoice';
-			}else{
-				template_name = 'Invoice';
-			}
+				template_name= templates[e];
 			
 			var data = {
 				client: a.p.get('client', form),
@@ -313,10 +312,11 @@ Form.prototype.copy = function(form){
 			pw.wait(button);
 			a.post({
 				url: environment.root+'/post/form',
-				template_id: input,
 				template_name: template_name,
+				template_id: input,
 				client_id: environment.client_id,
 				job_id: environment.job_id,
+				job_number: environment.job_number,
 			}, function(new_form){
 				
 				// Append item to DOM
@@ -734,7 +734,7 @@ Form.prototype.post = function(data, callback){
 			a.crawl(form);
 			
 			// Create new tab
-			a.tab.append(data.template_name, function(){
+			a.tab.append(data.template_name, function(tabID){
 				a.populate(form, {
 					job_number: data.job_number,
 					date: json.date,

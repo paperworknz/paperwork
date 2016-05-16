@@ -154,7 +154,7 @@
 			});
 		</script>
 		<script src="{{path.root}}/services/Form/Painter/{{job.painter}}"></script>
-		<script src="{{path.root}}/services/Form/Form.js{{resources.form}}"></script>
+		<script src="{{path.root}}/services/Form/Form.min.js{{resources.form}}"></script>
 		<script>var form = new Form;</script>
 		<script>
 		$(function(){
@@ -393,7 +393,9 @@
 			
 			// COPY
 			$(document).on('click', '[form-copy-btn]', function(){
-				form.copy($(form.s+' [form-blob]'));
+				form.copy($(form.s+' [form-blob]'), {
+					{% for a,b in templates %}{{a}}:"{{b.name}}",{%endfor%}
+				});
 			});
 			
 			// MARGIN

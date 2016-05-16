@@ -45,7 +45,7 @@ class SQL {
 			'values'	=> false,
 			'where'		=> [],
 			'also'		=> [],
-			'purge'		=> false,
+			'hard'		=> false,
 			'event'		=> false,
 			'return'	=> false,
 			'soft'		=> false,
@@ -170,6 +170,11 @@ class SQL {
 		return $this;
 	}
 	
+	public function hard(){
+		$this->query['hard'] = true;
+		return $this;
+	}
+	
 	// PUT VALUES //
 	
 	public function with($values){
@@ -186,11 +191,6 @@ class SQL {
 	
 	public function also($what){
 		array_push($this->query['also'], $what);
-		return $this;
-	}
-	
-	public function purge(){
-		$this->query['purge'] = true;
 		return $this;
 	}
 	
@@ -253,7 +253,7 @@ class SQL {
 		}
 		
 		// Soft delete
-		if(!$this->query['soft']) $this->where('date_deleted', '=', '0000-00-00 00:00:00', '*');
+		if(!$this->query['soft'] && !$this->query['hard']) $this->where('date_deleted', '=', '0000-00-00 00:00:00', '*');
 		
 		// Instantiate the result variable
 		$start	= microtime(true); // Start clock
@@ -288,7 +288,7 @@ class SQL {
 			'values'	=> false,
 			'where'		=> [],
 			'also'		=> [],
-			'purge'		=> false,
+			'hard'		=> false,
 			'event'		=> false,
 			'return'	=> false,
 			'soft'		=> false,
@@ -446,7 +446,7 @@ class SQL {
 	
 	protected function runDelete($app){
 		
-		if(!$this->query['purge']){
+		if(!$this->query['hard']){
 			$this->query['values'] = [
 				'date_deleted' => date("Y-m-d H:i:s"),
 				'date_touched' => date("Y-m-d H:i:s"),
