@@ -293,8 +293,10 @@ Form.prototype.copy = function(form, templates){
 	$('[copy-content]').css({
 		position:'absolute',
 		'z-index':999,
-		top:formcontent.offset().top -51,
-		left:formcontent.offset().left - 30,
+		left:0,
+		right:0,
+		marginLeft:'auto',
+		marginRight:'auto',
 		width:'710px',
 		'background-color':'white',
 		border:'none',
@@ -320,8 +322,12 @@ Form.prototype.copy = function(form, templates){
 	
 	$('[copy-parent]').append('<button copy-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>');
 	
+	$('[copy-content]').css({
+		top:(($(window).height() / 2)) - ($('[copy-content]').height() / 2),
+	});
+	
 	// Fade in 
-	$('[fade]').animate({'opacity':0.5}, 150, function(){
+	$('[fade]').animate({'opacity':0.66}, 150, function(){
 		$('[copy] [copy-content]').animate({'opacity':1}, 100);
 	});
 	
@@ -399,6 +405,164 @@ Form.prototype.copy = function(form, templates){
 	});
 	
 };
+Form.prototype.email = function(form){
+	var a= this,
+		form_id= form.attr('data-formid'),
+		formcontent = form.find($(a.p.get('form-content', form)));
+	
+	// Darken page, then show the concern
+	a.dark(form); // Turn off interaction 
+	
+	$('#content').after('<div email></div>'); // Append copy container
+	$('[email]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>');
+	$('[fade]').after('<div email-content></div>');
+	$('[email-content]').css({
+		position:'absolute',
+		'z-index':999,
+		left:0,
+		right:0,
+		marginLeft:'auto',
+		marginRight:'auto',
+		width:'710px',
+		'background-color':'white',
+		border:'none',
+		'min-height':'50px',
+		opacity: '0.00'
+	});
+	$('[email-content]').html(
+		'<style>.email-parent input {display:block;width:100%;border:1px solid #ccc;margin-bottom:10px;}</style>'+
+		'<div email-parent class="email-parent wrapper">'+
+			'<input class="email-email" type="text" style="width:50%" value="'+environment.client_email+'" placeholder="Email Address" />'+
+			'<input class="email-subject" type="text" placeholder="Subject Line" />'+
+			'<div class="email-body" style="padding:4px;width:100%;height:125px;border:1px solid #ccc;overflow-y:auto" contenteditable>'+
+			'</div>'+
+			'<i>PDF attached</i>'+
+		'</div>'
+	);
+	$('[email-parent]').css({
+		margin:'10px'
+	});
+	
+	$('[email-parent]').append(
+		'<div class="wrapper" style="padding:10px">'+
+			'<button email-send class="wolfe-btn pull-right">SEND</button>'+
+			'<button email-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>'+
+		'</div>'
+	);
+	
+	$('[email-content]').css({
+		top:(($(window).height() / 2)) - ($('[email-content]').height() / 2),
+	});
+	
+	// Fade in
+	$('[fade]').animate({'opacity':0.66}, 150, function(){
+		$('[email] [email-content]').animate({'opacity':1}, 100);
+	});
+	
+	
+	// ********* FORMDOM ********* //
+	
+	// Listen to send
+	$('[email] [email-send]').on('click', function(){
+		
+		$('[email] [email-parent]').addClass('no-click');
+		$('[email] [email-parent]').css('opacity', '0.5');
+		
+		$('[email] [email-parent]').append(
+			'<div class="wait la-ball-fall" style="width:50px!important;position:absolute;left:0;right:0;top:120px;margin:auto;">'+
+				'<div style="background-color:#bbb"></div><div style="background-color:#bbb"></div><div style="background-color:#bbb"></div>'+
+			'</div>'
+		);
+		
+		var address = $('.email-email').val(),
+			subject = $('.email-subject').val(),
+			body = $('.email-body').html(),
+			pdf = '';
+		
+		// Get PDF HTML
+		a.pdf($(a.s).find('[form-blob]'), function(data){
+			pdf = data;
+		});
+		
+		// Make PDF name
+		var tabID = $('.'+a.tab.activeTab).attr(a.tab.tabhook),
+			tname = $('.'+a.tab.activeTab).html(),
+			pdf_name = tabID+'-'+tname.toLowerCase();
+		
+		// Post PDF and Email
+		$.post(environment.root+'/post/email', {
+			job_number: environment.job_number,
+			file_name: pdf_name,
+			html: pdf,
+			client_name: environment.client_name,
+			address: address,
+			subject: subject,
+			body: body,
+		}).done(function(response){
+			if(response == 'OK'){
+				$('[email] [email-parent]').css('opacity', '0');
+				$('[email] [email-content]').append(
+					'<div style="width:95px;position:absolute;left:0;right:0;top:78px;margin:auto;">'+
+						'<video autoplay>'+
+							'<source src="'+environment.root+'/inc/paperwork/success.webm" type="video/webm">'+
+						'</video>'+
+					'</div>'
+				);
+				setTimeout(function(){
+					$('[email] [email-content]').fadeOut(100, function(){
+						$('[fade]').fadeOut(150, function(){
+							$('[email]').off().unbind().remove();
+							a.refresh(form);
+							a.update(form);
+						});
+					});
+				}, 1500);
+			}else{
+				$('[email] [email-parent]').css('opacity', '0');
+				$('[email] [email-content]').append(
+					'<div style="text-align:center;position:absolute;left:0;right:0;top:78px;margin:auto;">'+
+						'There was a problem sending this email.<br>'+
+						'Please make sure your email settings are correct, otherwise email hello@paperwork.nz for support.'+
+					'</div>'
+				);
+			}
+		}).fail(function(){
+			$('[email] [email-parent]').css('opacity', '0');
+			$('[email] [email-content]').append(
+				'<div style="text-align:center;position:absolute;left:0;right:0;top:78px;margin:auto;">'+
+					'There was a problem sending this email.<br>'+
+					'Please make sure your email settings are correct, otherwise email hello@paperwork.nz for support.'+
+				'</div>'
+			);
+		});
+		
+	});
+	
+	// Listen to cancel
+	$('[email] [email-cancel]').on('click', function(){
+		$('[email] [email-content]').fadeOut(100, function(){
+			$('[fade]').fadeOut(150, function(){
+				$('[email]').off().unbind().remove();
+				a.refresh(form);
+				a.update(form);
+			});
+		});
+	});
+	
+	// Cancel on click out of focus
+	$('[fade]').on('click', function(){
+		if($('.email-subject').val() == '' && $('.email-body').html().length === 0){
+			$('[email] [email-content]').fadeOut(100, function(){
+				$('[fade]').fadeOut(150, function(){
+					$('[email]').off().unbind().remove();
+					a.refresh(form);
+					a.update(form);
+				});
+			});
+		}
+	});
+	
+};
 Form.prototype.pdf = function(form, callback){
 	var a= this,
 		html= form.clone();
@@ -419,6 +583,106 @@ Form.prototype.pdf = function(form, callback){
 	
 	// Callback function
 	callback(page);
+};
+Form.prototype.delete = function(data, callback){
+	var a = this;
+	
+	// Delete form
+	if(data.url != undefined && data.form_id != undefined){
+		$.post(data.url, {
+			id: data.form_id
+		}).done(function(data){
+			if(data != '0'){
+				if(callback != undefined) callback(true); // Callback
+			}else{
+				if(callback != undefined) callback(false); // Callback
+				console.log('Form delete failed with Slim 0');
+			}
+		}).fail(function(){
+			if(callback != undefined) callback(false); // Callback
+			console.log('Internal Server Error');
+		});
+	}
+};
+Form.prototype.post = function(data, callback){
+	var a= this;
+	
+	// Post form
+	if(data.url != undefined && data.template_id != undefined &&
+		data.client_id != undefined && data.job_id != undefined && data.job_number != undefined){
+		$.post(data.url, {
+			template_id: data.template_id,
+			client_id: data.client_id,
+			job_id: data.job_id
+		}).done(function(json){
+			var json	= JSON.parse(json),
+				obj		= a.tab.objParent,
+				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook)),
+				form_id	= json.id;
+			
+			// Create new obj
+			$(obj).find('['+a.tab.heir+']').before('<div '+a.tab.objhook+'="'+objID+'" class="'+a.tab.obj+' h">'+json.html+'</div>');
+			$(obj).find('['+a.tab.heir+']').replaceWith('<div '+a.tab.objhook+'="'+(objID + 1)+'" '+a.tab.heir+' hidden></div>');
+			
+			// Update data-formid on form-blob
+			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', form_id);
+			
+			// Update a.map
+			var form = $('[data-formid="'+form_id+'"]');
+			a.crawl(form);
+			
+			// Create new tab
+			a.tab.append(data.template_name, function(tabID){
+				a.populate(form, {
+					job_number: data.job_number,
+					date: json.date,
+					client: json.client,
+				});
+				a.put({
+					url: environment.root+'/put/form',
+					id: form_id,
+				}, function(){
+					a.construct(form);
+					callback(form);
+				});
+			});
+		}).fail(function(){
+			if(callback != undefined) callback(false); // Callback
+			console.log('Internal Server Error');
+		});
+	}
+};
+Form.prototype.put = function(data, callback){
+	var a= this,
+		form= $('[data-formid="'+data.id+'"]'),
+		save= form.clone();
+	
+	// Flush html items
+	a.p.do('flush-items', save);
+	var html= a.strip(save); // Remove interactive tools, returns html
+	
+	// Put form
+	if(data.url != undefined && data.id != undefined){
+		$.post(data.url, {
+			id: data.id, // User defined or current
+			html: html,
+			json: JSON.stringify(a.map[data.id]),
+		}).done(function(){
+			if(data != '0'){
+				//a.refresh(form);
+				//document.cookie = 'autosave.'+$(a.s).attr('data-formid')+'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+				if(callback != undefined) callback(true); // Callback
+			}else{
+				if(callback != undefined) callback(false); // Callback
+				console.log('Form put failed with Slim 0');
+			}
+		}).fail(function(){
+			if(callback != undefined) callback(false); // Callback
+			console.log('Internal Server Error');
+		});
+	}else{
+		console.log('URL or data.id not supplied, form not saved.');
+	}
 };
 Form.prototype.margin = function(form){
 	
@@ -498,7 +762,7 @@ Form.prototype.margin = function(form){
 	$('[margin] [cent], [margin] [range]').val(0);
 	
 	// Fade in 
-	$('[fade]').animate({'opacity':0.5}, 150, function(){
+	$('[fade]').animate({'opacity':0.66}, 150, function(){
 		$('[margin] [margin-content]').animate({'opacity':1}, 100);
 	});
 	
@@ -740,104 +1004,4 @@ Form.prototype.marginOLD = function(form){
 			});
 		});
 	});
-};
-Form.prototype.delete = function(data, callback){
-	var a = this;
-	
-	// Delete form
-	if(data.url != undefined && data.form_id != undefined){
-		$.post(data.url, {
-			id: data.form_id
-		}).done(function(data){
-			if(data != '0'){
-				if(callback != undefined) callback(true); // Callback
-			}else{
-				if(callback != undefined) callback(false); // Callback
-				console.log('Form delete failed with Slim 0');
-			}
-		}).fail(function(){
-			if(callback != undefined) callback(false); // Callback
-			console.log('Internal Server Error');
-		});
-	}
-};
-Form.prototype.post = function(data, callback){
-	var a= this;
-	
-	// Post form
-	if(data.url != undefined && data.template_id != undefined &&
-		data.client_id != undefined && data.job_id != undefined && data.job_number != undefined){
-		$.post(data.url, {
-			template_id: data.template_id,
-			client_id: data.client_id,
-			job_id: data.job_id
-		}).done(function(json){
-			var json	= JSON.parse(json),
-				obj		= a.tab.objParent,
-				objID	= Number($(obj).find('['+a.tab.heir+']').attr(a.tab.objhook)),
-				form_id	= json.id;
-			
-			// Create new obj
-			$(obj).find('['+a.tab.heir+']').before('<div '+a.tab.objhook+'="'+objID+'" class="'+a.tab.obj+' h">'+json.html+'</div>');
-			$(obj).find('['+a.tab.heir+']').replaceWith('<div '+a.tab.objhook+'="'+(objID + 1)+'" '+a.tab.heir+' hidden></div>');
-			
-			// Update data-formid on form-blob
-			$('['+a.tab.objhook+'="'+objID+'"]').find('[form-blob]').attr('data-formid', form_id);
-			
-			// Update a.map
-			var form = $('[data-formid="'+form_id+'"]');
-			a.crawl(form);
-			
-			// Create new tab
-			a.tab.append(data.template_name, function(tabID){
-				a.populate(form, {
-					job_number: data.job_number,
-					date: json.date,
-					client: json.client,
-				});
-				a.put({
-					url: environment.root+'/put/form',
-					id: form_id,
-				}, function(){
-					a.construct(form);
-					callback(form);
-				});
-			});
-		}).fail(function(){
-			if(callback != undefined) callback(false); // Callback
-			console.log('Internal Server Error');
-		});
-	}
-};
-Form.prototype.put = function(data, callback){
-	var a= this,
-		form= $('[data-formid="'+data.id+'"]'),
-		save= form.clone();
-	
-	// Flush html items
-	a.p.do('flush-items', save);
-	var html= a.strip(save); // Remove interactive tools, returns html
-	
-	// Put form
-	if(data.url != undefined && data.id != undefined){
-		$.post(data.url, {
-			id: data.id, // User defined or current
-			html: html,
-			json: JSON.stringify(a.map[data.id]),
-		}).done(function(){
-			if(data != '0'){
-				//a.refresh(form);
-				//document.cookie = 'autosave.'+$(a.s).attr('data-formid')+'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-				if(callback != undefined) callback(true); // Callback
-			}else{
-				if(callback != undefined) callback(false); // Callback
-				console.log('Form put failed with Slim 0');
-			}
-		}).fail(function(){
-			if(callback != undefined) callback(false); // Callback
-			console.log('Internal Server Error');
-		});
-	}else{
-		console.log('URL or data.id not supplied, form not saved.');
-	}
 };

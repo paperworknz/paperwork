@@ -20,18 +20,6 @@
 				<button class="wolfe-btn blue" type="submit" form-pdf-btn>PDF</button>
 			</div>
 		</div>
-		<!--
-		<div class="box pull-left" style="width:105px;margin-right:5px">
-			<div class="ac">
-				<form method="post" action="{{path.root}}/post/pdf" form-email-form>
-					<input type="hidden" name="data" value="" form-email-data/>
-					<input type="hidden" name="id" value="{{job.id}}" />
-					<input type="hidden" name="name" />
-					<input type="hidden" name="email" value="true" />
-				</form>
-				<button class="wolfe-btn blue" type="submit" form-email-btn>EMAIL</button>
-			</div>
-		</div> -->
 		<div class="box pull-left" style="width:125px;margin-right:5px">
 			<div class="ac">
 				<button class="wolfe-btn blue" form-margin-btn>MARGIN</button>
@@ -42,6 +30,19 @@
 				<button class="wolfe-btn blue" form-copy-btn>MAKE COPY</button>
 			</div>
 		</div>
+		{% if user.username == 'admin' or user.username == 'logan' %}
+		<div class="box pull-left" style="width:105px;margin-right:5px">
+			<div class="ac">
+				<form method="post" action="{{path.root}}/post/pdf" form-email-form>
+					<input type="hidden" name="data" value="" form-email-data/>
+					<input type="hidden" name="id" value="{{job.id}}" />
+					<input type="hidden" name="name" />
+					<input type="hidden" name="email" value="true" />
+				</form>
+				<button class="wolfe-btn blue" type="submit" form-email-btn>EMAIL</button>
+			</div>
+		</div>
+		{% endif %}
 		<div class="box" style="right:0;position:absolute">
 			<div class="ac">
 				<button class="wolfe-btn delete" href="{{path.root}}/delete/form" form-del-btn>DELETE</button>

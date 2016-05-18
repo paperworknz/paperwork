@@ -4,10 +4,6 @@ namespace Paperwork\Extended;
 
 class Mail {
 	
-	public function __construct(){
-		require_once '../app/app/bin/PHPMailer-master/PHPMailer-master/PHPMailerAutoload.php';
-	}
-	
 	public function send($arr){
 		$mail = new \PHPMailer;
 		
