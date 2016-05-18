@@ -2,8 +2,7 @@
 
 include '../app/app/bin/phpToPDF.php';
 
-use Paperwork\Extended\Mail,
-	Symfony\Component\Process\Process,
+use Symfony\Component\Process\Process,
 	Symfony\Component\HttpFoundation\Response;
 
 $app->post('/post/pdf', 'uac', function() use ($app){

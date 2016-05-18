@@ -12,8 +12,10 @@ Form.prototype.copy = function(form, templates){
 	$('[copy-content]').css({
 		position:'absolute',
 		'z-index':999,
-		top:formcontent.offset().top -51,
-		left:formcontent.offset().left - 30,
+		left:0,
+		right:0,
+		marginLeft:'auto',
+		marginRight:'auto',
 		width:'710px',
 		'background-color':'white',
 		border:'none',
@@ -39,8 +41,12 @@ Form.prototype.copy = function(form, templates){
 	
 	$('[copy-parent]').append('<button copy-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>');
 	
+	$('[copy-content]').css({
+		top:(($(window).height() / 2)) - ($('[copy-content]').height() / 2),
+	});
+	
 	// Fade in 
-	$('[fade]').animate({'opacity':0.5}, 150, function(){
+	$('[fade]').animate({'opacity':0.66}, 150, function(){
 		$('[copy] [copy-content]').animate({'opacity':1}, 100);
 	});
 	

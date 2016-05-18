@@ -76,7 +76,7 @@ Form.prototype.margin = function(form){
 	$('[margin] [cent], [margin] [range]').val(0);
 	
 	// Fade in 
-	$('[fade]').animate({'opacity':0.5}, 150, function(){
+	$('[fade]').animate({'opacity':0.66}, 150, function(){
 		$('[margin] [margin-content]').animate({'opacity':1}, 100);
 	});
 	

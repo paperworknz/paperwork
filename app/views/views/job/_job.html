@@ -136,7 +136,9 @@
 				job_number: '{{job.job_number}}',
 				client_id: '{{client.id}}',
 				client_number: '{{client.client_number}}',
-				root: '{{path.root}}'
+				client_name: '{{client.name}}',
+				client_email: '{{client.email}}',
+				root: '{{path.root}}',
 			};
 			var pw	= new Paperwork;
 			var tab	= new Tab({
@@ -396,6 +398,12 @@
 			$(document).on('click', '[form-margin-btn]', function(){
 				form.margin($(form.s+' [form-blob]'));
 			});
+			
+			// EMAIL
+			$(document).on('click', '[form-email-btn]', function(){
+				form.email($(form.s+' [form-blob]'));
+			});
+			
 		});
 		</script>
 	</body>
