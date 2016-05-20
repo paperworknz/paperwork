@@ -126,7 +126,7 @@
 			</div>
 		</div>
 		{% include path.js with {
-			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu', 'selection']
+			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu', 'selection', 'Validation']
 		}%}
 		<script>
 			var environment = {
@@ -146,6 +146,7 @@
 					value: '{{job.job_number}}',
 				}
 			});
+			var v = new Validation;
 		</script>
 		<script src="{{path.root}}/js/app/{{path.js_cache[job.painter]}}"></script>
 		<script src="{{path.root}}/js/app/{{path.js_cache.Form}}"></script>
@@ -400,6 +401,7 @@
 			// EMAIL
 			$(document).on('click', '[form-email-btn]', function(){
 				form.email($(form.s+' [form-blob]'));
+				v.input($('body .email-parent'), $('body [email-send]'), 'email'); // Validation for template-list input
 			});
 			
 		});

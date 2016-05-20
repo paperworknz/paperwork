@@ -20,7 +20,3 @@
 	padding: 8px;
 	margin-bottom: 10px;
 }
-
-.ok {border: 1px solid #2ecc71!important;}
-.not-ok {border: 1px solid red!important;}
-.not-ok:focus {border: 1px solid #ccc!important;}

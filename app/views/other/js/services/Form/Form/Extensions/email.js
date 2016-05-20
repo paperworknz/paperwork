@@ -97,7 +97,7 @@ Form.prototype.email = function(form){
 				$('[email] [email-content]').append(
 					'<div style="width:95px;position:absolute;left:0;right:0;top:78px;margin:auto;">'+
 						'<video autoplay>'+
-							'<source src="'+environment.root+'/inc/paperwork/success.webm" type="video/webm">'+
+							'<source src="'+environment.root+'/css/app/media/success.webm" type="video/webm">'+
 						'</video>'+
 					'</div>'
 				);
