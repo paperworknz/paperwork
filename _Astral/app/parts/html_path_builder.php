@@ -15,14 +15,14 @@ class Html_path_builder {
 	public function crawl($path){
 		$patharray = [];
 		
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path.'/other/inc/html')) as $filename => $file) {
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path.'/other/html')) as $filename => $file) {
 			$file = str_replace($path, '', $file);
 			$file = str_replace('\\', '/', $file);
 			$file = str_replace('/..', '/', $file);
 			$file = str_replace('/.', '/', $file);
 			if(substr($file, -1) != '/'){
 				$name = str_replace('.html', '', $file);
-				$name = str_replace('/other/inc/html/', '', $name);
+				$name = str_replace('/other/html/', '', $name);
 				$name = str_replace('-', '', $name);
 				if(!strpos($name, '/')){
 					$patharray[$name] = $file;
@@ -30,14 +30,14 @@ class Html_path_builder {
 			}
 		}
 		
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path.'/other/inc')) as $filename => $file) {
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path.'/other')) as $filename => $file) {
 			$file = str_replace($path, '', $file);
 			$file = str_replace('\\', '/', $file);
 			$file = str_replace('/..', '/', $file);
 			$file = str_replace('/.', '/', $file);
 			if(substr($file, -1) != '/'){
 				$name = str_replace('.html', '', $file);
-				$name = str_replace('/other/inc/', '', $name);
+				$name = str_replace('/other/', '', $name);
 				$name = str_replace('-', '', $name);
 				if(!strpos($name, '/')){
 					$patharray[$name] = $file;

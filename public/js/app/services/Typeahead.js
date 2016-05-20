@@ -1,0 +1,1 @@
+var Typeahead=function(t,a,h){this.src=t,void 0!=a?this.params=a:this.params={hint:!0,highlight:!0,minLength:1},void 0!=h?this.env=h:this.env={source:substringMatcher(this.src)}};Typeahead.prototype.run=function(t){var a=this;$(t).find(".typeahead").typeahead(a.params,a.env)};

@@ -1,0 +1,28 @@
+<script src="{{path.root}}/js/app/{{path.js_cache.Paperwork}}"></script>
+
+{% for link in include %}
+{% if link == 'typeahead' %}
+<script src="{{path.root}}/js/typeahead.js"></script>
+<script src="{{path.root}}/js/thebasics.js"></script>
+<script src="{{path.root}}/js/app/{{path.js_cache.Typeahead}}"></script>
+{% elseif link == 'areyousure' %}
+<script src="{{path.root}}/js/jquery.are-you-sure.js"></script>
+{% elseif link == 'sweetalert' %}
+<script src="{{path.root}}/js/sweetalert.min.js"></script>
+{% elseif link == 'Tab' %}
+<script src="{{path.root}}/js/app/{{path.js_cache.Tab}}"></script>
+{% elseif link == 'Table' %}
+<script src="{{path.root}}/js/tinysort.js"></script>
+<script src="{{path.root}}/js/sortable.js"></script>
+<script src="{{path.root}}/js/interact.js"></script>
+<script src="{{path.root}}/js/app/{{path.js_cache.Table}}"></script>
+{% elseif link == 'interact' %}
+<script src="{{path.root}}/js/interact.js"></script>
+{% elseif link == 'contextmenu' %}
+<script src="{{path.root}}/js/jquery.contextMenu.js"></script>
+{% elseif link == 'selection' %}
+<script src="{{path.root}}/js/jquery.selection.js"></script>
+{% elseif link == 'Validation' %}
+<script src="{{path.root}}/js/app/{{path.js_cache.Validation}}"></script>
+{% endif %}
+{% endfor %}

@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="date" content="{{date}}">
-		<title>Paperwork</title>
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
-		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
-		<link href="{{path.root}}/inc/paperwork/Public.zaros.css" rel='stylesheet' type="text/css">
+		{% include path.head_public %}
 	</head>
 	<body>
 		<header>
@@ -69,7 +63,7 @@
 								</feature>
 								<feature>
 									<video class="spotlight" width="100%" autoplay loop>
-										<source src="inc/paperwork/client.webm" type="video/webm">
+										<source src="css/app/media/client.webm" type="video/webm">
 									</video>
 								</feature>
 							</div>
@@ -87,7 +81,7 @@
 								</feature>
 								<feature>
 									<video class="spotlight" width="100%" autoplay loop>
-										<source src="inc/paperwork/job.webm" type="video/webm">
+										<source src="css/app/media/job.webm" type="video/webm">
 									</video>
 								</feature>
 							</div>
@@ -105,7 +99,7 @@
 								</feature>
 								<feature>
 									<video class="spotlight" width="100%" autoplay loop>
-										<source src="inc/paperwork/inventory.webm" type="video/webm">
+										<source src="css/app/media/inventory.webm" type="video/webm">
 									</video>
 								</feature>
 							</div>
@@ -139,7 +133,7 @@
 				</div>
 			</div>
 		</section>
-		<script src="{{path.root}}/inc/jquery/jquery.2.1.4.js"></script>
+		{% include path.js %}
 		<script>
 			$(function(){
 				// Nav
