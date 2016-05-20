@@ -1,0 +1,103 @@
+<div class="wrapper">
+	<style scoped>
+		.wt-wrap {
+			font-size: 0;
+		}
+		.wt-wrap {
+			display:inline-block;
+			white-space:nowrap;
+		}
+		.wt-column {
+			display:inline-block;
+			min-width:44px;
+			font-size:14px;
+		}
+		.wt-column-ghost {
+			opacity: 0.5
+		}
+		.wt-head {
+			position:relative;
+			padding:5px 0px;
+			background-color:#7dbde8;
+			cursor:pointer;
+		}
+		.wt-head-handle {
+			position:absolute;
+			right:0;
+			top:0;
+			width:5px;
+			height:100%;
+			background-color:#2b85c1;
+			opacity:0;
+		}
+		.wt-head-handle:hover {
+			opacity:1;
+			cursor:e-resize;
+		}
+		.wt-wrap li {
+			padding:4px;
+			white-space:nowrap;
+			overflow:hidden;
+		}
+		.wt-row:hover {
+			cursor:pointer;
+		}
+		.wt-row-hover {
+			background-color:#eee
+		}
+	</style>
+	<div class="wt-table" style="display:none">
+		<div class="wrapper" style="margin-bottom:5px">
+			<div class="pull-right">
+				<select class="wt-filter">
+					<option value="All">All</option>
+					<option value="Hide Completed">Hide Completed</option>
+					{% for s in status %}
+					<option value="{{s.name}}">{{s.name}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="wrapper" style="overflow-x:auto;">
+			<div id="sortable" class="wt-wrap">
+				{% set i = 0 %}
+				{% for a,b in head %}
+					{% set style = '' %}
+					{% if '.' in a %}
+						{% set z = a|split('.')%}
+					{% endif %}
+					{% if '_' in b %}
+						{% set style = 'display:none;' %}
+					{% endif %}
+					{% if width %}
+						{% for c,d in width %}
+							{% if c == b %}
+								{% set style = style ~ 'width:' ~ d %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+					<ul class="wt-column" data-id="{{b}}" style="{{style}}">
+					<li class="wt-head noselect" data-state="def">
+						<div wt-head>
+							<span>{{b}}</span>
+							<img src="{{path.root}}/css/app/media/up.png" style="display:none;float:right;padding:5px 0px" height="20" alt="Ascending">
+						</div>
+						<div class="wt-head-handle">
+						</div>
+					</li>
+					{% for e in data %}
+						{% if e[a] %}
+							{% set i = i + 1 %}
+							<li class="wt-row" href="{{path.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[a]}}</li>
+						{% elseif z %}
+							{% set i = i + 1 %}
+							<li class="wt-row" href="{{path.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[z[0]][z[1]]}}</li>
+						{% endif %}
+					{% endfor %}
+					{% set i = 0 %}
+					</ul>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

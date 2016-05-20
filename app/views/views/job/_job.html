@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include path.typeahead %}
-		{% include path.sweetalert %}
 		{% include path.head %}
 		<meta name="format-detection" content="telephone=no">
 	</head>
@@ -149,8 +147,8 @@
 				}
 			});
 		</script>
-		<script src="{{path.root}}/services/Form/Painter/{{job.painter}}"></script>
-		<script src="{{path.root}}/services/Form/Form.min.js{{resources.form}}"></script>
+		<script src="{{path.root}}/js/app/{{path.js_cache[job.painter]}}"></script>
+		<script src="{{path.root}}/js/app/{{path.js_cache.Form}}"></script>
 		<script>var form = new Form;</script>
 		<script>
 		$(function(){

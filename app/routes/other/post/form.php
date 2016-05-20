@@ -36,7 +36,7 @@ $app->post('/post/form', 'uac', function() use ($app){
 				}
 			}*/
 			
-			$html = $app->build->page('other/inc/html/form.html', [
+			$html = $app->build->page('other/html/form.html', [
 				'html' => $template['content']
 			], false);
 			

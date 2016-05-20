@@ -1,78 +1,246 @@
 // Dependencies
 var gulp	= require('gulp');
+var each	= require('gulp-foreach');
 var concat	= require('gulp-concat');
 var rename	= require('gulp-rename');
 var uglify	= require('gulp-uglify');
-var css		= require('gulp-clean-css');
+var clean	= require('gulp-clean-css');
 var jeditor	= require('gulp-json-editor');
-var del		= require('del');
 
-// Continuous task to watch for changes in Form dir
-gulp.task('watch', function(){
-	var form = gulp.watch('public/services/Form/Form/**/*.js');
-	form.on('change', function(){
-		gulp.start('form-min');
-	});
-});
+// CONSTANTS //
+var path = {
+	'css_cache'		:'app/app/resources/.css-cache',
+	'js_cache'		:'app/app/resources/.js-cache',
+	'paperwork'		:'app/views/other/css/paperwork.css',
+	'public'		:'app/views/other/css/public.css',
+	'bootstrap'		:'public/css/bootstrap.3.3.6.css',
+	'sweetalert'	:'public/css/sweetalert.css',
+	'jquery'		:'public/js/jquery.2.1.4.js',
+};
 
-// Form minification, run on change
-gulp.task('form-min', function(){
+function updateCache(src, key, value, length){
+	var result = '',
+		chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+		dest = '';
 	
-	function randomString(length) {
-		var result = '',
-			chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		
-		for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-		return result;
-	}
+	// Generate random string, length of 6 by default
+	if(length == undefined) length = 6;
+	for(var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
 	
-	// Update .resources
-	gulp.src('app/app/resources/.resources')
+	// JSON value (key: value)
+	var value = value + '?' + result;
+	
+	// Destination
+	var shards = src.split('/');
+	shards.pop(); // Remove name from shards
+	for(var i = 0; i < shards.length; i++) dest += shards[i]+'/';
+	
+	// Update JSON
+	gulp.src(src)
 		.pipe(jeditor(function(json){
-			json.form = '?' + randomString(6);
+			json[key] = value
 			return json;
 		}))
 		.pipe(gulp.dest('app/app/resources'));
 	
-	// Concat, minify Form/* using random name var
-	gulp.src(['public/services/Form/Form/Core/Core.js', 'public/services/Form/Form/**/*.js'])
-		.pipe(concat('Form.js'))
-		.pipe(gulp.dest('public/services/Form/'))
-		.pipe(rename('Form.min.js'))
-		.pipe(uglify())
-		.pipe(gulp.dest('public/services/Form/'));
-		
-});
+	
+}
 
-// Postponed job css/js minification tasks
-
-/*gulp.task('job-css', function(){
-	return gulp.src([
-			'public/inc/paperwork/Paperwork.1.12.css',
-			'public/inc/paperwork/views/job/_job.css',
-			'public/inc/typeahead/*.css',
-			'public/inc/sweetalert/*.css',
+function globalCSS(name, filepath, seed){
+	
+	// Update .css-cache depending on seed
+	if(seed !== true) updateCache(path.css_cache, name, name+'.css');
+	
+	gulp
+		.src([
+			path.bootstrap,
+			path.sweetalert,
+			filepath,
 		])
-		.pipe(concat('min.css'))
-		.pipe(gulp.dest('public/inc/paperwork/views/job/'))
-		.pipe(css())
-		.pipe(gulp.dest('public/inc/paperwork/views/job/'));
-});
+		.pipe(concat(name+'.css'))
+		.pipe(clean())
+		.pipe(gulp.dest('public/css/app/'));
+	
+	// Log
+	console.log(name+'.css updated');
+}
 
-gulp.task('job-js', function(){
-	return gulp.src([
-		'public/inc/typeahead/*.js',
-		'public/services/Paperwork/*.js',
-		'public/services/Tab/Tab.1.2.js',
-		'public/services/Typeahead/*.js',
-		'public/inc/sweetalert/*.js',
-		'public/inc/interact/*.js',
-		'public/inc/contextmenu/jquery.contextMenu.js',
-	])
-		.pipe(concat('min.js'))
-		.pipe(gulp.dest('public/inc/paperwork/views/job/'))
+function viewCSS(file, seed){
+	var file_name	= file.path.replace(/^.*[\\\/]/, ''),
+		shards		= file.path.split('\\'),
+		dir			= [],
+		name		= '';
+	
+	// Full name as an array starting at name.css
+	shards.reverse();
+	
+	// Loop through shards to make dir path
+	for(i=0; i < shards.length; i++){
+		if(shards[i] !== 'views'){
+			if(shards[i] != file_name){
+				dir.push(shards[i]);
+			}
+		}else{
+			break; // End loop once we hit 'views'
+		}
+	}
+	
+	// Reverse directory array to it's natural form (eg. one,two,three)
+	dir.reverse();
+	
+	if(dir.length > 0){
+		// If there are directories, loop and concat into a string
+		for(i=0; i < dir.length; i++){
+			name += '/'+dir[i];
+		}
+	}else{
+		name = '/';
+	}
+	
+	// Display name
+	if(name == '/'){
+		var display_name = '/'+file_name;
+	}else{
+		var display_name = name+'/'+file_name;
+	}
+	
+	// Update .css-cache depending on seed
+	if(seed !== true) updateCache(path.css_cache, 'views'+display_name.split('.css')[0], 'views'+display_name);
+	
+	// Run gulp task with full dir name
+	gulp
+		.src([
+			file.path,
+		])
+		.pipe(concat(file_name))
+		.pipe(clean())
+		.pipe(gulp.dest('public/css/app/views'+name));
+	
+	// Log
+	if(name == '/'){
+		console.log(display_name+' updated');
+	}else{
+		console.log(display_name+' updated');
+	}
+}
+
+function paperworkJS(name, file, seed){
+	
+	// Update .js-cache depending on seed
+	if(seed !== true) updateCache(path.js_cache, name, name+'.js');
+	
+	gulp
+		.src([
+			path.jquery,
+			file,
+		])
+		.pipe(concat(name+'.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('public/inc/paperwork/views/job/'));
+		.pipe(gulp.dest('public/js/app/'));
+	
+	// Log
+	console.log(name+'.js updated');
+	
+}
+
+function servicesJS(file, seed){
+	
+	var file_name	= file.path.replace(/^.*[\\\/]/, ''),
+		shards		= file.path.split('\\'),
+		name		= '';
+	
+	// Full name as an array starting at name.css
+	shards.reverse();
+	
+	// Name as the js file name
+	var display_name = shards[0];
+	name = '/'+display_name;
+	
+	// Update .css-cache depending on seed
+	if(seed !== true) updateCache(path.js_cache, display_name.split('.js')[0], 'services/'+display_name);
+	
+	// Run gulp task with full dir name
+	gulp
+		.src([
+			file.path,
+		])
+		.pipe(concat(file_name))
+		.pipe(uglify())
+		.pipe(gulp.dest('public/js/app/services'));
+	
+	// Log
+	if(name == '/'){
+		console.log(display_name+' updated');
+	}else{
+		console.log(display_name+' updated');
+	}
+	
+}
+
+function formJS(seed){
+	
+	// Update .js-cache depending on seed
+	if(seed !== true) updateCache(path.js_cache, 'Form', 'services/Form.js');
+	
+	gulp
+		.src([
+			'app/views/other/js/services/Form/Form/Core/Core.js',
+			'app/views/other/js/services/Form/Form/**/*.js',
+		])
+		.pipe(concat('Form.js'))
+		.pipe(uglify())
+		.pipe(gulp.dest('public/js/app/services'));
+	
+	// Log
+	console.log('Form.js updated');
+	
+}
+
+// WATCH //
+gulp.task('watch', function(){
+	
+	// View css
+	gulp.watch('app/views/other/css/views/**').on('change', function(file){
+		viewCSS(file);
+	});
+	
+	// Services js
+	gulp.watch('app/views/other/js/services/*/*.js').on('change', function(file){
+		servicesJS(file);
+	});
+	
+	// paperwork.js
+	gulp.watch('app/views/other/js/Paperwork.js').on('change', function(){
+		paperworkJS('Paperwork', 'app/views/other/js/Paperwork.js');
+	});
+	
+	// paperwork.css
+	gulp.watch('app/views/other/css/paperwork.css').on('change', function(){
+		globalCSS('paperwork', 'app/views/other/css/paperwork.css');
+	});
+	
+	// public.css
+	gulp.watch('app/views/other/css/public.css').on('change', function(){
+		globalCSS('public', 'app/views/other/css/public.css');
+	});
+	
+	// Form
+	gulp.watch('app/views/other/js/services/Form/Form/**/*.js').on('change', function(file){
+		formJS();
+	});
+	
 });
 
-gulp.task('job', ['job-css', 'job-js']);*/
+// SEED //
+gulp.task('seed', function(){
+	globalCSS('paperwork', 'app/views/other/css/paperwork.css', true);
+	globalCSS('public', 'app/views/other/css/public.css', true);
+	gulp.src('app/views/other/css/views/**')
+		.pipe(each(function(stream, file){
+			viewCSS(file, true);
+			return stream;
+		}));
+	
+	paperworkJS('Paperwork', 'app/views/other/js/Paperwork.js', true);
+	formJS(true);
+});

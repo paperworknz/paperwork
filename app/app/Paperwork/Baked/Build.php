@@ -6,14 +6,25 @@ class Build {
 	
 	public function page($html, $data = [], $render = true){
 		$app	= \Slim\Slim::getInstance();
-		$css	= $app->root.'/inc/paperwork/'.str_replace('.html', '.css', $html); // http://.../inc/paperwork/views/{{uri}}.css, each uri has a corresponding css file
 		$view	= $app->view();
+		
+		// CSS Cache
+		$css = str_replace('.html', '', $html);
+		$css_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.css-cache'));
+		$css = isset($css_cache[$css]) ? $css_cache[$css] : $css = $css.'.css';
+		
+		// JS Cache
+		$js = str_replace('.html', '', $html);
+		$js_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.js-cache'));
 		
 		// Template array, all datasets contain these following values
 		$result = [
 			'path' => [
-				'root'	=> $app->root,
-				'css'	=> $css,
+				'root' => $app->root,
+				'paperwork_css' => $css_cache['paperwork'],
+				'public_css' => $css_cache['public'],
+				'css' => $css,
+				'js_cache' => $js_cache,
 			],
 			'env'	=> $app->env,
 			'user'	=> $app->user,
