@@ -57,13 +57,13 @@ Validation.prototype.input = function(obj, button, name){
 	};
 	
 	var cancel = function(){
-		$('.next-step').addClass('no-click');
-		$('.next-step').addClass('spotlight');
+		button.addClass('no-click');
+		button.addClass('spotlight');
 	};
 	
 	var open = function(){
-		$('.next-step').removeClass('no-click');
-		$('.next-step').removeClass('spotlight');
+		button.removeClass('no-click');
+		button.removeClass('spotlight');
 	};
 	
 	$(obj).on('blur', elements, function(){

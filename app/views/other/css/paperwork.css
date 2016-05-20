@@ -431,3 +431,9 @@ input::-webkit-inner-spin-button {
 .tt-suggestion:hover{background-color:#eee}
 .twitter-typeahead {width:100%}
 .typeahead {width:100%;background-color:white}
+
+/* Validation */
+.ok {border: 1px solid #2ecc71!important;}
+.not-ok {border: 1px solid red!important;}
+.not-ok:focus {border: 1px solid #ccc!important;}
+.spotlight {opacity: 0.6}
