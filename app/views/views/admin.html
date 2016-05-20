@@ -47,9 +47,9 @@
 								<td>{{a}}</td>
 								<td>
 									{% if b %}
-									<img src="{{path.root}}/inc/paperwork/toggle-on.png" data-name="{{a}}" data-value="{{b}}" height="26" />
+									<img src="{{path.root}}/css/app/media/toggle-on.png" data-name="{{a}}" data-value="{{b}}" height="26" />
 									{% else %}
-									<img src="{{path.root}}/inc/paperwork/toggle-off.png" data-name="{{a}}" data-value="{{b}}" height="26" />
+									<img src="{{path.root}}/css/app/media/toggle-off.png" data-name="{{a}}" data-value="{{b}}" height="26" />
 									{% endif %}
 								</td>
 							</tr>
@@ -171,10 +171,10 @@
 					}).done(function(data){
 						if(data == 'Success'){
 							if(value == 0){
-								src = '{{path.root}}/inc/paperwork/toggle-on.png';
+								src = '{{path.root}}/css/app/media/toggle-on.png';
 								value = 1;
 							}else{
-								src = '{{path.root}}/inc/paperwork/toggle-off.png';
+								src = '{{path.root}}/css/app/media/toggle-off.png';
 								value = 0;
 							}
 							ele.attr('src', src);

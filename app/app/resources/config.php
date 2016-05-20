@@ -24,12 +24,13 @@ foreach($config as $item){
 }
 
 // Twig scaffolding nav bar
-if(!isset($temp['nav'])){
+// Do NOT add to the env variable as it will show up in admin.switches
+/*if(!isset($temp['nav'])){
 	if(isset($_COOKIE['nav'])){
 		if($_COOKIE['nav'] === 'small' || $_COOKIE['nav'] === 'big'){
 			$temp['nav'] = $_COOKIE['nav'];
 		}
 	}
-}
+}*/
 
 return $temp; // $app->env contains switches
