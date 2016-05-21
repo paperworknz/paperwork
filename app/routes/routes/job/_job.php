@@ -63,6 +63,7 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 						continue;
 					}
 					
+					if($diff->d === 0 && $diff->m === 0 && $diff->y === 0){
 						if($diff->h === 0){
 							if($diff->i === 0){
 								$job[$key] = 'Just now';
@@ -77,6 +78,7 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 					}elseif($diff->y === 0){
 						$job[$key] = $time->format("F d, H:i");
 					}else{
+						$job[$key] = $time->format("F d Y, H:i");
 					}
 				}
 			}
