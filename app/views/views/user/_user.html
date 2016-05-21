@@ -17,6 +17,7 @@
 					<div style="padding:15px 20px;font-weight:600;border-bottom:1px solid #ccc">
 						RECENT
 						<span class="pull-right update" style="font-weight:300;cursor:pointer;color:#337ab7">Update</span>
+						<span class="pull-right" style="margin-right:15px;"><span style="padding: 0px 15px;cursor:pointer" prev> < </span> <span style="cursor:pointer" next> > </span></span>
 					</div>
 					<div events>
 					</div>
@@ -109,6 +110,18 @@
 				$('.update').on('click', function(){
 					events.css('opacity', '0.5');
 					update();
+				});
+				
+				$('[prev]').on('click', function(){
+					var id = location.href.split('/'),
+						next = Number(id.pop()) - 1;
+					location = '{{path.root}}/user/' + next;
+				});
+				
+				$('[next]').on('click', function(){
+					var id = location.href.split('/'),
+						next = Number(id.pop()) + 1;
+					location = '{{path.root}}/user/' + next;
 				});
 				
 				update();
