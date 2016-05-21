@@ -48,6 +48,8 @@ $app->post('/post/form', 'uac', function() use ($app){
 				'client'	=> $client['name'].'<br>'.$client['address']
 			];
 			
+			$app->event->log('created a new form for job_id: '.$job_id);
+			
 			echo $app->parse->arrayToJson($json);
 		}
 	}else{

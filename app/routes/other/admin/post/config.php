@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/admin/post/config', function() use ($app){
+$app->post('/admin/post/config', 'admin', function() use ($app){
 	/* Methods */
 	
 	/* Construction */

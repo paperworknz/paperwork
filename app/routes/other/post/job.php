@@ -43,6 +43,8 @@ $app->post('/post/job', 'uac', function() use ($app){
 				'name'			=> $name
 			])->run();
 			
+			$app->event->log('created a new job, job_number: '.$job_number);
+			
 			$app->redirect($app->root.'/job/'.$job_number); // Redirect to the new job
 			
 			/*****************************/

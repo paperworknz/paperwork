@@ -24,4 +24,6 @@ $app->post('/post/empty-trash', function() use ($app){
 		->hard()
 		->run();
 	
+	$app->event->log('emptied their trash');
+	
 });

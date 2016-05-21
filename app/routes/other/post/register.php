@@ -57,10 +57,7 @@ $app->post('/post/register', function() use ($app){
 				'job_status_number'	=> 1,
 			])->god()->run();
 			
-			$app->event->log([
-				'number' => 901,
-				'title' => $username.' added to user table.',
-			]);
+			$app->event->log('registered with username: '.$username);
 			
 			// Create storage directories
 			if($_ENV['MODE'] == 'dev'){
@@ -72,10 +69,7 @@ $app->post('/post/register', function() use ($app){
 			mkdir($dir, 0777);
 			mkdir($dir.'/pdf', 0777);
 			
-			$app->event->log([
-				'number' => 900,
-				'title' => 'Storage directories created for '.$username,
-			]);
+			$app->event->log('created new storage dir: '.$dir);
 			
 			// Return
 			echo $app->build->success([

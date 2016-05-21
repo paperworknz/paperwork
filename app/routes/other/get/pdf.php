@@ -19,11 +19,7 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 	
 	if(file_exists($path)){
 		// Log event
-		$app->event->log([
-			'number' => 76,
-			'title' => $app->user['username'].' looked at PDF '.$b,
-			'text' => $path,
-		]);
+		$app->event->log('looked at PDF '.$b);
 		// DOWNLOAD //
 		$response = new Response(file_get_contents($path), 200, [
 			'Content-Description'	=> 'File Transfer',
@@ -33,12 +29,7 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 		]);
 		$response->send(); // Return to client
 	}else{
-		$app->event->log([
-			'title' => $app->user['username'].' requested a missing PDF',
-			'text' => 'URI: '.$app->request->getResourceUri(),
-			'number' => 77,
-			'level' => 'Warning',
-		]);
+		$app->event->log('opened a missing PDF. URI: '.$app->request->getResourceUri());
 		$app->flash('error', 'Sorry, we couldn\'t find that PDF.');
 		$app->redirect($app->root.'/job/'.$a);
 	}

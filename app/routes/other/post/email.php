@@ -43,12 +43,7 @@ $app->post('/post/email', 'uac', function() use ($app){
 		'ssl'				=> 'yes'
 	]);
 	
-	// Log event
-	$app->event->log([
-		'number' => 75,
-		'title' => $app->user['username'].' created a PDF before sending an email',
-		'text' => 'For job '.$job_number,
-	]);
+	$app->event->log('created PDF '.$file);
 	
 	
 	
@@ -113,6 +108,7 @@ $app->post('/post/email', 'uac', function() use ($app){
 	if(!$mail->send()){
 		echo 'Fail';
 	}else{
+		$app->event->log('sent an email to '.$meta['to.email'].', with subject: '.$subject);
 		echo 'OK';
 	}
 	

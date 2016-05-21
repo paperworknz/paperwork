@@ -1,5 +1,7 @@
 <?php
 
+// ADMIN ONLY //
+
 $app->get('/admin', 'admin', function() use ($app){
 	/* Methods */
 

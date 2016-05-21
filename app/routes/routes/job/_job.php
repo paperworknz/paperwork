@@ -50,6 +50,41 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			// $resources = 'form.js?aBcdEf
 			$resources = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.resources'));
 			
+			// Time Since
+			foreach($job as $key => $value){
+				if(in_array($key, ['date_created', 'date_touched', 'date_invoiced', 'date_completed'])){
+					
+					$now = new DateTime();
+					$time = new DateTime($value);
+					$diff = $now->diff($time);
+					
+					if($value == '0000-00-00 00:00:00'){
+						$job[$key] = false;
+						continue;
+					}
+					
+					if($diff->d === 0 && $diff->m === 0 && $diff->y === 0){
+						if($diff->h === 0){
+							if($diff->i === 0){
+								$job[$key] = 'Just now';
+							}else{
+								$job[$key] = $diff->i.'m ago';
+							}
+						}else{
+							$job[$key] = $diff->h.'h ago';
+						}
+					}elseif($diff->d === 1){
+						$job[$key] = 'Yesterday at '.$time->h.':'.$time->i;
+					}elseif($diff->y === 0){
+						$job[$key] = $time->format("F d, H:i");
+					}else{
+						$job[$key] = $time->format("F d Y, H:i");
+					}
+				}
+			}
+			
+			$app->event->log('opened job '.$a);
+			
 			return $app->build->page($html, [
 				'id'		=> $a,
 				'job'		=> $job,

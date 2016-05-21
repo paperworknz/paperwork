@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/admin/get/password', function() use ($app){
+$app->post('/admin/get/password', 'admin', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
