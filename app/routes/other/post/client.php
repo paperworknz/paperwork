@@ -17,6 +17,8 @@ $app->post('/post/client', 'uac', function() use ($app){
 					'name' => $name,
 				])->run();
 				$client = $app->sql->get('client')->where('name', '=', $name)->one();
+				
+				$app->event->log('created a new client, '.$name);
 				echo $app->build->success([
 					'client' => $client
 				]);

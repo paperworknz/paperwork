@@ -45,12 +45,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 		'Content-Type' => 'application/pdf'
 	]);
 	
-	// Log event
-	$app->event->log([
-		'number' => 75,
-		'title' => $app->user['username'].' created a PDF',
-		'text' => 'For job '.$job_number,
-	]);
+	$app->event->log('craeted a PDF for job_number: '.$job_number);
 	
 	$response->send();
 	

@@ -9,6 +9,9 @@
 				3: 'inventory',
 				4: 'settings'
 			}%}
+			{% if user.admin %}
+			{% set nav = nav|merge(['admin', 'user']) %}
+			{% endif %}
 			{% for item in nav %}
 			<a href="{{path.root}}/{{item}}">
 			<li>{% if item == "app" %}Home

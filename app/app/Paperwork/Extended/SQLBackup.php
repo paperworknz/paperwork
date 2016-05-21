@@ -61,12 +61,6 @@ class SQLBackup {
 			
 			$end = microtime(true); // End clock
 			
-			$app->event->log([
-				'title' => 'SQL Backup. Started by '.$app->user['username'],
-				'text' => 'This took '.round($end - $start, 2).' seconds to run',
-				'number' => 3000 
-			]);
-			
 			return 'Success';
 		}
 		

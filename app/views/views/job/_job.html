@@ -48,19 +48,19 @@
 								<td>Phone</td>
 								<td><a href="tel:{{client.phone}}" title="Call {{client.name}}">{{client.phone}}</a></td>
 							</tr>
-							{% if job.date_created != '0000-00-00 00:00:00' %}
+							{% if job.date_created %}
 							<tr>
 								<td>Started</td>
 								<td>{{job.date_created}}</td>
 							</tr>
 							{% endif %}
-							{% if job.date_invoiced != '0000-00-00 00:00:00' %}
+							{% if job.date_invoice %}
 							<tr>
 								<td>Invoiced</td>
 								<td>{{job.date_invoiced}}</td>
 							</tr>
 							{% endif %}
-							{% if job.date_completed != '0000-00-00 00:00:00' %}
+							{% if job.date_completed %}
 							<tr>
 								<td>Closed</td>
 								<td>{{job.date_completed}}</td>

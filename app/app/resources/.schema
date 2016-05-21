@@ -1,10 +1,12 @@
 <?php
 return [
 'filearray' => [
+'/admin/get/activity' => '../app/routes/other/admin/get/activity.php',
 '/admin/get/password' => '../app/routes/other/admin/get/password.php',
 '/admin/post/backup' => '../app/routes/other/admin/post/backup.php',
 '/admin/post/config' => '../app/routes/other/admin/post/config.php',
 '/admin/post/query' => '../app/routes/other/admin/post/query.php',
+'/admin/put/settings' => '../app/routes/other/admin/put/settings.php',
 '/delete/client' => '../app/routes/other/delete/client.php',
 '/delete/form' => '../app/routes/other/delete/form.php',
 '/delete/inv' => '../app/routes/other/delete/inv.php',

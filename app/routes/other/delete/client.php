@@ -11,5 +11,7 @@ $app->post('/delete/client', 'uac', function() use ($app){
 		$app->sql->delete('client')->where('id', '=', $id)->run();
 	}
 	
+	$app->event->log('deleted a client, id: '.$id);
+	
 	$app->redirect($app->root.'/clients');
 });
