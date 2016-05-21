@@ -131,7 +131,7 @@
 							
 							if(q.toUpperCase() == 'users'.toUpperCase()) q = 'SELECT * FROM user ORDER BY user_id DESC';
 							if(q.toUpperCase() == 'event'.toUpperCase()) q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
-							if(q.toUpperCase() == 'clear event'.toUpperCase()) q = 'DELETE from event';
+							if(q.toUpperCase() == 'clear event'.toUpperCase()) q = 'TRUNCATE event';
 							
 							$.post('{{path.root}}/admin/post/query', {
 								'query': q

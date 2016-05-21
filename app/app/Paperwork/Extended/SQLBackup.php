@@ -61,6 +61,8 @@ class SQLBackup {
 			
 			$end = microtime(true); // End clock
 			
+			$app->event->log('ran a SQL Backup. Runtime '.round($end - $start, 2));
+			
 			return 'Success';
 		}
 		
