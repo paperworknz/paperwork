@@ -88,8 +88,6 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 				$email = false;
 			}
 			
-			$app->event->log('opened job '.$a);
-			
 			return $app->build->page($html, [
 				'id'		=> $a,
 				'job'		=> $job,
