@@ -31,7 +31,7 @@ Form.prototype.email = function(form){
 			'<input class="email-email" type="text" style="width:50%" value="'+environment.client_email+'" placeholder="Email Address" required />'+
 			'<input class="email-subject" type="text" placeholder="Subject Line" required />'+
 			'<div class="email-body" style="padding:4px;width:100%;height:300px;border:1px solid #ccc;overflow-y:auto" contenteditable>'+
-			'<span><br><br></span>'+
+			'<br>'+
 			signature+
 			'</div>'+
 			'<i>PDF attached</i>'+
