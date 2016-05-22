@@ -63,22 +63,24 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 						continue;
 					}
 					
+					$job[$key] = $time->format("d-m-Y, g:i A");
+					
 					if($diff->d === 0 && $diff->m === 0 && $diff->y === 0){
 						if($diff->h === 0){
 							if($diff->i === 0){
-								$job[$key] = 'Just now';
+								$job[$key.'_pretty'] = 'Just now';
 							}else{
-								$job[$key] = $diff->i.'m ago';
+								$job[$key.'_pretty'] = $diff->i.'m ago';
 							}
 						}else{
-							$job[$key] = $diff->h.'h ago';
+							$job[$key.'_pretty'] = $diff->h.'h ago';
 						}
 					}elseif($diff->d === 1){
-						$job[$key] = 'Yesterday at '.$time->format('H').':'.$time->format('i');
+						$job[$key.'_pretty'] = 'Yesterday at '.$time->format('g:i A');
 					}elseif($diff->y === 0){
-						$job[$key] = $time->format("F d, H:i");
+						$job[$key.'_pretty'] = $time->format("jS \of F");
 					}else{
-						$job[$key] = $time->format("F d Y, H:i");
+						$job[$key.'_pretty'] = $time->format("d F Y");
 					}
 				}
 			}

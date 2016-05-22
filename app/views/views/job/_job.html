@@ -26,8 +26,17 @@
 			<div class="obj" style="display:inline-block;margin-bottom:15px">
 				<div data-obj="0" id="summary" class="tabobj box job-material">
 					<div>
+						<span title="Job #{{job.job_number}}" class="h3" style="color:#7f8c8d;height:36px;line-height:36px;">{{job.job_number}}:</span>
 						<input type="text" class="jobName h3" name="jobName" value="{{job.name}}" placeholder="Job name"/>
-						<span class="h3 pull-right" style="color:#7f8c8d">Job #{{job.job_number}}</span>
+						<select title="Status" class="pull-right" style="margin:20px 0px 10px 0px;height:36px;line-height:36px;" job-status-select>
+							{% for item in status %}
+								{% if job.job_status.name == item.name %}
+								<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
+								{% else %}
+								<option value="{{item.name}}"/>{{item.name}}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
 					</div>
 					<hr>
 					<table class="clientdetails">
@@ -51,38 +60,24 @@
 							{% if job.date_created %}
 							<tr>
 								<td>Started</td>
-								<td>{{job.date_created}}</td>
+								<td title="{{job.date_created}}">{{job.date_created_pretty}}</td>
 							</tr>
 							{% endif %}
-							{% if job.date_invoice %}
+							{% if job.date_invoiced %}
 							<tr>
 								<td>Invoiced</td>
-								<td>{{job.date_invoiced}}</td>
+								<td title="{{job.date_invoiced}}">{{job.date_invoiced_pretty}}</td>
 							</tr>
 							{% endif %}
 							{% if job.date_completed %}
 							<tr>
 								<td>Closed</td>
-								<td>{{job.date_completed}}</td>
+								<td title="{{job.date_completed}}">{{job.date_completed_pretty}}</td>
 							</tr>
 							{% endif %}
 							<tr>
-								<td>Status</td>
+								<td class="token pdf-title"></td>
 								<td>
-									<select job-status-select>
-										{% for item in status %}
-											{% if job.job_status.name == item.name %}
-											<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
-											{% else %}
-											<option value="{{item.name}}"/>{{item.name}}</option>
-											{% endif %}
-										{% endfor %}
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td class="token pdf-title" style="vertical-align:top; padding-top:17px"></td>
-								<td style="padding-top:10px">
 									<div class="pdf-load"></div>
 									<div class="pdf-list"></div>
 								</td>
