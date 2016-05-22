@@ -1,6 +1,7 @@
 .jobName {
-	width:375px;
+	width:400px;
 	border:1px solid white;
+	margin-bottom:0;
 }
 .im {position:relative;z-index:1}
 .h {display:none;}

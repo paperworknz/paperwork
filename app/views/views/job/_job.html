@@ -26,9 +26,8 @@
 			<div class="obj" style="display:inline-block;margin-bottom:15px">
 				<div data-obj="0" id="summary" class="tabobj box job-material">
 					<div>
-						<span title="Job #{{job.job_number}}" class="h3" style="color:#7f8c8d;height:36px;line-height:36px;">{{job.job_number}}:</span>
 						<input type="text" class="jobName h3" name="jobName" value="{{job.name}}" placeholder="Job name"/>
-						<select title="Status" class="pull-right" style="margin:20px 0px 10px 0px;height:36px;line-height:36px;" job-status-select>
+						<select title="Status" class="pull-right" style="margin-top:20px;height:36px;line-height:36px;" job-status-select>
 							{% for item in status %}
 								{% if job.job_status.name == item.name %}
 								<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
@@ -42,21 +41,31 @@
 					<table class="clientdetails">
 						<tbody>
 							<tr>
+								<td>Job</td>
+								<td title="Job #{{job.job_number}}">#{{job.job_number}}</td>
+							</tr>
+							<tr>
 								<td>Client</td>
 								<td><a href="{{path.root}}/client/{{client.client_number}}" title="{{client.name}}'s Page">{{client.name}}</a></td>
 							</tr>
+							{% if client.email %}
 							<tr>
-								<td>Email</td>
+								<td></td>
 								<td><a href="mailto:{{client.email}}" title="Send Mail">{{client.email}}</a></td>
 							</tr>
+							{% endif %}
+							{% if client.address %}
 							<tr>
-								<td>Address</td>
+								<td></td>
 								<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
 							</tr>
+							{% endif %}
+							{% if client.phone %}
 							<tr>
-								<td>Phone</td>
+								<td></td>
 								<td><a href="tel:{{client.phone}}" title="Call {{client.name}}">{{client.phone}}</a></td>
 							</tr>
+							{% endif %}
 							{% if job.date_created %}
 							<tr>
 								<td>Started</td>
