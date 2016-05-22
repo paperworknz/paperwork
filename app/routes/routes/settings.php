@@ -14,6 +14,9 @@ $app->get('/settings', 'uac', function() use ($app){
 	// New job_number
 	$job_number	= $number->next('job');
 	
+	// Email settings
+	$email = $app->sql->get('user_email_settings')->one();
+	
 	// Trash
 	$job	= $app->sql->get('job')->select(['id', 'job_number', 'name', 'client_id'])->softOnly()->all();
 	$form	= $app->sql->get('job_form')->select(['id', 'job_id', 'name'])->softOnly()->all();
@@ -27,5 +30,6 @@ $app->get('/settings', 'uac', function() use ($app){
 		'clients'	=> $client,
 		'inventory'	=> $inventory,
 		'job_number'=> $job_number,
+		'email'		=> $email,
 	]);
 });

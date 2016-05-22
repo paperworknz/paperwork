@@ -22,16 +22,22 @@ Form.prototype.email = function(form){
 		'min-height':'50px',
 		opacity: '0.00'
 	});
+	
+	var signature = $('.email-signature-raw').html();
+	
 	$('[email-content]').html(
 		'<style>.email-parent input {display:block;width:100%;border:1px solid #ccc;margin-bottom:10px;}</style>'+
 		'<div email-parent class="email-parent wrapper">'+
-			'<input class="email-email" type="text" style="width:50%" value="'+environment.client_email+'" placeholder="Email Address" />'+
-			'<input class="email-subject" type="text" placeholder="Subject Line" />'+
-			'<div class="email-body" style="padding:4px;width:100%;height:125px;border:1px solid #ccc;overflow-y:auto" contenteditable>'+
+			'<input class="email-email" type="text" style="width:50%" value="'+environment.client_email+'" placeholder="Email Address" required />'+
+			'<input class="email-subject" type="text" placeholder="Subject Line" required />'+
+			'<div class="email-body" style="padding:4px;width:100%;height:300px;border:1px solid #ccc;overflow-y:auto" contenteditable>'+
+			'<span><br><br></span>'+
+			signature+
 			'</div>'+
 			'<i>PDF attached</i>'+
 		'</div>'
 	);
+	
 	$('[email-parent]').css({
 		margin:'10px'
 	});
@@ -40,6 +46,7 @@ Form.prototype.email = function(form){
 		'<div class="wrapper">'+
 			'<button email-send class="wolfe-btn pull-right">SEND</button>'+
 			'<button email-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>'+
+			'<input class="email-password pull-right" type="password" name="password" style="height:37px;line-height:37px;width:25%;margin-right:5px" placeholder="Email Password" required />'+
 		'</div>'
 	);
 	
@@ -70,6 +77,7 @@ Form.prototype.email = function(form){
 		var address = $('.email-email').val(),
 			subject = $('.email-subject').val(),
 			body = $('.email-body').html(),
+			password = $('.email-password').val(),
 			pdf = '';
 		
 		// Get PDF HTML
@@ -91,11 +99,12 @@ Form.prototype.email = function(form){
 			address: address,
 			subject: subject,
 			body: body,
+			password: password,
 		}).done(function(response){
 			if(response == 'OK'){
 				$('[email] [email-parent]').css('opacity', '0');
 				$('[email] [email-content]').append(
-					'<div style="width:95px;position:absolute;left:0;right:0;top:78px;margin:auto;">'+
+					'<div style="width:95px;position:absolute;left:0;right:0;top:165px;margin:auto;">'+
 						'<video autoplay>'+
 							'<source src="'+environment.root+'/css/app/media/success.webm" type="video/webm">'+
 						'</video>'+
@@ -110,6 +119,15 @@ Form.prototype.email = function(form){
 						});
 					});
 				}, 1500);
+			}else if(response == 'Password'){
+				$('[email] [email-parent]').removeClass('no-click');
+				$('[email] [email-parent]').css('opacity', '1');
+				$('[email] .wait').remove();
+				$('[email] .email-password').after(
+					'<div style="color:red;line-height:37px;padding-right:5px" class="pull-right">'+
+					'Wrong password'+
+					'<div>'
+				);
 			}else{
 				$('[email] [email-parent]').css('opacity', '0');
 				$('[email] [email-content]').append(

@@ -32,6 +32,8 @@ return [
 '/post/status' => '../app/routes/other/post/status.php',
 '/post/template-name' => '../app/routes/other/post/template-name.php',
 '/put/client-details' => '../app/routes/other/put/client-details.php',
+'/put/email-settings' => '../app/routes/other/put/email-settings.php',
+'/put/email-signature' => '../app/routes/other/put/email-signature.php',
 '/put/form-json' => '../app/routes/other/put/form-json.php',
 '/put/form' => '../app/routes/other/put/form.php',
 '/put/inv' => '../app/routes/other/put/inv.php',

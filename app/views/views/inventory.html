@@ -8,7 +8,7 @@
         <div id="content">
             <div class="box material">
 				<div class="h3">Inventory</div>
-				<div style="width:276px">
+				<div class="entry" style="width:276px">
 					<input id="name" type='text' name='name' placeholder='Name' class="input-big" style="width:150px" required/>
 					<input id="price" type="text" name='price' placeholder='$0.00' class="input-big" style='width:60px'/>
 					<div class="pull-right">
@@ -30,12 +30,15 @@
 			</div>
         </div>
 		{% include path.js with {
-			include: ['sweetalert']
+			include: ['sweetalert', 'Validation']
 		}%}
 		<script>
 			$(function(){
 				var pw = new Paperwork;
 				var inv = [{% for item in inventory %}{id:"{{item.id}}", name:"{{item.name}}", price:"{{item.price}}"},{% endfor %}];
+				
+				var v = new Validation;
+				v.input($('.entry'), $('.entry button'), 'inventory');
 				
 				// Check for inventory name/price change
 				$(document).on('change', '.inventory input', function(){

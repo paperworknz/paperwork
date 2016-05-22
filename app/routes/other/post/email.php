@@ -16,6 +16,7 @@ $app->post('/post/email', 'uac', function() use ($app){
 	$address		= $_POST['address'];
 	$subject		= $_POST['subject'];
 	$body			= $_POST['body'];
+	$password		= $_POST['password'];
 	
 	
 	// PDF //
@@ -46,70 +47,60 @@ $app->post('/post/email', 'uac', function() use ($app){
 	$app->event->log('created PDF '.$file);
 	
 	
-	
 	// EMAIL //
 	// Send Mail
 	$mail = new PHPMailer;
 	
-	if($app->user['username'] == 'logan'){
-		$meta = [
-			'protocol' => 'TLS',
-			'smtp' => 'smtp.gmail.com',
-			'port' => '587',
-			'from.name' => $app->user['first'].' '.$app->user['last'],
-			'from.email' => 'logan@naileditconstruction.kiwi',
-			'from.pw' => 'password5412',
-			'to.name' => $client_name,
-			'to.email' => $address,
-			'attachment' => $dir.'/'.$file,
-			'attachment.name' => $file,
-		];
-	}else if($app->user['username'] == 'admin'){
-		$meta = [
-			'protocol' => 'TLS',
-			'smtp' => 'smtp.gmail.com',
-			'port' => '587',
-			'from.name' => $app->user['first'].' '.$app->user['last'],
-			'from.email' => 'hello@paperwork.nz',
-			'from.pw' => 'Dasistdank420',
-			'to.name' => $client_name,
-			'to.email' => $address,
-			'attachment' => $dir.'/'.$file,
-			'attachment.name' => $file,
-		];
-	}else{
-		echo "Fail";
-		die();
+	// User email settings
+	if($email = $app->sql->get('user_email_settings')->one()){
+		// Password verify
+		if(password_verify($password, $email['password'])){
+			$meta = [
+				'protocol' => $email['protocol'],
+				'smtp' => $email['smtp'],
+				'port' => $email['port'],
+				'from.name' => $app->user['first'].' '.$app->user['last'],
+				'from.email' => $email['address'],
+				'from.pw' => $password,
+				'to.name' => $client_name,
+				'to.email' => $address,
+				'attachment' => $dir.'/'.$file,
+				'attachment.name' => $file,
+			];
+			
+			$mail->isSMTP();
+			$mail->Host = $meta['smtp'];
+			$mail->SMTPAuth = true;
+			$mail->Username = $meta['from.email'];
+			$mail->Password = $meta['from.pw'];
+			
+			if(isset($meta['protocol'])){
+				$mail->SMTPSecure = $meta['protocol'];
+			}
+			$mail->Port = $meta['port'];
+			
+			$mail->setFrom($meta['from.email'], $meta['from.name']);
+			$mail->addAddress($meta['to.email'], $meta['to.name']);
+			$mail->addReplyTo($meta['from.email'], $meta['from.name']);
+			$mail->addAttachment($meta['attachment'], $meta['attachment.name']);
+			$mail->addBCC($meta['from.email']);
+			
+			$mail->isHTML(true);
+			$mail->Subject = $subject;
+			$mail->Body    = $body;
+			$mail->AltBody = $body;
+			
+			if($mail->send()){
+				$app->event->log('sent an email to '.$meta['to.email'].', with subject: '.$subject);
+				echo 'OK';
+				die();
+			}
+		}else{
+			echo 'Password';
+			die();
+		}
 	}
 	
-	
-	$mail->isSMTP();
-	$mail->Host = $meta['smtp'];
-	$mail->SMTPAuth = true;
-	$mail->Username = $meta['from.email'];
-	$mail->Password = $meta['from.pw'];
-	
-	if(isset($meta['protocol'])){
-		$mail->SMTPSecure = $meta['protocol'];
-	}
-	$mail->Port = $meta['port'];
-	
-	$mail->setFrom($meta['from.email'], $meta['from.name']);
-	$mail->addAddress($meta['to.email'], $meta['to.name']);
-	$mail->addReplyTo($meta['from.email'], $meta['from.name']);
-	$mail->addAttachment($meta['attachment'], $meta['attachment.name']);
-	$mail->addBCC($meta['from.email']);
-	
-	$mail->isHTML(true);
-	$mail->Subject = $subject;
-	$mail->Body    = $body;
-	$mail->AltBody = $body;
-	
-	if(!$mail->send()){
-		echo 'Fail';
-	}else{
-		$app->event->log('sent an email to '.$meta['to.email'].', with subject: '.$subject);
-		echo 'OK';
-	}
+	echo 'Fail';
 	
 });

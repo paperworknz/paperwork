@@ -10,15 +10,16 @@
 			<div class="tabs">
 				<ul class="wrapper">
 					<li data-tab="0" class="tab noselect">My Account</li>
-					<li data-tab="1" class="tab noselect">Job Settings</li>
-					<li data-tab="2" class="tab noselect">Trash</li>
+					<li data-tab="1" class="tab noselect">Job</li>
+					<li data-tab="2" class="tab noselect">Email</li>
+					<li data-tab="3" class="tab noselect">Trash</li>
 				</ul>
 			</div>
 			<div class="obj">
 				<div data-obj="0" class="box material im" style="padding:30px">
 					<div class="uac">
 						<form method="post" action="{{path.root}}/put/settings">
-							<table>
+							<table class="user-details">
 								<tbody>
 									<tr>
 										<td>First</td>
@@ -52,19 +53,19 @@
 						</form>
 						<hr>
 						<form method="post" action="{{path.root}}/put/password">
-							<table>
+							<table class="password-settings">
 								<tbody>
 									<tr>
 										<td>Password</td>
-										<td><input name="oldpw" type="password" placeholder="Old Password"></td>
+										<td><input name="oldpw" type="password" placeholder="Old Password" required></td>
 									</tr>
 									<tr>
 										<td></td>
-										<td><input name="newpw" type="password" placeholder="New Password"></td>
+										<td><input name="newpw" type="password" placeholder="New Password" required></td>
 									</tr>
 									<tr>
 										<td></td>
-										<td><input name="confirmpw" type="password" placeholder="Confirm New Password"></td>
+										<td><input name="confirmpw" type="password" placeholder="Confirm New Password" required></td>
 									</tr>
 									<tr>
 										<td></td>
@@ -100,9 +101,9 @@
 						<button class="wolfe-btn" style="margin-top:7px;" job-status-btn>UPDATE</button>
 					</div>
 					<hr>
-					<div>
+					<div class="job_number">
 						<form method="post" action="{{path.root}}/post/job-n">
-							Next Job Number <input type="text" name="job_number" value="{{job_number}}"><br>
+							Next Job Number <input type="text" name="job_number" value="{{job_number}}" required><br>
 							<button class="wolfe-btn" style="margin-top:7px;">UPDATE</button>
 						</form>
 					</div>
@@ -110,6 +111,62 @@
 					<a href="{{path.root}}/register-settings">Rename your templates</a>-->
 				</div>
 				<div data-obj="2" class="box material im" style="padding:30px">
+					<form method="post" action="{{path.root}}/put/email-settings">
+						<table class="email-settings">
+							<tbody>
+								<tr>
+									<td>Email</td>
+									<td><input class="email-address" type="email" name="address" value="{{email.address}}" placeholder="hello@domain.com" required></td>
+								</tr>
+								<tr>
+									<td>Password</td>
+									<td><input type="password" name="password" placeholder="Email Password" value="" required></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><hr></td>
+								</tr>
+								<tr>
+									<td>SMTP</td>
+									<td><input type="text" name="smtp" value="{{email.smtp}}" placeholder="smtp.domain.com" required></td>
+								</tr>
+								<tr>
+									<td>Protocol</td>
+									<td><input type="text" name="protocol" value="{{email.protocol}}" placeholder="Protocol"></td>
+								</tr>
+								<tr>
+									<td>Port</td>
+									<td><input type="text" name="port" value="{{email.port}}" placeholder="000" required></td>
+								</tr>
+								<hr>
+								<tr>
+									<td></td>
+									<td style="height:40px">
+										<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+					<hr>
+					<table class="email-signature">
+						<tbody>
+							<tr>
+								<td style="vertical-align:top;padding-top:6px;">Signature</td>
+								<td>
+									<div class="signature" contenteditable>{{email.signature|raw}}</div>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="height:40px">
+									<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div data-obj="3" class="box material im" style="padding:30px">
 					<div class="trash">
 						{% if (jobs is not empty) or (forms is not empty) or (clients is not empty) or (inventory is not empty) %}
 						<div class="h4">Jobs</div>
@@ -142,7 +199,7 @@
 			</div>
 		</div>
 		{% include path.js with {
-			include: ['Tab']
+			include: ['Tab', 'Validation']
 		}%}
 		<script>
 			$(function(){
@@ -153,6 +210,19 @@
 						value: '{{user.first}}'
 					}
 				});
+				
+				// VALIDATION //
+				var v = new Validation;
+				v.input($('.user-details'), $('.user-details button'), 'user', {
+					allowDuplicates: true,
+					visible: true,
+				});
+				v.input($('.email-settings'), $('.email-settings button'), 'email');
+				v.input($('.password-settings'), $('.password-settings button'), 'password', {
+					allowDuplicates: true
+				});
+				v.input($('.job_number'), $('.job_number button'), 'jobNumber');
+				
 				var j = $('.jobstatus ul');
 				$('[new-status]').click(function(){
 					j.append('<li><input type="text" placeholder="Status name" /></li>');
@@ -225,6 +295,41 @@
 						callback === undefined ? location.reload() : callback();
 					});
 				};
+				
+				// EMAIL SETTINGS //
+				$('.email-address').on('blur', function(){
+					var address = $(this).val(),
+						smtp = $('.email-settings input[name=smtp]'),
+						protocol = $('.email-settings input[name=protocol]'),
+						port = $('.email-settings input[name=port]');
+					
+					if(address.indexOf('@gmail') != -1){
+						smtp.val('smtp.gmail.com');
+						protocol.val('TLS');
+						port.val('587');
+					}
+					
+					if(address.indexOf('@hotmail') != -1 || address.indexOf('@live') != -1){
+						smtp.val('smtp.live.com');
+						protocol.val('');
+						port.val('465');
+					}
+					
+					if(address.indexOf('@outlook') != -1){
+						smtp.val('smtp-mail.outlook.com');
+						protocol.val('TLS');
+						port.val('587');
+					}
+					
+				});
+				
+				$('.email-signature button').on('click', function(){
+					$.post('{{path.root}}/put/email-signature', {
+						signature: $('.signature').html()
+					}).done(function(){
+						location.reload();
+					});
+				});
 				
 			});
 		</script>

@@ -20,7 +20,7 @@
 										Full Name
 									</td>
 									<td>
-										<input type="text" client-name>
+										<input type="text" required client-name>
 									</td>
 								</tr>
 								<tr>
@@ -40,7 +40,7 @@
             </div>
         </div>
 		{% include path.js with {
-			include: ['typeahead']
+			include: ['typeahead', 'Validation']
 		}%}
 		<script>
 			$(function(){
@@ -56,6 +56,9 @@
 					source: substringMatcher(src),
 					limit: 1000000
 				});
+				
+				var v = new Validation;
+				v.input($('#new-content'), $('#new-content button'), 'clients');
 				
 				var clientTypeahead = function(){
 					var go = function(){
