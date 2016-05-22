@@ -50,19 +50,19 @@
 							</tr>
 							{% if client.email %}
 							<tr>
-								<td></td>
+								<td>Email</td>
 								<td><a href="mailto:{{client.email}}" title="Send Email" target="_blank">{{client.email}}</a></td>
 							</tr>
 							{% endif %}
 							{% if client.address %}
 							<tr>
-								<td></td>
+								<td>Address</td>
 								<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
 							</tr>
 							{% endif %}
 							{% if client.phone %}
 							<tr>
-								<td></td>
+								<td>Phone</td>
 								<td><a href="tel:{{client.phone}}" title="Call {{client.name}}">{{client.phone}}</a></td>
 							</tr>
 							{% endif %}
