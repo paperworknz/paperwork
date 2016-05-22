@@ -74,7 +74,7 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 							$job[$key] = $diff->h.'h ago';
 						}
 					}elseif($diff->d === 1){
-						$job[$key] = 'Yesterday at '.$time->format('h').':'.$time->format('i');
+						$job[$key] = 'Yesterday at '.$time->format('H').':'.$time->format('i');
 					}elseif($diff->y === 0){
 						$job[$key] = $time->format("F d, H:i");
 					}else{
