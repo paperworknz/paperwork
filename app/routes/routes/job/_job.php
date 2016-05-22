@@ -83,6 +83,11 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 				}
 			}
 			
+			// EMAIL
+			if(!$email = $app->sql->get('user_email_settings')->one()){
+				$email = false;
+			}
+			
 			$app->event->log('opened job '.$a);
 			
 			return $app->build->page($html, [
@@ -93,6 +98,7 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 				'status'	=> $status,
 				'forms'		=> $forms,
 				'resources'	=> $resources,
+				'email'		=> $email,
 			]);
 		}else{
 			$app->sql->put('job')->with([

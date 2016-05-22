@@ -22,7 +22,7 @@
 										</td>
 										<td>
 											<div id="the-basics">
-												<input type="text" class="typeahead" name="client_name" placeholder="Quick Search" />
+												<input type="text" class="typeahead" name="client_name" placeholder="Quick Search" required />
 											</div>
 										</td>
 									</tr>
@@ -31,7 +31,7 @@
 											Job Name:
 										</td>
 										<td>
-											<input type="text" name="name" />
+											<input type="text" name="name" required />
 										</td>
 									</tr>
 									<tr>
@@ -68,7 +68,7 @@
             </div>
         </div>
 		{% include path.js with {
-			include: ['typeahead', 'Table', 'contextmenu']
+			include: ['typeahead', 'Table', 'contextmenu', 'Validation']
 		}%}
 		<script>
 			var environment = {
@@ -90,6 +90,9 @@
 					name: 'Clients',
 					source: substringMatcher(src)
 				});
+				
+				var v = new Validation;
+				v.input($('#new-content'), $('#new-content button'), 'jobs');
 				
 				// New object
 				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});

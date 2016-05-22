@@ -30,7 +30,7 @@
 				<button class="wolfe-btn blue" form-copy-btn>MAKE COPY</button>
 			</div>
 		</div>
-		{% if user.username == 'admin' or user.username == 'logan' %}
+		{% if email %}
 		<div class="box pull-left" style="width:105px;margin-right:5px">
 			<div class="ac">
 				<form method="post" action="{{path.root}}/post/pdf" form-email-form>
