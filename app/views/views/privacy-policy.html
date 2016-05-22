@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="date" content="{{date}}">
-		<title>Paperwork - Privacy Policy</title>
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
-		<link href="{{path.root}}/inc/bootstrap/bootstrap.3.3.6.css" rel='stylesheet' type='text/css'>
-		<link href="{{path.root}}/inc/paperwork/Public.zaros.css" rel='stylesheet' type="text/css">
+		{% include path.head_public %}
 	</head>
 	<body>
 		<header>
@@ -45,7 +39,8 @@
 						<br><br>
 						<b>Information that is gathered from users</b><br>
 						Users must provide their name, company name, email address and a password to use our service. 
-						Passwords are stored in such a way as to be meaningless to ourselves, this means we can not view a password and be able to read the contents. 
+						Users may optionally provide their email password to use the Email feature within Paperwork. 
+						All passwords are securely hashed and stored on Paperworks servers. The real passwords provided are never recorded anywhere. 
 						Users may choose to provide their phone number and address to assist in communication. 
 						Users may input data such as, but not limited to, their customer information, job information, and other 
 						user generated information. This information is saved on our webserver. 
@@ -66,13 +61,13 @@
 						No 3rd Party advertising companies or similar with interest in user data are utilized by Paperwork.<br>No user generated data will be sold, disclosed or otherwise entertained to any 3rd Party company or person. 
 						
 						<br><br>
-						<i>Last updated 11/04/2016</i>
+						<i>Last updated 22/05/2016</i>
 					</div>
 				</div>
 				
 			</div>
 		</section>
-		<script src="{{path.root}}/inc/jquery/jquery.2.1.4.js"></script>
+		{% include path.js %}
 		<script>
 			$(function(){
 				// Nav
