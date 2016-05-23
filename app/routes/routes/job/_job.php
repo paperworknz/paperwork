@@ -58,6 +58,9 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 					$time = new DateTime($value);
 					$diff = $now->diff($time);
 					
+					$today = $now->format('d');
+					$stamp = $now->format('d');
+					
 					if($value == '0000-00-00 00:00:00'){
 						$job[$key] = false;
 						continue;
@@ -77,8 +80,10 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 							}else{
 								$job[$key.'_pretty'] = $diff->i.'m ago';
 							}
+						}elseif($today == $stamp){
+							$job[$key.'_pretty'] = 'Today at '.$time->format('g:i A');
 						}else{
-							$job[$key.'_pretty'] = $diff->h.'h ago';
+							$job[$key.'_pretty'] = 'Yesterday at '.$time->format('g:i A');
 						}
 					}else{
 						$job[$key.'_pretty'] = $time->format("d F Y");
