@@ -65,6 +65,11 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 					
 					$job[$key] = $time->format("d-m-Y, g:i A");
 					
+					if($time->format('d') == $now->format('d') - 1){
+						$job[$key.'_pretty'] = 'Yesterday at '.$time->format('g:i A');
+						continue;
+					}
+					
 					if($diff->d === 0 && $diff->m === 0 && $diff->y === 0){
 						if($diff->h === 0){
 							if($diff->i === 0){
@@ -75,10 +80,6 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 						}else{
 							$job[$key.'_pretty'] = $diff->h.'h ago';
 						}
-					}elseif($diff->d === 1){
-						$job[$key.'_pretty'] = 'Yesterday at '.$time->format('g:i A');
-					}elseif($diff->y === 0){
-						$job[$key.'_pretty'] = $time->format("jS \of F");
 					}else{
 						$job[$key.'_pretty'] = $time->format("d F Y");
 					}

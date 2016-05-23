@@ -6,10 +6,9 @@ var Paperwork = function(obj){
 // ################################ TOGGLES ################################
 Paperwork.prototype.preventBackspace = function(){
 	var exclusions = 'input, select, textarea, [contenteditable]';
-	$(document).on('keydown', function (e){
-		if (e.which === 8 && !$(e.target).is(exclusions)){
-			e.preventDefault();
-		}
+	
+	$(document).on('keydown', function(e){
+		if(e.which === 8 && !$(e.target).is(exclusions)) e.preventDefault(); 
 	});
 };
 
