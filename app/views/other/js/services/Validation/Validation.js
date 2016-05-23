@@ -9,16 +9,17 @@ Validation.prototype.input = function(obj, button, name, flags){
 	
 	var pref = {
 		'allowDuplicates': false,
-		'visible': false,
 	};
 	
 	if(flags != undefined) pref = $.extend(pref, flags);
 	
 	a.data[name] = {};
 	
-	var update = function(vis){
+	var update = function(force){
 		var data = [],
 			temp = [];
+		
+		if(force == undefined) force = false;
 		
 		open();
 		
@@ -40,7 +41,7 @@ Validation.prototype.input = function(obj, button, name, flags){
 						attr: this.attributes,
 						status: 'duplicate',
 					});
-					if(pref.visible && vis || vis == 'force') $(this).addClass('not-ok');
+					if(force) $(this).addClass('not-ok');
 					cancel();
 				}
 			}else if(!this.hasAttribute('required')){
@@ -56,7 +57,7 @@ Validation.prototype.input = function(obj, button, name, flags){
 					attr: this.attributes,
 					status: 'empty',
 				});
-				if(pref.visible && vis || vis == 'force') $(this).addClass('not-ok');
+				if(force) $(this).addClass('not-ok');
 				cancel();
 			}
 		});
@@ -76,13 +77,13 @@ Validation.prototype.input = function(obj, button, name, flags){
 	};
 	
 	obj.on('blur', elements, function(){
-		update(true);
+		update(false);
 	});
 	
 	button.parent().on('click', function(){
 		// User trying to submit form while the form isn't complete
 		if($(this).find('button').hasClass('no-click')){
-			update('force');
+			update(true);
 		}
 	});
 	
