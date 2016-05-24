@@ -36,8 +36,11 @@ $app->post('/post/form', 'uac', function() use ($app){
 				}
 			}
 			
+			$email = $app->sql->get('user_email_settings')->all();
+			
 			$html = $app->build->page('other/html/form.html', [
 				'html' => $template['content'],
+				'email' => $email,
 			], false);
 			
 			$json = [
