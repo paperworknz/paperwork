@@ -57,6 +57,32 @@ $app->post('/post/register', function() use ($app){
 				'job_status_number'	=> 1,
 			])->god()->run();
 			
+			// Status
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'New',
+				'job_status_number' => 1,
+			])->god()->run();
+			
+			// Templates
+			if(null !== file_get_contents('../app/app/storage/clients/Default/quote-inline.html')){
+				$quote = file_get_contents('../app/app/storage/clients/Default/quote-inline.html');
+				$app->sql->post('job_form_template')->with([
+					'user_id' => $user['id'],
+					'name' => 'Quote',
+					'content' => $quote,
+				])->god()->run();
+			}
+
+			if(null !== file_get_contents('../app/app/storage/clients/Default/invoice-inline.html')){
+				$invoice = file_get_contents('../app/app/storage/clients/Default/invoice-inline.html');
+				$app->sql->post('job_form_template')->with([
+					'user_id' => $user['id'],
+					'name' => 'Invoice',
+					'content' => $invoice,
+				])->god()->run();
+			}
+			
 			$app->event->log('registered with username: '.$username);
 			
 			// Create storage directories

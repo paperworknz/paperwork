@@ -76,6 +76,10 @@ Validation.prototype.input = function(obj, button, name, flags){
 		button.removeClass('spotlight');
 	};
 	
+	obj.on('keyup', elements, function(){
+		update(false);
+	});
+	
 	obj.on('blur', elements, function(){
 		update(false);
 	});

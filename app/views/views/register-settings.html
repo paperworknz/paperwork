@@ -8,7 +8,7 @@
 		<header>
 			<div class="wrapper width">
 				<div class="nav">
-					<div class="logo">Paperwork</div>
+					<div class="major_title logo">Paperwork</div>
 					<ul class="nav_list_less wrapper">
 						<li>
 							<span class="color_hint" home>Home</span>
@@ -36,8 +36,8 @@
 				<div class="centered">
 					<div class="interest">
 						<ul class="template-list user-information">
-							<li><input type="text" placeholder="Template Name" value="Quote"></li>
-							<li><input type="text" placeholder="Template Name" value="Invoice"></li>
+							<li><input type="text" placeholder="Template Name" value="Quote" required></li>
+							<li><input type="text" placeholder="Template Name" value="Invoice" required></li>
 						</ul>
 					</div>
 					<button class="wolfe-btn large next-step" style="margin-top:30px;">NEXT STEP</button>
@@ -60,7 +60,7 @@
 				});
 				
 				// Validation for template-list input
-				v.input($('.template-list'), $('.next-step'), 'templates', true);
+				v.input($('.template-list'), $('.next-step'), 'templates');
 				
 				$('.next-step').on('click', function(){
 					$('.next-step').addClass('no-click');
@@ -83,10 +83,10 @@
 						$(this).html(
 							'<div class="interest wrapper">'+
 								'<div class="template template-first">'+
-									'<img src="{{path.root}}/inc/paperwork/template-1.png" height="400px">'+
+									'<img src="{{path.root}}/css/app/media/template-1.png" height="400px">'+
 								'</div>'+
 								'<div class="template template-last">'+
-									'<img src="{{path.root}}/inc/paperwork/template-2.png" height="400px">'+
+									'<img src="{{path.root}}/css/app/media/template-2.png" height="400px">'+
 								'</div>'+
 							'</div>'
 						);

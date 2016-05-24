@@ -28,16 +28,16 @@ $app->post('/post/form', 'uac', function() use ($app){
 			])->run();
 			
 			// Experimental af. Evaluate stored twig variables in form content
-			/*foreach($app->user as $key => $value){
+			foreach($app->user as $key => $value){
 				if(strpos($template['content'], '{{user.'.$key.'}}') === false){
 					$template['content'] = str_replace('{{user.'.$key.'}}', '', $template['content']);
 				}else{
 					$template['content'] = str_replace('{{user.'.$key.'}}', $value, $template['content']);
 				}
-			}*/
+			}
 			
 			$html = $app->build->page('other/html/form.html', [
-				'html' => $template['content']
+				'html' => $template['content'],
 			], false);
 			
 			$json = [
