@@ -44,6 +44,10 @@ li {list-style-type:none!important}
 	feature .minor_title {text-align:center}
 	.form {min-width:330px!important}
 	.large {font-size:18px!important}
+	.user-information td {padding: 5px!important;}
+	.user-information td:nth-child(odd) {font-size: 13px!important;}
+	.user-information input {font-size: 16px!important;}
+	
 }
 
 input[type=text], input[type=email], input[type=password] {
@@ -287,11 +291,12 @@ video, img {
 	font-size: 20px;
 }
 
-.user-information td {
-	padding: 5px 10px;
+.user-information td {padding: 5px 10px;}
+.user-information input, .user-information button {
+	padding: 8px;
 }
 
-.user-information input, .user-information button {padding:8px}
+.user-information input {width:100%;}
 
 .login input, .login button {
 	display:block;

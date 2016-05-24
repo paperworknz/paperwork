@@ -24,24 +24,28 @@
 			</div>
 		</header>
 		<section>
-			<div class="width">
-				<div class="centered" style="padding-top:50px">
-					<span class="main_title">Template Editor</span>
-					<div info-text style="padding-bottom:20px;">Hello {{user.first}}!<br>On your free trail you have two templates. Please name these templates (or leave default)</div>
-				</div>
-			</div>
-		</section>
-		<section>
-			<div class="width">
-				<div class="centered">
-					<div class="interest">
-						<ul class="template-list user-information">
-							<li><input type="text" placeholder="Template Name" value="Quote" required></li>
-							<li><input type="text" placeholder="Template Name" value="Invoice" required></li>
-						</ul>
+			<div class="main">
+				<section>
+					<div class="width">
+						<div class="centered">
+							<span class="main_title">Template Editor</span>
+							<div info-text style="padding-bottom:20px;">Hello {{user.first}}!<br>On your free trail you have two templates. Please name these templates (or leave default)</div>
+						</div>
 					</div>
-					<button class="wolfe-btn large next-step" style="margin-top:30px;">NEXT STEP</button>
-				</div>
+				</section>
+				<section>
+					<div class="width">
+						<div class="centered">
+							<div class="interest">
+								<ul class="template-list user-information">
+									<li><input type="text" placeholder="Template Name" value="Quote" required></li>
+									<li><input type="text" placeholder="Template Name" value="Invoice" required></li>
+								</ul>
+							</div>
+							<button class="wolfe-btn large next-step" style="margin-top:30px;">NEXT STEP</button>
+						</div>
+					</div>
+				</section>
 			</div>
 		</section>
 		{% include path.js with {
