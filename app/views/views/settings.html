@@ -10,13 +10,14 @@
 			<div class="tabs">
 				<ul class="wrapper">
 					<li data-tab="0" class="tab noselect">My Account</li>
-					<li data-tab="1" class="tab noselect">Job</li>
+					<li data-tab="1" class="tab noselect">Job Config</li>
 					<li data-tab="2" class="tab noselect">Email</li>
 					<li data-tab="3" class="tab noselect">Trash</li>
 				</ul>
 			</div>
 			<div class="obj">
-				<div data-obj="0" class="box material im" style="padding:30px">
+				<div data-obj="0" class="box material im" style="padding:10px 30px 30px">
+					<div class="h4">My Details</div>
 					<div class="uac">
 						<form method="post" action="{{path.root}}/put/settings">
 							<table class="user-details">
@@ -79,13 +80,14 @@
 						</form>
 					</div>
 				</div>
-				<div data-obj="1" class="box material im" style="padding:30px">
+				<div data-obj="1" class="box material im" style="padding:10px 30px 30px">
 					<div class="jobstatus">
 						<style scoped>
 							.kappa li {
 								margin-top:4px;
 							}
 						</style>
+						<div class="h4">Job Statuses</div>
 						<ul class="kappa">
 							{% for item in status %}
 							<li><input type="text" data-id="{{item.id}}" value="{{item.name}}"/></li>
@@ -101,6 +103,7 @@
 						<button class="wolfe-btn" style="margin-top:7px;" job-status-btn>UPDATE</button>
 					</div>
 					<hr>
+					<div class="h4">Change Next Job Number</div>
 					<div class="job_number">
 						<form method="post" action="{{path.root}}/post/job-n">
 							Next Job Number <input type="text" name="job_number" value="{{job_number}}" required><br>
