@@ -63,6 +63,16 @@ $app->post('/post/register', function() use ($app){
 				'name' => 'New',
 				'job_status_number' => 1,
 			])->god()->run();
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'In Progress',
+				'job_status_number' => 2,
+			])->god()->run();
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'Completed',
+				'job_status_number' => 3,
+			])->god()->run();
 			
 			// Templates
 			if(null !== file_get_contents('../app/app/storage/clients/Default/quote-inline.html')){
