@@ -92,7 +92,9 @@
 				});
 				
 				var v = new Validation;
-				v.input($('#new-content'), $('#new-content button'), 'jobs');
+				v.input($('#new-content'), $('#new-content button'), 'jobs', {
+					allowDuplicates: true,
+				});
 				
 				// New object
 				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});

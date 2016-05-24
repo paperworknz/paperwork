@@ -1,11 +1,6 @@
 /* Infrastructure */
 body {
 	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: -10px;
-	overflow-y: scroll;
 	overflow-x: hidden;
 }
 ul {-webkit-padding-start:0px!important;margin:0!important}
@@ -32,19 +27,21 @@ li {list-style-type:none!important}
 
 @media screen and (max-width:921px){
 	feature {width: 100%!important}
+	feature .minor_title {text-align:center}
 }
 
 @media screen and (max-width:700px){
 	.logo {float: none!important;text-align:center}
 	.nav_list {float: none!important;width:315px;margin: 0 auto!important;}
 	.nav_list_less {float: none!important;width:220px;margin: 0 auto!important;}
+	.feature .minor_title {text-align:center}
 }
 
 @media screen and (max-width:500px){
 	.width {padding: 0px!important;}
-	video {min-width: 330px!important}
+	video, img {min-width: 330px!important}
 	feature {padding-left: 5px!important;padding-right: 5px!important}
-	.feature .main_title {text-align:center}
+	feature .minor_title {text-align:center}
 	.form {min-width:330px!important}
 	.large {font-size:18px!important}
 }
@@ -71,18 +68,20 @@ input[type=text], input[type=email], input[type=password] {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.33);
     min-height: 28px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-color: rgba(0,0,0,.333);
+	background-color: rgba(0,0,0,.5);
 	-webkit-transition: background-color 1000ms linear;
 	-moz-transition: background-color 1000ms linear;
 	-o-transition: background-color 1000ms linear;
 	-ms-transition: background-color 1000ms linear;
 	transition: background-color 1000ms linear;
 }
+
+/* */
 
 .no-click{
 	pointer-events:none!important;
@@ -138,14 +137,17 @@ section:after{
 .logo {
 	display: block;
 	float: left;
-	font-size: 46px;
-	line-height:46px;
-	font-weight:300;
 }
 
 .main {
 	padding: 50px 0px;
 	position: relative;
+}
+
+.major_title {
+	font-size: 46px;
+	line-height:46px;
+	font-weight:300;
 }
 
 .main_title {
@@ -164,12 +166,12 @@ section:after{
 	left: 0;
 	top: 0;
 	background: rgba(255,255,255,0);
-	background: -moz-linear-gradient(top, rgba(255,255,255,0) 100px, rgba(255,255,255,1) 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(100px, rgba(255,255,255,0)), color-stop(100%, rgba(255,255,255,1)));
-	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 100px, rgba(255,255,255,1) 100%);
-	background: -o-linear-gradient(top, rgba(255,255,255,0) 100px, rgba(255,255,255,1) 100%);
-	background: -ms-linear-gradient(top, rgba(255,255,255,0) 100px, rgba(255,255,255,1) 100%);
-	background: linear-gradient(to bottom, rgba(255,255,255,0) 100px, rgba(255,255,255,1) 100%);
+	background: -moz-linear-gradient(top, rgba(255,255,255,0) 125px, rgba(255,255,255,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(125px, rgba(255,255,255,0)), color-stop(100%, rgba(255,255,255,1)));
+	background: -webkit-linear-gradient(top, rgba(255,255,255,0) 125px, rgba(255,255,255,1) 100%);
+	background: -o-linear-gradient(top, rgba(255,255,255,0) 125px, rgba(255,255,255,1) 100%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,0) 125px, rgba(255,255,255,1) 100%);
+	background: linear-gradient(to bottom, rgba(255,255,255,0) 125px, rgba(255,255,255,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
 }
 
@@ -182,6 +184,7 @@ section:after{
 }
 
 feature {
+	position: relative;
 	display: block;
 	float: left;
 	width: 50%;
@@ -190,7 +193,7 @@ feature {
 
 .minor_title {
 	font-size: 20px;
-	line-height: 20px;
+	line-height: 25px;
 	font-weight: 300;
 	padding-bottom: 12px;
 	display: block;
@@ -198,10 +201,6 @@ feature {
 
 .spotlight {
 	opacity: 0.6;
-}
-
-.spotlight:hover {
-	opacity: 1;
 }
 
 .centered {text-align:center}
@@ -253,7 +252,7 @@ feature {
 	font-weight: 600;
 }
 
-video {
+video, img {
 	min-width: 400px;
 }
 
@@ -274,7 +273,7 @@ video {
 	padding-left:5px;
 }
 
-.top {padding-bottom:120px}
+.top {padding-bottom:80px}
 .foot {padding-bottom:200px}
 
 /* Login/Registration */
@@ -315,9 +314,37 @@ video {
 
 .price {
 	font-size: 60px;
-	line-height: 60px;
+	line-height: 80px;
 	font-weight: 100;
 	font-family: 'Open Sans Light';
+}
+
+price {
+	float: left;
+	padding: 0px 25px;
+}
+
+.video_overlay {
+	font-size: 40px;
+	line-height: 40px;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: 0;
+	left: 0;
+}
+
+.video_overlay > div {
+	position: relative;
+	line-height: 90px;
+	margin: 0px auto;
+	font-weight: 600;
+	width: 100px;
+	height: 100px;
+}
+
+video::-webkit-media-controls {
+    display:none !important;
 }
 
 /********** Typeahead **********/
