@@ -92,9 +92,7 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			}
 			
 			// EMAIL
-			if(!$email = $app->sql->get('user_email_settings')->one()){
-				$email = false;
-			}
+			if(!$email = $app->sql->get('user_email_settings')->one()) $email = false;
 			
 			return $app->build->page($html, [
 				'id'		=> $a,

@@ -10,11 +10,17 @@ $app->post('/post/inv', 'uac', function() use ($app){
 		
 		//$name = preg_replace('/\s+/', ' ', $name);
 		if($app->sql->get('inventory')->where('name', '=', $name)->one()){
+			
+			$app->event->log('updated inventory item: '.$name);
+			
 			$app->sql->put('inventory')->with([
 				'name' => $name,
 				'price' => $price,
 			])->where('name', '=', $name)->run();
 		}else{
+			
+			$app->event->log('created inventory item: '.$name);
+			
 			$app->sql->post('inventory')->with([
 				'name' => $name,
 				'price' => $price,

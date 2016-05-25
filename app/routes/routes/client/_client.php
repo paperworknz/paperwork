@@ -16,8 +16,6 @@ $app->get('/client/:a', 'uac', function($a) use ($app){
 		
 		$status = $app->sql->get('job_status')->select(['name'])->all();
 		
-		$app->event->log('opened client '.$a);
-		
 		return $app->build->page('views/client/_client.html', [
 			'client'	=> $client,
 			'jobs'		=> $jobs,

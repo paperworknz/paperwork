@@ -31,6 +31,8 @@ $app->post('/put/email-settings', 'uac', function() use ($app){
 		])->run();
 	}
 	
+	$app->event->log('updated their email settings');
+	
 	$app->flash('success', 'Updated');
 	$app->redirect($app->root.'/settings');
 });

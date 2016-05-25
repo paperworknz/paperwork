@@ -18,6 +18,8 @@ $app->post('/put/password', 'uac', function() use ($app){
 				'password' => $password
 			])->where('id', '=', $app->user['id'])->god()->run();
 			
+			$app->event->log('changed their password');
+			
 			$app->flash('success', 'Password changed successfully!');
 			$app->redirect($app->root.'/settings');
 			

@@ -7,6 +7,9 @@ $app->post('/put/rename-form', 'uac', function() use ($app){
 	
 	/* Construction */
 	if($id && $name){
+		
+		$app->event->log('renamed form '.$id.' to: '.$name);
+		
 		$app->sql->put('job_form')->with([
 			'name' => $name,
 		])->where('id', '=', $id)->run();
