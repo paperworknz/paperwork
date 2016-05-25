@@ -107,6 +107,45 @@ $app->post('/post/register', function() use ($app){
 			
 			$app->event->log('created new storage dir: '.$dir);
 			
+			// EMAIL //
+			// Send Mail
+			$mail = new PHPMailer;
+			$meta = [
+				'protocol' => 'TLS',
+				'smtp' => 'smtp.gmail.com',
+				'port' => '587',
+				'from.name' => 'Paperwork',
+				'from.email' => 'hello@paperwork.nz',
+				'from.pw' => 'Dasistdank420',
+				'to.name' => $first.' '.$last,
+				'to.email' => $email,
+			];
+			
+			$subject = 'Welcome to Paperwork';
+			$body = 'Hello '.$first.'!<br><br>Welcome to Paperwork. Please feel free to reply to this email with any questions, feedback, or to report any problems!<br><br><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="2"><b>Cade Murphy</b></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Director</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="6" face="arial, helvetica, sans-serif">Paperwork</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Web:&nbsp;<a href="http://paperwork.nz/" target="_blank" style="color: rgb(17, 85, 204);">paperwork.nz</a></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Support:&nbsp;</font><a href="mailto:hello@paperwork.nz" target="_blank" style="color: rgb(17, 85, 204);">hello@paperwork.nz</a></div>';
+			
+			$mail->isSMTP();
+			$mail->Host = $meta['smtp'];
+			$mail->SMTPAuth = true;
+			$mail->Username = $meta['from.email'];
+			$mail->Password = $meta['from.pw'];
+			
+			if(isset($meta['protocol'])){
+				$mail->SMTPSecure = $meta['protocol'];
+			}
+			$mail->Port = $meta['port'];
+			
+			$mail->setFrom($meta['from.email'], $meta['from.name']);
+			$mail->addAddress($meta['to.email'], $meta['to.name']);
+			$mail->addReplyTo($meta['from.email'], $meta['from.name']);
+			
+			$mail->isHTML(true);
+			$mail->Subject = $subject;
+			$mail->Body    = $body;
+			$mail->AltBody = $body;
+			
+			if($mail->send()) $app->event->log('Welcome email sent to '.$first.' '.$last.' at address: '.$email);
+			
 			// Return
 			echo $app->build->success([
 				'message' => 'Registration Successful'
