@@ -147,16 +147,21 @@
 				<div class="main foot">
 					<div class="centered">
 						{% if env.user_registration %}
-						<div class="wrapper" style="display:inline-block;">
+						<div class="wrapper" style="display:inline-block;padding-bottom:50px;">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
-								<div class="main_title price">
-									$49<span style="font-size:14px">/MO</span>
+								<div class="major_title">
+									Try it out for free!
+									<!--$49<span style="font-size:14px">/MO</span>-->
 								</div>
 							</price>
+							
 						</div>
-						<div>Do you think Paperwork is right for your business?</div>
-						<div><a href="{{path.root}}/register"><b>Register</b></a> and try it for free! No credit card required.</div>
+						<div style="height:60px;"><button register class="facade wolfe-btn large" style="margin:auto;">SIGN UP</button></div>
+						<div class="main">
+							<div>Paperwork is paid for on a monthly basis, </div>
+							<div>but you may <a href="{{path.root}}/register"><b>Sign Up</b></a> for free to see if it's right for your business. No credit card required.</div>
+						</div>
 						{% else %}
 						<span class="main_title">We're Not Public Yet</span>
 						<div>Pop your email in below and we'll let you know when Paperwork is available.</div>

@@ -324,11 +324,6 @@ video, img {
 	font-family: 'Open Sans Light';
 }
 
-price {
-	float: left;
-	padding: 0px 25px;
-}
-
 .video_overlay {
 	font-size: 40px;
 	line-height: 40px;
