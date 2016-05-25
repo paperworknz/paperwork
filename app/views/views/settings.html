@@ -113,8 +113,17 @@
 					<!--<hr>
 					<a href="{{path.root}}/register-settings">Rename your templates</a>-->
 				</div>
-				<div data-obj="2" class="box material im" style="padding:30px">
+				<div data-obj="2" class="box material im" style="padding:10px 30px 30px">
 					<form method="post" action="{{path.root}}/put/email-settings">
+						<div class="h4">Email Integration</div>
+						{% if email != true %}
+						<div class="alert alert-success">
+							For Paperwork to send emails on your behalf, you may need to change some email settings with your email provider.<br><br>
+							For Gmail, please follow <a href="https://www.google.com/settings/security/lesssecureapps" target="_blank"><b>this link</b></a>. Otherwise, you will need to ask your email provider how to allow "less secure apps" 
+							to use their SMTP server. You can always try enter your email and password, then try to send an email from a <a href="{{path.root}}/jobs"><b>job</b></a> to see if it works.
+						</div>
+						{% endif %}
+						<hr>
 						<table class="email-settings">
 							<tbody>
 								<tr>
@@ -141,7 +150,6 @@
 									<td>Port</td>
 									<td><input type="text" name="port" value="{{email.port}}" placeholder="000" required></td>
 								</tr>
-								<hr>
 								<tr>
 									<td></td>
 									<td style="height:40px">
