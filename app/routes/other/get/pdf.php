@@ -20,7 +20,7 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 	if(file_exists($path)){
 		// Log event
 		$app->event->log([
-			'text' => 'looked at PDF '.$b,
+			'text' => 'looked at PDF: '.$b,
 			'icon' => 'pdf.png',
 		]);
 		// DOWNLOAD //

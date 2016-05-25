@@ -30,6 +30,7 @@ $app->post('/put/settings', 'uac', function() use ($app){
 			'phone'		=> $phone,
 		])->where('id', '=', $app->user['id'])->god()->run();
 	}
+	$app->event->log('updated their details');
 	$app->flash('success', 'Updated');
 	$app->redirect($app->root.'/settings');
 });

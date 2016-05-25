@@ -83,7 +83,7 @@ $app->post('/post/email', 'uac', function() use ($app){
 			$mail->addAddress($meta['to.email'], $meta['to.name']);
 			$mail->addReplyTo($meta['from.email'], $meta['from.name']);
 			$mail->addAttachment($meta['attachment'], $meta['attachment.name']);
-			$mail->addBCC($meta['from.email']);
+			//$mail->addBCC($meta['from.email']);
 			
 			$mail->isHTML(true);
 			$mail->Subject = $subject;

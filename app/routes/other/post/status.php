@@ -33,6 +33,8 @@ $app->post('/post/status', 'uac', function() use ($app){
 			}
 		}
 		
+		$app->event->log('updated their statuses');
+		
 		$app->flash('success', 'Updated');
 	}
 });

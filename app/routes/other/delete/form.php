@@ -7,7 +7,7 @@ $app->post('/delete/form', 'uac', function() use ($app){
 	/* Construction */
 	if($id){
 		$app->sql->delete('job_form')->where('id', '=', $id)->run();
-		$app->event->log('deleted a job_form, id: '.$id);
+		$app->event->log('deleted form: '.$id);
 	}else{
 		echo '0';
 	}

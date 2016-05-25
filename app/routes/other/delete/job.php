@@ -10,7 +10,7 @@ $app->post('/delete/job', 'uac', function() use ($app){
 		$app->sql->delete('job')->where('id', '=', $id)->run();
 	}
 	
-	$app->event->log('deleted a job, id: '.$id);
+	$app->event->log('deleted job: '.$id);
 	
 	$app->redirect($app->root.'/jobs');
 });

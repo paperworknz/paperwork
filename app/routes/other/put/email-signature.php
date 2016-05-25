@@ -16,6 +16,8 @@ $app->post('/put/email-signature', 'uac', function() use ($app){
 		])->run();
 	}
 	
+	$app->event->log('updated their email signature');
+	
 	$app->flash('success', 'Updated');
 	$app->redirect($app->root.'/settings');
 });
