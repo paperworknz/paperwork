@@ -9,7 +9,9 @@
 			<div class="tabs">
 				<ul class="wrapper">
 					<li data-tab="0" class="tab noselect">Activity Log</li>
+					{% if host.first %}
 					<li data-tab="1" class="tab noselect">{{host.first}}</li>
+					{% endif %}
 				</ul>
 			</div>
 			<div class="obj">
