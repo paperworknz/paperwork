@@ -381,13 +381,18 @@
 					html = button.html();
 				
 				pw.wait(button);
-				form.pdf($(form.s).find('[form-blob]'), function(data){
-					$(form.s).find('[form-pdf-html]').val(data);
-					$(form.s).find('[form-pdf-jobid]').val('{{job.job_number}}');
-					$(form.s).find('[form-pdf-form]').submit();
-					window.onfocus = function(){
-						pw.ready(button, html);
-					};
+				form.put({
+					url: '{{path.root}}/put/form',
+					id: $(form.s).find('[form-blob]').attr('data-formid'),
+				}, function(bool){
+					form.pdf($(form.s).find('[form-blob]'), function(data){
+						$(form.s).find('[form-pdf-html]').val(data);
+						$(form.s).find('[form-pdf-jobid]').val('{{job.job_number}}');
+						$(form.s).find('[form-pdf-form]').submit();
+						window.onfocus = function(){
+							pw.ready(button, html);
+						};
+					});
 				});
 			});
 			
