@@ -2,7 +2,7 @@
 
 $app->post('/post/register', function() use ($app){
 	/* Methods */
-	$app->event->log(' started a new registration');
+	$app->event->log('started a new registration');
 	
 	/* Construction */
 	if($_POST['first'] &&  $_POST['last'] &&  $_POST['username'] &&  $_POST['company'] &&  $_POST['email'] &&  $_POST['password']){
