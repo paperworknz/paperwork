@@ -14,13 +14,15 @@ $app->get('/user/:a', 'admin', function($a) use ($app){
 	
 	/* Construction */
 	if($user = $app->sql->get('user')->where('id', '=', $a)->god()->one()){
-		
 		return $app->build->page('views/user/_user.html', [
 			'host' => $user,
 		]);
-		
 	}else{
-		$app->flash('error', 'User id '.$a.' not found');
-		$app->redirect($app->root.'/user/1');
+		$user = [
+			'id' => 'Guest'
+		];
+		return $app->build->page('views/user/_user.html', [
+			'host' => $user,
+		]);
 	}
 }); 
