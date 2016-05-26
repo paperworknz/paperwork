@@ -6,7 +6,7 @@ $app->get('/user', 'admin', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$app->redirect($app->root.'/user/1');
+	$app->redirect($app->root.'/user/guest');
 });
 
 $app->get('/user/:a', 'admin', function($a) use ($app){
