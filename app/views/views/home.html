@@ -75,12 +75,14 @@
 									</span>
 								</feature>
 								<feature>
-									<div class="video_overlay" style="padding-top:127px;">
-										<div>&#9658;</div>
+									<div class="video_overlay">
+										<div class="video_tint">
+											<div class="play"></div>
+										</div>
+										<video name="new-invoice" width="100%" loop>
+											<source src="css/app/media/new-invoice.webm" type="video/webm">
+										</video>
 									</div>
-									<video class="spotlight" width="100%" loop>
-										<source src="css/app/media/new-invoice.webm" type="video/webm">
-									</video>
 								</feature>
 							</div>
 						</section>
@@ -109,12 +111,14 @@
 									</span>
 								</feature>
 								<feature>
-									<div class="video_overlay" style="padding-top:199px;">
-										<div>&#9658;</div>
+									<div class="video_overlay">
+										<div class="video_tint">
+											<div class="play"></div>
+										</div>
+										<video name="inventory" width="100%" loop>
+											<source src="css/app/media/inventory.webm" type="video/webm">
+										</video>
 									</div>
-									<video class="spotlight" width="100%" loop>
-										<source src="css/app/media/inventory.webm" type="video/webm">
-									</video>
 								</feature>
 							</div>
 						</section>
@@ -129,12 +133,14 @@
 									</span>
 								</feature>
 								<feature>
-									<div class="video_overlay" style="padding-top:231px;">
-										<div>&#9658;</div>
+									<div class="video_overlay">
+										<div class="video_tint">
+											<div class="play"></div>
+										</div>
+										<video name="margin" width="100%" loop>
+											<source src="css/app/media/margin.webm" type="video/webm">
+										</video>
 									</div>
-									<video class="spotlight" width="100%" loop>
-										<source src="css/app/media/margin.webm" type="video/webm">
-									</video>
 								</feature>
 							</div>
 						</section>
@@ -200,12 +206,17 @@
 				// Interaction
 				$('video').on('click', function(){
 					if(this.paused){
-						$(this).removeClass('spotlight');
-						$(this).prev().css('display', 'none');
+						$(this).prev().css('opacity', 0.1);
+						$(this).prev().children().removeClass('play');
+						$(this).prev().children().addClass('pause');
 						this.play();
+						$.post('{{path.root}}/post/play-video', {
+							video: $(this).attr('name')
+						});
 					}else{
-						$(this).addClass('spotlight');
-						$(this).prev().css('display', 'block');
+						$(this).prev().css('opacity', 0.2);
+						$(this).prev().children().removeClass('pause');
+						$(this).prev().children().addClass('play');
 						this.pause();
 					}
 				});

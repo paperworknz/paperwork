@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/get/template', function() use ($app){
+$app->get('/get/template', 'uac', function() use ($app){
 	/* Methods */
 	$id = isset($_POST['template_id']) ? $_POST['template_id'] : false;
 	

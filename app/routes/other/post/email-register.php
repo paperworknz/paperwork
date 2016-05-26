@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/post/email-register', function() use ($app){
+$app->post('/post/email-register', 'app', function() use ($app){
 	/* Methods */
 	
 	/* Construction */

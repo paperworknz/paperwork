@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/post/login', function() use ($app){
+$app->post('/post/login', 'app', function() use ($app){
 	/* Methods */
 	
 	/* Construction */

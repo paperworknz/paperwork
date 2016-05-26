@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/post/register', function() use ($app){
+$app->post('/post/register', 'app', function() use ($app){
 	/* Methods */
 	$app->event->log('started a new registration');
 	
