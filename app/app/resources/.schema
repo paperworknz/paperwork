@@ -28,6 +28,7 @@ return [
 '/post/job' => '../app/routes/other/post/job.php',
 '/post/login' => '../app/routes/other/post/login.php',
 '/post/pdf' => '../app/routes/other/post/pdf.php',
+'/post/play-video' => '../app/routes/other/post/play-video.php',
 '/post/register' => '../app/routes/other/post/register.php',
 '/post/status' => '../app/routes/other/post/status.php',
 '/post/template-name' => '../app/routes/other/post/template-name.php',
