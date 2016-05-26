@@ -23,6 +23,7 @@
 						</div>
 						<a event style="cursor:pointer">Events</a>
 						<a clear-event style="cursor:pointer;float:right">Clear events</a>
+						<div insights style="padding-top:10px;"></div>
 						<div console style="padding-top:10px"></div>
 					</div>
 				</div>
@@ -74,10 +75,25 @@
 					}
 				});
 				
+				var landing = 0;
+				var regist = 0;
+				var login = 0;
+				var newuser = 0;
+				
 				function dump(obj) {
 					var out = '';
 					for (var i in obj) {
 						out += i + ": " + obj[i] + "\n";
+					}
+					
+					if(out.indexOf('landing page') !== -1){
+						landing++;
+					}else if(out.indexOf('registration page') !== -1){
+						regist++;
+					}else if(out.indexOf('login page') !== -1){
+						login++;
+					}else if(out.indexOf('registered with username') !== -1){
+						newuser++;
 					}
 
 					$('[console]').append(
@@ -85,12 +101,20 @@
 							out+
 						'</pre>'
 					);
+					
+					$('[insights]').html(
+						'Landing Page: '+landing+
+						'<br>Login Page: '+regist+
+						'<br>Registration Page: '+regist+
+						'<br>New Users: '+newuser+'<hr>'
+					);
 				}
 				
 				$('[event]').on('click', function(){
 					var q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
 					
 					$('[console]').html('');
+					landing = regist = login = newuser = 0;
 					
 					$.post('{{path.root}}/admin/post/query', {
 						'query': q
