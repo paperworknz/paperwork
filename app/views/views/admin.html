@@ -77,7 +77,6 @@
 				
 				var landing = 0;
 				var regist = 0;
-				var login = 0;
 				var newuser = 0;
 				
 				function dump(obj) {
@@ -90,8 +89,6 @@
 						landing++;
 					}else if(out.indexOf('registration page') !== -1){
 						regist++;
-					}else if(out.indexOf('login page') !== -1){
-						login++;
 					}else if(out.indexOf('registered with username') !== -1){
 						newuser++;
 					}
@@ -104,7 +101,6 @@
 					
 					$('[insights]').html(
 						'Landing Page: '+landing+
-						'<br>Login Page: '+regist+
 						'<br>Registration Page: '+regist+
 						'<br>New Users: '+newuser+'<hr>'
 					);
@@ -114,7 +110,7 @@
 					var q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
 					
 					$('[console]').html('');
-					landing = regist = login = newuser = 0;
+					landing = regist = newuser = 0;
 					
 					$.post('{{path.root}}/admin/post/query', {
 						'query': q
