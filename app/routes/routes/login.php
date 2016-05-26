@@ -12,7 +12,7 @@ $app->get('/login', 'app', function() use ($app){
 		$IP = $_SERVER['REMOTE_ADDR'];
 	}
 	
-	if($IP != '::1' && $IP != '127.0.0.1' && $IP != '222.152.212.0') $app->event->log('browsed the landing page with IP: '.$IP);
+	if($IP != '::1' && $IP != '127.0.0.1' && $IP != '222.152.212.0') $app->event->log('browsed the login page with IP: '.$IP);
 	
 	$app->build->page('views/login.html');
 });
