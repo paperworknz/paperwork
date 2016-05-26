@@ -18,7 +18,7 @@ class Authentication {
 		if(!isset($_SESSION['user'])){ // Touch user if session has expired
 			$app->sql->touch('user')->where('id', '=', $user['id'])->god()->run();
 			$app->event->log([
-				'text' => ' resumed their session',
+				'text' => 'resumed their session',
 				'user_id' => $user['id']
 			]);
 		}
@@ -86,12 +86,12 @@ class Authentication {
 					if($admin){
 						$app->event->log([
 							'user_id' => $user['id'],
-							'text' => ' logged in via admin',
+							'text' => 'logged in via admin',
 						]);
 					}else{
 						$app->event->log([
 							'user_id' => $user['id'],
-							'text' => ' logged in',
+							'text' => 'logged in',
 						]);
 					}
 					
