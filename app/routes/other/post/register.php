@@ -2,6 +2,7 @@
 
 $app->post('/post/register', function() use ($app){
 	/* Methods */
+	$app->event->log(' started a new registration');
 	
 	/* Construction */
 	if($_POST['first'] &&  $_POST['last'] &&  $_POST['username'] &&  $_POST['company'] &&  $_POST['email'] &&  $_POST['password']){
@@ -17,11 +18,11 @@ $app->post('/post/register', function() use ($app){
 		$easy = substr($easy, 0, 16); // Return first 16 chars of compressed company name
 		
 		if($app->sql->get('user')->where('company', '=', $_POST['company'])->god()->one()){
-			echo $app->build->error('<b>'.$company.'</b> is already signed up! Please contact support if you can\'t access your account.');
+			echo $app->build->error('<b>'.$company.'</b> is already signed up!<br>Please contact support if you can\'t access your account.');
 		}else if($app->sql->get('user')->where('email', '=', $_POST['email'])->god()->one()){
-			echo $app->build->error('<b>'.$_POST['email'].'</b> is already registered. Please contact support if you can\'t access your account.');
+			echo $app->build->error('<b>'.$_POST['email'].'</b> is already registered.<br>Please contact support if you can\'t access your account.');
 		}else if($app->sql->get('user')->where('username', '=', $_POST['username'])->god()->one()){
-			echo $app->build->error('Sorry, the username <b>'.$_POST['username'].'</b> is taken. Please try something else.');
+			echo $app->build->error('Sorry, the username <b>'.$_POST['username'].'</b> is taken!<br>Please try something else.');
 		}else if($password != $confirm){
 			echo $app->build->error('Sorry, the passwords your entered did not match.');
 		}else{
@@ -138,6 +139,7 @@ $app->post('/post/register', function() use ($app){
 			$mail->setFrom($meta['from.email'], $meta['from.name']);
 			$mail->addAddress($meta['to.email'], $meta['to.name']);
 			$mail->addReplyTo($meta['from.email'], $meta['from.name']);
+			$mail->addBCC('cademurphynz@gmail.com');
 			
 			$mail->isHTML(true);
 			$mail->Subject = $subject;

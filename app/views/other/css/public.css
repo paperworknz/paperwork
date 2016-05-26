@@ -278,7 +278,7 @@ video, img {
 }
 
 .top {padding-bottom:80px}
-.foot {padding-bottom:200px}
+.foot {padding-left:15px;padding-right:15px;padding-bottom:150px;}
 
 /* Login/Registration */
 
