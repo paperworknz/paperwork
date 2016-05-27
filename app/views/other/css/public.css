@@ -328,6 +328,7 @@ video, img, .video_tint {
 	position:relative;
 	height:100%;
 	width:100%;
+	cursor: pointer;
 }
 
 .video_tint {
@@ -339,7 +340,6 @@ video, img, .video_tint {
 	bottom: 5px;
 	top: 0;
 	height: 72px;
-	cursor: pointer;
 }
 
 .video_padding {

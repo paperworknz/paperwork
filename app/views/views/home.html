@@ -219,22 +219,19 @@
 					var video = $(this).find('video'),
 						tint = $(this).find('.video_tint'),
 						box = $(this).find('.video_padding'),
-						icon = $(this).find('.video_padding div');
+						icon = $(this).find('.video_padding div'),
+						gg;
 					
 					if(video.get(0).paused){
-						tint.css('display', 'block');
-						box.css('opacity', 0.10);
+						box.fadeOut();
 						icon.removeClass('play');
 						icon.addClass('pause');
 						video.get(0).play();
 						$.post('{{path.root}}/post/play-video', {
 							video: video.attr('name')
 						});
-						setTimeout(function(){
-							tint.fadeOut('fast');
-						}, 1000);
 					}else{
-						tint.css('display', 'block');
+						box.css('display', 'inline-block');
 						box.css('opacity', 0.25);
 						icon.removeClass('pause');
 						icon.addClass('play');
