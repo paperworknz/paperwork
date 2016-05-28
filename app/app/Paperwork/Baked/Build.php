@@ -29,6 +29,7 @@ class Build {
 			'env'	=> $app->env,
 			'user'	=> $app->user,
 			'date'	=> date('d/m/Y'),
+			'state'	=> $_ENV['MODE'],
 		];
 		
 		$result['path'] = array_merge($result['path'], $app->schema['patharray']);	// Merge this path with $app's path

@@ -62,6 +62,7 @@ return [
 'head' => '/other/html/head.html',
 'head_public' => '/other/html/head_public.html',
 'js' => '/other/html/js.html',
+'pixel' => '/other/html/pixel.html',
 'scaffolding' => '/other/html/scaffolding.html',
 'table' => '/other/html/table.html',
 ],
