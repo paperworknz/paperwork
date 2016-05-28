@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		{% include path.head_public %}
+		{% include path.pixel %}
 	</head>
 	<body>
 		<header>
@@ -68,24 +69,12 @@
 								<feature>
 									<span class="minor_title">Quotes and Invoices</span>
 									<span>
-										New Quotes and Invoices are made from your templates.<br>
 										Paperwork provides a natural work flow, which means client details and job numbers are loaded automatically. 
 										Quotes are made inside Paperwork and can be converted to a PDF with the click of a button.
 									</span>
 								</feature>
 								<feature>
-									<div class="video_overlay">
-										<div class="video_tint">
-											<div class="video_padding">
-												<div class="play"></div>
-											</div>
-										</div>
-										<video name="new-invoice" width="100%" loop>
-											<source src="css/app/media/new-invoice.webm" type="video/webm">
-											<source src="css/app/media/new-invoice.mp4" type="video/mp4">
-											<img src="{{path.root}}/css/app/media/new-invoice.png" />
-										</video>
-									</div>
+									<img src="{{path.root}}/css/app/media/new-invoice.png" width="100%" />
 								</feature>
 							</div>
 						</section>
@@ -96,7 +85,7 @@
 									<span>
 										Quotes and Invoices are powered by <b>Inventory</b>.<br>
 										Your inventory is a simple list of names and prices. There are many ways you can add to this list, 
-										including <b>bulk upload</b> from supported suppliers. (image)
+										including <b>bulk upload</b> from supported suppliers.
 									</span>
 								</feature>
 								<feature>
@@ -109,8 +98,9 @@
 								<feature>
 									<span class="minor_title">Inventory in Action</span>
 									<span>
-										Just start typing an item name into a Quote and Paperwork will suggest items from your inventory. 
+										Just start typing an item name into a Quote, and Paperwork will suggest items from your inventory. 
 										If you use a new material, and you'd like to use it again, you can add it to your inventory with a single tap. 
+										Watch this video to see a quick demonstration. 
 									</span>
 								</feature>
 								<feature>
@@ -172,12 +162,11 @@
 									<!--$49<span style="font-size:14px">/MO</span>-->
 								</div>
 							</price>
-							
 						</div>
-						<div style="height:60px;"><button register class="facade wolfe-btn large" style="margin:auto;">SIGN UP</button></div>
+						<div style="height:60px;"><button register-btn class="facade wolfe-btn large" style="margin:auto;">SIGN UP</button></div>
 						<div class="main">
 							<div>Paperwork is paid for on a monthly basis, </div>
-							<div>but you may <a href="{{path.root}}/register"><b>Sign Up</b></a> for free to see if it's right for your business. No credit card required.</div>
+							<div>but you may <a href="{{path.root}}/register?src=button"><b>Sign Up</b></a> for free to see if it's right for your business. No credit card required.</div>
 						</div>
 						{% else %}
 						<span class="main_title">We're Not Public Yet</span>
@@ -212,6 +201,9 @@
 				});
 				$('[register]').on('click', function(){
 					window.location = '{{path.root}}/register';
+				});
+				$('[register-btn]').on('click', function(){
+					window.location = '{{path.root}}/register?src=button';
 				});
 				
 				// Interaction

@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		{% include path.head_public %}
+		{% include path.pixel %}
 	</head>
 	<body>
 		<header>
@@ -93,7 +94,7 @@
 								<tr>
 									<td></td>
 									<td>
-										<button class="wolfe-btn next-step" style="float:left;outline:none">NEXT STEP</button>
+										<button class="wolfe-btn next-step" style="float:left;outline:none">LOG IN</button>
 									</td>
 								</tr>
 							</tbody>
@@ -112,6 +113,11 @@
 				});
 				$('[login]').on('click', function(){
 					window.location = '{{path.root}}/login';
+				});
+				
+				// Helpers
+				$('input[name="first"]').on('blur', function(){
+					$('input[name="username"]').val($(this).val().toLowerCase());
 				});
 				
 				var register = function(){
