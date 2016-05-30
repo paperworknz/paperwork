@@ -41,3 +41,27 @@ table td:nth-child(2n+1) {
 .email-signature {
 	width: 100%;
 }
+
+.status-handle {
+	display: inline-block;
+	letter-spacing: 3px;
+	cursor: move;
+	padding: 5px;
+	line-height: 20px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.status-hover {
+	background-color: #ccc;
+}
+
+.kappa li {
+	width: 180px;
+	margin-top:4px;
+}
