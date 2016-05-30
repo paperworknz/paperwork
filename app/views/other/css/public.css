@@ -32,7 +32,7 @@ li {list-style-type:none!important}
 
 @media screen and (max-width:700px){
 	.logo {float: none!important;text-align:center}
-	.nav_list {float: none!important;width:315px;margin: 0 auto!important;}
+	.nav_list {float: none!important;width:320px!important;margin: 0 auto!important;}
 	.nav_list_less {float: none!important;width:220px;margin: 0 auto!important;}
 	.feature {text-align:center}
 }
@@ -47,7 +47,8 @@ li {list-style-type:none!important}
 	.user-information td {padding: 5px!important;}
 	.user-information td:nth-child(odd) {font-size: 13px!important;}
 	.user-information input {font-size: 16px!important;}
-	
+	.nav_list {width:150px!important;}
+	.negligible {display:none!important;}
 }
 
 input[type=text], input[type=email], input[type=password] {
