@@ -12,7 +12,7 @@ li {list-style-type:none!important}
 	margin-left:auto;
 	margin-right:auto;
 	padding: 0px 60px;
-	min-width: 343px;
+	min-width: 300px;
 }
 
 .nav_list span, .nav_list_less span {
@@ -39,10 +39,10 @@ li {list-style-type:none!important}
 
 @media screen and (max-width:500px){
 	.width {padding: 0px!important;}
-	video, feature img, .video_tint {min-width: 330px!important}
+	video, feature img, .video_tint {min-width: 300px!important}
 	feature {padding-left: 5px!important;padding-right: 5px!important}
 	feature .minor_title {text-align:center}
-	.form {min-width:330px!important}
+	.form {min-width:300px!important}
 	.large {font-size:18px!important}
 	.user-information td {padding: 5px!important;}
 	.user-information td:nth-child(odd) {font-size: 13px!important;}
