@@ -9,7 +9,7 @@ $app->get('/settings', 'uac', function() use ($app){
 	/* Construction */
 	
 	// Status
-	$status	= $app->sql->get('job_status')->all();
+	$status	= $app->sql->get('job_status')->also('ORDER BY job_status_number')->all();
 	
 	// New job_number
 	$job_number	= $number->next('job');

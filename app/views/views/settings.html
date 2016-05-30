@@ -82,15 +82,15 @@
 				</div>
 				<div data-obj="1" class="box material im" style="padding:10px 30px 30px">
 					<div class="jobstatus">
-						<style scoped>
-							.kappa li {
-								margin-top:4px;
-							}
-						</style>
 						<div class="h4">Job Statuses</div>
-						<ul class="kappa">
+						<ul id="jobstatus" class="kappa">
 							{% for item in status %}
-							<li><input type="text" data-id="{{item.id}}" value="{{item.name}}"/></li>
+							<li>
+								<div style="position:relative;width:180px;">
+									<input type="text" data-id="{{item.id}}" value="{{item.name}}" style="padding-right:24px;width:100%" />
+									<div class="status-handle">::</div>
+								</div>
+							</li>
 							{% endfor %}
 						</ul>
 						<a style="cursor:pointer;" new-status>
@@ -210,7 +210,7 @@
 			</div>
 		</div>
 		{% include path.js with {
-			include: ['Tab', 'Validation']
+			include: ['Tab', 'Validation', 'sortable']
 		}%}
 		<script>
 			$(function(){
@@ -220,6 +220,13 @@
 						name: 'settings',
 						value: '{{user.first}}'
 					}
+				});
+				
+				// STATUS REARRANGE //
+				new Sortable(document.getElementById('jobstatus'), {
+					handle: '.status-handle',
+					animation: 150,
+					ghostClass: 'status-hover',
 				});
 				
 				// VALIDATION //

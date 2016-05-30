@@ -12,7 +12,8 @@ $app->post('/post/status', 'uac', function() use ($app){
 			if(isset($b['id'])){
 				if($b['name'] != ''){
 					$app->sql->put('job_status')->with([
-						'name' => $b['name']
+						'name' => $b['name'],
+						'job_status_number' => ($a + 1)
 					])->where('id', '=', $b['id'])->run();
 				}
 			}else if(isset($b['name'])){

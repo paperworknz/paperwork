@@ -16,7 +16,7 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			$app->sql->touch('job')->where('id', '=', $job['id'])->run();
 			
 			$client	= $job['client'];
-			$status	= $app->sql->get('job_status')->select(['name'])->all();
+			$status	= $app->sql->get('job_status')->select(['name'])->also('ORDER BY job_status_number')->all();
 			unset($job['client']);
 			
 			// TABS PART ONE //
