@@ -39,7 +39,7 @@ li {list-style-type:none!important}
 
 @media screen and (max-width:500px){
 	.width {padding: 0px!important;}
-	video, img, .video_tint {min-width: 330px!important}
+	video, feature img, .video_tint {min-width: 330px!important}
 	feature {padding-left: 5px!important;padding-right: 5px!important}
 	feature .minor_title {text-align:center}
 	.form {min-width:330px!important}
@@ -256,7 +256,7 @@ feature {
 	font-weight: 600;
 }
 
-video, img, .video_tint {
+video, feature img, .video_tint {
 	min-width: 400px;
 }
 
@@ -278,7 +278,9 @@ video, img, .video_tint {
 }
 
 .top {padding-bottom:80px}
-.foot {padding-left:15px;padding-right:15px;padding-bottom:150px;}
+footer {
+	padding:15px 0px 100px;
+}
 
 /* Login/Registration */
 
@@ -380,3 +382,17 @@ video::-webkit-media-controls {
 .tt-suggestion:hover{background-color:#eee}
 .twitter-typeahead {width:100%}
 .typeahead {width:100%;background-color:white}
+
+
+.fb {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	cursor: pointer;
+	width:29px;
+	height:29px
+}
+
+.fb:hover {
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);
+}
