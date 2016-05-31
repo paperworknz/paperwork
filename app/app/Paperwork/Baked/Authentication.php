@@ -70,7 +70,14 @@ class Authentication {
 			$admin = true;
 		}
 		
-		if($user = $app->sql->get('user')->where('username', '=', $username)->god()->one()){
+		// Get user by email or username
+		if(strpos($username, '@') !== false){
+			$user = $app->sql->get('user')->where('email', '=', $username)->god()->one();
+		}else{
+			$user = $app->sql->get('user')->where('username', '=', $username)->god()->one();
+		}
+		
+		if($user){
 			if(!$user['disabled']){
 				
 				// $admin if using admin override
