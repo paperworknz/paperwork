@@ -10,7 +10,6 @@ $app->get('/jobs', 'uac', function() use ($app){
 	foreach($status as $index => $item){
 		if($item['name'] == 'Completed'){
 			$completed = $item['id'];
-			unset($status[$index]);
 			break;
 		}
 	}
