@@ -87,7 +87,11 @@
 							{% for item in status %}
 							<li>
 								<div style="position:relative;width:180px;">
-									<input type="text" data-id="{{item.id}}" value="{{item.name}}" style="padding-right:24px;width:100%" />
+									<input type="text" data-id="{{item.id}}" value="{{item.name}}" style="padding-right:24px;width:100%" 
+									{% if item.name == 'Completed' %}
+									disabled title="This is currently a built-in status"
+									{% endif %}
+									/>
 									<div class="status-handle">::</div>
 								</div>
 							</li>
