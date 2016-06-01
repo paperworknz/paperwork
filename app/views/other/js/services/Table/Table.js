@@ -1,7 +1,7 @@
 var Table = function(a){
 	
 	this.map = {
-		filter: 'Hide Completed',
+		filter: 'All',
 		columns: {},
 	};
 	
@@ -220,18 +220,6 @@ Table.prototype.filter = function(val){
 		$('.wt-row').each(function(){
 			$(this).show();
 		})
-	}else if(val == 'Hide Completed'){
-		$('.wt-row').each(function(){
-			$(this).show();
-		});
-		$('[data-id="Status"] .wt-row').each(function(){
-			if($(this).text() == 'Completed'){
-				var row = $(this).attr('data-row');
-				$('.wt-row').each(function(){
-					if($(this).attr('data-row') == row) $(this).hide();
-				});
-			}
-		});
 	}else{
 		$('.wt-row').each(function(){
 			$(this).hide();
@@ -245,6 +233,24 @@ Table.prototype.filter = function(val){
 			}
 		});
 	}
+	
+	/*
+	// Deprecated 'Hide Completed' status filter
+	else if(val == 'Hide Completed'){
+		$('.wt-row').each(function(){
+			$(this).show();
+		});
+		$('[data-id="Status"] .wt-row').each(function(){
+			if($(this).text() == 'Completed'){
+				var row = $(this).attr('data-row');
+				$('.wt-row').each(function(){
+					if($(this).attr('data-row') == row) $(this).hide();
+				});
+			}
+		});
+	}
+	*/
+	
 	$('.wt-filter').val(val);
 	a.map.filter = val;
 	a.setCookie();
