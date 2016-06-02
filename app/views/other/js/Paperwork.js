@@ -89,9 +89,9 @@ $('#content').animate({
 // Scaffolding nav clicks
 $('#menu li').on('click', function(){
 	$('#content').animate({
-		marginTop: '15px',
+		marginTop: '30px',
 		opacity: 0,
-	}, 'slow');
+	}, 'medium');
 	window.location = $(this).attr('href');
 });
 
