@@ -199,8 +199,8 @@ input::-webkit-inner-spin-button {
 	color:white;
 	list-style:none;
 	z-index:2000;
+	line-height:40px;
 }
-#sidebar li {text-indent:20px;line-height:40px;}
 #sidebar li:hover{background-color:#666;cursor:pointer;}
 #sidebar a {color:white;}
 #sidebar a:hover{text-decoration:none;}
@@ -415,6 +415,7 @@ input::-webkit-inner-spin-button {
 	position:absolute;
 	bottom:5px;
 	left:0;
+	text-indent: 0;
 }
 .navbar-hide:hover { background-color:#555;cursor:pointer}
 

@@ -10,43 +10,64 @@ var Tab = function(data){
 	this.activeObj	= data.activeObj != undefined ? data.activeObj : 'tabopen';
 	this.tabParent	= data.tabParent != undefined ? data.tabParent : '.tabs';
 	this.objParent	= data.objParent != undefined ? data.objParent : '.obj';
-	this.cookie		= data.cookie != undefined ? data.cookie : false;
 	this.tab		= 'tab';
 	this.obj		= 'tabobj'
 	this.heir		= 'heir';
 	this.tabhook	= 'data-tab';
 	this.objhook	= 'data-obj';
 	this.h			= 'h';
+	this.current	= 0;
+	this.name;
+	this.method;
 	
-	if(this.cookie.value == undefined) this.cookie.value = '';
+	// Tab.js instance name, method of storage
+	if(data.name == undefined){
+		this.name = window.location.pathname.substr(1);
+		this.method = 'session';
+	}else{
+		this.name = data.name;
+		this.method = 'local';
+	}
 	
-	this.getCookie	= function(key){
-		var name = key + '=', ca = document.cookie.split(';');
-		for(var i = 0; i < ca.length; i++){
-			var c = ca[i];
-			while (c.charAt(0) == ' ') c = c.substring(1);
-			if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-		}
-		return '';
+	// Storage key name
+	this.key = 'tab_'+this.name;
+	
+	// Set last opened tab
+	this.setTab = function(){
+		this.method == 'session' ?
+			sessionStorage[this.key] = this.current :
+			localStorage[this.key] = this.current;
 	};
 	
-	this.current = this.cookie ? 
-		this.getCookie(this.cookie.name+'.'+this.cookie.value+'.tab') ? 
-			this.getCookie(this.cookie.name+'.'+this.cookie.value+'.tab') 
-			: 0 
-		: 0;
+	// Get last opened tab
+	this.getTab = function(){
+		
+		// Store in session if the tab instance doesn't have a name
+		// or persist in Local Storage if it does;
+		this.method == 'session' ?
+			this.current = sessionStorage[this.key] :
+			this.current = localStorage[this.key];
+		
+		if(this.current == undefined) this.current = 0;
+	};
 	
-	// Activate from cookie
+	// Set current to last opened tab
+	this.getTab();
+	
+	// Activate from storage
 	var first = $('['+this.tabhook+'="'+this.current+'"]')
 	first.hasClass(this.tab) ?
 		this.activate(first) :
 		this.activate($('['+this.tabhook+'="0"]'));
 	
-	// LISTEN
+	// LISSEN DOOD
 	var a = this;
 	$(this.tabParent).on('click', '['+this.tabhook+']', function(){
 		a.activate($(this));
 	});
+	
+	// Display content
+	$('#content').css('display', 'block');
 };
 
 Tab.prototype.activate = function(tab){
@@ -69,13 +90,15 @@ Tab.prototype.activate = function(tab){
 			}
 		});
 	}
-	$(obj).removeClass(a.h); // Display the obj
-	date.setFullYear(date.getFullYear() + 1);
-	c = a.cookie.name+'.' +a.cookie.value+ '.tab='+tabID+';expires='+date.toGMTString()+';';
-	document.cookie = c; // Post/put cookie
 	
-	// Display content
-	$('#content').css('display', 'block');
+	// Update current tab
+	a.current = tabID;
+	
+	// Display the obj
+	$(obj).removeClass(a.h);
+	
+	// Save
+	a.setTab();
 };
 
 Tab.prototype.append = function(templateName, call){
