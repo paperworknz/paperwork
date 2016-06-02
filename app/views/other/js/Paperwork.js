@@ -94,7 +94,7 @@ $('#menu li').on('click', function(){
 			opacity: 0,
 		}, 'fast');
 	}, 200);
-	//window.location = $(this).attr('href');
+	window.location = $(this).attr('href');
 });
 
 // Global click listener
