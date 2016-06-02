@@ -89,10 +89,12 @@ $('#content').animate({
 $('#menu li').on('click', function(){
 	$('#menu li').removeClass('nav_active');
 	$(this).addClass('nav_active');
-	$('#content').animate({
-		opacity: 0,
-	}, 'medium');
-	window.location = $(this).attr('href');
+	setTimeout(function(){
+		$('#content').animate({
+			opacity: 0,
+		}, 'fast');
+	}, 200);
+	//window.location = $(this).attr('href');
 });
 
 // Global click listener
