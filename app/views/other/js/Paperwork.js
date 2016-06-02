@@ -91,7 +91,7 @@ $('#menu li').on('click', function(){
 	$('#content').animate({
 		marginTop: '15px',
 		opacity: 0,
-	}, 'fast');
+	}, 'slow');
 	window.location = $(this).attr('href');
 });
 
