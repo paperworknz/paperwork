@@ -1,31 +1,21 @@
 var Table = function(a){
 	
+	this.setMap = function(){
+		localStorage.map = JSON.stringify(this.map);
+	};
+	
+	this.clearMap = function(){
+		delete localStorage.map;
+		location.reload();
+	};
+	
 	this.map = {
 		filter: 'All',
 		columns: {},
 	};
 	
-	this.getCookie	= function(key){
-		var name	= key + '=',
-			ca		= document.cookie.split(';');
-		for(var i=0; i<ca.length; i++){
-			var c = ca[i];
-			while (c.charAt(0) == ' ') c = c.substring(1);
-			if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-		}
-		return '';
-	};
+	if(localStorage.map) this.map = JSON.parse(localStorage.map);
 	
-	this.setCookie = function(){
-		var a = this,
-			date = new Date();
-		
-		date.setFullYear(date.getFullYear() + 1);
-		c = 'map='+JSON.stringify(a.map)+';expires='+date.toGMTString()+';';
-		document.cookie = c; // Post/put cookie
-	};
-	
-	if(this.getCookie('map') !== '') this.map = JSON.parse(this.getCookie('map'));
 	this.filter(this.map.filter);
 	this.hover();
 	this.init();
@@ -51,7 +41,7 @@ Table.prototype.init = function(){
 				state: $(this).find('.wt-head').attr('data-state'),
 				stateOrder: index,
 			};
-			a.setCookie();
+			a.setMap();
 		}
 	});
 	
@@ -106,7 +96,7 @@ Table.prototype.init = function(){
 		
 		target.style.width = width; // Update css width
 		a.map.columns[id].width = width; // Update a.map
-		a.setCookie();
+		a.setMap();
 		
 	}).allowFrom('.wt-head');
 	
@@ -118,7 +108,7 @@ Table.prototype.init = function(){
 		onEnd: function(event){
 			$.each($('.wt-column'), function(event){
 				a.map.columns[$(this).attr('data-id')].index = event;
-				a.setCookie();
+				a.setMap();
 			});
 		}
 	});
@@ -126,6 +116,11 @@ Table.prototype.init = function(){
 	// Linkable rows
 	$('.wt-row').click(function(){
 		if($(this).attr('href') != undefined) window.location = $(this).attr('href');
+	});
+	
+	// Clear table
+	$('.wt-reset').click(function(){
+		a.clearMap();
 	});
 	
 	// Display table
@@ -209,7 +204,7 @@ Table.prototype.state = function(obj){
 			break;
 	}
 	
-	a.setCookie();
+	a.setMap();
 };
 
 Table.prototype.filter = function(val){
@@ -253,7 +248,7 @@ Table.prototype.filter = function(val){
 	
 	$('.wt-filter').val(val);
 	a.map.filter = val;
-	a.setCookie();
+	a.setMap();
 };
 
 Table.prototype.sort = function(ul, state){

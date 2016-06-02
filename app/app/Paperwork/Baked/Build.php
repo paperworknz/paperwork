@@ -17,6 +17,17 @@ class Build {
 		$js = str_replace('.html', '', $html);
 		$js_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.js-cache'));
 		
+		// Cookies
+		if(isset($_COOKIE['sidebar'])){
+			if($_COOKIE['sidebar'] === 'big'){
+				$sidebar = 'big';
+			}elseif($_COOKIE['sidebar'] === 'small'){
+				$sidebar = 'small';
+			}
+		}else{
+			$sidebar = 'big';
+		}
+		
 		// Template array, all datasets contain these following values
 		$result = [
 			'path' => [
@@ -30,6 +41,7 @@ class Build {
 			'user'	=> $app->user,
 			'date'	=> date('d/m/Y'),
 			'state'	=> $_ENV['MODE'],
+			'sidebar' => $sidebar,
 		];
 		
 		$result['path'] = array_merge($result['path'], $app->schema['patharray']);	// Merge this path with $app's path

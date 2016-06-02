@@ -1,4 +1,10 @@
-<div id="sidebar">
+<div id="sidebar" 
+{% if sidebar == 'big' %}
+style="text-indent:20px;width:160px;"
+{% else %}
+style="width:25px;text-align:center;"
+{% endif %}
+>
     <div id="navbar">
         <div class="ac noselect thumb" style="line-height:40px">Menu</div>
         <ul id="menu" style="display:none">
@@ -13,15 +19,35 @@
 			{% set nav = nav|merge(['admin', 'user']) %}
 			{% endif %}
 			{% for item in nav %}
-			<a href="{{path.root}}/{{item}}">
-			<li>{% if item == "app" %}Home
-			{% elseif item =="settings" %}Settings
-			{% else %}{{item|capitalize}}
-			{% endif %}</li>
+			{% if item == 'app' %}
+				<a href="{{path.root}}/app">
+				{% set item = 'home' %}
+			{% else %}
+				<a href="{{path.root}}/{{item}}">
+			{% endif %}
+			{% if sidebar == 'big' %}
+				{% set item = item|capitalize %}
+				<li val="{{item}}">
+					{{item}}
+				</li>
+			{% else %}
+				<li val="{{item|capitalize}}">
+					{% set item = item|first|capitalize %}
+					{{item}}
+				</li>
+			{% endif %}
 			</a>
 			{% endfor %}
         </ul>
     </div>
-	<div class="navbar-hide"> < </div>
+	{% if sidebar == 'big' %}
+		<div class="navbar-hide">
+			<
+		</div>
+	{% else %}
+		<div class="navbar-hide small">
+			>
+		</div>
+	{% endif %}
 </div>
 <div class="pw-notification" style="opacity: 0"></div>
