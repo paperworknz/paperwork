@@ -76,7 +76,7 @@ if(localStorage.sidebar != undefined){
 		});
 	}
 }
-$('#content').fadeIn(75);
+$('#content').fadeIn('fast');
 
 // Global click listener
 thumb.click(function(){
