@@ -77,7 +77,7 @@ if(localStorage.sidebar != undefined){
 	}
 }
 $('#content').css({
-	marginTop: '-15px',
+	marginTop: '-5px',
 	opacity: 0,
 	display: 'block'
 });
@@ -89,7 +89,7 @@ $('#content').animate({
 // Scaffolding nav clicks
 $('#menu li').on('click', function(){
 	$('#content').animate({
-		marginTop: '15px',
+		marginTop: '5px',
 		opacity: 0,
 	}, 'fast');
 	window.location = $(this).attr('href');
