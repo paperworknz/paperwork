@@ -77,21 +77,19 @@ if(localStorage.sidebar != undefined){
 	}
 }
 $('#content').css({
-	marginTop: '-5px',
+	//marginTop: '-5px',
 	opacity: 0,
 	display: 'block'
 });
 $('#content').animate({
-	marginTop: 0,
 	opacity: 1,
 }, 'fast');
 
 // Scaffolding nav clicks
 $('#menu li').on('click', function(){
 	$('#content').animate({
-		marginTop: '5px',
 		opacity: 0,
-	}, 'fast');
+	}, 'medium');
 	window.location = $(this).attr('href');
 });
 
