@@ -16,27 +16,27 @@ style="width:25px;text-align:center;"
 				4: 'settings'
 			}%}
 			{% if user.admin %}
-			{% set nav = nav|merge(['admin', 'user']) %}
+				{% set nav = nav|merge(['admin', 'user']) %}
 			{% endif %}
+			
 			{% for item in nav %}
-			{% if item == 'app' %}
-				<a href="{{path.root}}/app">
-				{% set item = 'home' %}
-			{% else %}
-				<a href="{{path.root}}/{{item}}">
-			{% endif %}
-			{% if sidebar == 'big' %}
-				{% set item = item|capitalize %}
-				<li val="{{item}}">
-					{{item}}
-				</li>
-			{% else %}
-				<li val="{{item|capitalize}}">
-					{% set item = item|first|capitalize %}
-					{{item}}
-				</li>
-			{% endif %}
-			</a>
+				{% if item == 'app' %}
+					{% set location = 'app' %}
+					{% set item = 'home' %}
+				{% else %}
+					{% set location = item %}
+				{% endif %}
+				{% if sidebar == 'big' %}
+					{% set item = item|capitalize %}
+					<li val="{{item}}" href="{{path.root}}/{{location}}">
+						{{item}}
+					</li>
+				{% else %}
+					<li val="{{item|capitalize}}" href="{{path.root}}/{{location}}">
+						{% set item = item|first|capitalize %}
+						{{item}}
+					</li>
+				{% endif %}
 			{% endfor %}
         </ul>
     </div>

@@ -76,7 +76,24 @@ if(localStorage.sidebar != undefined){
 		});
 	}
 }
-$('#content').fadeIn('fast');
+$('#content').css({
+	marginTop: '-15px',
+	opacity: 0,
+	display: 'block'
+});
+$('#content').animate({
+	marginTop: 0,
+	opacity: 1,
+}, 'fast');
+
+// Scaffolding nav clicks
+$('#menu li').on('click', function(){
+	$('#content').animate({
+		marginTop: '15px',
+		opacity: 0,
+	}, 'fast');
+	window.location = $(this).attr('href');
+});
 
 // Global click listener
 thumb.click(function(){
