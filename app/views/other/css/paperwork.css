@@ -206,10 +206,16 @@ input::-webkit-inner-spin-button {
 #sidebar a:hover{text-decoration:none;}
 #tools {border-top: 1px solid white;padding:20px;color: #333;}
 #tools select {width:100%;margin-bottom:2px;}
-.active { background-color: #555}
 #menu {background-color:#333;}
 .thumb {height:40px; display:none}
 
+#menu li {
+	transition: background-color 0.25s ease;
+}
+
+.nav_active {
+	background-color:#666;
+}
 
 /********** new-object.html **********/
 #new-content td{padding:2px 5px;}

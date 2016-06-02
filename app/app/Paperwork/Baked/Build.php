@@ -36,6 +36,7 @@ class Build {
 				'public_css' => $css_cache['public'],
 				'css' => $css,
 				'js_cache' => $js_cache,
+				'page' => str_replace('/', '', $app->request->getResourceUri()),
 			],
 			'env'	=> $app->env,
 			'user'	=> $app->user,

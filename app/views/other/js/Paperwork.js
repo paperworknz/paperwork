@@ -87,6 +87,8 @@ $('#content').animate({
 
 // Scaffolding nav clicks
 $('#menu li').on('click', function(){
+	$('#menu li').removeClass('nav_active');
+	$(this).addClass('nav_active');
 	$('#content').animate({
 		opacity: 0,
 	}, 'medium');

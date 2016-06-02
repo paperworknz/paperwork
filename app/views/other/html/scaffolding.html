@@ -28,11 +28,17 @@ style="width:25px;text-align:center;"
 				{% endif %}
 				{% if sidebar == 'big' %}
 					{% set item = item|capitalize %}
-					<li val="{{item}}" href="{{path.root}}/{{location}}">
+					<li val="{{item}}" href="{{path.root}}/{{location}}" 
+					{% if path.page in location %}
+					class="nav_active"
+					{% endif %}>
 						{{item}}
 					</li>
 				{% else %}
-					<li val="{{item|capitalize}}" href="{{path.root}}/{{location}}">
+					<li val="{{item|capitalize}}" href="{{path.root}}/{{location}}" 
+					{% if path.page in location %}
+					class="nav_active"
+					{% endif %}>
 						{% set item = item|first|capitalize %}
 						{{item}}
 					</li>
