@@ -199,7 +199,7 @@ function goto(location) {
 		$('#content').animate({
 			opacity: 0,
 		}, 'fast');
-	}, 200);
+	}, 150);
 	
 	window.location = location;
 };
