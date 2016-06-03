@@ -158,6 +158,7 @@
 		<script>var form = new Form;</script>
 		<script>
 		$(function(){
+			
 			// AJAX CALL FOR PDFS
 			pw.wait($('.pdf-load'));
 			$.get('{{path.root}}/get/pdf-json/{{job.job_number}}')
@@ -411,7 +412,9 @@
 			// EMAIL
 			$(document).on('click', '[form-email-btn]', function(){
 				form.email($(form.s+' [form-blob]'));
-				v.input($('body .email-parent'), $('body [email-send]'), 'email'); // Validation for template-list input
+				v.input($('body .email-parent'), $('body [email-send]'), 'email', {
+					allowDuplicates: true
+				}); // Validation for template-list input
 			});
 			
 			// FORM PUT after 2 seconds after last keyup
