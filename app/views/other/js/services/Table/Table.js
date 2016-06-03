@@ -115,7 +115,7 @@ Table.prototype.init = function(){
 	
 	// Linkable rows
 	$('.wt-row').click(function(){
-		if($(this).attr('href') != undefined) window.location = $(this).attr('href');
+		if($(this).attr('href') != undefined) goto($(this).attr('href'));
 	});
 	
 	// Clear table

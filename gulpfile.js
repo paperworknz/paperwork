@@ -1,5 +1,6 @@
 // Dependencies
 var gulp	= require('gulp');
+var babel	= require('gulp-babel');
 var each	= require('gulp-foreach');
 var concat	= require('gulp-concat');
 var rename	= require('gulp-rename');
@@ -134,6 +135,7 @@ function paperworkJS(name, file, seed){
 			path.jquery,
 			file,
 		])
+		.pipe(babel())
 		.pipe(concat(name+'.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/js/app/'));
@@ -164,6 +166,7 @@ function servicesJS(file, seed){
 		.src([
 			file.path,
 		])
+		.pipe(babel())
 		.pipe(concat(file_name))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/js/app/services'));
@@ -187,6 +190,7 @@ function formJS(seed){
 			'app/views/other/js/services/Form/Form/Core/Core.js',
 			'app/views/other/js/services/Form/Form/**/*.js',
 		])
+		.pipe(babel())
 		.pipe(concat('Form.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/js/app/services'));

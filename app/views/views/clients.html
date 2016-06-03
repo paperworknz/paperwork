@@ -62,7 +62,7 @@
 				
 				var clientTypeahead = function(){
 					var go = function(){
-						window.location = "{{path.root}}/client/" + clients[$('.tt-input').val()];
+						goto("{{path.root}}/client/" + clients[$('.tt-input').val()]);
 					}
 					ta.run($('#content'));
 					// Enter key to select the first suggestion

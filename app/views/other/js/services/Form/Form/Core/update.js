@@ -49,4 +49,5 @@ Form.prototype.update = function(form){
 	
 	// Painter layer
 	if (a.p.update != undefined) a.p.update(form);
+	
 };

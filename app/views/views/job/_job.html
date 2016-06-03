@@ -414,6 +414,19 @@
 				v.input($('body .email-parent'), $('body [email-send]'), 'email'); // Validation for template-list input
 			});
 			
+			// FORM PUT after 2 seconds after last keyup
+			var timer;
+			
+			$(document).on('keyup', '[form-blob] [contenteditable]', function(){
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					form.put({
+						url: '{{path.root}}/put/form',
+						id: $(form.s).find('[form-blob]').attr('data-formid'),
+					});
+				}, 2000);
+			});
+			
 		});
 		</script>
 	</body>

@@ -89,12 +89,7 @@ $('#content').animate({
 $('#menu li').on('click', function(){
 	$('#menu li').removeClass('nav_active');
 	$(this).addClass('nav_active');
-	setTimeout(function(){
-		$('#content').animate({
-			opacity: 0,
-		}, 'fast');
-	}, 200);
-	window.location = $(this).attr('href');
+	goto($(this).attr('href'));
 });
 
 // Global click listener
@@ -196,4 +191,22 @@ function since(timeStamp) {
 		year = timeStamp.getFullYear() == now.getFullYear() ? "" :  " "+timeStamp.getFullYear();
 		return day + " " + month + year;
 	}
-}
+};
+
+function goto(location) {
+	
+	setTimeout(function(){
+		$('#content').animate({
+			opacity: 0,
+		}, 'fast');
+	}, 200);
+	
+	window.location = location;
+};
+
+$('a').on('click', function(e){
+	if($(this).attr('href')){
+		e.preventDefault();
+		goto($(this).attr('href'));
+	}
+});
