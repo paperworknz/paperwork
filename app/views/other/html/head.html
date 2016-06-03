@@ -7,3 +7,8 @@
 <!-- Page stylesheets -->
 <link rel="stylesheet" type="text/css" href="{{path.root}}/css/app/{{path.paperwork_css}}" />
 <link rel="stylesheet" type="text/css" href="{{path.root}}/css/app/{{path.css}}" />
+{% if state == 'dev' %}
+<style>
+	#sidebar {color:pink}
+</style>
+{% endif %}
