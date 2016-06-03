@@ -71,19 +71,11 @@ $(window).resize(width); // On resize, run width();
 if(localStorage.sidebar != undefined){
 	if(localStorage.sidebar == 'small'){
 		$('#content').css({
-			'margin-left': '25px',
-			'padding':'15px 0px 0px 15px',
+			marginLeft: '25px',
+			padding: '15px 0px 0px 15px',
 		});
 	}
 }
-$('#content').css({
-	//marginTop: '-5px',
-	opacity: 0,
-	display: 'block'
-});
-$('#content').animate({
-	opacity: 1,
-}, 'fast');
 
 // Scaffolding nav clicks
 $('#menu li').on('click', function(){
@@ -121,13 +113,13 @@ $('.navbar-hide').on('click', function(){
 			width: '160px'
 		}, 100, function(){
 			$('#content').animate({
-				'margin-left': '160px',
-				'padding':'15px 0px 15px 15px'
+				marginLeft: '160px',
+				padding: '15px 0px 15px 15px'
 			}, 100);
 			$('#sidebar li').each(function(){
 				$(this).css({
-					'text-indent':'20px',
-					'text-align':'left'
+					textIndent: '20px',
+					textAlign: 'left'
 				});
 				$(this).html($(this).attr('val'));
 			});
@@ -155,8 +147,8 @@ $('.navbar-hide').on('click', function(){
 			width: '25px'
 		}, 100, function(){
 			$('#content').animate({
-				'margin-left': '25px',
-				'padding':'15px 0px 0px 15px',
+				marginleft: '25px',
+				padding: '15px 0px 0px 15px',
 			}, 100);
 			$('.navbar-hide').html(' > ');
 			$('.navbar-hide').addClass('small');
@@ -187,19 +179,17 @@ function since(timeStamp) {
 	}
 	if(secondsPast > 86400){
 		day = timeStamp.getDate();
-		month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ","");
-		year = timeStamp.getFullYear() == now.getFullYear() ? "" :  " "+timeStamp.getFullYear();
-		return day + " " + month + year;
+		month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(' ','');
+		year = timeStamp.getFullYear() == now.getFullYear() ? '' :  ' '+timeStamp.getFullYear();
+		return day+' '+month+year;
 	}
 };
 
 function goto(location) {
 	
-	setTimeout(function(){
-		$('#content').animate({
-			opacity: 0,
-		}, 'fast');
-	}, 100);
+	$('#content').animate({
+		opacity: 0,
+	}, 'fast');
 	
 	window.location = location;
 };

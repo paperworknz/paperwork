@@ -78,7 +78,10 @@ input::-webkit-inner-spin-button {
 
 /********** Containers **********/
 /* Content */
-#content {padding:15px 0px 15px 15px;}
+#content {
+	padding:15px 0px 15px 15px;
+	opacity: 0;
+}
 
 /* Wrapper, used across multiple pages */
 .wrapper:before{
