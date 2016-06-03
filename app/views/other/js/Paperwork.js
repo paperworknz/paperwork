@@ -165,7 +165,7 @@ $('.navbar-hide').on('click', function(){
 function since(timeStamp) {
 	var now = new Date(),
 		stamp = timeStamp.split(/[- :]/),
-		timeStamp = new Date(stamp[0], stamp[1]-1, stamp[2], stamp[3], stamp[4], stamp[5]);
+		timeStamp = new Date(stamp[0], stamp[1]-1, stamp[2], stamp[3], stamp[4], stamp[5]),
 		secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
 	
 	if(secondsPast < 60){
@@ -181,7 +181,7 @@ function since(timeStamp) {
 		day = timeStamp.getDate();
 		month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(' ','');
 		year = timeStamp.getFullYear() == now.getFullYear() ? '' :  ' '+timeStamp.getFullYear();
-		return day+' '+month+year;
+		return day + ' ' + month + year;
 	}
 };
 
