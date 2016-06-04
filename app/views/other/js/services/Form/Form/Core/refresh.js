@@ -33,8 +33,4 @@ Form.prototype.refresh = function(form){
 		}
 	});
 	
-	// Update form-pdf-name
-	var tabID = $('.'+a.tab.activeTab).attr(a.tab.tabhook),
-		tname = $('.'+a.tab.activeTab).html();
-	form.closest('.'+a.tab.obj).find('[form-pdf-name]').val(tabID+'-'+tname.toLowerCase());
 };

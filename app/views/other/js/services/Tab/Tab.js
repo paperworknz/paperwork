@@ -55,14 +55,14 @@ var Tab = function(data){
 	this.getTab();
 	
 	// Activate from storage
-	var first = $('['+this.tabhook+'="'+this.current+'"]')
+	var first = $(`[${this.tabhook}="${this.current}"]`)
 	first.hasClass(this.tab) ?
 		this.activate(first) :
-		this.activate($('['+this.tabhook+'="0"]'));
+		this.activate($(`[${this.tabhook}="0"]`));
 	
 	// LISSEN DOOD
 	var a = this;
-	$(this.tabParent).on('click', '['+this.tabhook+']', function(){
+	$(this.tabParent).on('click', `[${this.tabhook}]`, function(){
 		a.activate($(this));
 	});
 	
@@ -73,20 +73,20 @@ var Tab = function(data){
 Tab.prototype.activate = function(tab){
 	var a		= this,
 		tabID	= tab.data('tab'),
-		obj		= $('['+a.objhook+'="'+tabID+'"]'),
+		obj		= $(`[${a.objhook}="${tabID}"]`),
 		date	= new Date(),
-		c		= '';
+		c;
 	
 	if(!tab.hasClass(a.activeTab)){	// Clicking an inactive tab
 		tab.addClass(a.activeTab);	// Make tab active
 		$(obj).addClass(a.activeObj);	// Make corresponding object open
-		$('['+a.tabhook+']').each(function(){ // Close all tabs and objs and open the current tab
+		$(`[${a.tabhook}]`).each(function(){ // Close all tabs and objs and open the current tab
 			if($(this).data('tab') != tabID){
 				$(this).removeClass(a.activeTab);
-				if(!$(this).is('['+a.heir+']')){
-					$('['+a.objhook+'="'+$(this).data('tab')+'"]').addClass(a.h);
+				if(!$(this).is(`[${a.heir}]`)){
+					$(`[${a.objhook}="${$(this).data('tab')}"]`).addClass(a.h);
 				}
-				$('['+a.objhook+'="'+$(this).data('tab')+'"]').removeClass(a.activeObj);
+				$(`[${a.objhook}="${$(this).data('tab')}"]`).removeClass(a.activeObj);
 			}
 		});
 	}
@@ -104,16 +104,26 @@ Tab.prototype.activate = function(tab){
 Tab.prototype.append = function(templateName, call){
 	var a		= this,
 		tab		= a.tabParent,
-		tabID	= Number($(tab).find('['+a.heir+']').data('tab'));
+		tabID	= Number($(tab).find(`[${a.heir}]`).data('tab'));
 	
 	// Create new tab
-	$(tab).find('['+a.heir+']').before('<li data-tab="'+tabID+'" class="tab noselect" style="display:none">'+templateName+'</div>');
-	$(tab).find('['+a.heir+']').replaceWith('<li data-tab="'+(tabID + 1)+'" '+a.heir+' hidden></li>');
+	$(tab).find(`[${a.heir}]`).before(`
+		<li data-tab="${tabID}" class="tab noselect" style="display:none">
+			${templateName}
+		</div>
+	`);
+	
+	$(tab).find(`[${a.heir}]`).replaceWith(`
+		<li data-tab="${(tabID + 1)}" ${a.heir} hidden>
+		</li>
+	`);
 	
 	// Animate tab
-	$('['+a.tabhook+'="'+tabID+'"]').animate({width: 'toggle'}, 80, function(){
+	$(`[${a.tabhook}="${tabID}"]`).animate({
+		width: 'toggle'
+	}, 80, function(){
 		// Make tab active
-		a.activate($('['+a.tabhook+'="'+tabID+'"]'));
+		a.activate($(`[${a.tabhook}="${tabID}"]`));
 		if(call != undefined) call(tabID);
 	});
 };

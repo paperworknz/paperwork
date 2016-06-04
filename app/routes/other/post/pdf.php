@@ -9,9 +9,9 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$job_number	= $_POST['job_number'];
-	$name	= $_POST['file_name'];
-	$html	= $_POST['html'];
+	$job_number = $_POST['job_number'];
+	$name = $_POST['name'];
+	$html = $_POST['html'];
 	
 	// Directory and file
 	$easy = $app->user['easy'];
@@ -21,8 +21,11 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	}else{
 		$dir = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$job_number}";
 	}
+	
 	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for job_number if it doesn't exist
-	$file = $job_number.'_'.$name.'.pdf'; // 1000_ . $_POST['file_name'] . .pdf=> "1000_1-quote.pdf"
+	
+	// File name
+	$file = "{$name}.pdf";
 	
 	// Create PDF
 	phptopdf([
