@@ -13,12 +13,12 @@ Form.prototype.margin = function(form){
 	
 	// List of current prices on form, and the original price via math (from a.map)
 	$.each(a.map[formID].items, function(a,b){
-		var itemID = a,
-			margin = b.margin;
+		var itemID = a;
 		
-		pricemap[itemID] = { 
+		pricemap[itemID] = {
+			margin: b.margin,
 			current: b.price,
-			original: Number(b.price.replace('$', '').replace(',', '')) / margin,
+			original: Number(b.price.replace('$', '').replace(',', '')) / b.margin,
 		};
 	});
 	
@@ -50,15 +50,15 @@ Form.prototype.margin = function(form){
 		</div>
 	`);
 	$('[margin-content]').css({
-		position:'absolute',
-		zIndex:999,
-		top:formcontent.offset().top - 51,
-		left:formcontent.offset().left - 30,
-		width:'710px',
-		backgroundColor:'white',
-		border:'none',
-		minHeight:'50px',
-		opacity: '0.00'
+		position: 'absolute',
+		zIndex: 999,
+		top: formcontent.offset().top - 51,
+		left: formcontent.offset().left - 30,
+		width: '710px',
+		backgroundColor: 'white',
+		border: 'none',
+		minHeight: '50px',
+		opacity: 0,
 	});
 	$('[margin-content]').html(`
 		<div margin-parent>
@@ -67,8 +67,8 @@ Form.prototype.margin = function(form){
 	
 	// Margin parent
 	$('[margin-parent]').css({
-		margin:'10px',
-		border: '1px solid black'
+		margin: '10px',
+		border: '1px solid black',
 	});
 	
 	// Append items 
@@ -79,6 +79,8 @@ Form.prototype.margin = function(form){
 		}else{
 			var percent = '';
 		}
+		
+		let original = comma(std(pricemap[a].original));
 		
 		$('[margin-parent]').append(`
 			<div class="margin-item wrapper lowlight" item-id="${a}">
@@ -146,17 +148,23 @@ Form.prototype.margin = function(form){
 		
 		// Update price and pricemap in real time 
 		$('[margin] [item-id]').each(function(){
+			
 			var itemID = $(this).attr('item-id');
+			
 			if($(this).find('input[type=checkbox]')[0].checked){
-				var price = pricemap[itemID].original,
-					qty = $(this).find('[margin-qty]').html().replace('$', '').replace(',', '');
 				
-				$(this).find('[margin-price]').html(`$${comma(std(price * cent))}`);
+				var price = pricemap[itemID].original,
+					qty = $(this).find('[margin-qty]').html().replace('$', '').replace(',', ''),
+					current = comma(std(price * cent));
+				
+				$(this).find('[margin-price]').html(`$${current}`);
 				$(this).find('[margin-percent]').html(` (+${Number(((cent*100)-100)).toFixed(1)}%)`);
 				$(this).find('[margin-total]').html(`$${comma(std((price * cent) * qty))}`);
 				
-				// Update a.map margin property 
-				a.map[formID].items[itemID].margin = cent;
+				// Update pricemap
+				pricemap[itemID].current = current;
+				pricemap[itemID].margin = cent;
+				
 			}
 			
 			if($(this).find('[margin-percent]').html().indexOf('(+0.0%)') !== -1){
@@ -196,14 +204,17 @@ Form.prototype.margin = function(form){
 	
 	// Listen to convert
 	$('[margin] [margin-apply]').on('click', function(){
+		
 		// Update a.map with new values then update();
 		form.find(priceDOM).each(function(){
 			var itemID = a.p.get('this-item-id', $(this));
-			$(this).html($('[margin] [item-id="'+itemID+'"] span').html());
+			
+			$(this).html(pricemap[itemID].current); // Update DOM price
+			a.map[formID].items[itemID].margin = pricemap[itemID].margin; // Update map margin
 		});
 		
 		a.refresh(form);
-		a.update(form);
+		a.update(form); // Updates a.map fully from the new DOM
 		
 		a.put({
 			url: environment.root+'/put/form',

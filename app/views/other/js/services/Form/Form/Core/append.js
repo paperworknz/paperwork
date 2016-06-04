@@ -28,7 +28,7 @@ Form.prototype.append = function(form, item, quantity, price){
 	if(flag === false && item != undefined){
 		swal({
 			html: true,
-			title: 'Add '+item+' to your inventory?',
+			title: `Add ${item} to your inventory?`,
 			text: 'If you save this item you can use it again in future.',
 			showCancelButton: true,
 			closeOnConfirm: true,

@@ -386,13 +386,16 @@
 					url: '{{path.root}}/put/form',
 					id: $(form.s).find('[form-blob]').attr('data-formid'),
 				}, function(bool){
-					form.pdf($(form.s).find('[form-blob]'), function(data){
+					form.pdf($(form.s).find('[form-blob]'), function(name, data){
+						
+						$(form.s).find('[form-pdf-name]').val(name);
 						$(form.s).find('[form-pdf-html]').val(data);
-						$(form.s).find('[form-pdf-jobid]').val('{{job.job_number}}');
 						$(form.s).find('[form-pdf-form]').submit();
+						
 						window.onfocus = function(){
 							pw.ready(button, html);
 						};
+						
 					});
 				});
 			});
@@ -419,7 +422,6 @@
 			
 			// FORM PUT after 2 seconds after last keyup
 			var timer;
-			
 			$(document).on('keyup', '[form-blob] [contenteditable]', function(){
 				clearTimeout(timer);
 				timer = setTimeout(function(){

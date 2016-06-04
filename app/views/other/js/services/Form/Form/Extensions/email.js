@@ -24,7 +24,7 @@ Form.prototype.email = function(form){
 		</div>
 	`);
 	
-	// Margin content
+	// Email content
 	$('[fade]').after(`
 		<div email-content>
 		</div>
@@ -105,23 +105,20 @@ Form.prototype.email = function(form){
 			subject = $('.email-subject').val(),
 			body = $('.email-body').html(),
 			password = $('.email-password').val(),
-			pdf = '';
+			pdf_name,
+			pdf_html;
 		
 		// Get PDF HTML
-		a.pdf($(a.s).find('[form-blob]'), function(data){
-			pdf = data;
+		a.pdf($(a.s).find('[form-blob]'), function(name, data){
+			pdf_name = name;
+			pdf_html = data;
 		});
-		
-		// Make PDF name
-		var tabID = $('.'+a.tab.activeTab).attr(a.tab.tabhook),
-			tname = $('.'+a.tab.activeTab).html(),
-			pdf_name = tabID+'-'+tname.toLowerCase();
 		
 		// Post PDF and Email
 		$.post(environment.root+'/post/email', {
 			job_number: environment.job_number,
 			file_name: pdf_name,
-			html: pdf,
+			html: pdf_html,
 			client_name: environment.client_name,
 			address: address,
 			subject: subject,
@@ -131,13 +128,13 @@ Form.prototype.email = function(form){
 			if(response == 'OK'){
 				
 				$('[email] [email-parent]').css('opacity', '0');
-				$('[email] [email-content]').append(
-					'<div style="width:95px;position:absolute;left:0;right:0;top:165px;margin:auto;">'+
-						'<video autoplay>'+
-							'<source src="'+environment.root+'/css/app/media/success.webm" type="video/webm">'+
-						'</video>'+
-					'</div>'
-				);
+				$('[email] [email-content]').append(`
+					<div style="width:95px;position:absolute;left:0;right:0;top:165px;margin:auto;">
+						<video autoplay>
+							<source src="${environment.root}/css/app/media/success.webm" type="video/webm">
+						</video>
+					</div>
+				`);
 				
 				setTimeout(function(){
 					$('[email] [email-content]').fadeOut(100, function(){
@@ -174,21 +171,21 @@ Form.prototype.email = function(form){
 				wrong++;
 			}else{
 				$('[email] [email-parent]').css('opacity', '0');
-				$('[email] [email-content]').append(
-					'<div style="text-align:center;position:absolute;left:0;right:0;top:78px;margin:auto;">'+
-						'There was a problem sending this email.<br>'+
-						'Please make sure your email settings are correct, otherwise email hello@paperwork.nz for support.'+
-					'</div>'
-				);
+				$('[email] [email-content]').append(`
+					<div style="text-align:center;position:absolute;left:0;right:0;top:78px;margin:auto;">
+						There was a problem sending this email.<br>
+						Please make sure your email settings are correct, otherwise email hello@paperwork.nz for support.
+					</div>
+				`);
 			}
 		}).fail(function(){
 			$('[email] [email-parent]').css('opacity', '0');
-			$('[email] [email-content]').append(
-				'<div style="text-align:center;position:absolute;left:0;right:0;top:78px;margin:auto;">'+
-					'There was a problem sending this email.<br>'+
-					'Please make sure your email settings are correct, otherwise email hello@paperwork.nz for support.'+
-				'</div>'
-			);
+			$('[email] [email-content]').append(`
+				<div style="text-align:center;position:absolute;left:0;right:0;top:78px;margin:auto;">
+					There was a problem sending this email.<br>
+					Please make sure your email settings are correct, otherwise email hello@paperwork.nz for support.
+				</div>
+			`);
 		});
 		
 	});

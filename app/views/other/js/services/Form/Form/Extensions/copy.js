@@ -6,48 +6,67 @@ Form.prototype.copy = function(form, templates){
 	// Darken page, then show the concern
 	a.dark(form); // Turn off interaction 
 	
-	$('#content').after('<div copy></div>'); // Append copy container
-	$('[copy]').append('<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable></div>');
-	$('[fade]').after('<div copy-content></div>');
+	// Container
+	$('#content').after(`
+		<div copy>
+		</div>
+	`);
+	
+	// Fade
+	$('[copy]').append(`
+		<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable>
+		</div>
+	`);
+	
+	// Copy content
+	$('[fade]').after(`
+		<div copy-content>
+		</div>
+	`);
 	$('[copy-content]').css({
-		position:'absolute',
-		'z-index':999,
-		left:0,
-		right:0,
-		marginLeft:'auto',
-		marginRight:'auto',
-		width:'710px',
-		'background-color':'white',
-		border:'none',
-		'min-height':'50px',
-		opacity: '0.00'
+		position: 'absolute',
+		zIndex: 999,
+		left: 0,
+		right: 0,
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		width: '710px',
+		backgroundColor: 'white',
+		border: 'none',
+		minHeight: '50px',
+		opacity: '0.00',
 	});
-	$('[copy-content]').html(
-		'<div copy-parent class="wrapper">'+
-			'<div style="text-align:center;font-size:20px;line-height:20px;padding:15px 0px">Use template:</div>'+
-		'</div>'
-	);
+	
+	$('[copy-content]').html(`
+		<div copy-parent class="wrapper">
+			<div style="text-align:center;font-size:20px;line-height:20px;padding:15px 0px">
+				Use template:
+			</div>
+		</div>
+	`);
 	$('[copy-parent]').css({
-		margin:'10px'
+		margin: '10px',
 	});
 	
 	$.each(templates, function(a,b){
-		$('[copy-parent]').append(
-			'<div class="new-template" data-templateid="'+a+'">'+
-				b+
-			'</div>'
-		);
+		$('[copy-parent]').append(`
+			<div class="new-template" data-templateid="${a}">
+				${b}
+			</div>
+		`);
 	});
 	
 	$('[copy-parent]').append('<button copy-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>');
 	
 	$('[copy-content]').css({
-		top:(($(window).height() / 2)) - ($('[copy-content]').height() / 2),
+		top: (($(window).height() / 2)) - ($('[copy-content]').height() / 2),
 	});
 	
 	// Fade in 
 	$('[fade]').animate({'opacity':0.66}, 150, function(){
-		$('[copy] [copy-content]').animate({'opacity':1}, 100);
+		$('[copy] [copy-content]').animate({
+			opacity: 1,
+		}, 100);
 	});
 	
 	// ********* FORMDOM ********* //

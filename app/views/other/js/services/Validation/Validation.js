@@ -8,7 +8,7 @@ Validation.prototype.input = function(obj, button, name, flags){
 	var elements = 'input[type=text], input[type=email], input[type=password]';
 	
 	var pref = {
-		'allowDuplicates': false,
+		allowDuplicates: false,
 	};
 	
 	if(flags != undefined) pref = $.extend(pref, flags);
