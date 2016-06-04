@@ -83,12 +83,12 @@ Form.prototype.margin = function(form){
 		$('[margin-parent]').append(`
 			<div class="margin-item wrapper lowlight" item-id="${a}">
 				<input type="checkbox" style="float:left;margin-left:5px">
-				<div style="float:left;width:285px;overflow:hidden;white-space:nowrap;position:relative;margin-left:5px;margin-right:10px;height:24px;line-height:24px">${b.item}</div>
-				<div margin-qty style="float:left;width:50px;border-left:1px solid black;padding:0px 5px;text-align:center;height:24px;line-height:24px">${b.quantity}</div>
+				<div style="float:left;width:273px;overflow:hidden;white-space:nowrap;position:relative;margin-left:5px;margin-right:10px;height:24px;line-height:24px">${b.item}</div>
+				<div margin-qty style="float:left;width:58px;border-left:1px solid black;padding:0px 5px;text-align:center;height:24px;line-height:24px">${b.quantity}</div>
 				<div style="float:left;border-left:1px solid black;padding:0px 5px;width:230px;text-align:center;height:24px;line-height:24px;">
 					<span margin-price style="font-weight:600">${b.price}</span><span margin-percent>${percent}</span>
 				</div>
-				<div margin-total style="float:left;border-left:1px solid black;width:75px;text-align:center;height:24px;line-height:24px">${b.total}</div>
+				<div margin-total style="float:left;border-left:1px solid black;text-align:left;height:24px;line-height:24px;padding-left:10px;">${b.total}</div>
 			</div>
 		`);
 	});
@@ -106,16 +106,16 @@ Form.prototype.margin = function(form){
 					<input range type="range" style="width:200px;margin:0 auto">
 				</div>
 			</div>
-			<div style="position:absolute;right:10px;top:0;">
-				<ul class="pull-left" style="text-align:right;padding:0;">
+			<div style="position:absolute;right:10px;top:0;border:1px solid black;">
+				<ul class="pull-left" style="text-align:right;padding:0;border-right:1px solid black;">
 					<li style="padding:2px 10px;">Sub Total</li>
 					<li style="padding:2px 10px;">GST</li>
-					<li style="padding:2px 10px;border-top:1px solid black;">Total</li>
+					<li style="padding:2px 10px;font-weight:600;">Total</li>
 				</ul>
-				<ul class="pull-left" style="text-align:right;padding:0;">
+				<ul class="pull-left" style="text-align:left;padding:0;min-width:93px;">
 					<li margin-subtotal style="padding:2px 10px;">$${comma(std(totals.subtotal))}</li>
 					<li margin-tax style="padding:2px 10px;">$${comma(std(totals.tax))}</li>
-					<li margin-totalend style="padding:2px 10px;border-top:1px solid black;">$${comma(std(totals.total))}</li>
+					<li margin-totalend style="padding:2px 10px;font-weight:600;">$${comma(std(totals.total))}</li>
 				</ul>
 			</div>
 		</div>
