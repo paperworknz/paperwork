@@ -95,11 +95,11 @@ Form.prototype.email = function(form){
 		$('[email] [email-parent]').addClass('no-click');
 		$('[email] [email-parent]').css('opacity', '0.5');
 		
-		$('[email] [email-parent]').append(
-			'<div class="wait la-ball-fall" style="width:50px!important;position:absolute;left:0;right:0;top:120px;margin:auto;">'+
-				'<div style="background-color:#bbb"></div><div style="background-color:#bbb"></div><div style="background-color:#bbb"></div>'+
-			'</div>'
-		);
+		$('[email] [email-parent]').append(`
+			<div style="width:200px;height:123px;position:absolute;left:0;right:0;top:0;bottom:0;margin:auto;">
+				<img src="${environment.root}/css/app/media/plane.gif" style="width:200px;" />
+			</div>
+		`);
 		
 		var address = $('.email-email').val(),
 			subject = $('.email-subject').val(),
