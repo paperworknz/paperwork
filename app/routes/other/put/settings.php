@@ -1,36 +1,42 @@
 <?php
 
 $app->post('/put/settings', 'uac', function() use ($app){
-	if(isset($_POST['smtp'])){
-		// Not updated in years mate
-		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-		$pw = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
-		$smtp = filter_var($_POST['smtp'], FILTER_SANITIZE_STRING);
-		$protocol = filter_var($_POST['protocol'], FILTER_SANITIZE_STRING);
-		$port = filter_var($_POST['port'], FILTER_SANITIZE_STRING);
-		$app->sql->put('settings')->with([
-			'email_email'		=> $email,
-			'email_password'	=> $pw,
-			'email_smtp'		=> $smtp,
-			'email_protocol'	=> $protocol,
-			'email_port'		=> $port,
-		])->where('settingsID', '=', '1')->run();
-	}elseif(isset($_POST['my'])){
-		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-		$first = filter_var($_POST['first'], FILTER_SANITIZE_STRING);
-		$last = filter_var($_POST['last'], FILTER_SANITIZE_STRING);
-		$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
-		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
+	/* Methods */
+	
+	/* Construction */
+	$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+	$first = filter_var($_POST['first'], FILTER_SANITIZE_STRING);
+	$last = filter_var($_POST['last'], FILTER_SANITIZE_STRING);
+	$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
+	$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
+	
+	if(!$app->sql->get('user')->where('email', '=', $email)->and('id', '<>', $app->user['id'])->god()->one()){
+		if(!$app->sql->get('user')->where('company', '=', $company)->and('id', '<>', $app->user['id'])->god()->one()){
+			
+			$app->sql->put('user')->with([
+				'email'		=> $email,
+				'first'		=> $first,
+				'last'		=> $last,
+				'company'	=> $company,
+				'phone'		=> $phone,
+			])->where('id', '=', $app->user['id'])->god()->run();
+			
+			$app->event->log('updated their details');
+			
+			$app->flash('success', 'Updated');
+			$app->redirect($app->root.'/settings');
+			
+		}else{
+			$app->event->log('tried to change their company name to another user\'s name: '.$company);
+			
+			$app->flash('error', 'Uh oh. Your new Company name already exists in Paperwork. Please contact support if you think this is wrong.');
+			$app->redirect($app->root.'/settings');
+		}
+	}else{
+		$app->event->log('tried to change their email address to another user\'s address: '.$email);
 		
-		$app->sql->put('user')->with([
-			'email'		=> $email,
-			'first'		=> $first,
-			'last'		=> $last,
-			'company'	=> $company,
-			'phone'		=> $phone,
-		])->where('id', '=', $app->user['id'])->god()->run();
+		$app->flash('error', 'Uh oh. Your new Email address already exists in Paperwork. Please contact support if you think this is wrong.');
+		$app->redirect($app->root.'/settings');
 	}
-	$app->event->log('updated their details');
-	$app->flash('success', 'Updated');
-	$app->redirect($app->root.'/settings');
+	
 });

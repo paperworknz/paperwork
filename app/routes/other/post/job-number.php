@@ -2,7 +2,7 @@
 
 use Paperwork\Extended\Number;
 
-$app->post('/post/job-n', 'uac', function() use ($app){
+$app->post('/post/job-number', 'uac', function() use ($app){
 	/* Methods */
 	$number = new Number;
 	$job_number = isset($_POST['job_number']) ? $_POST['job_number'] : false;

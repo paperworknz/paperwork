@@ -12,7 +12,7 @@ var Form = function(){
 	a.map= {}; // Material on form
 	
 	// __construct()
-	$.get(environment.root+'/get/inv', function(data){
+	$.get(environment.root+'/get/inventory', function(data){
 		$.get(environment.root+'/get/form/'+environment.job_id, function(items){
 			var src = [],
 				map = JSON.parse(items);

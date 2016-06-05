@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/get/inv', 'uac', function() use ($app){
+$app->get('/get/inventory', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */

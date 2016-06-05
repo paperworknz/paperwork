@@ -119,7 +119,7 @@ $('.navbar-hide').on('click', function(){
 			$('#sidebar li').each(function(){
 				$(this).css({
 					textIndent: '20px',
-					textAlign: 'left'
+					textAlign: 'left',
 				});
 				$(this).html($(this).attr('val'));
 			});
@@ -127,7 +127,7 @@ $('.navbar-hide').on('click', function(){
 		});
 		
 		date.setFullYear(date.getFullYear() + 1);
-		c = 'sidebar=big;expires='+date.toGMTString()+';path=/;';
+		let c = 'sidebar=big;expires='+date.toGMTString()+';path=/;';
 		document.cookie = c; // Post/put cookie
 		
 		localStorage.sidebar = 'big';
@@ -135,10 +135,9 @@ $('.navbar-hide').on('click', function(){
 	}else{
 		$('#sidebar li').each(function(){
 			var letter = $(this).html().trim().charAt(0);
-			console.log(letter);
 			$(this).css({
-				'text-indent':'0',
-				'text-align':'center'
+				textIndent: '0',
+				textAlign: 'center',
 			});
 			$(this).attr('val', $(this).html());
 			$(this).html(letter);
@@ -147,7 +146,7 @@ $('.navbar-hide').on('click', function(){
 			width: '25px'
 		}, 100, function(){
 			$('#content').animate({
-				marginleft: '25px',
+				marginLeft: '25px',
 				padding: '15px 0px 0px 15px',
 			}, 100);
 			$('.navbar-hide').html(' > ');
@@ -155,7 +154,7 @@ $('.navbar-hide').on('click', function(){
 		});
 		
 		date.setFullYear(date.getFullYear() + 1);
-		c = 'sidebar=small;expires='+date.toGMTString()+';path=/;';
+		let c = 'sidebar=small;expires='+date.toGMTString()+';path=/;';
 		document.cookie = c; // Post/put cookie
 		
 		localStorage.sidebar = 'small';
