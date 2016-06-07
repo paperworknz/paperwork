@@ -13,7 +13,7 @@ Form.prototype.margin = function(form){
 	
 	// List of current prices on form, and the original price via math (from a.map)
 	$.each(a.map[formID].items, function(a,b){
-		var itemID = a;
+		let itemID = a;
 		
 		pricemap[itemID] = {
 			margin: b.margin,
@@ -32,43 +32,32 @@ Form.prototype.margin = function(form){
 	// Darken page, then show the concern
 	a.dark(form); // Turn off interaction
 	
-	// Container
-	$('#content').after(`
-		<div margin>
-		</div>
-	`);
+	var d = dark();
+	var dark_container = d.object;
+	var fade = d.object.find('.dark_object');
 	
-	// Fade
-	$('[margin]').append(`
-		<div fade style="width:10000px;height:10000px;background-color:black;opacity:0.0;position:fixed;top:0;z-index:2;overflow:hidden;" disable>
-		</div>
-	`);
-	
+	/*
+	WARNING: If you change .margin-content, you must change
+		update.js to reflect this change. When update.js
+		updates each item, at the end it resets the margin
+		if the user has manually changed the price. It does
+		this by checking the length of .margin-content (to
+		see if the interface is open or not) - if you change
+		the class name the length will always return 0 and 
+		the margin will always be reset to 0.
+	*/
 	// Margin content
-	$('[fade]').after(`
-		<div margin-content>
+	fade.after(`
+		<div class="margin-content">
+			<div class="margin-parent">
+			</div>
 		</div>
 	`);
-	$('[margin-content]').css({
-		position: 'absolute',
-		zIndex: 999,
+	
+	// Margin content css
+	$('.margin-content').css({
 		top: formcontent.offset().top - 51,
 		left: formcontent.offset().left - 30,
-		width: '710px',
-		backgroundColor: 'white',
-		border: 'none',
-		minHeight: '50px',
-		opacity: 0,
-	});
-	$('[margin-content]').html(`
-		<div margin-parent>
-		</div>
-	`);
-	
-	// Margin parent
-	$('[margin-parent]').css({
-		margin: '10px',
-		border: '1px solid black',
 	});
 	
 	// Append items 
@@ -82,7 +71,7 @@ Form.prototype.margin = function(form){
 		
 		let original = comma(std(pricemap[a].original));
 		
-		$('[margin-parent]').append(`
+		$('.margin-content .margin-parent').append(`
 			<div class="margin-item wrapper lowlight" item-id="${a}">
 				<input type="checkbox" style="float:left;margin-left:5px">
 				<div style="float:left;width:273px;overflow:hidden;white-space:nowrap;position:relative;margin-left:5px;margin-right:10px;height:24px;line-height:24px">${b.item}</div>
@@ -95,10 +84,8 @@ Form.prototype.margin = function(form){
 		`);
 	});
 	
-	// $${comma(std(pricemap[a].original))}>  <---- original price
-	
 	// Append slider, totals and buttons
-	$('[margin] [margin-content]').append(`
+	$('.margin-content').append(`
 		<div class="wrapper" style="position:relative;">
 			<div class="wrapper">
 				<div class="ac" style="padding:10px 10px 0px 10px;">
@@ -128,11 +115,11 @@ Form.prototype.margin = function(form){
 	`);
 	
 	// Set input to 0
-	$('[margin] [cent], [margin] [range]').val(0);
+	$('.margin-content [cent], .margin-content [range]').val(0);
 	
-	// Fade in 
-	$('[fade]').animate({'opacity':0.66}, 150, function(){
-		$('[margin] [margin-content]').animate({
+	// Fade in
+	d.run(function(){
+		$('.margin-content').animate({
 			opacity: 1
 		}, 100);
 	});
@@ -140,25 +127,27 @@ Form.prototype.margin = function(form){
 	// ********* FORMDOM ********* //
 	
 	// Update [cent] from slider - and totals
-	$('[margin] [range], [margin] [cent]').on('input', function(){
+	$('.margin-content [range], .margin-content [cent]').on('input', function(){
 		
-		$('[margin] [cent]').val($(this).val()); // Update input to value of slider
-		$('[margin] [range]').val($(this).val());
-		var cent = (Number($('[cent]').val()) + 100) / 100; // Get std cent value - must come after val is set
+		// Normalise both inputs when one changes
+		$('.margin-content [cent]').val($(this).val());
+		$('.margin-content [range]').val($(this).val());
+		
+		var cent = (Number(dark_container.find('[cent]').val()) + 100) / 100; // Get std cent value - must come after val is set
 		
 		// Update price and pricemap in real time 
-		$('[margin] [item-id]').each(function(){
+		dark_container.find('.margin-item').each(function(){
 			
 			var itemID = $(this).attr('item-id');
 			
 			if($(this).find('input[type=checkbox]')[0].checked){
 				
-				var price = pricemap[itemID].original,
+				let price = pricemap[itemID].original,
 					qty = $(this).find('[margin-qty]').html().replace('$', '').replace(',', ''),
 					current = comma(std(price * cent));
 				
 				$(this).find('[margin-price]').html(`$${current}`);
-				$(this).find('[margin-percent]').html(` (+${Number(((cent*100)-100)).toFixed(1)}%)`);
+				$(this).find('[margin-percent]').html(` (+${Number(((cent * 100) - 100)).toFixed(1)}%)`);
 				$(this).find('[margin-total]').html(`$${comma(std((price * cent) * qty))}`);
 				
 				// Update pricemap
@@ -174,7 +163,7 @@ Form.prototype.margin = function(form){
 		
 		var subtotal = 0;
 		
-		$('[margin] [margin-total]').each(function(){
+		$('.margin-content [margin-total]').each(function(){
 			subtotal += Number($(this).html().replace('$', '').replace(',', ''));
 		});
 		
@@ -183,14 +172,14 @@ Form.prototype.margin = function(form){
 		var total = std((Number(subtotal)+Number(tax)));
 		
 		// Totals
-		$('[margin] [margin-subtotal]').html(`$${comma(subtotal)}`);
-		$('[margin] [margin-tax]').html(`$${comma(tax)}`);
-		$('[margin] [margin-totalend]').html(`$${comma(total)}`);
+		$('[margin-subtotal]').html(`$${comma(subtotal)}`);
+		$('[margin-tax]').html(`$${comma(tax)}`);
+		$('[margin-totalend]').html(`$${comma(total)}`);
 		
 	});
 	
 	// Highlight item if checked
-	$('input:checkbox').on('change', function(){
+	$('.margin-content input:checkbox').on('change', function(){
 		var item = $(this).closest('[item-id]');
 		
 		if(item.hasClass('lowlight')){
@@ -203,37 +192,34 @@ Form.prototype.margin = function(form){
 	// ********* ******** ********* //
 	
 	// Listen to convert
-	$('[margin] [margin-apply]').on('click', function(){
+	$('.margin-content [margin-apply]').on('click', function(){
 		
 		// Update a.map with new values then update();
 		form.find(priceDOM).each(function(){
 			var itemID = a.p.get('this-item-id', $(this));
 			
+			a.map[formID].items[itemID].margin = pricemap[itemID].margin; // Update margin in map
 			$(this).html(pricemap[itemID].current); // Update DOM price
-			a.map[formID].items[itemID].margin = pricemap[itemID].margin; // Update map margin
 		});
 		
 		a.refresh(form);
-		a.update(form); // Updates a.map fully from the new DOM
+		a.update(form);
 		
 		a.put({
 			url: environment.root+'/put/form',
 			id: formID,
 		});
 		
-		$('[margin] [margin-content]').fadeOut(100, function(){
-			$('[fade]').fadeOut(150, function(){
-				$('[margin]').off().unbind().remove();
-			});
+		$('.margin-content').fadeOut(100, function(){
+			d.remove();
 		});
 	});
 	
 	// Listen to cancel
-	$('[margin] [margin-cancel]').on('click', function(){
+	$('.margin-content [margin-cancel]').on('click', function(){
 		a.update(form);
-		$('[margin] [margin-content]').fadeOut(100, function(){
-			$('[fade]').fadeOut(150, function(){
-				$('[margin]').off().unbind().remove();
+		$('.margin-content').fadeOut(100, function(){
+			d.remove(function(){
 				a.refresh(form);
 				a.update(form);
 			});
@@ -241,11 +227,10 @@ Form.prototype.margin = function(form){
 	});
 	
 	// Cancel on click out of focus
-	$('[fade]').on('click', function(){
+	fade.on('click', function(){
 		a.update(form);
-		$('[margin] [margin-content]').fadeOut(100, function(){
-			$('[fade]').fadeOut(150, function(){
-				$('[margin]').off().unbind().remove();
+		$('.margin-content').fadeOut(100, function(){
+			d.remove(function(){
 				a.refresh(form);
 				a.update(form);
 			});

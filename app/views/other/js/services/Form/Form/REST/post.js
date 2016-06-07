@@ -22,7 +22,7 @@ Form.prototype.post = function(data, callback){
 			`);
 			
 			$(obj).find(`[${a.tab.heir}]`).replaceWith(`
-				<div ${a.tab.objhook}="${(objID + 1)}" ${a.tab.heir$} hidden>
+				<div ${a.tab.objhook}="${(objID + 1)}" ${a.tab.heir} hidden>
 				</div>
 			`);
 			
