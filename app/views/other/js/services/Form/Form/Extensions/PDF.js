@@ -8,7 +8,7 @@ Form.prototype.pdf = function(form, callback){
 	html = a.strip(html);
 	
 	// PDF
-	var name = `${environment.job_number}_${tab.attr('data-tab')}-${tab.html().toLowerCase()}`;
+	var name = `${environment.job_number}_${tab.attr('data-tab')}-${tab.html().trim().toLowerCase()}`.trim();
 	var page = 
 	`
 	<!DOCTYPE html>
