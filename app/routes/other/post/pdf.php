@@ -24,8 +24,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	
 	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for job_number if it doesn't exist
 	
-	// File name
-	$file = "{$name}.pdf";
+	$file = "{$name}.pdf"; // File name
 	
 	// Create PDF
 	phptopdf([

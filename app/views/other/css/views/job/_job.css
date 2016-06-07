@@ -83,3 +83,43 @@ textarea {width:100%;max-width:610px;height:100px;border:1px solid #999;padding:
 	border: 1px solid #2ecc71;
 	background: rgba(46,204,113, 0.25);
 }
+
+.margin-content {
+	position: absolute;
+	z-index: 999;
+	width: 710px;
+	background-color: white;
+	border: none;
+	min-height: 50px;
+	opacity: 0;
+}
+
+.margin-parent {
+	margin: 10px;
+	border: 1px solid black;
+}
+
+.email-content, .copy-content {
+	position: absolute;
+	z-index: 999;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 710px;
+	background-color: white;
+	border: none;
+	min-height: 50px;
+	opacity: 0;
+}
+
+.email-parent, .copy-parent {
+	margin: 10px;
+}
+
+.email-parent input {
+	display: block;
+	width: 100%;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+}

@@ -27,9 +27,9 @@ Form.prototype.update = function(form){
 		a.p.do('price-by-ID', form, {itemID:itemID, val:'$'+comma(price)});
 		a.p.do('total-by-ID', form, {itemID:itemID, val:'$'+comma(total)});
 		
-		// 
+		// Reset margin on manual change
 		if(a.map[form_id].items[itemID] != undefined){
-			if(price != a.map[form_id].items[itemID].price.replace('$', '').replace(',', '') && $('[margin]').length == 0){
+			if(price != a.map[form_id].items[itemID].price.replace('$', '').replace(',', '') && $('.margin-content').length == 0){
 				a.map[form_id].items[itemID].margin = 1;
 			}
 		}
