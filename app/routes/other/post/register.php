@@ -17,11 +17,11 @@ $app->post('/post/register', 'app', function() use ($app){
 		$easy = str_replace(' ', '', $company);
 		$easy = substr($easy, 0, 16); // Return first 16 chars of compressed company name
 		
-		if($app->sql->get('user')->where('company', '=', $_POST['company'])->god()->one()){
+		if($app->sql->get('user')->where('company', '=', $_POST['company'])->root()->one()){
 			echo $app->build->error('<b>'.$company.'</b> is already signed up!<br>Please contact support if you can\'t access your account.');
-		}else if($app->sql->get('user')->where('email', '=', $_POST['email'])->god()->one()){
+		}else if($app->sql->get('user')->where('email', '=', $_POST['email'])->root()->one()){
 			echo $app->build->error('<b>'.$_POST['email'].'</b> is already registered.<br>Please contact support if you can\'t access your account.');
-		}else if($app->sql->get('user')->where('username', '=', $_POST['username'])->god()->one()){
+		}else if($app->sql->get('user')->where('username', '=', $_POST['username'])->root()->one()){
 			echo $app->build->error('Sorry, the username <b>'.$_POST['username'].'</b> is taken!<br>Please try something else.');
 		}else if($password != $confirm){
 			echo $app->build->error('Sorry, the passwords your entered did not match.');
@@ -45,10 +45,10 @@ $app->post('/post/register', 'app', function() use ($app){
 				'admin'		=> 0,
 				'password'	=> $password,
 				'cookie'	=> $cookie,
-			])->god()->run();
+			])->root()->run();
 			
 			// Get user
-			$user = $app->sql->get('user')->where('username', '=', $username)->god()->one();
+			$user = $app->sql->get('user')->where('username', '=', $username)->root()->one();
 			
 			// Add user to user_number
 			$app->sql->post('user_number')->with([
@@ -56,24 +56,24 @@ $app->post('/post/register', 'app', function() use ($app){
 				'client_number'		=> 1,
 				'job_number'		=> 1,
 				'job_status_number'	=> 1,
-			])->god()->run();
+			])->root()->run();
 			
 			// Status
 			$app->sql->post('job_status')->with([
 				'user_id' => $user['id'],
 				'name' => 'New',
 				'job_status_number' => 1,
-			])->god()->run();
+			])->root()->run();
 			$app->sql->post('job_status')->with([
 				'user_id' => $user['id'],
 				'name' => 'In Progress',
 				'job_status_number' => 2,
-			])->god()->run();
+			])->root()->run();
 			$app->sql->post('job_status')->with([
 				'user_id' => $user['id'],
 				'name' => 'Completed',
 				'job_status_number' => 3,
-			])->god()->run();
+			])->root()->run();
 			
 			// Templates
 			if(null !== file_get_contents('../app/app/storage/clients/Default/quote-inline.html')){
@@ -92,7 +92,7 @@ $app->post('/post/register', 'app', function() use ($app){
 					'user_id' => $user['id'],
 					'name' => 'Quote',
 					'content' => $template,
-				])->god()->run();
+				])->root()->run();
 			}
 
 			if(null !== file_get_contents('../app/app/storage/clients/Default/invoice-inline.html')){
@@ -111,7 +111,7 @@ $app->post('/post/register', 'app', function() use ($app){
 					'user_id' => $user['id'],
 					'name' => 'Invoice',
 					'content' => $template,
-				])->god()->run();
+				])->root()->run();
 			}
 			
 			$app->event->log('registered with username: '.$username);

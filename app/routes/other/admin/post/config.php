@@ -16,7 +16,7 @@ $app->post('/admin/post/config', 'admin', function() use ($app){
 	
 	$app->sql->put('config')->where('name', '=', $name)->with([
 		'value' => $value
-	])->god()->run();
+	])->root()->run();
 	
 	echo 'Success';
 });
