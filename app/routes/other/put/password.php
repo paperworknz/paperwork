@@ -16,7 +16,7 @@ $app->post('/put/password', 'uac', function() use ($app){
 			// Update user's password
 			$app->sql->put('user')->with([
 				'password' => $password
-			])->where('id', '=', $app->user['id'])->god()->run();
+			])->where('id', '=', $app->user['id'])->root()->run();
 			
 			$app->event->log('changed their password');
 			

@@ -21,7 +21,7 @@ class Event {
 			$data = $default;
 		}
 		
-		$app->sql->post('event')->with($data)->event()->god()->run();
+		$app->sql->post('event')->with($data)->event()->root()->run();
 		
 	}
 	

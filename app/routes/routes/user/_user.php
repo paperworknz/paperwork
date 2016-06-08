@@ -13,7 +13,7 @@ $app->get('/user/:a', 'admin', function($a) use ($app){
 	/* Methods */
 	
 	/* Construction */
-	if($user = $app->sql->get('user')->where('id', '=', $a)->god()->one()){
+	if($user = $app->sql->get('user')->where('id', '=', $a)->root()->one()){
 		return $app->build->page('views/user/_user.html', [
 			'host' => $user,
 		]);

@@ -10,8 +10,8 @@ $app->post('/put/settings', 'uac', function() use ($app){
 	$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
 	$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 	
-	if(!$app->sql->get('user')->where('email', '=', $email)->and('id', '<>', $app->user['id'])->god()->one()){
-		if(!$app->sql->get('user')->where('company', '=', $company)->and('id', '<>', $app->user['id'])->god()->one()){
+	if(!$app->sql->get('user')->where('email', '=', $email)->and('id', '<>', $app->user['id'])->root()->one()){
+		if(!$app->sql->get('user')->where('company', '=', $company)->and('id', '<>', $app->user['id'])->root()->one()){
 			
 			$app->sql->put('user')->with([
 				'email'		=> $email,
@@ -19,7 +19,7 @@ $app->post('/put/settings', 'uac', function() use ($app){
 				'last'		=> $last,
 				'company'	=> $company,
 				'phone'		=> $phone,
-			])->where('id', '=', $app->user['id'])->god()->run();
+			])->where('id', '=', $app->user['id'])->root()->run();
 			
 			$app->event->log('updated their details');
 			

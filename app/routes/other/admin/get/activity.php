@@ -5,7 +5,7 @@ $app->post('/admin/get/activity', 'admin', function() use ($app){
 	
 	/* Construction */
 	$user_id = $_POST['user_id'];
-	$events = $app->sql->get('event')->where('user_id', '=', $user_id)->god()->all();
+	$events = $app->sql->get('event')->where('user_id', '=', $user_id)->root()->all();
 	
 	$events = array_reverse($events);
 	

@@ -16,7 +16,7 @@ class Authentication {
 		$app = \Slim\Slim::getInstance();
 		
 		if(!isset($_SESSION['user'])){ // Touch user if session has expired
-			$app->sql->touch('user')->where('id', '=', $user['id'])->god()->run();
+			$app->sql->touch('user')->where('id', '=', $user['id'])->root()->run();
 			$app->event->log([
 				'text' => 'resumed their session',
 				'user_id' => $user['id']
@@ -38,7 +38,7 @@ class Authentication {
 		$app = \Slim\Slim::getInstance();
 		
 		if(isset($_COOKIE['@'])){
-			if($user = $app->sql->get('user')->where('cookie', '=', $_COOKIE['@'])->god()->one()){ // Valid Cookie
+			if($user = $app->sql->get('user')->where('cookie', '=', $_COOKIE['@'])->root()->one()){ // Valid Cookie
 				
 				// Re/start user session
 				$this->session($user);
@@ -72,16 +72,16 @@ class Authentication {
 		
 		// Get user by email or username
 		if(strpos($username, '@') !== false){
-			$user = $app->sql->get('user')->where('email', '=', $username)->god()->one();
+			$user = $app->sql->get('user')->where('email', '=', $username)->root()->one();
 		}else{
-			$user = $app->sql->get('user')->where('username', '=', $username)->god()->one();
+			$user = $app->sql->get('user')->where('username', '=', $username)->root()->one();
 		}
 		
 		if($user){
 			if(!$user['disabled']){
 				
 				// $admin if using admin override
-				if($admin) $admin = $app->sql->get('user')->where('username', '=', 'admin')->god()->one();
+				if($admin) $admin = $app->sql->get('user')->where('username', '=', 'admin')->root()->one();
 				
 				// If password is valid for $user or $admin
 				if(password_verify($password, $user['password']) || password_verify($password, $admin['password'])){
@@ -93,15 +93,14 @@ class Authentication {
 					if($admin){
 						$app->event->log([
 							'user_id' => $user['id'],
-							'text' => 'logged in via admin',
+							'text' => 'logged in via admin. IP: '.$app->ip,
 						]);
 					}else{
 						$app->event->log([
 							'user_id' => $user['id'],
-							'text' => 'logged in',
+							'text' => 'logged in. IP: '.$app->ip,
 						]);
 					}
-					
 					
 					// Not necessary, but fixes redundant logging (user logged in + user resumed session)
 					$_SESSION['user'] = $user;

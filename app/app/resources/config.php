@@ -5,7 +5,7 @@ $temp	= []; // $app environment array
 $config = $app->sql
 	->get('config')
 	->select(['name', 'value'])
-	->god()
+	->root()
 	->all();
 
 foreach($config as $item){

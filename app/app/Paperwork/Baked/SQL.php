@@ -37,7 +37,7 @@ class SQL {
 		);
 		
 		$this->query = [
-			'god'		=> false,
+			'root'		=> false,
 			'method'	=> false,
 			'select'	=> [],
 			'distinct'	=> false,
@@ -199,8 +199,8 @@ class SQL {
 		return $this;
 	}
 	
-	public function god(){
-		$this->query['god'] = true;
+	public function root(){
+		$this->query['root'] = true;
 		return $this;
 	}
 	
@@ -241,7 +241,7 @@ class SQL {
 		
 		
 		// Query over all users, or by user_id
-		if(!$this->query['god']){
+		if(!$this->query['root']){
 			if(isset($app->user['id'])){
 				if($this->query['method'] == 'post') $this->query['values']['user_id'] = $app->user['id'];
 				$this->where('user_id', '=', $app->user['id'], '*');
@@ -280,7 +280,7 @@ class SQL {
 		
 		$this->statement = [];
 		$this->query = [
-			'god'		=> false,
+			'root'		=> false,
 			'method'	=> false,
 			'select'	=> [],
 			'distinct'	=> false,
@@ -575,7 +575,7 @@ class SQL {
 			
 			$sql .= $list.')';
 			
-			if(!$this->query['god']){
+			if(!$this->query['root']){
 				if(isset($app->user['id'])){
 					$sql .= ' AND user_id='.$app->user['id'];
 				}
