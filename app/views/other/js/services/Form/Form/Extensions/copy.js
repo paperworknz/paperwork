@@ -108,7 +108,7 @@ Form.prototype.copy = function(form, templates){
 	// Listen to cancel
 	$('.copy-content [copy-cancel]').on('click', function(){
 		a.update(form);
-		$('.copy-content .copy-content').fadeOut(100, function(){
+		$('.copy-content').fadeOut(100, function(){
 			d.remove(function(){
 				$('.copy-content').off().unbind().remove();
 				a.refresh(form);
@@ -120,7 +120,7 @@ Form.prototype.copy = function(form, templates){
 	// Cancel on click out of focus
 	fade.on('click', function(){
 		a.update(form);
-		$('.copy-content .copy-content').fadeOut(100, function(){
+		$('.copy-content').fadeOut(100, function(){
 			d.remove(function(){
 				$('.copy-content').off().unbind().remove();
 				a.refresh(form);
