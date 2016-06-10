@@ -196,14 +196,17 @@
 		{% include path.js %}
 		<script>
 			$(function(){
+				
 				// Nav
 				$('[features]').on('click', function(){
-					var a = $('[1]').offset();
-					$('html, body').animate({scrollTop: a.top}, 'slow');
+					$('html, body').animate({
+						scrollTop: $('[1]').offset().top,
+					}, 'slow');
 				});
 				$('[pricing]').on('click', function(){
-					var a = $('[2]').offset();
-					$('html, body').animate({scrollTop: a.top}, 'slow');
+					$('html, body').animate({
+						scrollTop: $('[2]').offset().top,
+					}, 'slow');
 				});
 				$('[login]').on('click', function(){
 					window.location = '{{path.root}}/login';
@@ -218,10 +221,8 @@
 				// Interaction
 				$('.video_overlay').on('click', function(){
 					var video = $(this).find('video'),
-						tint = $(this).find('.video_tint'),
 						box = $(this).find('.video_padding'),
-						icon = $(this).find('.video_padding div'),
-						gg;
+						icon = $(this).find('.video_padding div');
 					
 					if(video.get(0).paused){
 						box.fadeOut();

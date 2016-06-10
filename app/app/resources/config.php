@@ -9,6 +9,7 @@ $config = $app->sql
 	->all();
 
 foreach($config as $item){
+	
 	$name 	= $item['name']; // Name
 	$value 	= $item['value']; // Value
 	
@@ -22,15 +23,5 @@ foreach($config as $item){
 	
 	$temp[$name] = $value; // Populate $temp
 }
-
-// Twig scaffolding nav bar
-// Do NOT add to the env variable as it will show up in admin.switches
-/*if(!isset($temp['nav'])){
-	if(isset($_COOKIE['nav'])){
-		if($_COOKIE['nav'] === 'small' || $_COOKIE['nav'] === 'big'){
-			$temp['nav'] = $_COOKIE['nav'];
-		}
-	}
-}*/
 
 return $temp; // $app->env contains switches
