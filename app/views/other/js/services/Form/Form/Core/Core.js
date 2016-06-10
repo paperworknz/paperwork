@@ -2,7 +2,7 @@ var Form = function(){
 	var a = this;
 	
 	// Depends on
-	a.pw= pw;
+	a.pw= Paperwork;
 	a.tab= tab;
 	a.p= new Painter;
 	

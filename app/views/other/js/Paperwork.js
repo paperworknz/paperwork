@@ -1,55 +1,75 @@
-var Paperwork = function(obj){
-	this.preventBackspace();
-	this.flow();
-};
-
-// ################################ TOGGLES ################################
-Paperwork.prototype.preventBackspace = function(){
-	var exclusions = 'input, select, textarea, [contenteditable]';
+var Paperwork = (function(){
 	
-	$(document).on('keydown', function(e){
-		if(e.which === 8 && !$(e.target).is(exclusions)) e.preventDefault(); 
-	});
-};
-
-Paperwork.prototype.flow = function(){
-	var elements = 'input[type=text], input[type=email], input[type=password]';
-	$(document).on('keydown', elements, function(e){
-		var code = e.keyCode || e.which;
-		if(code == 13) $(':input:eq(' + ($(':input').index(this) + 1) + ')').focus();
-	});
-};
-
-// ################################ METHODS ################################
-Paperwork.prototype.wait = function(ele){
-	ele.addClass('wolfe-btn-wait');
-	ele.html('<div class="wait la-ball-fall"><div></div><div></div><div></div></div>');
-};
-
-Paperwork.prototype.ready = function(ele, html, func){
-	ele.removeClass('wolfe-btn-wait');
-	ele.html(html);
-	if(func != undefined) func();
-};
-
-Paperwork.prototype.saved = function(a, length){
-	var ele = $('.pw-notification');
-	if(a === undefined) a = 'Saved';
-	if(length === undefined) length = 1000;
-	ele.html(a);
+	const $document = $(document);
 	
-	ele.animate({
-		opacity: 0.75,
-	}, 100, function(){
-	setTimeout(function(){
-		ele.animate({
-			opacity: 0
-		}, 1000, function(){
-			ele.html(' ');
+	preventBackspace();
+	flow();
+	
+	function preventBackspace(){
+		let exclusions = 'input, select, textarea, [contenteditable]';
+		$document.on('keydown', function(event){
+			let code = event.keyCode || event.which,
+				$target = $(event.target);
+			
+			if(code === 8 && !$target.is(exclusions)) event.preventDefault();
 		});
-	}, length);
-	});
-};
+	}
+	
+	function flow(){
+		let elements = 'input[type=text], input[type=email], input[type=password]';
+		$document.on('keydown', elements, function(event){
+			let code = event.keyCode || event.which,
+				$next = $(`:input:eq(${($(':input').index(this) + 1)})`);
+			
+			if(code === 13) $next.focus();
+		});
+	}
+	
+	function wait($element){
+		$element.addClass('wolfe-btn-wait');
+		$element.html(`
+			<div class="wait la-ball-fall">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		`);
+	}
+	
+	function ready($element, html, callback){
+		$element.removeClass('wolfe-btn-wait');
+		$element.html(html);
+		if(callback != undefined) callback();
+	}
+	
+	function saved(message, length){
+		let $element = $document.find('.pw-notification');
+		
+		if(message === undefined) message = 'Saved';
+		if(length === undefined) length = 1000;
+		
+		$element.html(message);
+		
+		$element.animate({
+			opacity: 0.75,
+		}, 100, function(){
+		setTimeout(function(){
+			$element.animate({
+				opacity: 0
+			}, 1000, function(){
+				$element.html(' ');
+			});
+		}, length);
+		});
+	}
+	
+	return {
+		wait: wait,
+		ready: ready,
+		saved: saved,
+	};
+	
+})();
 
 // *************** MENU
 var thumb = $('.thumb');

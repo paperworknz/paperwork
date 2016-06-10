@@ -91,7 +91,6 @@
 			var environment = {
 				root: '{{path.root}}',
 			};
-			var pw = new Paperwork;
 			{% if jobs %}
 			new Table({
 				defaultFilter: 'All',
@@ -131,7 +130,7 @@
 						id: {{client.id}},
 						notes: $('#notes').val(),
 					}).done(function(){
-						pw.saved();
+						Paperwork.saved();
 					});
 				});
 				
@@ -145,7 +144,7 @@
 							email: $('[client-email]').val(),
 							phone: $('[client-phone]').val(),
 						}).done(function(){
-							pw.saved();
+							Paperwork.saved();
 						});
 					}
 				});
