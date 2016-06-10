@@ -74,8 +74,9 @@
 			var environment = {
 				root: '{{path.root}}'
 			};
-			new Paperwork;
-			{% if jobs %}new Table();{% endif %}
+			{% if jobs %}
+			new Table();
+			{% endif %}
 		</script>
 		<script>
 			$(function(){

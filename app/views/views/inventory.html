@@ -34,7 +34,6 @@
 		}%}
 		<script>
 			$(function(){
-				var pw = new Paperwork;
 				var inv = [{% for item in inventory %}{id:"{{item.id}}", name:"{{item.name}}", price:"{{item.price}}"},{% endfor %}];
 				
 				var v = new Validation;
@@ -59,7 +58,7 @@
 								price: price,
 								id: id
 							}).done(function(){
-								pw.saved();
+								Paperwork.saved();
 							});
 						}
 					}else{
@@ -77,7 +76,7 @@
 							$('#name').val('');
 							$('#price').val('');
 							$('#name').focus();
-							pw.saved();
+							Paperwork.saved();
 						});
 					}
 				});

@@ -46,8 +46,7 @@
 			$(function(){
 				var clients = { {% for client in clients %} "{{client.name|raw}}" : "{{client.client_number}}", {% endfor %} },
 					src = []; $.each(clients, function(a,b){src.push(a);});
-					
-				var pw = new Paperwork;
+				
 				var ta = new Typeahead(src, {
 					hint: true,
 					highlight: true,
