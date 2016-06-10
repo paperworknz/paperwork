@@ -148,7 +148,9 @@
 							
 							if(a.type == 'success'){
 								
-								{% if state == 'prod' %}fbq('track', 'CompleteRegistration');{% endif %}
+								{% if state == 'prod' %}
+								fbq('track', 'CompleteRegistration');
+								{% endif %}
 								
 								$.post('{{path.root}}/post/login', {
 									username: $('input[name=username]').val(),
