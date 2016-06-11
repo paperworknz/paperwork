@@ -115,7 +115,6 @@
 			</div>
 		</footer>
 		{% include path.js %}
-		<script>var pw = new Paperwork;</script>
 		<script>
 			$(function(){
 				// Nav
@@ -133,7 +132,7 @@
 				
 				var register = function(){
 					if(!$('.next-step').hasClass('wolfe-btn-wait')){
-						pw.wait($('.next-step'));
+						Paperwork.wait($('.next-step'));
 						
 						$.post('{{path.root}}/post/register', {
 							first: $('input[name=first]').val(),
@@ -170,7 +169,7 @@
 								}else{
 									$('table').before('<div class="alert alert-danger">'+a.message+'</div>');
 								}
-								pw.ready($('.next-step'), 'NEXT STEP');
+								Paperwork.ready($('.next-step'), 'NEXT STEP');
 							}
 						});
 					}

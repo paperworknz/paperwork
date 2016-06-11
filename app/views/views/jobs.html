@@ -71,12 +71,12 @@
 			include: ['typeahead', 'Table', 'contextmenu', 'Validation']
 		}%}
 		<script>
-			var environment = {
-				root: '{{path.root}}'
-			};
-			{% if jobs %}
-			new Table();
-			{% endif %}
+		var environment = {
+			root: '{{path.root}}'
+		};
+		{% if jobs %}
+		new Table();
+		{% endif %}
 		</script>
 		<script>
 			$(function(){

@@ -92,15 +92,7 @@
 				root: '{{path.root}}',
 			};
 			{% if jobs %}
-			new Table({
-				defaultFilter: 'All',
-				width: {
-					Status:'111px',
-					Client:'165px',
-					Name:'260px'
-				},
-				cookie: true
-			})
+			new Table();
 			{% endif %}
 			new Tab({
 				cookie: {

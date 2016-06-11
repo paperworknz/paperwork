@@ -50,7 +50,6 @@
 			</div>
 		</footer>
 		{% include path.js %}
-		<script>var pw = new Paperwork;</script>
 		<script>
 			$(function(){
 				// Nav
@@ -66,7 +65,7 @@
 				
 				var login = function(){
 					$('.next-step').focus();
-					pw.wait($('.next-step'));
+					Paperwork.wait($('.next-step'));
 					// Front-end validation //
 					
 					$.post('{{path.root}}/post/login', {
@@ -82,7 +81,7 @@
 							}else{
 								$('.next-step').before('<div class="alert alert-danger">'+data.message+'</div>');
 							}
-							pw.ready($('.next-step'), 'NEXT STEP');
+							Paperwork.ready($('.next-step'), 'NEXT STEP');
 						}
 					});
 				};
