@@ -55,11 +55,6 @@
 							'name': 'Name',
 							'client.name': 'Client',
 							'job_status.name': 'Status',
-						},
-						'width': {
-							'Name': '260px',
-							'Client': '165px',
-							'Status': '111px'
 						}
 					}%}
 				{% else %}
@@ -67,19 +62,18 @@
 				{% endif %}
             </div>
         </div>
-		{% include path.js with {
-			include: ['typeahead', 'Table', 'contextmenu', 'Validation']
-		}%}
 		<script>
 		var environment = {
 			root: '{{path.root}}'
 		};
-		{% if jobs %}
-		new Table();
-		{% endif %}
 		</script>
+		{% include path.js with {
+			include: ['typeahead', 'Table', 'contextmenu', 'Validation']
+		}%}
 		<script>
 			$(function(){
+				
+				Table.run();
 				
 				var src = [{% for client in clients %} "{{client.name | raw}}", {% endfor %}];
 				
@@ -101,12 +95,6 @@
 				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});
 				
 				ta.run($('#content'));
-				
-				// STATUS CHANGE
-				$('.wt-filter').on('change', function(){
-					var status = $(this).val();
-					status = status.split(' ').join('+');
-				});
 				
 				// Resizable content material box - EXPERIMENTAL
 				interact('.material').resizable({
