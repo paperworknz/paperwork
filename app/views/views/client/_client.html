@@ -73,27 +73,21 @@
 							'name': 'Name',
 							'client.name': 'Client',
 							'job_status.name': 'Status'
-						},
-						'width': {
-							'Name': '260px',
-							'Client': '165px',
-							'Status': '111px'
 						}
 					}%}
 				</div>
 				{% endif %}
 			</div>
         </div>
-		{% include path.js with {
-			include: ['Tab', 'Table', 'sweetalert']
-		}%}
 		<script>
 			var environment = {
 				root: '{{path.root}}',
 			};
-			{% if jobs %}
-			new Table();
-			{% endif %}
+		</script>
+		{% include path.js with {
+			include: ['Tab', 'Table', 'sweetalert']
+		}%}
+		<script>
 			new Tab({
 				cookie: {
 					name: 'client',
@@ -103,6 +97,10 @@
 		</script>
 		<script>
 			$(function(){
+				
+				{% if jobs %}
+				Table.run();
+				{% endif %}
 				
 				// CLIENT DELETE
 				$(document).on('click', '[client-del-btn]', function(){
