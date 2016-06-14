@@ -7,6 +7,7 @@ var rename	= require('gulp-rename');
 var uglify	= require('gulp-uglify');
 var clean	= require('gulp-clean-css');
 var jeditor	= require('gulp-json-editor');
+var exec	= require('child_process').exec;
 
 // CONSTANTS //
 var path = {
@@ -149,7 +150,7 @@ function servicesJS(file, seed){
 	
 	var file_name	= file.path.replace(/^.*[\\\/]/, ''),
 		shards		= file.path.split('\\'),
-		name		= '';
+		name;
 	
 	// Full name as an array starting at name.css
 	shards.reverse();
@@ -161,22 +162,24 @@ function servicesJS(file, seed){
 	// Update .css-cache depending on seed
 	if(seed !== true) updateCache(path.js_cache, display_name.split('.js')[0], 'services/'+display_name);
 	
-	// Run gulp task with full dir name
-	gulp
-		.src([
-			file.path,
-		])
-		.pipe(babel())
-		.pipe(concat(file_name))
-		.pipe(uglify())
-		.pipe(gulp.dest('public/js/app/services'));
-	
-	// Log
-	if(name == '/'){
-		console.log(display_name+' updated');
-	}else{
-		console.log(display_name+' updated');
-	}
+	exec('php "C:\\Bitnami\\wampstack-7.0.0-0\\apache2\\htdocs\\paperwork\\_Astral\\js.php" ' + file.path + ' ' + display_name, function(e, stdout, stderr){
+		// Run gulp task with full dir name
+		gulp
+			.src([
+				stdout,
+			])
+			.pipe(babel())
+			.pipe(concat(file_name))
+			.pipe(uglify())
+			.pipe(gulp.dest('public/js/app/services'));
+		
+		// Log
+		if(name == '/'){
+			return console.log(display_name+' updated');
+		}else{
+			return console.log(display_name+' updated');
+		}
+	});
 	
 }
 
