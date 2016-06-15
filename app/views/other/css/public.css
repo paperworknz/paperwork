@@ -35,6 +35,9 @@ li {list-style-type:none!important}
 	.nav_list {float: none!important;width:320px!important;margin: 0 auto!important;}
 	.nav_list_less {float: none!important;width:220px;margin: 0 auto!important;}
 	.feature {text-align:center}
+	.quote {font-size: 24px!important;}
+	.quote_lead {font-size: 34px!important;line-height:24px!important;}
+	.quote_author {font-size: 13px!important;}
 }
 
 @media screen and (max-width:500px){
@@ -49,6 +52,7 @@ li {list-style-type:none!important}
 	.user-information input {font-size: 16px!important;}
 	.nav_list {width:150px!important;}
 	.negligible {display:none!important;}
+	.quote {text-align:center!important;padding-left:15px!important;padding-right:15px!important;}
 }
 
 input[type=text], input[type=email], input[type=password] {
@@ -396,4 +400,22 @@ video::-webkit-media-controls {
 .fb:hover {
 	-webkit-filter: grayscale(0%);
 	filter: grayscale(0%);
+}
+
+.quote {
+	text-align: right;
+	font-size: 30px;
+	font-weight: 200;
+	padding: 100px 0px;
+}
+
+.quote_author {
+	display: block;
+	font-size: 18px;
+}
+
+.quote_lead {
+	font-family: Helvetica;
+	font-size: 50px;
+	line-height: 30px;
 }
