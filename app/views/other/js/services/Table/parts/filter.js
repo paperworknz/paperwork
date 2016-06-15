@@ -76,7 +76,7 @@ function newFilter(){
 								<div class="wt-title ac">
 									Create New Filter
 								</div>
-								<div class="wrapper">
+								<div class="wrapper" style="padding-bottom:5px;">
 									<div class="wt-filter-interface_table-label">
 										New Filter Name
 									</div>

@@ -1,7 +1,9 @@
-<link rel="stylesheet" href="http://localhost/wolfe/public/inc/bootstrap/bootstrap-3.3.2.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" type="text/css">
 <style>
-	.pw-form {position:relative;background-color:white;font-size:13px;}
+	.pw-form {position:relative;background-color:white;font-size:13px;font-family:'Open Sans';width:650px;}
 	.pw-form li {list-style-type:none}
+	.pw-user td:nth-child(odd) {width: 140px}
+	.pw-user td {font-weight:300;padding:4px 0px;}
 	header, footer, row {display:table}
 	column {padding: 2px 10px}
 	row, column {float:left}
@@ -18,95 +20,73 @@
 	.blob_item {border-right: 1px solid black;border-left: 1px solid black;line-height:24px;height:24px;}
 	.blob_item, .blob_item div {page-break-inside:avoid!important;}
 	@media print {.blob_item, .blob_item div {page-break-inside:avoid!important}}
-	.qq-left {border-left: 1px solid black;}
-	.ta {z-index:1;width:100%;border-top:1px solid #333;border-left:1px solid #333;border-right:1px solid #333;}
+	.ta {z-index:1;width:100%;}
 	.typeahead {border:1px solid white;width:100%;outline:0}
 	.twitter-typeahead {border-bottom:1px dashed #999}
 </style>
 <section class="pw-form">
 	<header style="width:100%">
-		<div style="float:left" form-logo><img src="logo.png" alt=""></div>
-		<div style="float:right">
-			<div class="h2" style="padding-left:10px" contenteditable form-type>INVOICE</div>
+		<div style="float:left" form-type>
+			<div style="font-size:40px;font-weight:300">Paperwork</div>
+		</div>
+		<div style="float:right;text-align:right;height:57px;padding-top:10px">
+			<div style="font-size:12px;line-height:19px;">HELLO@PAPERWORK.NZ</div>
+			<div style="font-size:12px">WWW.PAPERWORK.NZ</div>
 		</div>
 	</header>
-	<header style="width:100%">
-		<div style="float:left">
-			<div style="font-weight:600;min-width:160px" contenteditable>
-				Logan Rear<br>
-				027 5077 187<br>
-				40 Seddon Street<br>
-				Waikanae<br>
-				logan.rear@hotmail.co.nz
-			</div>
+	<header style="width:100%;padding-top:50px;padding-bottom:30px">
+		<div style="font-size:16px;float:left">
+			<table class="pw-user">
+				<tr>
+					<td contenteditable>To:</td>
+					<td><span contenteditable form-clientblob></span></td>
+				</tr>
+				<tr>
+					<td contenteditable>Issued:</td>
+					<td><span contenteditable form-date></span></td>
+				</tr>
+				<tr>
+					<td contenteditable>Invoice Number:</td>
+					<td><span contenteditable form-jobID></span></td>
+				</tr>
+			</table>
 		</div>
 		<div style="float:right">
-			<section>
-				<ul style="float:left;text-align:right;padding:0;margin:0">
-					<li style="padding:2px 10px" contenteditable>Date</li>
-					<li style="padding:2px 10px" contenteditable>Reference#</li>
-					<li style="padding:2px 10px" contenteditable>GST#</li>
-				</ul>
-				<ul style="float:left;text-align:right;padding:0;margin:0">
-					<li style="border:1px solid black;padding:2px 10px;text-align:center;min-width:86px;" contenteditable form-date></li>
-					<li style="border:1px solid black;border-top:none;padding:2px 10px;text-align:center;min-width:86px;" contenteditable form-jobID></li>
-					<li style="border:1px solid black;border-top:none;padding:2px 10px;text-align:center;min-width:86px;" contenteditable>73-232-678</li>
-				</ul>
-			</section>
+			<span style="color:#999;font-size:30px;line-height:30px;font-weight:300">INVOICE</span>
 		</div>
 	</header>
-	<section style="width:50%;padding-top:15px">
-		<header style="width:100%">
-			<span style="text-align:center;width:100%;display:block;background-color:#39B0EB;font-weight:600;border:1px solid black" contenteditable>CUSTOMER</span>
-		</header>
-		<section style="width:100%;border:1px solid black;border-top:none;text-align:center;padding:2px;display:block" contenteditable form-clientblob>
-			<br><br>
-		</section>
-	</section>
-	<section style="width:100%;padding-top:15px">
-		<header style="width:100%">
-			<span style="text-align:center;width:100%;display:block;background-color:#39B0EB;font-weight:600;border:1px solid black" contenteditable>JOB DESCRIPTION</span>
-		</header>
-		<section style="width:100%;border:1px solid black;border-top:none;text-align:left;padding:5px;display:block" contenteditable form-jobd>
-			<br>
-		</section>
-	</section>
-	<section style="width:100%;padding-top:15px">
+	<section style="width:100%;">
 		<div style="border: 1px solid black;font-size:11px;font-weight:600">
-			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">TOTAL</div>
-			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">UNIT PRICE</div>
-			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">QTY UNIT</div>
-			<div style="text-align:center;background-color:#39B0EB;width:auto;overflow:hidden;height:20px;line-height:20px">CONTRACTORS & MATERIALS</div>
+			<div style="text-align:center;float:right;background-color:#c4dff6;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">TOTAL</div>
+			<div style="text-align:center;float:right;background-color:#c4dff6;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">PRICE</div>
+			<div style="text-align:center;float:right;background-color:#c4dff6;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">QTY</div>
+			<div style="text-align:left;padding-left:6px;background-color:#c4dff6;width:auto;overflow:hidden;height:20px;line-height:20px">ITEM</div>
 		</div>
 		<div style="position:relative;margin-top:-1px" form-inventory></div>
 		<div form-content></div>
 	</section>
-	<footer style="width:100%;padding-top:15px">
-		<div style="float:left;width:410px;font-size:11px">
+	<footer style="width:100%;padding-top:30px;">
+		<div style="float:left;width:410px;font-size:13px">
 			<header style="width:100%">
-				<span style="font-weight:600;font-style:italic;display:block;padding-bottom:5px" contenteditable>
-					Details for Direct Crediting:<br>
-					Bank Account Name: Logan Rear<br>
-					Bank Account Number: 01 0731 0239787 00<br>
-					Reference: LR<span form-jobID></span>
+				<span style="display:block;padding-bottom:5px" contenteditable>
+					<span style="font-weight:200">Details for Direct Crediting:</span><br>
+					<span style="font-weight:200">Payable to </span>Paperwork New Zealand<br>
+					<span style="font-weight:200">Bank Account Number: </span>	38-9017-0691961-00<br>
+					<span style="font-weight:200">Reference: </span>PW-<span form-jobID></span>
 				</span>
-				<span style="text-align:center;width:100%;display:block;background-color:#39B0EB;border:1px solid black" contenteditable>TERMS & CONDITIONS</span>
 			</header>
-			<section style="width:100%;border:1px solid black;border-top:none;text-align:left;padding:2px;display:block" contenteditable>
-				<div form-terms><br></div>
-			</section>
 		</div>
 		<div style="float:right;margin:10px 0px 0px 10px">
 			<section>
 				<ul style="float:left;text-align:right;padding:0;margin:0">
-					<li style="padding:2px 10px" contenteditable>Sub Total</li>
-					<li style="padding:2px 10px" contenteditable>GST</li>
-					<li style="padding:2px 10px;font-weight:600;background-color:#39B0EB;border:1px solid black" contenteditable>TOTAL TO PAY</li>
+					<li style="padding:2px 10px;font-weight:200" contenteditable>Sub Total</li>
+					<li style="padding:2px 10px;font-weight:200" contenteditable>GST</li>
+					<li style="padding:2px 10px;font-weight:600;" contenteditable>TOTAL TO PAY</li>
 				</ul>
 				<ul style="float:left;text-align:right;padding:0;margin:0">
 					<li style="padding:2px 4px;text-align:right;height:22px;min-width:100px" form-subtotal></li>
 					<li style="padding:2px 4px;text-align:right;height:22px" form-tax></li>
-					<li style="border:1px solid black;border-left:none;padding:2px 4px;text-align:right;height:24px;font-weight:600" form-total></li>
+					<li style="border:1px solid black;padding:2px 4px;text-align:right;height:24px;font-weight:600" form-total></li>
 				</ul>
 			</section>
 		</div>
