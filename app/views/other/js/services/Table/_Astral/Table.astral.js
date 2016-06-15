@@ -405,7 +405,7 @@ function newFilter(){
 					<tbody>
 						<tr>
 							<td class="wt-border">
-								<div class="wt-title ac">
+								<div class="wt-title">
 									My Filters
 								</div>
 								<div class="wt-existing-filters_container">
@@ -470,6 +470,11 @@ function newFilter(){
 		var filters = getFilters();
 		
 		if($.isEmptyObject(filters)){
+			$f.find('.wt-existing-filters_container').html(`
+				<div>
+					You don't have any custom filters
+				</div>
+			`);
 			$f.find('.wt-existing-filter-apply').hide();
 		}
 		
