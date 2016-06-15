@@ -1,15 +1,41 @@
 function render(){
 	var order = [],
-		index = [];
+		index = [],
+		filters;
+	
+	// Filter options
+	filters = getFilters();
+	for(let i in filters){
+		const value = filters[i];
+		
+		if(!$filter.find(`option[value="${i}"]`).length){
+			$filter.append(`
+				<option value="${i}">
+					${i}
+				</option>
+			`);
+		}
+	}
 	
 	// Filter rows
 	$filter.val(map.filter);
 	if(map.filter == 'All'){
 		$row.show();
 	}else{
+		let statuses = [];
+		
+		// Hide all
 		$row.hide();
+		
+		// Check if filter is a status name, or a custom filter
+		if(filters[map.filter]){
+			statuses = filters[map.filter].status;
+		}else{
+			statuses[0] = map.filter;
+		}
+		
 		$column.filter('[data-id="Status"]').find('.wt-row').each(function(){
-			if($(this).text() == map.filter){
+			if(statuses.indexOf($(this).text()) !== -1){
 				let id = this.attributes['data-row'].value;
 				
 				$row.each(function(){
@@ -71,7 +97,6 @@ function render(){
 	
 	
 	// Row width
-	
 	for(let i in map.columns){
 		const value = map.columns[i];
 		$column.filter(`[data-id=${i}]`).css('width', value.width);

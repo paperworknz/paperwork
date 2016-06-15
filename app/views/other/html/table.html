@@ -46,18 +46,110 @@
 		.wt-row-hover {
 			background-color:#eee
 		}
-		.wt-reset {
+		.wt-settings {
 			cursor: pointer;
 			color: #337ab7;
 		}
-		.wt-reset:hover {
+		.wt-settings:hover {
 			text-decoration:underline;
+		}
+		
+		/* filter interface */
+		.wt-filter-interface {
+			position: absolute;
+			z-index: 999;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
+			width: 710px;
+			background-color: white;
+			border: none;
+			min-height: 50px;
+			opacity: 0;
+			padding: 15px;
+		}
+		
+		/* New Filter */
+		.wt-filter-interface_table {
+			width: 100%;
+		}
+		.wt-filter-interface_table td {
+			width: 50%;
+			vertical-align: top;
+			padding: 5px;
+		}
+		.wt-filter-interface_table-label {
+			float: left;
+			width: 110px;
+			color: #ccc;
+			font-size: 12px;
+			line-height: 30px;
+			padding: 2.5px 5px;
+			text-align: right;
+		}
+		.wt-border {
+			border-right: 1px solid #ccc;
+		}
+		.wt-title {
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+		.wt-filter-facade {
+			height: 30px;
+			line-height: 30px;
+		}
+		.wt-filter-facade_container {
+			padding: 5px;
+			min-height: 40px;
+		}
+		.wt-multi-select {
+			display:inline-block;
+			background-color:#7dbde8;
+			margin: 2.5px 0px;
+		}
+		.wt-multi-select_object {
+			display: inline-block;
+			padding: 5px;
+			cursor: default;
+		}
+		.wt-multi-select_remove {
+			display: inline-block;
+			background-color: #52a7e0;
+			width: 30px;
+			text-align: center;
+			line-height: 30px;
+			cursor: pointer;
+		}
+		.wt-multi-select_remove:hover {
+			background-color: #2691d9;
+		}
+		
+		/* Existing Filters */
+		
+		.wt-existing-filter {
+			margin: 2.5px 0px;
+		}
+		.wt-existing-filter_input {
+			display: inline-block;
+			border: 1px solid white;
+			width: 260px;
+		}
+		.wt-existing-filter_remove {
+			float: right;
+			cursor: pointer;
+			color: #337ab7;
+			line-height: 30px;
+			margin: 0px 10px;
+		}
+		.wt-existing-filter_remove:hover {
+			text-decoration: underline;
 		}
 	</style>
 	<div class="wt-table" style="display:none">
 		<div class="wrapper" style="margin-bottom:5px">
-			<div class="wt-reset pull-left" title="Reset table to standard width and order">
-				Reset Changes
+			<div class="wt-settings pull-left" title="Edit Filters and Preferences">
+				Filter Settings
 			</div>
 			<div class="pull-right">
 				<select class="wt-filter">
