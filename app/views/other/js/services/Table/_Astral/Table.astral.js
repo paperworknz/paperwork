@@ -508,7 +508,7 @@ function newFilter(){
 		$filter.find('option').each(function(){
 			let id = $(this).attr('value');
 			
-			if(!filters[id]){
+			if(!filters[id] && id != 'All'){
 				$f.find('.wt-filter-facade').append(`
 					<option value="${id}">
 						${id}
