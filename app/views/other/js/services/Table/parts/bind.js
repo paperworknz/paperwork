@@ -3,7 +3,7 @@ $row.on('mouseover', hover);
 $row.on('mouseout', hover);
 
 // Reset Changes
-$reset.on('click', reset);
+$settings.on('click', newFilter);
 
 // When a row is clicked, goto(href)
 $row.on('click', function(){

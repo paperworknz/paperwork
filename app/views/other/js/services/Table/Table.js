@@ -1,12 +1,13 @@
 var Table = (function($, environment){
 	
-	var map;
+	var map,
+		filters;
 	
 	const $table = $('.wt-table'),
 		$row = $table.find('.wt-row'),
 		$column = $table.find('.wt-column'),
 		$filter = $table.find('.wt-filter'),
-		$reset = $table.find('.wt-reset');
+		$settings = $table.find('.wt-settings');
 	
 	const config = {
 		filter: 'All',
