@@ -6,5 +6,6 @@
 	"Validation": "services/Validation.js?VTIi3e",
 	"Form": "services/Form.js?0NCaOl",
 	"Paperwork": "Paperwork.js?RYoFr5",
-	"Armadyl": "services/Armadyl.js?sQb1Wj"
+	"Armadyl": "services/Armadyl.js?sQb1Wj",
+	"Notification": "services/Notification.js?OkU0OF"
 }
