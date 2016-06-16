@@ -49,6 +49,12 @@
 				<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
 			</div>
 		</footer>
+		<script>
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
 		{% include path.js %}
 		<script>
 			$(function(){

@@ -1,5 +1,5 @@
 /********** Basic **********/
-body {width:100%!important;height:100%!important;padding:0!important;background-color:#e8e8e8!important;}
+body {position:relative!important;overflow-x:hidden!important;width:100%!important;height:100%!important;padding:0!important;background-color:#e8e8e8!important;}
 ul {-webkit-padding-start:0px!important;margin:0!important}
 li {list-style-type:none!important}
 input, select {
@@ -73,7 +73,7 @@ input::-webkit-inner-spin-button {
 .w1 {width:100%}
 .fr {float:right}
 .h {display:none}
-.im {position:relative;z-index:1}
+.im {position: relative; z-index: 1;}
 
 
 /********** Containers **********/
@@ -195,14 +195,14 @@ input::-webkit-inner-spin-button {
 
 /* Sidebar */
 #sidebar {
-	position:fixed;
-	left:0;
-	top:0;
-	background-color:#333;
-	color:white;
-	list-style:none;
-	z-index:2000;
-	line-height:40px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background-color: #333;
+	color: white;
+	list-style: none;
+	z-index: 1;
+	line-height: 40px;
 }
 #sidebar li:hover{background-color:#666;cursor:pointer;}
 #sidebar a {color:white;}
@@ -221,9 +221,19 @@ input::-webkit-inner-spin-button {
 }
 
 /********** new-object.html **********/
+#new-content table {margin: auto;}
 #new-content td{padding:2px 5px;}
-.n-new{width:285px;cursor:default}
-#create-new{padding:10px 0px 5px 0px;cursor:pointer}
+.n-new{
+	width: 100%;
+	cursor: default;
+	background-color: white;
+}
+#create-new{
+	background-color: white;
+	padding: 30px 0px;
+	cursor: pointer;
+	margin: 0;
+}
 #create-new:hover{text-decoration:underline}
 .noselect {
     -webkit-touch-callout: none;
@@ -324,9 +334,9 @@ input::-webkit-inner-spin-button {
 }
 
 .tabobj {
-	display:block;
-	position:relative;
-	z-index:1;
+	display: block;
+	position: relative;
+	z-index: 1;
 }
 
 .token {
@@ -465,6 +475,41 @@ input::-webkit-inner-spin-button {
 	opacity: 0;
 	position: fixed;
 	top: 0;
-	z-index: 2;
 	overflow: hidden;
+}
+
+.pw-notification-container {
+	position: absolute;
+}
+
+.pw-notification-text {
+	position: relative;
+	float: left;
+	top: 0;
+	z-index: 1;
+	font-size: 14px;
+	line-height: 14px;
+	background-color: #53aee0;
+	padding: 10px 16px;
+	color: white;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	cursor: default;
+}
+
+.triangle-parent {
+	position: relative;
+	float: left;
+	left: 0;
+	top: 0;
+	width: 6px;
+	z-index: 2;
+}
+
+.triangle-left {
+	position: relative;
+	width: 0;
+	height: 0;
+	border-top: 5px solid transparent;
+	border-right: 6px solid #53aee0;
+	border-bottom: 5px solid transparent;
 }

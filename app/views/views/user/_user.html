@@ -48,6 +48,12 @@
 				</div>
 			</div>
         </div>
+		<script>
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
 		{% include path.js with {
 			include: ['Tab']
 		}%}
@@ -126,10 +132,9 @@
 					location = '{{path.root}}/user/' + next;
 				});
 				
+				{% include path.load %}
 				update();
-				
 			});
 		</script>
-		{% include path.load %}
     </body>
 </html>

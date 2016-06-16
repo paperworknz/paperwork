@@ -18,7 +18,17 @@
 				</div>
 			</div>
         </div>
+		<script>
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
 		{% include path.js %}
-		{% include path.load %}
+		<script>
+			$(function(){
+				{% include path.load %}
+			});
+		</script>
     </body>
 </html>

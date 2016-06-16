@@ -18,6 +18,12 @@
 				</div>
 			</div>
         </div>
+		<script>
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
 		{% include path.js with {
 			include: ['interact']
 		}%}
@@ -46,6 +52,7 @@
 					}
 				});
 				
+				{% include path.load %}
 			});
 		</script>
     </body>

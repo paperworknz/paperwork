@@ -32,7 +32,7 @@ Form.prototype.margin = function(form){
 	// Darken page, then show the concern
 	a.dark(form); // Turn off interaction
 	
-	var d = dark();
+	var d = Paperwork.dark();
 	var dark_container = d.object;
 	var fade = d.object.find('.dark_object');
 	
