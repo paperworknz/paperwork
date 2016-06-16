@@ -12,6 +12,7 @@
 					<li data-tab="1" class="tab noselect">UAC</li>
 					<li data-tab="2" class="tab noselect">Toggles</li>
 					<li data-tab="3" class="tab noselect">Backup</li>
+					<li data-tab="4" class="tab noselect">Notifications</li>
 				</ul>
 			</div>
 			<div class="obj">
@@ -61,6 +62,38 @@
 				<div data-obj="3" class="box material im">
 					<button pw-backup class="wolfe-btn" style="margin-top:15px">BACKUP</button>
 				</div>
+				<div data-obj="4" class="box material im" style="padding: 30px;">
+					<table class="new-notification">
+						<tbody>
+							<tr>
+								<td>user_id</td>
+								<td><input type="text" name="user_id" placeholder="1,2,3 || All, all, *" required></td>
+							</tr>
+							<tr>
+								<td>Page</td>
+								<td><input type="text" name="page" placeholder="jobs" required></td>
+							</tr>
+							<tr>
+								<td>Text</td>
+								<td><input type="text" name="text" placeholder="What arm thing homie?" required></td>
+							</tr>
+							<tr>
+								<td>Anchor</td>
+								<td><input type="text" name="anchor" placeholder=".box" required></td>
+							</tr>
+							<tr>
+								<td>Position</td>
+								<td><input type="text" name="position" placeholder="right-center" required></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="height:40px">
+									<button class="wolfe-btn notification-post" style="margin-top:3px">POST</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<script>
@@ -70,15 +103,18 @@
 		};
 		</script>
 		{% include path.js with {
-			include: ['Tab', 'sweetalert']
+			include: ['Tab', 'sweetalert', 'Validation']
 		}%}
 		<script>
 			$(function(){
+				
 				new Tab({
 					cookie: {
 						name: 'admin'
 					}
 				});
+				
+				var v = new Validation;
 				
 				var landing = 0;
 				var regist = 0;
@@ -226,6 +262,41 @@
 					.done(function(data){
 						if(data == 'Success') Paperwork.ready(button, 'BACKUP');
 					});
+				});
+				
+				// Notification
+				v.input($('.new-notification'), $('.notification-post'), 'notification', {
+					allowDuplicates: true
+				});
+				$('.notification-post').on('click', function(){
+					var $notification = $('.new-notification');
+					var user_id = $notification.find('[name="user_id"]').val();
+					if(user_id == 'all' || user_id == '*' || user_id == 'All'){
+						user_id = '*';
+					}else{
+						user_id = user_id.split(',');
+					}
+					
+					user_id = JSON.stringify(user_id);
+					
+					$.post(environment.root+'/admin/post/notification', {
+						user_id: user_id,
+						page: $notification.find('[name="page"]').val().trim(),
+						text: $notification.find('[name="text"]').val().trim(),
+						anchor: $notification.find('[name="anchor"]').val().trim(),
+						position: $notification.find('[name="position"]').val().trim(),
+					}).done(function(data){
+						if(data == 'success'){
+							alert('Success');
+						}else{
+							console.log(data);
+							alert('Notification post failed');
+						}
+					}).fail(function(data){
+						console.log(data);
+						alert('Notification post failed');
+					})
+					
 				});
 				
 				{% include path.load %}
