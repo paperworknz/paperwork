@@ -130,34 +130,36 @@
 			</div>
 		</div>
 		<div class="email-signature-raw" style="display:none">{{email.signature|raw}}</div>
+		<script>
+		var environment = {
+			job_id: '{{job.id}}',
+			job_number: '{{job.job_number}}',
+			client_id: '{{client.id}}',
+			client_number: '{{client.client_number}}',
+			client_name: '{{client.name}}',
+			client_email: '{{client.email}}',
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
 		{% include path.js with {
 			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu', 'selection', 'Validation']
 		}%}
 		<script>
-			var environment = {
-				job_id: '{{job.id}}',
-				job_number: '{{job.job_number}}',
-				client_id: '{{client.id}}',
-				client_number: '{{client.client_number}}',
-				client_name: '{{client.name}}',
-				client_email: '{{client.email}}',
-				root: '{{path.root}}',
-			};
-			var tab	= new Tab({
-				tabParent: '.tabs-job',
-				cookie: {
-					name: 'job',
-					value: '{{job.job_number}}',
-				}
-			});
-			var v = new Validation;
+		var tab	= new Tab({
+			tabParent: '.tabs-job',
+			cookie: {
+				name: 'job',
+				value: '{{job.job_number}}',
+			}
+		});
+		var v = new Validation;
 		</script>
 		<script src="{{path.root}}/js/app/{{path.js_cache[job.painter]}}"></script>
 		<script src="{{path.root}}/js/app/{{path.js_cache.Form}}"></script>
 		<script>var form = new Form;</script>
 		<script>
 		$(function(){
-			
 			// AJAX CALL FOR PDFS
 			Paperwork.wait($('.pdf-load'));
 			$.get('{{path.root}}/get/pdf-json/{{job.job_number}}')
@@ -431,8 +433,8 @@
 				}, 2000);
 			});
 			
+			{% include path.load %}
 		});
 		</script>
-		{% include path.load %}
 	</body>
 </html>

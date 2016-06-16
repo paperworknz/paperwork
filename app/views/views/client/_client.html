@@ -80,9 +80,10 @@
 			</div>
         </div>
 		<script>
-			var environment = {
-				root: '{{path.root}}',
-			};
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
 		</script>
 		{% include path.js with {
 			include: ['Tab', 'Table', 'sweetalert']
@@ -146,8 +147,9 @@
 					var target = event.target;
 					target.style.width  = event.rect.width + 'px';
 				});
+				
+				{% include path.load %}
 			});
 		</script>
-		{% include path.load %}
     </body>
 </html>

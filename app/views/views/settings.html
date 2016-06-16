@@ -212,6 +212,12 @@
 				</div>
 			</div>
 		</div>
+		<script>
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
 		{% include path.js with {
 			include: ['Tab', 'Validation', 'sortable']
 		}%}
@@ -351,8 +357,8 @@
 					});
 				});
 				
+				{% include path.load %}
 			});
 		</script>
-		{% include path.load %}
     </body>
 </html>

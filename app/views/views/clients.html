@@ -7,13 +7,13 @@
         {% include path.scaffolding %}
         <div id="content" style="display:none;">
             <div style="width:610px">{% include path.flash %}</div>
-            <div class="box material">
+            <div class="box material" style="padding: 0">
                 <div class="n-new center">
 					<div id="create-new" class="h4 ac w1 noselect">
 						New Client
 					</div>
 					<div id="new-content" style="display:none">
-						<table>
+						<table style="margin-bottom: 20px;">
 							<tbody>
 								<tr>
 									<td class="ar">
@@ -33,12 +33,18 @@
 						</table>
 					</div>
 				</div>
-				<hr>
-				<div id="the-basics">
+				<hr style="margin-top: 0;">
+				<div id="the-basics" style="padding: 15px;">
 					<input type="text" class="typeahead" placeholder="Quick Search" />
 				</div>
             </div>
         </div>
+		<script>
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
 		{% include path.js with {
 			include: ['typeahead', 'Validation']
 		}%}
@@ -58,6 +64,9 @@
 				
 				var v = new Validation;
 				v.input($('#new-content'), $('#new-content button'), 'clients');
+				
+				// New object
+				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});
 				
 				var clientTypeahead = function(){
 					var go = function(){
@@ -84,11 +93,6 @@
 					$('.tt-input').focus();
 				};
 				
-				clientTypeahead();
-				
-				// New object
-				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});
-				
 				// New Client
 				$('[create-btn]').on('click', function(){
 					if($('[client-name]').val().length > 0){
@@ -107,8 +111,10 @@
 						});
 					}
 				});
+				
+				{% include path.load %}
+				clientTypeahead();
 			});
 		</script>
-		{% include path.load %}
     </body>
 </html>

@@ -51,10 +51,10 @@ function removeFilter(name){
 
 function newFilter(){
 		
-		// Paperwork dark();
-		var d = dark();
-		var dark_container = d.object;
-		var fade = d.object.find('.dark_object');
+		// Paperwork.dark();
+		var d = Paperwork.dark(),
+			dark_container = d.object,
+			fade = d.object.find('.dark_object');
 		
 		// Copy content
 		fade.after(`
@@ -72,7 +72,7 @@ function newFilter(){
 								<div class="wt-existing-filters_container">
 								</div>
 							</td>
-							<td>
+							<td class="wt-new-box">
 								<div class="wt-title ac">
 									Create New Filter
 								</div>

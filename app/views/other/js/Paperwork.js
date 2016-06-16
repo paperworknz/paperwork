@@ -1,6 +1,7 @@
 var Paperwork = (function(){
 	
 	const $document = $(document);
+	var darkIndex = 49;
 	
 	preventBackspace();
 	flow();
@@ -63,10 +64,55 @@ var Paperwork = (function(){
 		});
 	}
 	
+	function dark(container) {
+		var container = container != undefined ? con : $('#content'),
+			dc = 'dark_container',
+			chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			result = '';
+		
+		darkIndex++;
+		
+		// Generate random string, length of 6
+		for(var i = 6; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+		
+		// Fade
+		container.after(`
+			<div class="${dc}" data-module="${result}">
+				<div class="dark_object" disable>
+				</div>
+			</div>
+		`);
+		
+		var $dark_module = $(`.${dc}`).filter(`[data-module="${result}"]`);
+		$dark_module.css('z-index', darkIndex);
+		
+		// Return dark_instance
+		return {
+			object: $dark_module,
+			run: function(callback){
+				$dark_module.find(`.dark_object`).animate({
+					opacity: 0.66,
+				}, 150, function(){
+					if(callback != undefined) callback();
+				});
+			},
+			remove: function(callback){
+				$dark_module.find(`.dark_object`).fadeOut(150, function(){
+					$dark_module.remove();
+					if(callback != undefined) callback();
+				});
+			},
+		};
+	}
+	
 	return {
 		wait: wait,
 		ready: ready,
 		saved: saved,
+		dark: dark,
+		dark_instance: function(){
+			return dark_instance;
+		}
 	};
 	
 })();
@@ -219,42 +265,3 @@ $('a').on('click', function(e){
 		goto($(this).attr('href'));
 	}
 });
-
-function dark(container, name) {
-	
-	var container = container != undefined ? con : $('#content'),
-		name = name != undefined ? name : '',
-		dc = 'dark_container',
-		chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-		result = '';
-	
-	// Generate random string, length of 6
-	for(var i = 6; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-	
-	// Fade
-	container.after(`
-		<div class="${dc} ${result}">
-			<div class="dark_object ${name}" disable>
-			</div>
-		</div>
-	`);
-	
-	// Container
-	return {
-		object: $(`.${dc}`),
-		run: function(callback){
-			$(`.${dc} .dark_object`).animate({
-				opacity: 0.66,
-			}, 150, function(){
-				if(callback != undefined) callback();
-			});
-		},
-		remove: function(callback){
-			$(`.${dc} .dark_object`).fadeOut(150, function(){
-				$(`.${dc}`).remove();
-				if(callback != undefined) callback();
-			});
-		},
-	};
-	
-};

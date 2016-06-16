@@ -7,14 +7,14 @@
         {% include path.scaffolding %}
         <div id="content" style="display:none;">
 			<div style="width:610px">{% include path.flash %}</div>
-            <div class="box material">
+            <div class="box material" style="padding: 0">
                 <div class="n-new center">
 					<div id="create-new" class="h4 ac w1 noselect">
 						New Job
 					</div>
 					<div id="new-content" style="display:none">
 						<form method="post" action="{{path.root}}/post/job">
-							<table>
+							<table style="margin: auto;margin-bottom: 20px;">
 								<tbody>
 									<tr>
 										<td class="ar">
@@ -45,26 +45,29 @@
 						</form>
 					</div>
 				</div>
-				<hr>
-				{% if jobs %}
-					{% include path.table with {
-						'data': jobs,
-						'head': {
-							'id': '_id',
-							'job_number': 'ID',
-							'name': 'Name',
-							'client.name': 'Client',
-							'job_status.name': 'Status',
-						}
-					}%}
-				{% else %}
-				<div class="ac">Start your first job by hitting New Job!</div>
-				{% endif %}
+				<hr style="margin-top: 0;">
+				<div style="padding: 15px;">
+					{% if jobs %}
+						{% include path.table with {
+							'data': jobs,
+							'head': {
+								'id': '_id',
+								'job_number': 'ID',
+								'name': 'Name',
+								'client.name': 'Client',
+								'job_status.name': 'Status',
+							}
+						}%}
+					{% else %}
+					<div class="ac">Start your first job by hitting New Job!</div>
+					{% endif %}
+				</div>
             </div>
         </div>
 		<script>
 		var environment = {
-			root: '{{path.root}}'
+			root: '{{path.root}}',
+			page: '{{path.page}}',
 		};
 		</script>
 		{% include path.js with {
@@ -147,8 +150,9 @@
 					}
 				});
 				{% endif %}
+				
+				{% include path.load %}
 			});
 		</script>
-		{% include path.load %}
     </body>
 </html>
