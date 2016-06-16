@@ -13,6 +13,7 @@ class Js {
 		$core = $path.$name;
 		
 		$js = file_get_contents($core);
+		
 		if(strpos($js, '//->')){
 			$shards = preg_split("/\r\n|\n|\r/", $js);
 			
@@ -30,6 +31,8 @@ class Js {
 			
 			// Join array into a string
 			$file = implode("\n", $shards);
+		}else{
+			$file = $js;
 		}
 		
 		// Make _Astral folder if it doesn't exist
@@ -56,4 +59,8 @@ class Js {
 }
 
 $parse = new Js;
-if(isset($argv[1])) $parse->run($argv[1]);
+if(isset($argv[1])){
+	$parse->run($argv[1]);
+}else{
+	$parse->run('C:\\Bitnami\\wampstack-7.0.0-0\\apache2\\htdocs\\paperwork\\app\\views\\other\\js\\services\\Notification\\Notification.js');
+}
