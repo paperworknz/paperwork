@@ -14,14 +14,14 @@ $app->get('/user/:a', 'admin', function($a) use ($app){
 	
 	/* Construction */
 	if($user = $app->sql->get('user')->where('id', '=', $a)->root()->one()){
-		return $app->build->page('views/user/_user.html', [
+		return $app->build->page('views/user/$user.html', [
 			'host' => $user,
 		]);
 	}else{
 		$user = [
 			'id' => 'Guest'
 		];
-		return $app->build->page('views/user/_user.html', [
+		return $app->build->page('views/user/$user.html', [
 			'host' => $user,
 		]);
 	}

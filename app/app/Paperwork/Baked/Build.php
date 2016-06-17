@@ -9,12 +9,11 @@ class Build {
 		$view	= $app->view();
 		
 		// CSS Cache
-		$css = str_replace('.html', '', $html);
+		$css = str_replace(['views/', '$', '.html'], '', $html);
 		$css_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.css-cache'));
 		$css = isset($css_cache[$css]) ? $css_cache[$css] : $css = $css.'.css';
 		
 		// JS Cache
-		$js = str_replace('.html', '', $html);
 		$js_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.js-cache'));
 		
 		// Cookies
@@ -32,11 +31,11 @@ class Build {
 		$result = [
 			'path' => [
 				'root' => $app->root,
-				'paperwork_css' => $css_cache['paperwork'],
-				'public_css' => $css_cache['public'],
-				'css' => $css,
+				'paperwork_css' => $css_cache['@Paperwork'],
+				'public_css' => $css_cache['@Public'],
+				'page_css' => $css,
 				'js_cache' => $js_cache,
-				'page' => str_replace('/', '', $app->request->getResourceUri()),
+				'page' => ltrim($app->request->getResourceUri(), '/'),
 			],
 			'env'	=> $app->env,
 			'user'	=> $app->user,

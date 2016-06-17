@@ -54,6 +54,7 @@ var Table = (function($, environment){
 	}
 	
 	function run(){
+		bind();
 		getMap();
 		render();
 	}

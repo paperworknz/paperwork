@@ -1,11 +1,11 @@
 {
-	"Tab": "services/Tab.js?kk94o9",
-	"Table": "services/Table.js?1Wv6mX",
-	"Typeahead": "services/Typeahead.js?O6v0x8",
-	"Paint": "services/Paint.js?BBM2DS",
-	"Validation": "services/Validation.js?VTIi3e",
-	"Form": "services/Form.js?xAINQL",
-	"Paperwork": "Paperwork.js?MEWiPf",
-	"Armadyl": "services/Armadyl.js?sQb1Wj",
-	"Notification": "services/Notification.js?qyV73x"
+	"Tab": "Tab.js?La7s5d",
+	"Table": "Table.js?Aqv8nu",
+	"Typeahead": "Typeahead.js?xibwJj",
+	"Paint": "Paint.js?qn4ohi",
+	"Validation": "Validation.js?bSQMRs",
+	"Form": "Form.js?GBZxeH",
+	"Paperwork": "Paperwork.js?cyp0wc",
+	"Notification": "Notification.js?D9wPeE",
+	"Armadyl": "Armadyl.js?EZcVdb"
 }
