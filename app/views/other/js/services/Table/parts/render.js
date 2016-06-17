@@ -80,12 +80,12 @@ function render(){
 		
 		if(map.columns[value].state == 'asc'){
 			$col.find('img').css('display', 'block');
-			$col.find('img').attr('src', environment.root+'/css/app/media/up.png');
+			$col.find('img').attr('src', environment.root+'/css/media/up.png');
 			$col.find('.wt-head').attr('data-state', 'asc');
 			sort(value, 'asc');
 		}else if(map.columns[value].state == 'desc'){
 			$col.find('img').css('display', 'block');
-			$col.find('img').attr('src', environment.root+'/css/app/media/down.png');
+			$col.find('img').attr('src', environment.root+'/css/media/down.png');
 			$col.find('.wt-head').attr('data-state', 'desc');
 			sort(value, 'desc');
 		}else if(map.columns[value].state == 'def'){

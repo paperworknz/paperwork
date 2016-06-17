@@ -16,7 +16,7 @@ $app->get('/client/:a', 'uac', function($a) use ($app){
 		
 		$status = $app->sql->get('job_status')->select(['name'])->also('ORDER BY job_status_number')->all();
 		
-		return $app->build->page('views/client/_client.html', [
+		return $app->build->page('views/client/$client.html', [
 			'client'	=> $client,
 			'jobs'		=> $jobs,
 			'status'	=> $status,

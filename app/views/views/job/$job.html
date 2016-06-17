@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include path.head %}
+		<meta name="format-detection" content="telephone=no">
+	</head>
+	<body>
+		{% include path.scaffolding %}
+		<div id="content" style="display:none;padding:15px 0px 0px 15px">
+			<div style="width:100%">
+            	{% include path.flash %}
+			</div>
+			<div class="tabs-job">
+				<ul class="wrapper">
+					<li data-tab="0" id="summarytab" class="tab noselect">Job</li>
+					{% set i = 0 %}
+					{% for form in forms %}
+						{% set i = i + 1 %}
+						<li data-tab="{{i}}" class="tab noselect">{{form.name}}</li>
+					{% endfor %}
+					{% set i = i + 1 %}
+					<li data-tab="{{i}}" heir hidden></li>
+					<li data-tab="+" id="newtab" class="tab noselect">+</li>
+				</ul>
+			</div>
+			<div class="obj" style="display:inline-block;margin-bottom:15px">
+				<div data-obj="0" id="summary" class="tabobj box job-material">
+					<div>
+						<input type="text" class="jobName h3" name="jobName" value="{{job.name}}" placeholder="Job name"/>
+						<select title="Status" class="pull-right" style="margin-top:20px;height:36px;line-height:36px;" job-status-select>
+							{% for item in status %}
+								{% if job.job_status.name == item.name %}
+								<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
+								{% else %}
+								<option value="{{item.name}}"/>{{item.name}}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+					<hr>
+					<table class="clientdetails">
+						<tbody>
+							<tr>
+								<td>Job</td>
+								<td title="Job #{{job.job_number}}">#{{job.job_number}}</td>
+							</tr>
+							<tr>
+								<td>Client</td>
+								<td><a href="{{path.root}}/client/{{client.client_number}}" title="{{client.name}}'s Page">{{client.name}}</a></td>
+							</tr>
+							{% if client.email %}
+							<tr>
+								<td>Email</td>
+								<td><a href="mailto:{{client.email}}" title="Send Email" target="_blank">{{client.email}}</a></td>
+							</tr>
+							{% endif %}
+							{% if client.address %}
+							<tr>
+								<td>Address</td>
+								<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
+							</tr>
+							{% endif %}
+							{% if client.phone %}
+							<tr>
+								<td>Phone</td>
+								<td><a href="tel:{{client.phone}}" title="Call {{client.name}}">{{client.phone}}</a></td>
+							</tr>
+							{% endif %}
+							{% if job.date_created %}
+							<tr>
+								<td>Started</td>
+								<td title="{{job.date_created}}">{{job.date_created_pretty}}</td>
+							</tr>
+							{% endif %}
+							{% if job.date_invoiced %}
+							<tr>
+								<td>Invoiced</td>
+								<td title="{{job.date_invoiced}}">{{job.date_invoiced_pretty}}</td>
+							</tr>
+							{% endif %}
+							{% if job.date_completed %}
+							<tr>
+								<td>Closed</td>
+								<td title="{{job.date_completed}}">{{job.date_completed_pretty}}</td>
+							</tr>
+							{% endif %}
+							<tr>
+								<td class="token pdf-title" style="padding-top:6px;vertical-align:top;"></td>
+								<td>
+									<div class="pdf-load"></div>
+									<div class="pdf-list"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="wrapper">
+						<form method="post" action="{{path.root}}/delete/job" job-del-form>
+							<input type="hidden" name="id" value="{{job.id}}"/>
+						</form>
+						<button class="wolfe-btn delete pull-right" job-del-btn>Delete Job</button>
+					</div>
+				</div>
+				{% set i = 0 %}
+				{% for a,b in forms %}
+					{% set i = i + 1 %}
+					<div data-obj="{{i}}" class="tabobj h">
+						{% include path.form with {
+							id: a,
+							html: b.html
+						} %}
+					</div>
+				{% endfor %}
+				{% set i = i + 1 %}
+				<div data-obj="{{i}}" heir hidden></div>
+				<div data-obj="+" id="newtabscreen" class="tabobj box job-material h" style="padding-top:15px">
+					{% for a,b in templates %}
+					<div class="new-template" new-template data-templateid="{{a}}" href="{{path.root}}/post/form">
+						{{b.name}}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div note-parent class="box wrapper note-parent" style="display:inline-block;vertical-align:top;padding:5px;">
+				<div style="color:#7f8c8d">
+					<span style="line-height:9pt;font-size:9pt">Notes</span>
+				</div>
+				<div note-wrapper class="note-wrapper" style="width:250px;min-height:209px;border:1px solid #eee;cursor:text;min-width:30px;" class="wrapper" >
+					<div id="notes" style="padding:4px;min-width:30px;min-height:30px;outline:none" contenteditable>{{job.notes | raw}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="email-signature-raw" style="display:none">{{email.signature|raw}}</div>
+		<script>
+		var environment = {
+			job_id: '{{job.id}}',
+			job_number: '{{job.job_number}}',
+			client_id: '{{client.id}}',
+			client_number: '{{client.client_number}}',
+			client_name: '{{client.name}}',
+			client_email: '{{client.email}}',
+			root: '{{path.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
+		{% include path.js with {
+			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu', 'selection', 'Validation']
+		}%}
+		<script>
+		var tab	= new Tab({
+			tabParent: '.tabs-job',
+			cookie: {
+				name: 'job',
+				value: '{{job.job_number}}',
+			}
+		});
+		var v = new Validation;
+		</script>
+		<script src="{{path.root}}/js/services/{{path.js_cache[job.painter]}}"></script>
+		<script src="{{path.root}}/js/services/{{path.js_cache.Form}}"></script>
+		<script>var form = new Form;</script>
+		<script>
+		$(function(){
+			// AJAX CALL FOR PDFS
+			Paperwork.wait($('.pdf-load'));
+			$.get('{{path.root}}/get/pdf-json/{{job.job_number}}')
+			.done(function(data){
+				if(data != '0'){
+					$('.pdf-load').remove();
+					$('.pdf-title').html('Paper');
+					data = JSON.parse(data);
+					$.each(data, function(a,b){
+						$('.pdf-list').append(
+							'<div style="height:24px;line-height:24px">'+
+								'<a target="_blank" href="{{path.root}}/get/pdf/{{job.job_number}}/'+b+'">'+b+'</a>'+
+							'</div>'
+						);
+					});
+				}else{
+					$('.pdf-load').closest('tr').remove();
+				}
+			});
+			
+			// JOB STATUS
+			$(document).on('change', '[job-status-select]', function(){
+				if($(this).val() != undefined){
+					$.post('{{path.root}}/put/job-details', {
+						id: '{{job.id}}',
+						status: $(this).val()
+					}).done(function(data){
+						if(data != '0'){
+							Paperwork.saved();
+							if(data == 'Completed'){
+								location.reload();
+							}
+						}
+					});
+				}
+			});
+			
+			// NOTES FOCUS
+			$('[note-wrapper]').on('click', function(){
+				$('#notes').focus();
+			});
+			
+			// NOTES CHANGE
+			var notes = $('#notes').html();
+			$('#notes').on('blur', function(){
+				if($(this).html() != notes){
+					$.post('{{path.root}}/put/job-details', {
+						notes: $(this).html(),
+						id: '{{job.id}}',
+					}).done(function(){
+						notes = $('#notes').html();
+						Paperwork.saved();
+					});
+				}
+			});
+			
+			// JOB NAME CHANGE
+			$('.jobName').change(function(){
+				if($('.jobName').val() !=''){
+					$.post('{{path.root}}/put/job-details', {
+						name: $('.jobName').val(),
+						id: '{{job.id}}',
+					}).done(function(){
+						Paperwork.saved();
+					});
+				}
+			});
+			
+			// JOB DELETE
+			$(document).on('click', '[job-del-btn]', function(){
+				$this = $(this);
+				
+				Paperwork.wait($this);
+				swal({
+					title: 'Are you sure you want to delete this job?',
+					text: 'Deleting this job will delete ALL quotes and invoices attached',
+					showCancelButton: true,
+					closeOnConfirm: true,
+				}, function(result){
+					if(result){
+						$('[job-del-form]').submit();
+					}else{
+						Paperwork.ready($this, 'Delete Job');
+					}
+				});
+			});
+			
+			// Right click context menu
+			$('.tabs-job').contextMenu({
+				selector: '.tab',
+				callback: function(key){
+					var item = $(this).attr('data-tab'),
+						id = $('[data-obj="'+item+'"]').find(form.form).attr('data-formid');
+					
+					if(key != 'cancel' && id != undefined){
+						swal({
+							title: 'New Name',
+							type: 'input',
+							showCancelButton: true,
+							closeOnConfirm: false,
+							showLoaderOnConfirm: true,
+						}, function(name){
+							if(name === false){
+								return false
+							}else if(name === ''){
+								swal.showInputError('You need to write something!');
+								return false;
+							}
+							$.post('{{path.root}}/put/rename-form', {
+								id: id,
+								name: name,
+							}).done(function(data){
+								data = JSON.parse(data);
+								if(data.type == 'success'){
+									swal({
+										title: 'Renamed Form!',
+										timer: '1000',
+										type: 'success',
+										showConfirmButton: false
+									});
+									$('[data-tab="'+item+'"]').html(data.name);
+								}
+							});
+						});
+					}
+				},
+				items: {
+					Rename: {
+						name: 'Rename'
+					},
+					sep: '-',
+					cancel: {
+						name: 'Cancel'
+					}
+				}
+			});
+			
+			// FORM.POST()
+			$(document).on('click', '[new-template]', function(){
+				var button = $(this),
+					name = $(this).html();
+				
+				Paperwork.wait(button);
+				form.post({
+					url: '{{path.root}}/post/form',
+					template_name: name,
+					template_id: button.attr('data-templateid'),
+					client_id: '{{client.id}}',
+					job_id: '{{job.id}}',
+					job_number: '{{job.job_number}}',
+				}, function(bool){
+					if(bool){
+						Paperwork.ready(button, name);
+						$(form.s).find('[form-blob]').removeClass('form-loading');
+					}else{
+						//location.reload();
+					}
+					$(form.s).find('.tt-input').focus();
+				});
+			});
+			
+			// FORM.PUT()
+			$(document).on('click', '[form-save-btn]', function(){
+				var button = $(this);
+				
+				Paperwork.wait(button);
+				form.put({
+					url: '{{path.root}}/put/form',
+					id: $(form.s).find('[form-blob]').attr('data-formid'),
+				}, function(bool){
+					if(bool){
+						Paperwork.ready(button, 'SAVE');
+						Paperwork.saved();
+					}else{
+						Paperwork.ready(button, 'SAVE');
+						Paperwork.saved('Failed to save');
+					}
+				});
+			});
+			
+			// FORM.DELETE()
+			$(document).on('click', '[form-del-btn]', function(){
+				var button = $(this);
+				
+				Paperwork.wait(button);
+				$(form.s+' '+form.form).addClass('form-loading');
+				swal({
+					title: 'Are you sure you want to delete this?',
+					text: 'Deleting this will remove it forever',
+					showCancelButton: true,
+					closeOnConfirm: true,
+				}, function(a){
+					if(a){
+						form.delete({
+							url: '{{path.root}}/delete/form',
+							form_id: $(form.s).find('[form-blob]').attr('data-formid'),
+						}, function(){
+							var noteposition = $('[note-parent]').position(),
+								noteparent = $('[note-parent]').clone(),
+								tab_id = $('.'+tab.activeTab).attr('data-tab');
+							$('[note-parent]').css({
+								'position':'absolute',
+								'top':noteposition.top,
+								'left':noteposition.left
+							});
+							$(form.s).slideUp('fast', function(){
+								$(form.s).remove();
+								$('.'+tab.tab+'.'+tab.activeTab).fadeOut('fast', function(){
+									tab.activate($('[data-tab="'+tab_id+'"]').prev());
+									$('[note-parent]').replaceWith(noteparent);
+									$('[note-wrapper]').on('click', function(){
+										$('#notes').focus();
+									});
+									$(this).remove();
+								});
+							});
+						});
+					}else{
+						Paperwork.ready(button, 'DELETE');
+					}
+					
+				});
+			});
+			
+			// PDF
+			$(document).on('click', '[form-pdf-btn]', function(){
+				var button = $(this),
+					html = button.html();
+				
+				Paperwork.wait(button);
+				form.put({
+					url: '{{path.root}}/put/form',
+					id: $(form.s).find('[form-blob]').attr('data-formid'),
+				}, function(bool){
+					form.pdf($(form.s).find('[form-blob]'), function(name, data){
+						
+						$(form.s).find('[form-pdf-name]').val(name);
+						$(form.s).find('[form-pdf-html]').val(data);
+						$(form.s).find('[form-pdf-form]').submit();
+						
+						window.onfocus = function(){
+							Paperwork.ready(button, html);
+						};
+						
+					});
+				});
+			});
+			
+			// COPY
+			$(document).on('click', '[form-copy-btn]', function(){
+				form.copy($(form.s+' [form-blob]'), {
+					{% for a,b in templates %}{{a}}:"{{b.name}}",{%endfor%}
+				});
+			});
+			
+			// MARGIN
+			$(document).on('click', '[form-margin-btn]', function(){
+				form.margin($(form.s+' [form-blob]'));
+			});
+			
+			// EMAIL
+			$(document).on('click', '[form-email-btn]', function(){
+				form.email($(form.s+' [form-blob]'));
+				v.input($('body .email-parent'), $('body [email-send]'), 'email', {
+					allowDuplicates: true
+				}); // Validation for template-list input
+			});
+			
+			// FORM PUT after 2 seconds after last keyup
+			var timer;
+			$(document).on('keyup', '[form-blob] [contenteditable]', function(){
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					form.put({
+						url: '{{path.root}}/put/form',
+						id: $(form.s).find('[form-blob]').attr('data-formid'),
+					});
+				}, 2000);
+			});
+			
+			{% include path.load %}
+		});
+		</script>
+	</body>
+</html>

@@ -95,18 +95,15 @@
 					$(this).find('.invremove').css('opacity', '0');
 				});
 				$('.invremove').on('click', function(){
-					var th = $(this);
-					swal({
-						title: 'Are you sure you want to delete this item?',
-						text: 'You may add this inventory item again later',
-						showCancelButton: true,
-						closeOnConfirm: true,
-					}, function(){
-						$.post('{{path.root}}/delete/inv', {
-							id: th.closest('li').attr('data-id')
-						}, function(data){
-							if(data !== '0') th.closest('li').remove();
-						});
+					var $this = $(this);
+					$.post('{{path.root}}/delete/inv', {
+						id: $this.closest('li').attr('data-id')
+					}, function(data){
+						if(data !== '0'){
+							$this.closest('li').remove();
+						}else{
+							console.warn('Error deleting inventory item');
+						}
 					});
 				});
 				

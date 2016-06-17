@@ -44,8 +44,8 @@ $app->get('/job/:a', 'uac', function($a) use ($app){
 			$job['painter'] = $job['job_cache']['painter'];
 			unset($job['cache']);
 			
-			// $html = ($job['status']['statusID'] == 0) ? 'views/job/_archived.html' : 'views/job/_job.html';
-			$html = 'views/job/_job.html';
+			// $html = ($job['status']['statusID'] == 0) ? 'views/job/$archived.html' : 'views/job/$job.html';
+			$html = 'views/job/$job.html';
 			
 			// $resources = 'form.js?aBcdEf
 			$resources = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.resources'));
