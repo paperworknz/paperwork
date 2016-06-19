@@ -15,7 +15,6 @@ var Tab = function(data){
 	this.heir		= 'heir';
 	this.tabhook	= 'data-tab';
 	this.objhook	= 'data-obj';
-	this.h			= 'h';
 	this.current	= 0;
 	this.name;
 	this.method;
@@ -55,7 +54,7 @@ var Tab = function(data){
 	this.getTab();
 	
 	// Activate from storage
-	var first = $(`[${this.tabhook}="${this.current}"]`)
+	var first = $(`[${this.tabhook}="${this.current}"]`);
 	first.hasClass(this.tab) ?
 		this.activate(first) :
 		this.activate($(`[${this.tabhook}="0"]`));
@@ -84,7 +83,7 @@ Tab.prototype.activate = function(tab){
 			if($(this).data('tab') != tabID){
 				$(this).removeClass(a.activeTab);
 				if(!$(this).is(`[${a.heir}]`)){
-					$(`[${a.objhook}="${$(this).data('tab')}"]`).addClass(a.h);
+					$(`[${a.objhook}="${$(this).data('tab')}"]`).attr('hidden', '');
 				}
 				$(`[${a.objhook}="${$(this).data('tab')}"]`).removeClass(a.activeObj);
 			}
@@ -95,7 +94,7 @@ Tab.prototype.activate = function(tab){
 	a.current = tabID;
 	
 	// Display the obj
-	$(obj).removeClass(a.h);
+	$(obj).removeAttr('hidden');
 	
 	// Save
 	a.setTab();
@@ -108,13 +107,13 @@ Tab.prototype.append = function(templateName, call){
 	
 	// Create new tab
 	$(tab).find(`[${a.heir}]`).before(`
-		<li data-tab="${tabID}" class="tab noselect" style="display:none">
+		<li data-tab="${tabID}" class="tab" style="display: none;">
 			${templateName}
 		</div>
 	`);
 	
 	$(tab).find(`[${a.heir}]`).replaceWith(`
-		<li data-tab="${(tabID + 1)}" ${a.heir} hidden>
+		<li data-tab="${tabID + 1}" ${a.heir} hidden>
 		</li>
 	`);
 	

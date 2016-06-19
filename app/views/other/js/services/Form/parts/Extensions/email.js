@@ -22,7 +22,7 @@ Form.prototype.email = function(form){
 	// Email content
 	fade.after(`
 		<div class="email-content">
-			<div class="email-parent wrapper">
+			<div class="email-parent wrap container">
 				<input class="email-email" type="text" style="width:50%" value="${environment.client_email}" placeholder="Email Address" required />
 				<input class="email-subject" type="text" placeholder="Subject Line" required />
 				<div class="email-body" style="padding:4px;width:100%;height:300px;border:1px solid #ccc;overflow-y:auto" contenteditable>
@@ -30,10 +30,10 @@ Form.prototype.email = function(form){
 					${signature}
 				</div>
 				<i>PDF attached</i>
-				<div class="wrapper">
-					<button email-send class="wolfe-btn pull-right">SEND</button>
-					<button email-cancel class="wolfe-btn blue pull-right" style="margin-right:5px">CANCEL</button>
-					<input class="email-password pull-right" type="password" name="password" 
+				<div class="wrap">
+					<button email-send class="button right">SEND</button>
+					<button email-cancel class="button blue right" style="margin-right:5px">CANCEL</button>
+					<input class="email-password right" type="password" name="password" 
 						style="height:37px;line-height:37px;width:25%;margin-right:5px" placeholder="Email Password" required />
 				</div>
 			</div>
@@ -133,7 +133,7 @@ Form.prototype.email = function(form){
 				$('.email-content .wait').remove();
 				$('.email-content [wrong-password]').remove();
 				$('.email-content .email-password').after(`
-					<div wrong-password style="color:red;line-height:37px;padding-right:5px" class="pull-right">
+					<div wrong-password style="color:red;line-height:37px;padding-right:5px" class="right">
 						${message}
 					<div>
 				`);

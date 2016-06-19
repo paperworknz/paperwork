@@ -1,0 +1,63 @@
+.tabs, .tabs-job {
+	z-index: 0;
+	width: 100%;
+	
+	ul {
+		@include mobile {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+}
+
+.tab {
+	position: relative;
+	float: left;
+	padding: 0px 10px;
+	background-color: white;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	font-size: 11px;
+	height: 26px;
+	line-height: 26px;
+	text-transform: uppercase;
+	margin-right: 1px;
+	cursor: pointer;
+	-webkit-user-select: none;
+}
+
+.active {
+	height: 30px;
+	line-height: 30px;
+	text-transform: uppercase;
+	margin: -3px 1px 0px 0px;
+	cursor: default;
+}
+
+.tabobj {
+	display: block;
+	position: relative;
+}
+
+.token {
+	text-align: right;
+	padding-right: 10px;
+	width: 60px;
+	font-size: 9pt;
+	line-height: 9pt;
+	color: #7f8c8d;
+}
+
+.obj { position: relative; }
+
+.obj-job {
+	display: inline-block;
+	
+	.box-std {
+		width: 610px;
+	}
+	
+	@include mobile {
+		display: block;
+		margin-bottom: 5px;
+	}
+}

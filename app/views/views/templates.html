@@ -5,18 +5,25 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none;">
-			<div class="box" style="background-color:white;width:712px;padding-top:5px">
-				<div class="h3">Templates</div>
-				{% for template in templates %}
-					<a data-template="{{template.id}}">{{template.name}}</a><br>
-				{% endfor %}
-				<div style="padding:15px">
-					<div class="template">
-						<div style="text-align:center;padding:45px 0px">Pick a template!</div>
+        <div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<div class="box" style="background-color:white;width:712px;padding-top:5px">
+					<div class="h3">Templates</div>
+					{% for template in templates %}
+						<a data-template="{{template.id}}">{{template.name}}</a><br>
+					{% endfor %}
+					<div style="padding:15px">
+						<div class="template">
+							<div style="text-align:center;padding:45px 0px">Pick a template!</div>
+						</div>
 					</div>
 				</div>
-			</div>
+			</module>
         </div>
 		<script>
 		var environment = {

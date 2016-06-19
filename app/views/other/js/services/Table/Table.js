@@ -28,6 +28,7 @@ var Table = (function($, environment){
 	//-> parts/state.js
 	//-> parts/render.js
 	//-> parts/filter.js
+	//-> parts/filterInterface.js
 	
 	// API
 	function configure(data){

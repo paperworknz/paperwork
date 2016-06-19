@@ -7,7 +7,8 @@ $app->post('/put/client-details', 'uac', function() use($app){
 	$name = isset($_POST['name']) ? $_POST['name'] : false;
 	
 	/* Construction */
-	if($id && $notes){
+	
+	if($id && isset($_POST['notes'])){
 		$notes = filter_var($_POST['notes'], FILTER_SANITIZE_STRING);
 		$app->sql->put('client')->with([
 			'notes' => $notes

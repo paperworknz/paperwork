@@ -6,8 +6,8 @@ style="width:25px;text-align:center;"
 {% endif %}
 >
     <div id="navbar">
-        <div class="ac noselect thumb" style="line-height:40px">Menu</div>
-        <ul id="menu" style="display:none">
+        <div class="noselect thumb" style="line-height: 40px;cursor: default;">Menu</div>
+        <ul id="menu" class="noselect" style="display:none">
 			{% set nav = {
 				0: 'app',
 				1: 'jobs',
@@ -56,4 +56,3 @@ style="width:25px;text-align:center;"
 		</div>
 	{% endif %}
 </div>
-<div class="pw-notification" style="opacity: 0"></div>

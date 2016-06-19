@@ -1,66 +1,112 @@
-.jobName {
-	width:455px;
-	border:1px solid white;
-	margin-bottom:0;
-}
-.im {position: relative; z-index: 1;}
-.h {display:none;}
+@import '../../library/mixins/mixins';
 
-textarea {width:100%;max-width:610px;height:100px;border:1px solid #999;padding:5px 5px 0px 5px;outline:none}
+.box-job {
+	width: 710px;
+}
+
+.job-name {
+	width: 455px;
+	font-size: 24px;
+	line-height: 26px;
+	border: 1px solid white;
+	width: 75%;
+}
+
+.status {
+	height: 36px;
+	line-height: 36px;
+}
+
+.notes {
+	display: inline-block;
+	width: 250px;
+	vertical-align: top;
+	
+	.notes-label {
+		color: #7f8c8d;
+		height: 20px;
+		line-height: 20px;
+		font-size: 13px;
+	}
+	
+	.note-wrap {
+		width: 240px;
+		min-height: 205px;
+		border: 1px solid #eee;
+		cursor: text;
+		min-width: 30px;
+		
+		@include mobile { width: 100%; }
+	}
+	
+	.notepad {
+		padding: 4px;
+		min-width: 30px;
+		min-height: 30px;
+		outline: none;
+	}
+	
+	@include mobile {
+		display: block;
+		width: 610px;
+	}
+}
+
+.form-settings {
+	margin-top: 5px;
+	
+	.left {
+		margin-right: 5px;
+	}
+}
 
 .twig-remove {
-	position:absolute;
-	top:0;
-	right:0;
+	position: absolute;
+	top: 0;
+	right: 0;
     color: white;
     width: 22px;
     text-align: center;
     cursor: pointer;
 }
-.twig-remove:hover {
-	color:red
-}
 
-.clientdetails td {
-	height:28px;
-}
-.clientdetails {width:70%}
+.blob_item:hover .twig-remove { color: red; }
+
+.client-details td { height:28px; }
+.client-details { width:75% }
 
 .pdf-load {
-	width:52px;
-	height:25px;
-	background-color:white;
-	padding:0px!important;
+	width: 52px;
+	height: 25px;
+	background-color: white;
+	padding: 0px;
 }
 
-.pdf-load .la-ball-fall div {
-	background-color:#999;
-}
+.pdf-load .la-ball-fall div { background-color: #999; }
 
 .form {
-	min-width:710px;
-	max-width:710px;
-	min-height:10px;
+	position: relative;
+	min-width: 710px;
+	max-width: 710px;
+	min-height: 10px;
 }
-.p0 {padding:0}
+.p0 { padding: 0; }
 
-.clientdetails td:nth-child(2n+1) {
-	text-align:right;
-	font-size:9pt;
-	line-height:9pt;
-	color:#7f8c8d;
-	padding:0px 10px;
-	width:50px;
+.client-details td:nth-child(2n+1) {
+	text-align: right;
+	font-size: 9pt;
+	line-height: 9pt;
+	color: #7f8c8d;
+	padding: 0px 10px;
+	width: 50px;
 }
 
 .twitter-typeahead {
 	border: 1px solid black;
-	border-bottom:1px dashed #999
+	border-bottom: 1px dashed #999;
 }
 
-.lowlight {
-	color:#999;
-}
+.lowlight { color: #999; }
 
 .new-template {
 	text-transform: uppercase;
@@ -72,11 +118,11 @@ textarea {width:100%;max-width:610px;height:100px;border:1px solid #999;padding:
 	border: 1px solid transparent;
 	margin-bottom: 5px;
 	cursor:pointer;
-	-webkit-transition: background 0.3s ease, border-color 0.3s ease;
-         -moz-transition: background 0.3s ease, border-color 0.3s ease;
-           -o-transition: background 0.3s ease, border-color 0.3s ease;
-          -ms-transition: background 0.3s ease, border-color 0.3s ease;
-              transition: background 0.3s ease, border-color 0.3s ease;
+	@include transition((background 0.3s ease, border-color 0.3s ease));
+}
+
+.new-template:last-child {
+	margin-bottom: 0;
 }
 
 .new-template:hover {
@@ -85,21 +131,62 @@ textarea {width:100%;max-width:610px;height:100px;border:1px solid #999;padding:
 }
 
 .margin-content {
-	position: absolute;
-	z-index: 9999;
-	width: 710px;
-	background-color: white;
-	border: none;
-	min-height: 50px;
-	opacity: 0;
+	
+	
+	.percent {
+		width: 60px;
+	}
+	
+	.range {
+		width: 200px;
+		margin: 0 auto;
+	}
 }
 
 .margin-parent {
-	margin: 10px;
 	border: 1px solid black;
 }
 
-.email-content, .copy-content {
+.margin-item {
+	height: 24px;
+	line-height: 24px;
+	overflow-y: hidden;
+	white-space: nowrap;
+	
+	div:first-child, div:nth-child(2) {
+		border-left: none;
+	}
+	div {
+		border-left: 1px solid black;
+	}
+	
+	.margin-name {
+		width: 273px;
+		overflow: hidden;
+		margin-left: 5px;
+		margin-right: 10px;
+	}
+	
+	.margin-qty {
+		width: 58px;
+		padding: 0px 5px;
+	}
+	
+	.margin-price-container {
+		padding: 0px 5px;
+		width: 230px;
+		
+		.margin-price {
+			font-weight: 600;
+		}
+	}
+	
+	.margin-total {
+		padding-left: 10px;
+	}
+}
+
+.email-content, .copy-content, .margin-content {
 	position: absolute;
 	z-index: 9999;
 	left: 0;
@@ -113,13 +200,13 @@ textarea {width:100%;max-width:610px;height:100px;border:1px solid #999;padding:
 	opacity: 0;
 }
 
-.email-parent, .copy-parent {
-	margin: 10px;
-}
-
 .email-parent input {
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;
 	margin-bottom: 10px;
+}
+
+.email-content .container {
+	padding: 10px;
 }

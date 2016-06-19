@@ -6,130 +6,141 @@
 	</head>
 	<body>
 		{% include path.scaffolding %}
-		<div id="content" style="display:none;padding:15px 0px 0px 15px">
-			<div style="width:100%">
+		<div id="content">
+			<!-- <div style="width:100%">
             	{% include path.flash %}
-			</div>
-			<div class="tabs-job">
-				<ul class="wrapper">
-					<li data-tab="0" id="summarytab" class="tab noselect">Job</li>
-					{% set i = 0 %}
-					{% for form in forms %}
+			</div> -->
+			<module>
+				<part class="tabs-job">
+					<ul class="wrap box-std">
+						<li data-tab="0" class="tab">Job</li>
+						{% set i = 0 %}
+						{% for form in forms %}
+							{% set i = i + 1 %}
+							<li data-tab="{{i}}" class="tab">{{form.name}}</li>
+						{% endfor %}
 						{% set i = i + 1 %}
-						<li data-tab="{{i}}" class="tab noselect">{{form.name}}</li>
+						<li data-tab="{{i}}" heir hidden></li>
+						<li data-tab="+" class="tab">+</li>
+					</ul>
+				</part>
+				<part class="obj-job">
+					<box data-obj="0" class="tabobj box-std">
+						<part class="container wrap" style="padding-top: 20px;">
+							<input type="text" class="job-name" name="job-name" value="{{job.name}}" placeholder="Job name" />
+							<select title="Status" class="status right" job-status-select>
+								{% for item in status %}
+									{% if job.job_status.name == item.name %}
+									<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
+									{% else %}
+									<option value="{{item.name}}"/>{{item.name}}</option>
+									{% endif %}
+								{% endfor %}
+							</select>
+						</part>
+						<hr>
+						<part class="container-top">
+							<table class="client-details">
+								<tbody>
+									<tr>
+										<td>Job</td>
+										<td title="Job #{{job.job_number}}">#{{job.job_number}}</td>
+									</tr>
+									<tr>
+										<td>Client</td>
+										<td><a href="{{path.root}}/client/{{client.client_number}}" title="{{client.name}}'s Page">{{client.name}}</a></td>
+									</tr>
+									{% if client.email %}
+									<tr>
+										<td>Email</td>
+										<td><a href="mailto:{{client.email}}" title="Send Email" target="_blank">{{client.email}}</a></td>
+									</tr>
+									{% endif %}
+									{% if client.address %}
+									<tr>
+										<td>Address</td>
+										<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
+									</tr>
+									{% endif %}
+									{% if client.phone %}
+									<tr>
+										<td>Phone</td>
+										<td><a href="tel:{{client.phone}}" title="Call {{client.name}}">{{client.phone}}</a></td>
+									</tr>
+									{% endif %}
+									{% if job.date_created %}
+									<tr>
+										<td>Started</td>
+										<td title="{{job.date_created}}">{{job.date_created_pretty}}</td>
+									</tr>
+									{% endif %}
+									{% if job.date_invoiced %}
+									<tr>
+										<td>Invoiced</td>
+										<td title="{{job.date_invoiced}}">{{job.date_invoiced_pretty}}</td>
+									</tr>
+									{% endif %}
+									{% if job.date_completed %}
+									<tr>
+										<td>Closed</td>
+										<td title="{{job.date_completed}}">{{job.date_completed_pretty}}</td>
+									</tr>
+									{% endif %}
+									<tr>
+										<td class="token pdf-title" style="padding-top:6px;vertical-align:top;"></td>
+										<td>
+											<div class="pdf-load"></div>
+											<div class="pdf-list"></div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</part>
+						<part class="container-bottom wrap">
+							<form method="post" action="{{path.root}}/delete/job" job-del-form>
+								<input type="hidden" name="id" value="{{job.id}}"/>
+							</form>
+							<button class="button delete right" job-del-btn>Delete Job</button>
+						</part>
+					</box>
+					{% set i = 0 %}
+					{% for a,b in forms %}
+						{% set i = i + 1 %}
+						<part data-obj="{{i}}" class="tabobj" hidden>
+							{% include path.form with {
+								id: a,
+								html: b.html
+							} %}
+						</part>
 					{% endfor %}
 					{% set i = i + 1 %}
-					<li data-tab="{{i}}" heir hidden></li>
-					<li data-tab="+" id="newtab" class="tab noselect">+</li>
-				</ul>
-			</div>
-			<div class="obj" style="display:inline-block;margin-bottom:15px">
-				<div data-obj="0" id="summary" class="tabobj box job-material">
-					<div>
-						<input type="text" class="jobName h3" name="jobName" value="{{job.name}}" placeholder="Job name"/>
-						<select title="Status" class="pull-right" style="margin-top:20px;height:36px;line-height:36px;" job-status-select>
-							{% for item in status %}
-								{% if job.job_status.name == item.name %}
-								<option value="{{item.name}}" selected="selected"/>{{item.name}}</option>
-								{% else %}
-								<option value="{{item.name}}"/>{{item.name}}</option>
-								{% endif %}
+					<box data-obj="{{i}}" heir hidden>
+					</box>
+					<box data-obj="+" class="tabobj box-std" hidden>
+						<part class="container">
+							{% for a,b in templates %}
+							<div class="new-template" new-template data-templateid="{{a}}" href="{{path.root}}/post/form">
+								{{b.name}}
+							</div>
 							{% endfor %}
-						</select>
-					</div>
-					<hr>
-					<table class="clientdetails">
-						<tbody>
-							<tr>
-								<td>Job</td>
-								<td title="Job #{{job.job_number}}">#{{job.job_number}}</td>
-							</tr>
-							<tr>
-								<td>Client</td>
-								<td><a href="{{path.root}}/client/{{client.client_number}}" title="{{client.name}}'s Page">{{client.name}}</a></td>
-							</tr>
-							{% if client.email %}
-							<tr>
-								<td>Email</td>
-								<td><a href="mailto:{{client.email}}" title="Send Email" target="_blank">{{client.email}}</a></td>
-							</tr>
-							{% endif %}
-							{% if client.address %}
-							<tr>
-								<td>Address</td>
-								<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
-							</tr>
-							{% endif %}
-							{% if client.phone %}
-							<tr>
-								<td>Phone</td>
-								<td><a href="tel:{{client.phone}}" title="Call {{client.name}}">{{client.phone}}</a></td>
-							</tr>
-							{% endif %}
-							{% if job.date_created %}
-							<tr>
-								<td>Started</td>
-								<td title="{{job.date_created}}">{{job.date_created_pretty}}</td>
-							</tr>
-							{% endif %}
-							{% if job.date_invoiced %}
-							<tr>
-								<td>Invoiced</td>
-								<td title="{{job.date_invoiced}}">{{job.date_invoiced_pretty}}</td>
-							</tr>
-							{% endif %}
-							{% if job.date_completed %}
-							<tr>
-								<td>Closed</td>
-								<td title="{{job.date_completed}}">{{job.date_completed_pretty}}</td>
-							</tr>
-							{% endif %}
-							<tr>
-								<td class="token pdf-title" style="padding-top:6px;vertical-align:top;"></td>
-								<td>
-									<div class="pdf-load"></div>
-									<div class="pdf-list"></div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="wrapper">
-						<form method="post" action="{{path.root}}/delete/job" job-del-form>
-							<input type="hidden" name="id" value="{{job.id}}"/>
-						</form>
-						<button class="wolfe-btn delete pull-right" job-del-btn>Delete Job</button>
-					</div>
-				</div>
-				{% set i = 0 %}
-				{% for a,b in forms %}
-					{% set i = i + 1 %}
-					<div data-obj="{{i}}" class="tabobj h">
-						{% include path.form with {
-							id: a,
-							html: b.html
-						} %}
-					</div>
-				{% endfor %}
-				{% set i = i + 1 %}
-				<div data-obj="{{i}}" heir hidden></div>
-				<div data-obj="+" id="newtabscreen" class="tabobj box job-material h" style="padding-top:15px">
-					{% for a,b in templates %}
-					<div class="new-template" new-template data-templateid="{{a}}" href="{{path.root}}/post/form">
-						{{b.name}}
-					</div>
-					{% endfor %}
-				</div>
-			</div>
-			<div note-parent class="box wrapper note-parent" style="display:inline-block;vertical-align:top;padding:5px;">
-				<div style="color:#7f8c8d">
-					<span style="line-height:9pt;font-size:9pt">Notes</span>
-				</div>
-				<div note-wrapper class="note-wrapper" style="width:250px;min-height:209px;border:1px solid #eee;cursor:text;min-width:30px;" class="wrapper" >
-					<div id="notes" style="padding:4px;min-width:30px;min-height:30px;outline:none" contenteditable>{{job.notes | raw}}</div>
-				</div>
-			</div>
+						</part>
+					</box>
+				</part>
+				<box class="notes">
+					<part style="padding: 5px;">
+						<div class="notes-label">
+							Notes
+						</div>
+						<div class="note-wrap wrap">
+							<div class="notepad" contenteditable>
+								{{job.notes | raw}}
+							</div>
+						</div>
+					</part>
+				</box>
+			</module>
 		</div>
-		<div class="email-signature-raw" style="display:none">{{email.signature|raw}}</div>
+		<div class="email-signature-raw" hidden>{{email.signature|raw}}</div>
 		<script>
 		var environment = {
 			job_id: '{{job.id}}',
@@ -198,29 +209,29 @@
 			});
 			
 			// NOTES FOCUS
-			$('[note-wrapper]').on('click', function(){
-				$('#notes').focus();
+			$('.note-wrap').on('click', function(){
+				$('.notepad').focus();
 			});
 			
 			// NOTES CHANGE
-			var notes = $('#notes').html();
-			$('#notes').on('blur', function(){
+			var notes = $('.notepad').html();
+			$('.notepad').on('blur', function(){
 				if($(this).html() != notes){
 					$.post('{{path.root}}/put/job-details', {
 						notes: $(this).html(),
 						id: '{{job.id}}',
 					}).done(function(){
-						notes = $('#notes').html();
+						notes = $('.notepad').html();
 						Paperwork.saved();
 					});
 				}
 			});
 			
 			// JOB NAME CHANGE
-			$('.jobName').change(function(){
-				if($('.jobName').val() !=''){
+			$('.job-name').change(function(){
+				if($('.job-name').val() !=''){
 					$.post('{{path.root}}/put/job-details', {
-						name: $('.jobName').val(),
+						name: $('.job-name').val(),
 						id: '{{job.id}}',
 					}).done(function(){
 						Paperwork.saved();
@@ -357,21 +368,22 @@
 							url: '{{path.root}}/delete/form',
 							form_id: $(form.s).find('[form-blob]').attr('data-formid'),
 						}, function(){
-							var noteposition = $('[note-parent]').position(),
-								noteparent = $('[note-parent]').clone(),
+							var noteposition = $('.notes').position(),
+								noteparent = $('.notes').clone(),
 								tab_id = $('.'+tab.activeTab).attr('data-tab');
-							$('[note-parent]').css({
-								'position':'absolute',
-								'top':noteposition.top,
-								'left':noteposition.left
+							
+							$('.notes').css({
+								position: 'absolute',
+								top: noteposition.top,
+								left: noteposition.left,
 							});
 							$(form.s).slideUp('fast', function(){
 								$(form.s).remove();
 								$('.'+tab.tab+'.'+tab.activeTab).fadeOut('fast', function(){
 									tab.activate($('[data-tab="'+tab_id+'"]').prev());
-									$('[note-parent]').replaceWith(noteparent);
-									$('[note-wrapper]').on('click', function(){
-										$('#notes').focus();
+									$('.notes').replaceWith(noteparent);
+									$('.note-wrap').on('click', function(){
+										$('.notepad').focus();
 									});
 									$(this).remove();
 								});

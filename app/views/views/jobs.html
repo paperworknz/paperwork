@@ -5,65 +5,71 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none;">
-			<div style="width:610px">{% include path.flash %}</div>
-            <div class="box material" style="padding: 0">
-                <div class="n-new center">
-					<div id="create-new" class="h4 ac w1 noselect">
-						New Job
-					</div>
-					<div id="new-content" style="display:none">
-						<form method="post" action="{{path.root}}/post/job">
-							<table style="margin: auto;margin-bottom: 20px;">
-								<tbody>
-									<tr>
-										<td class="ar">
-											Client:
-										</td>
-										<td>
-											<div id="the-basics">
-												<input type="text" class="typeahead" name="client_name" placeholder="Quick Search" required />
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td class="ar">
-											Job Name:
-										</td>
-										<td>
-											<input type="text" name="name" required />
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td>
-											<button type="submit" class="wolfe-btn uc">CREATE</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-					</div>
-				</div>
-				<hr style="margin-top: 0;">
-				<div style="padding: 15px;">
-					{% if jobs %}
-						{% include path.table with {
-							'data': jobs,
-							'head': {
-								'id': '_id',
-								'job_number': 'ID',
-								'name': 'Name',
-								'client.name': 'Client',
-								'job_status.name': 'Status',
-							}
-						}%}
-					{% else %}
-					<div class="ac">Start your first job by hitting New Job!</div>
-					{% endif %}
-				</div>
-            </div>
-        </div>
+        <div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<box class="box-std">
+					<part class="container">
+						<div class="h4 title centered create-new noselect">
+							New Job
+						</div>
+						<div id="new-content" class="container-bottom" style="display:none">
+							<form method="post" action="{{path.root}}/post/job">
+								<table class="central">
+									<tbody>
+										<tr>
+											<td class="ar">
+												Client
+											</td>
+											<td>
+												<div id="the-basics">
+													<input type="text" class="typeahead" name="client_name" placeholder="Quick Search" required />
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="ar">
+												Job name
+											</td>
+											<td>
+												<input type="text" name="name" required />
+											</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td>
+												<button type="submit" class="button uc">Create</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					</part>
+					<hr>
+					<part class="container">
+						{% if jobs %}
+							{% include path.table with {
+								'data': jobs,
+								'head': {
+									'id': '_id',
+									'job_number': 'ID',
+									'name': 'Name',
+									'client.name': 'Client',
+									'job_status.name': 'Status',
+								}
+							}%}
+						{% else %}
+						<div class="centered">Start your first job by hitting New Job!</div>
+						{% endif %}
+					</part>
+				</box>
+			</module>
+		</div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -76,7 +82,9 @@
 		<script>
 			$(function(){
 				
+				{% if jobs %}
 				Table.run();
+				{% endif %}
 				
 				var src = [{% for client in clients %} "{{client.name | raw}}", {% endfor %}];
 				
@@ -95,17 +103,9 @@
 				});
 				
 				// New object
-				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});
+				$('.create-new').on('click', function(){$("#new-content").slideToggle(100);});
 				
 				ta.run($('#content'));
-				
-				// Resizable content material box - EXPERIMENTAL
-				interact('.material').resizable({
-					edges: {right: true}
-				}).on('resizemove', function(event){
-					var target = event.target;
-					target.style.width  = event.rect.width + 'px';
-				});
 				
 				// Open new-content if a client name is provided w GET
 				{% if cname|length > 1 %}

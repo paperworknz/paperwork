@@ -67,12 +67,12 @@ Validation.prototype.input = function(obj, button, name, flags){
 	};
 	
 	var cancel = function(){
-		button.addClass('no-click');
+		button.attr('disabled', '');
 		button.addClass('spotlight');
 	};
 	
 	var open = function(){
-		button.removeClass('no-click');
+		button.removeAttr('disabled');
 		button.removeClass('spotlight');
 	};
 	
@@ -86,7 +86,7 @@ Validation.prototype.input = function(obj, button, name, flags){
 	
 	button.parent().on('click', function(){
 		// User trying to submit form while the form isn't complete
-		if($(this).find('button').hasClass('no-click')){
+		if($(this).find('button').attr('disabled')){
 			update(true);
 		}
 	});

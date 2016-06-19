@@ -5,49 +5,53 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none">
-			<div class="tabs">
-				<ul class="wrapper">
-					<li data-tab="0" class="tab noselect">Activity Log</li>
+        <div id="content">
+			<module>
+				<part class="tabs">
+					<ul class="wrap box-std">
+						<li data-tab="0" class="tab">Activity Log</li>
+						{% if host.first %}
+						<li data-tab="1" class="tab">{{host.first}}</li>
+						{% endif %}
+					</ul>
+				</part>
+				<part class="obj">
+					<box data-obj="0" class="tabobj box-std">
+						<part class="container" style="padding:15px 20px; font-weight: 600; border-bottom: 1px solid #ccc">
+							RECENT
+							<span class="right update" style="font-weight:300;cursor:pointer;color:#337ab7">Update</span>
+							<span class="right" style="margin-right:15px;"><span style="padding: 0px 15px;cursor:pointer" prev> < </span> <span style="cursor:pointer" next> > </span></span>
+						</part>
+						<part events>
+						</part>
+					</box>
 					{% if host.first %}
-					<li data-tab="1" class="tab noselect">{{host.first}}</li>
+					<box data-obj="1" id="jobs" class="tabobj box-std">
+						<part class="client-details container">
+							<form method="post" action="{{path.root}}/admin/put/settings">
+								<table>
+									<tbody>
+										{% for a,b in host %}
+										<tr>
+											<td>{{a}}</td>
+											<td><input type="text" name="{{a}}" value="{{b}}"></td>
+										</tr>
+										{% endfor %}
+										<tr>
+											<td></td>
+											<td style="height:40px">
+												<button class="button" style="margin-top:3px">UPDATE</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</part>
+					</box>
 					{% endif %}
-				</ul>
-			</div>
-			<div class="obj">
-				<div data-obj="0" class="box material im wrapper pr" style="padding:0px">
-					<div style="padding:15px 20px;font-weight:600;border-bottom:1px solid #ccc">
-						RECENT
-						<span class="pull-right update" style="font-weight:300;cursor:pointer;color:#337ab7">Update</span>
-						<span class="pull-right" style="margin-right:15px;"><span style="padding: 0px 15px;cursor:pointer" prev> < </span> <span style="cursor:pointer" next> > </span></span>
-					</div>
-					<div events>
-					</div>
-				</div>
-				<div data-obj="1" id="jobs" class="box material im h" style="padding:15px;">
-					<div class="client-details">
-						<form method="post" action="{{path.root}}/admin/put/settings">
-							<table>
-								<tbody>
-									{% for a,b in host %}
-									<tr>
-										<td>{{a}}</td>
-										<td><input type="text" name="{{a}}" value="{{b}}"></td>
-									</tr>
-									{% endfor %}
-									<tr>
-										<td></td>
-										<td style="height:40px">
-											<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-					</div>
-				</div>
-			</div>
-        </div>
+				</part>
+			</module>
+		</div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -65,22 +69,23 @@
 						value: "{{host.id}}"
 					}
 				});
-				var events = $('[events]');
+				var events = $('[events]'),
+					img;
 				var draw = function(data){
 					if(data.icon){
-						var img = '<img class="event-icon" src="{{path.root}}/css/media/icon/activity/'+data.icon+'" />'
+						img = `<img class="event-icon" src="{{path.root}}/css/media/icon/activity/${data.icon}" />`;
 					}else{
-						var img = '<img class="event-icon" src="{{path.root}}/css/media/icon/activity/default.png" />'
+						img = `<img class="event-icon" src="{{path.root}}/css/media/icon/activity/default.png" />`;
 					}
-					events.append(
-						'<event>'+
-							'<event-title>'+
-								img +
-								'<span style="color:#27ae60">{{host.first}} {{host.last}}</span> ' + data.text +
-							'</event-title>'+
-							'<event-date>'+ since(data.date_created) +'</event-date>'+
-						'</event>'
-					);
+					events.append(`
+						<event>
+							<event-title>
+								${img}
+								<span style="color:#27ae60">{{host.first}} {{host.last}}</span> ${data.text}
+							</event-title>
+							<event-date>${since(data.date_created)}</event-date>
+						</event>
+					`);
 				};
 				
 				var update = function(){
@@ -95,11 +100,11 @@
 						if(data.length > 0){
 							for(i in data) draw(data[i]);
 						}else{
-							events.html(
-								'<div style="text-align:center;padding-top:40px;font-weight:600">'+
-									'No Activity For {{host.first}}'+
-								'</div>'
-							);
+							events.html(`
+								<div class="container centered" style="font-weight: 600;">
+									No Activity For {{host.first}}
+								</div>
+							`);
 						}
 						
 					}).fail(function(data){
@@ -107,11 +112,11 @@
 						events.css('opacity', '1');
 						events.html('');
 						
-						events.html(
-							'<div style="text-align:center;padding-top:40px;font-weight:600">'+
-								'There was a problem getting {{host.first}}\'s events'+
-							'</div>'
-						);
+						events.html(`
+							<div style="text-align:center;padding-top:40px;font-weight:600">
+								There was a problem getting {{host.first}}\'s events
+							</div>
+						`);
 					});
 				};
 				
