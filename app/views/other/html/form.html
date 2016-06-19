@@ -1,52 +1,54 @@
-<div class="wrapper form p0">
-	<div style="background-color:white;padding:30px">
-		<div data-formid="{{id}}" style="pointer-events:none;opacity:0.25" form-blob>
+<part class="wrap form">
+	<part class="container" style="background-color: white;padding: 30px;">
+		<div data-formid="{{id}}" style="pointer-events: none;opacity: 0.25" form-blob>
 			{{ html | raw }}
 		</div>
-	</div>
-	<div class="wrapper pr" style="margin-top:5px">
-		<div class="box pull-left" style="width:100px;margin-right:5px">
-			<div class="ac">
-				<button class="wolfe-btn" href="{{path.root}}/put/form" form-save-btn>SAVE</button>
-			</div>
-		</div>
-		<div class="box pull-left" style="width:100px;margin-right:5px">
-			<div class="ac">
-				<form method="post" action="{{path.root}}/post/pdf" form-pdf-form>
-					<input type="hidden" name="job_number" value="{{job.job_number}}" form-pdf-job_number />
-					<input type="hidden" name="name" form-pdf-name />
-					<input type="hidden" name="html" form-pdf-html/>
-				</form>
-				<button class="wolfe-btn blue" type="submit" form-pdf-btn>PDF</button>
-			</div>
-		</div>
-		<div class="box pull-left" style="width:125px;margin-right:5px">
-			<div class="ac">
-				<button class="wolfe-btn blue" form-margin-btn>MARGIN</button>
-			</div>
-		</div>
-		<div class="box pull-left" style="width:140px;margin-right:5px">
-			<div class="ac">
-				<button class="wolfe-btn blue" form-copy-btn>MAKE COPY</button>
-			</div>
-		</div>
-		{% if email %}
-		<div class="box pull-left" style="width:105px;margin-right:5px">
-			<div class="ac">
-				<form method="post" action="{{path.root}}/post/pdf" form-email-form>
-					<input type="hidden" name="data" value="" form-email-data/>
-					<input type="hidden" name="id" value="{{job.id}}" />
-					<input type="hidden" name="name" />
-					<input type="hidden" name="email" value="true" />
-				</form>
-				<button class="wolfe-btn blue" type="submit" form-email-btn>EMAIL</button>
-			</div>
-		</div>
-		{% endif %}
-		<div class="box" style="right:0;position:absolute">
-			<div class="ac">
-				<button class="wolfe-btn delete" href="{{path.root}}/delete/form" form-del-btn>DELETE</button>
-			</div>
-		</div>
-	</div>
-</div>
+	</part>
+	<part class="form-settings">
+		<part class="wrap">
+			<box class="left">
+				<part class="container centered" style="width: 100px;">
+					<button class="button" href="{{path.root}}/put/form" form-save-btn>SAVE</button>
+				</part>
+			</box>
+			<box class="left">
+				<part class="container centered" style="width:100px;">
+					<form method="post" action="{{path.root}}/post/pdf" form-pdf-form>
+						<input type="hidden" name="job_number" value="{{job.job_number}}" form-pdf-job_number />
+						<input type="hidden" name="name" form-pdf-name />
+						<input type="hidden" name="html" form-pdf-html/>
+					</form>
+					<button class="button blue" type="submit" form-pdf-btn>PDF</button>
+				</part>
+			</box>
+			<box class="left">
+				<part class="container centered" style="width:125px;">
+					<button class="button blue" form-margin-btn>MARGIN</button>
+				</part>
+			</box>
+			<box class="left">
+				<part class="container centered" style="width:140px;">
+					<button class="button blue" form-copy-btn>MAKE COPY</button>
+				</part>
+			</box>
+			{% if email %}
+			<box class="left">
+				<part class="container centered" style="width:105px;">
+					<form method="post" action="{{path.root}}/post/pdf" form-email-form>
+						<input type="hidden" name="data" value="" form-email-data/>
+						<input type="hidden" name="id" value="{{job.id}}" />
+						<input type="hidden" name="name" />
+						<input type="hidden" name="email" value="true" />
+					</form>
+					<button class="button blue" type="submit" form-email-btn>EMAIL</button>
+				</part>
+			</box>
+			{% endif %}
+			<box style="right: 0;position: absolute;">
+				<part class="container centered">
+					<button class="button delete" href="{{path.root}}/delete/form" form-del-btn>DELETE</button>
+				</part>
+			</box>
+		</part>
+	</part>
+</part>

@@ -5,79 +5,85 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none">
-			<div class="tabs">
-				<ul class="wrapper">
-					<li data-tab="0" id="summarytab" class="tab noselect">Client</li>
-					{% if jobs %}<li data-tab="1" id="jobstab" class="tab noselect">Jobs</li>{% endif %}
-				</ul>
-			</div>
-			<div class="obj">
-				<div data-obj="0" id="summary" class="box material im">
-					<div class="wrapper pr">
-						<div class="client-details pull-left">
-							<input type="text" class="h3" value="{{client.name}}" placeholder="Client name" client-name/>
-							<table class="w1">
+        <div id="content">
+			<module>
+				<part class="tabs">
+					<ul class="wrap box-std">
+						<li data-tab="0" id="summarytab" class="tab">Client</li>
+						{% if jobs %}<li data-tab="1" id="jobstab" class="tab">Jobs</li>{% endif %}
+					</ul>
+				</part>
+				<part class="obj">
+					<box data-obj="0" class="tabobj box-std">
+						<part class="container wrap">
+							<input type="text" class="client-name" value="{{client.name}}" placeholder="Client name" client-name />
+							<div class="right">
+								<span class="firm-right">
+									<form method="get" action="{{path.root}}/jobs">
+										<input type="hidden" name="id" value="{{client.client_number}}" />
+										<button type="submit" class="button">
+											New Job
+										</button>
+									</form>
+								</span>
+							</div>
+						</part>
+						<part class="container-mid client-details">
+							<table>
 								<tbody>
 									<tr>
 										<td>Address</td>
-										<td><input type="text" class="h5" value="{{client.address}}" placeholder="..." client-address/></td>
+										<td>
+											<input type="text" class="input" value="{{client.address}}" placeholder="..." client-address />
+										</td>
 									</tr>
 									<tr>
 										<td>Email</td>
-										<td><input type="text" class="h5" value="{{client.email}}" placeholder="..." client-email/></td>
+										<td>
+											<input type="text" class="input" value="{{client.email}}" placeholder="..." client-email />
+										</td>
 									</tr>
 									<tr>
 										<td>Phone</td>
-										<td><input type="text" class="h5" value="{{client.phone}}" placeholder="..." client-phone/></td>
+										<td>
+											<input type="text" class="input" value="{{client.phone}}" placeholder="..." client-phone />
+										</td>
 									</tr>
 								</tbody>
 							</table>
-						</div>
-						<div class="pull-right h3">
-							<span class="firm-right">
-								<form method="get" action="{{path.root}}/jobs">
-									<input type="hidden" name="id" value="{{client.client_number}}" />
-									<button type="submit" class="wolfe-btn">
-										New Job
-									</button>
-								</form>
-							</span>
-						</div>
-					</div>
-					<br>
-					<div class="wrapper">
-						<form method="post" action="{{path.root}}/delete/client" client-del-form>
-							<input type="hidden" name="id" value="{{client.id}}" />
-						</form>
-						<button type="submit" class="wolfe-btn delete" client-del-btn>Delete Client</button>
-					</div>
-					<hr>
-					<div>
-						<div>
-							<span>Notes</span>
-							<span class="fr">
-								<div id="ajax" style="color:#888;font-style:italic"></div>
-							</span>
-						</div>
-						<textarea id="notes">{{client.notes | raw}}</textarea>
-					</div>
-				</div>
-				{% if jobs %}
-				<div data-obj="1" id="jobs" class="box material im h" style="padding-top:15px;">
-					{% include path.table with {
-						'data': jobs,
-						'head': {
-							'id': '_id',
-							'job_number': 'ID',
-							'name': 'Name',
-							'client.name': 'Client',
-							'job_status.name': 'Status'
-						}
-					}%}
-				</div>
-				{% endif %}
-			</div>
+						</part>
+						<part class="container">
+							<form method="post" action="{{path.root}}/delete/client" client-del-form>
+								<input type="hidden" name="id" value="{{client.id}}" />
+							</form>
+							<button type="submit" class="button delete" client-del-btn>Delete Client</button>
+						</part>
+						<hr>
+						<part class="container">
+							<div style="color: #7f8c8d">
+								Notes
+							</div>
+							<textarea id="notes">{{client.notes | raw}}</textarea>
+						</part>
+					</box>
+					{% if jobs %}
+					<box data-obj="1" class="tabobj box-std">
+						<part class="container">
+							{% include path.table with {
+								'data': jobs,
+								'head': {
+									'id': '_id',
+									'job_number': 'ID',
+									'name': 'Name',
+									'client.name': 'Client',
+									'job_status.name': 'Status'
+								}
+							}%}
+						</part>
+					</box>
+					{% endif %}
+				</part>
+			</module>
         </div>
 		<script>
 		var environment = {
@@ -128,11 +134,12 @@
 					});
 				});
 				
-				$('#notes').change(function(){
-					$('#ajax').css({'display':'block'});
+				$('#notes').on('change', function(){
+					var note = $(this).val() || '';
+					
 					$.post('{{path.root}}/put/client-details', {
-						id: {{client.id}},
-						notes: $('#notes').val(),
+						id: "{{client.id}}",
+						notes: note,
 					}).done(function(){
 						Paperwork.saved();
 					});
@@ -140,7 +147,8 @@
 				
 				$('.client-details input').change(function(){
 					if($('[client-name]').val() != ''){
-						$('#ajax').css({'display':'block'});
+						$('#ajax').css('display', 'block');
+						
 						$.post('{{path.root}}/put/client-details', {
 							id: {{client.id}},
 							name: $('[client-name]').val(),

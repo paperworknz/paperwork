@@ -16,7 +16,7 @@ Form.prototype.post = function(data, callback){
 			
 			// Create new obj
 			$(obj).find(`[${a.tab.heir}]`).before(`
-				<div ${a.tab.objhook}="${objID}" class="${a.tab.obj} h">
+				<div ${a.tab.objhook}="${objID}" class="${a.tab.obj}" hidden>
 					${json.html}
 				</div>
 			`);

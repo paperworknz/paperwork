@@ -13,16 +13,20 @@ Form.prototype.copy = function(form, templates){
 	// Copy content
 	fade.after(`
 		<div class="copy-content">
-			<div class="copy-parent wrapper">
-				<div style="text-align:center;font-size:20px;line-height:20px;padding:15px 0px">
-					Use template:
+			<div class="copy-parent wrap">
+				<div class="container-top">
+					<div class="h4 title centered ">
+						Use template:
+					</div>
+				</div>
+				<div class="container-mid">
 				</div>
 			</div>
 		</div>
 	`);
 	
 	$.each(templates, function(a,b){
-		$('.copy-content .copy-parent').append(`
+		$('.copy-content .copy-parent .container-mid').append(`
 			<div class="new-template" data-templateid="${a}">
 				${b}
 			</div>
@@ -30,9 +34,11 @@ Form.prototype.copy = function(form, templates){
 	});
 	
 	$('.copy-content .copy-parent').append(`
-		<button copy-cancel class="wolfe-btn blue pull-right" style="margin:5px 5px 0px 0px;">
-			CANCEL
-		</button>
+		<div class="container wrap">
+			<button copy-cancel class="button blue right">
+				CANCEL
+			</button>
+		</div>
 	`);
 	
 	$('.copy-content').css({

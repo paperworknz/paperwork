@@ -5,97 +5,121 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-		<div id="content" style="padding:15px;display:none;">
-			<div class="tabs">
-				<ul class="wrapper">
-					<li data-tab="0" class="tab noselect">SQL</li>
-					<li data-tab="1" class="tab noselect">UAC</li>
-					<li data-tab="2" class="tab noselect">Toggles</li>
-					<li data-tab="3" class="tab noselect">Backup</li>
-					<li data-tab="4" class="tab noselect">Notifications</li>
-				</ul>
-			</div>
-			<div class="obj">
-				<div data-obj="0" class="box material im">
-					<div class="wrapper">
-						<br>
-						<div class="wrapper">
+		<div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<part class="tabs">
+					<ul class="wrap box-std">
+						<li data-tab="0" class="tab">SQL</li>
+						<li data-tab="1" class="tab">UAC</li>
+						<li data-tab="2" class="tab">Toggles</li>
+						<li data-tab="3" class="tab">Backup</li>
+						<li data-tab="4" class="tab">Notifications</li>
+					</ul>
+				</part>
+				<part class="obj">
+					<box data-obj="0" class="tabobj box-std">
+						<part class="wrap container">
 							<input type="text" class="prompt" placeholder="SQL" />
-						</div>
-						<a event style="cursor:pointer">Events</a>
-						<a clear-event style="cursor:pointer;float:right">Clear events</a>
-						<div insights style="padding-top:10px;"></div>
-						<div console style="padding-top:10px"></div>
-					</div>
-				</div>
-				<div data-obj="1" class="box material im">
-					<div class="wrapper">
-						<div style="width:240px">
-							<div class="h3">Generate Password</div>
-							<input type="text" pw style="height:36px">
-							<div class="pull-right">
-								<button pw-get class="wolfe-btn">GET</button>
+						</part>
+						<part class="wrap container-bottom">
+							<a event class="left" style="cursor: pointer">Events</a>
+							<a clear-event class="right" style="cursor: pointer;">Clear events</a>
+						</part>
+						<part class="output" style="display: none;">
+							<hr>
+							<part class="container">
+								<div insights>
+								</div>
+							</part>
+							<hr>
+							<part class="container">
+								<div console>
+								</div>
+							</part>
+						</part>
+					</box>
+					<box data-obj="1" class="tabobj box-std">
+						<part class="wrap container" style="width: 270px;">
+							<div class="h3 title">
+								Generate Password
 							</div>
-						</div>
-						<div pw-console style="margin-top:15px"></div>
-					</div>
+							<input type="text" class="left" pw style="height: 37px;">
+							<button pw-get class="button left" style="margin-left: 5px;">GET</button>
+						</part>
+						<part class="container">
+							<div pw-console>
+							</div>
+						</part>
+					</box>
+					<box data-obj="2" class="tabobj box-std">
+						<part class="container" style="padding: 30px 15px;">
+							<table class="toggle-table">
+								<tbody>
+									{% for a,b in env %}
+									<tr>
+										<td>{{a}}</td>
+										<td>
+											{% if b %}
+											<img src="{{path.root}}/css/media/toggle-on.png" data-name="{{a}}" data-value="{{b}}" height="26" />
+											{% else %}
+											<img src="{{path.root}}/css/media/toggle-off.png" data-name="{{a}}" data-value="{{b}}" height="26" />
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</part>
+					</box>
+					<box data-obj="3" class="tabobj box-std">
+						<part class="container" style="padding: 30px 15px;">
+							<button pw-backup class="button">
+								BACKUP
+							</button>
+						</part>
+					</box>
+					<box data-obj="4" class="tabobj box-std">
+						<part class="container" style="padding: 30px;">
+							<table class="new-notification">
+								<tbody>
+									<tr>
+										<td>user_id</td>
+										<td><input type="text" name="user_id" placeholder="1,2,3 || All, all, *" required></td>
+									</tr>
+									<tr>
+										<td>Text</td>
+										<td><input type="text" name="text" placeholder="What arm thing homie?" required></td>
+									</tr>
+									<tr>
+										<td>Page</td>
+										<td><input type="text" name="page" placeholder="jobs" required></td>
+									</tr>
+									<tr>
+										<td>Anchor</td>
+										<td><input type="text" name="anchor" placeholder=".box" required></td>
+									</tr>
+									<tr>
+										<td>Position</td>
+										<td><input type="text" name="position" placeholder="right-center" required></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td style="height:40px">
+											<button class="button notification-post" style="margin-top:3px">POST</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</part>
+					</box>
 				</div>
-				<div data-obj="2" class="box material im">
-					<br>
-					<table class="toggle-table">
-						<tbody>
-							{% for a,b in env %}
-							<tr>
-								<td>{{a}}</td>
-								<td>
-									{% if b %}
-									<img src="{{path.root}}/css/media/toggle-on.png" data-name="{{a}}" data-value="{{b}}" height="26" />
-									{% else %}
-									<img src="{{path.root}}/css/media/toggle-off.png" data-name="{{a}}" data-value="{{b}}" height="26" />
-									{% endif %}
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
-				<div data-obj="3" class="box material im">
-					<button pw-backup class="wolfe-btn" style="margin-top:15px">BACKUP</button>
-				</div>
-				<div data-obj="4" class="box material im" style="padding: 30px;">
-					<table class="new-notification">
-						<tbody>
-							<tr>
-								<td>user_id</td>
-								<td><input type="text" name="user_id" placeholder="1,2,3 || All, all, *" required></td>
-							</tr>
-							<tr>
-								<td>Page</td>
-								<td><input type="text" name="page" placeholder="jobs" required></td>
-							</tr>
-							<tr>
-								<td>Text</td>
-								<td><input type="text" name="text" placeholder="What arm thing homie?" required></td>
-							</tr>
-							<tr>
-								<td>Anchor</td>
-								<td><input type="text" name="anchor" placeholder=".box" required></td>
-							</tr>
-							<tr>
-								<td>Position</td>
-								<td><input type="text" name="position" placeholder="right-center" required></td>
-							</tr>
-							<tr>
-								<td></td>
-								<td style="height:40px">
-									<button class="wolfe-btn notification-post" style="margin-top:3px">POST</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+			</part>
+		</module>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -141,7 +165,7 @@
 						'Landing Page: '+landing+
 						'<br>Video play count: '+playcount+
 						'<br>Registration Page: '+regist+
-						'<br>New Users: '+newuser+'<hr>'
+						'<br>New Users: '+newuser
 					);
 					
 					if(out.indexOf('landing') == -1){
@@ -167,6 +191,7 @@
 								dump(z);
 							});
 							$('.prompt').val('');
+							if(data.length > 1) $('.output').show();
 						}
 					});
 				});
@@ -183,6 +208,7 @@
 								dump(z);
 							});
 							$('.prompt').val('');
+							$('.output').hide();
 						}
 					});
 				});

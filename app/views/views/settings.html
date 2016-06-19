@@ -5,212 +5,308 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none;">
-			{% include path.flash %}
-			<div class="tabs">
-				<ul class="wrapper">
-					<li data-tab="0" class="tab noselect">My Account</li>
-					<li data-tab="1" class="tab noselect">Jobs</li>
-					<li data-tab="2" class="tab noselect">Email</li>
-					<li data-tab="3" class="tab noselect">Trash</li>
-				</ul>
-			</div>
-			<div class="obj">
-				<div data-obj="0" class="box material im" style="padding:10px 30px 30px">
-					<div class="h4">My Details</div>
-					<div class="uac">
-						<form method="post" action="{{path.root}}/put/settings">
-							<table class="user-details">
-								<tbody>
-									<tr>
-										<td>First name</td>
-										<td><input type="text" name="first" value="{{user.first}}" required></td>
-									</tr>
-									<tr>
-										<td>Last name</td>
-										<td><input type="text" name="last" value="{{user.last}}"></td>
-									</tr>
-									<tr>
-										<td>Email</td>
-										<td><input type="text" name="email" type="email" value="{{user.email}}" required></td>
-									</tr>
-									<tr>
-										<td>Company</td>
-										<td><input type="text" name="company" value="{{user.company}}" required></td>
-									</tr>
-									<tr>
-										<td>Phone</td>
-										<td><input type="text" name="phone" value="{{user.phone}}"></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td style="height:40px">
-											<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
+        <div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<part class="tabs">
+					<ul class="wrap box-std">
+						<li data-tab="0" class="tab">My Account</li>
+						<li data-tab="1" class="tab">Jobs</li>
+						<li data-tab="2" class="tab">Email</li>
+						<li data-tab="3" class="tab">Trash</li>
+					</ul>
+				</part>
+				<part class="obj">
+					<box data-obj="0" class="tabobj box-std">
+						<part class="container-top">
+							<div class="h4 title">
+								My Details
+							</div>
+						</part>
+						<part class="uac container-bottom">
+							<form method="post" action="{{path.root}}/put/settings">
+								<table class="user-details">
+									<tbody>
+										<tr>
+											<td>First name</td>
+											<td><input type="text" name="first" value="{{user.first}}" required></td>
+										</tr>
+										<tr>
+											<td>Last name</td>
+											<td><input type="text" name="last" value="{{user.last}}"></td>
+										</tr>
+										<tr>
+											<td>Email</td>
+											<td><input type="text" name="email" type="email" value="{{user.email}}" required></td>
+										</tr>
+										<tr>
+											<td>Company</td>
+											<td><input type="text" name="company" value="{{user.company}}" required></td>
+										</tr>
+										<tr>
+											<td>Phone</td>
+											<td><input type="text" name="phone" value="{{user.phone}}"></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td style="height:40px">
+												<button class="button">UPDATE</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</part>
 						<hr>
-						<form method="post" action="{{path.root}}/put/password">
-							<table class="password-settings">
-								<tbody>
-									<tr>
-										<td>Password</td>
-										<td><input name="oldpw" type="password" placeholder="Old Password" required></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td><input name="newpw" type="password" placeholder="New Password" required></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td><input name="confirmpw" type="password" placeholder="Confirm New Password" required></td>
-									</tr>
-									<tr>
-										<td></td>
-										<td style="height:40px">
-											<input type="hidden" name="my">
-											<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-					</div>
-				</div>
-				<div data-obj="1" class="box material im" style="padding:10px 30px 30px">
-					<div class="jobstatus">
-						<div class="h4">Job Statuses</div>
-						<ul id="jobstatus" class="kappa">
-							{% for item in status %}
-							<li>
-								<div style="position:relative;width:180px;">
-									<input type="text" data-id="{{item.id}}" value="{{item.name}}" style="padding-right:24px;width:100%" 
-									{% if item.name == 'Completed' %}
-									disabled title="This is currently a built-in status"
-									{% endif %}
-									/>
-									<div class="status-handle">::</div>
+						<part class="container-top">
+							<div class="h4 title">
+								Change Your Password
+							</div>
+						</part>
+						<part class="uac container-bottom">
+							<form method="post" action="{{path.root}}/put/password">
+								<table class="password-settings">
+									<tbody>
+										<tr>
+											<td>Password</td>
+											<td><input name="oldpw" type="password" placeholder="Old Password" required></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td><input name="newpw" type="password" placeholder="New Password" required></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td><input name="confirmpw" type="password" placeholder="Confirm New Password" required></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td style="height:40px">
+												<input type="hidden" name="my">
+												<button class="button">UPDATE</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</part>
+					</box>
+					<box data-obj="1" class="tabobj box-std">
+						<part class="jobstatus">
+							<part class="container-top">
+								<div class="h4 title">
+									Job Statuses
 								</div>
-							</li>
-							{% endfor %}
-						</ul>
-						<a style="cursor:pointer;" new-status>
-							{% if status is empty %}
-							New Status
-							{% else %}
-							Another One
+							</part>
+							<part class="container-bottom">
+								<ul id="job-status">
+									{% for item in status %}
+									<li>
+										<input type="text" data-id="{{item.id}}" value="{{item.name}}" 
+										{% if item.name == 'Completed' %}
+										disabled title="This is a built-in status"
+										{% endif %}
+										/>
+										<div class="status-handle">
+										</div>
+									</li>
+									{% endfor %}
+								</ul>
+								<a style="cursor: pointer;padding: 5px 0px;display: block;" new-status>
+									{% if status is empty %}
+									New Status
+									{% else %}
+									Another One
+									{% endif %}
+								</a>
+								<button class="button" job-status-btn>UPDATE</button>
+							</part>
+						</part>
+						<hr>
+						<part class="container-top">
+							<div class="h4 title">
+								Change the next Job number
+							</div>
+						</part>
+						<part class="container-bottom">
+							<div class="job_number">
+								<form method="post" action="{{path.root}}/post/job-number">
+									<part style="padding: 5px 0px;">
+										Next Job Number <input type="text" name="job_number" value="{{job_number}}" required>
+									</part>
+									<button class="button">UPDATE</button>
+								</form>
+							</div>
+						</part>
+					</box>
+					<box data-obj="2" class="tabobj box-std">
+						<part class="container-top">
+							<div class="h4 title">
+								Email Integration
+							</div>
+							{% if email != true %}
+							<div class="alert alert-success">
+								For Paperwork to send emails on your behalf, you may need to change some email settings with your email provider.<br><br>
+								For Gmail, please follow <a href="https://www.google.com/settings/security/lesssecureapps" target="_blank"><b>this link</b></a>. Otherwise, you will need to ask your email provider how to allow "less secure apps" 
+								to use their SMTP server.<br><br>You can always try enter your email and password below, then try to send an email from a <a href="{{path.root}}/jobs"><b>job</b></a> to see if it works.
+							</div>
 							{% endif %}
-						</a><br>
-						<button class="wolfe-btn" style="margin-top:7px;" job-status-btn>UPDATE</button>
-					</div>
-					<hr>
-					<div class="h4">Change Next Job Number</div>
-					<div class="job_number">
-						<form method="post" action="{{path.root}}/post/job-number">
-							Next Job Number <input type="text" name="job_number" value="{{job_number}}" required><br>
-							<button class="wolfe-btn" style="margin-top:7px;">UPDATE</button>
-						</form>
-					</div>
-					<!--<hr>
-					<a href="{{path.root}}/register-settings">Rename your templates</a>-->
-				</div>
-				<div data-obj="2" class="box material im" style="padding:10px 30px 30px">
-					<form method="post" action="{{path.root}}/put/email-settings">
-						<div class="h4">Email Integration</div>
+						</part>
 						{% if email != true %}
-						<div class="alert alert-success">
-							For Paperwork to send emails on your behalf, you may need to change some email settings with your email provider.<br><br>
-							For Gmail, please follow <a href="https://www.google.com/settings/security/lesssecureapps" target="_blank"><b>this link</b></a>. Otherwise, you will need to ask your email provider how to allow "less secure apps" 
-							to use their SMTP server.<br><br>You can always try enter your email and password below, then try to send an email from a <a href="{{path.root}}/jobs"><b>job</b></a> to see if it works.
-						</div>
+						<hr>
 						{% endif %}
+						<part class="container">
+							<form method="post" action="{{path.root}}/put/email-settings">
+								<table class="email-settings">
+									<tbody>
+										<tr>
+											<td>Email</td>
+											<td><input class="email-address" type="email" name="address" value="{{email.address}}" placeholder="hello@domain.com" required></td>
+										</tr>
+										<tr>
+											<td>Password</td>
+											<td><input type="password" name="password" placeholder="Email Password" value="" required></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td><hr style="margin: 15px 0px; max-width: 225px;"></td>
+										</tr>
+										<tr>
+											<td>SMTP</td>
+											<td><input type="text" name="smtp" value="{{email.smtp}}" placeholder="smtp.domain.com" required></td>
+										</tr>
+										<tr>
+											<td>Protocol</td>
+											<td><input type="text" name="protocol" value="{{email.protocol}}" placeholder="Protocol"></td>
+										</tr>
+										<tr>
+											<td>Port</td>
+											<td><input type="text" name="port" value="{{email.port}}" placeholder="000" required></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td style="height:40px">
+												<button class="button">UPDATE</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</part>
 						<hr>
-						<table class="email-settings">
-							<tbody>
-								<tr>
-									<td>Email</td>
-									<td><input class="email-address" type="email" name="address" value="{{email.address}}" placeholder="hello@domain.com" required></td>
-								</tr>
-								<tr>
-									<td>Password</td>
-									<td><input type="password" name="password" placeholder="Email Password" value="" required></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td><hr></td>
-								</tr>
-								<tr>
-									<td>SMTP</td>
-									<td><input type="text" name="smtp" value="{{email.smtp}}" placeholder="smtp.domain.com" required></td>
-								</tr>
-								<tr>
-									<td>Protocol</td>
-									<td><input type="text" name="protocol" value="{{email.protocol}}" placeholder="Protocol"></td>
-								</tr>
-								<tr>
-									<td>Port</td>
-									<td><input type="text" name="port" value="{{email.port}}" placeholder="000" required></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td style="height:40px">
-										<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
-					<hr>
-					<table class="email-signature">
-						<tbody>
-							<tr>
-								<td style="vertical-align:top;padding-top:6px;">Signature</td>
-								<td>
-									<div class="signature" contenteditable>{{email.signature|raw}}</div>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td style="height:40px">
-									<button class="wolfe-btn" style="margin-top:3px">UPDATE</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div data-obj="3" class="box material im" style="padding:30px">
-					<div class="trash">
-						{% if (jobs is not empty) or (forms is not empty) or (clients is not empty) or (inventory is not empty) %}
-						<div class="h4">Jobs</div>
-						{% for job in jobs %}
-						<div>{{job.job_number}} - {{job.name}} - <span style="color:#999">{{job.client.name}}</span>&nbsp&nbsp<a href="#" data-jobid="{{job.id}}">Undo</a></div>
-						{% endfor %}
-						<hr>
-						<div class="h4">Job Forms</div>
-						{% for form in forms %}
-						<div>{{form.job.job_number}} - {{form.name}} - <span style="color:#999">{{form.client.name}}</span>&nbsp&nbsp<a href="#" data-formid="{{form.id}}">Undo</a></div>
-						{% endfor %}
-						<hr>
-						<div class="h4">Clients</div>
-						{% for client in clients %}
-						<div>{{client.client_number}} - {{client.name}}&nbsp&nbsp<a href="#" data-clientid="{{client.id}}">Undo</a></div>
-						{% endfor %}
-						<hr>
-						<div class="h4">Inventory</div>
-						{% for item in inventory %}
-						<div>{{item.name}} - {{item.price}}&nbsp&nbsp<a href="#" data-inventoryid="{{item.id}}">Undo</a></div>
-						{% endfor %}
-						<hr>
-						<div class="ac empty">Empty Trash</div>
-						<div class="ac"><i>Items older than 30 days will be cleaned automatically</i></div>
-						{% else %}
-						<div class="ac h3">Trash is empty</div>
-						{% endif %}
-					</div>
-				</div>
-			</div>
+						<part class="container">
+							<table class="email-signature">
+								<tbody>
+									<tr>
+										<td style="vertical-align:top;padding-top:6px;">Signature</td>
+										<td>
+											<div class="signature" contenteditable>{{email.signature|raw}}</div>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td style="height:40px">
+											<button class="button">UPDATE</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</part>
+					</box>
+					<box data-obj="3" class="tabobj box-std">
+						<part class="trash">
+							{% if (jobs is not empty) or (forms is not empty) or (clients is not empty) or (inventory is not empty) %}
+							<part class="container-top">
+								<div class="h4 title">
+									Jobs
+								</div>
+							</part>
+							<part class="container-bottom">
+							{% for job in jobs %}
+								<part>
+									{{job.job_number}} - {{job.name}} - 
+									<span style="color:#999">
+										{{job.client.name}}
+									</span>
+									&nbsp&nbsp
+									<a href="#" data-jobid="{{job.id}}">
+										Undo
+									</a>
+								</part>
+							{% endfor %}
+							</part>
+							<hr>
+							<part class="container-top">
+								<div class="h4 title">
+									Job Quotes and Invoices
+								</div>
+							</part>
+							<part class="container-bottom">
+							{% for form in forms %}
+								<part>
+									{{form.job.job_number}} - {{form.name}}
+									<span style="color:#999">
+										{{form.client.name}}
+									</span>
+									&nbsp&nbsp
+									<a href="#" data-formid="{{form.id}}">
+										Undo
+									</a>
+								</part>
+							{% endfor %}
+							</part>
+							<hr>
+							<part class="container-top">
+								<div class="h4 title">
+									Clients
+								</div>
+							</part>
+							<part class="container-bottom">
+							{% for client in clients %}
+								<part>
+									{{client.client_number}} - {{client.name}}
+									&nbsp&nbsp
+									<a href="#" data-clientid="{{client.id}}">
+										Undo
+									</a>
+								</part>
+							{% endfor %}
+							</part>
+							<hr>
+							<part class="container-top">
+								<div class="h4 title">
+									Inventory
+								</div>
+							</part>
+							<part class="container-bottom">
+							{% for item in inventory %}
+								<part>
+									{{item.name}} - {{item.price}}
+									&nbsp&nbsp
+									<a href="#" data-inventoryid="{{item.id}}">
+										Undo
+									</a>
+								</part>
+							{% endfor %}
+							</part>
+							<hr>
+							<part class="centered empty container-top">
+								Empty Trash
+							</part>
+							<part class="centered container">
+								<i>Items older than 30 days will be cleaned automatically</i>
+							</div>
+							{% else %}
+							<div class="centered h3 title" style="padding: 50px 0px;">Trash is empty</div>
+							{% endif %}
+						</part>
+					</box>
+				</part>
+			</module>
 		</div>
 		<script>
 		var environment = {
@@ -230,12 +326,60 @@
 					}
 				});
 				
-				// STATUS REARRANGE //
-				new Sortable(document.getElementById('jobstatus'), {
+				// STATUS //
+				var $status = $('.jobstatus ul');
+				
+				new Sortable(document.getElementById('job-status'), {
 					handle: '.status-handle',
 					animation: 150,
 					ghostClass: 'status-hover',
+					onEnd: function(event){
+						updateStatus();
+					}
 				});
+				
+				// Listen to button
+				$('[job-status-btn]').on('click', updateStatus);
+				
+				// Listen to change
+				$status.on('change', 'input', updateStatus);
+				
+				// New status
+				$('[new-status]').click(function(){
+					$status.append(`
+						<li>
+							<input type="text" placeholder="Status name" />
+							<div class="status-handle">
+							</div>
+						</li>
+					`);
+				});
+				
+				function updateStatus(){
+					let map = [];
+					
+					$status.find('input').each(function(){
+						if($(this).data('id') != undefined){
+							if($(this).val() != undefined){
+								map.push({
+									id: $(this).data('id'),
+									name: $(this).val(),
+								});
+							}
+						}else if($(this).val() != undefined){
+							map.push({
+								name: $(this).val()
+							});
+						}
+					});
+					
+					$.post('{{path.root}}/post/status', {
+						data: map
+					}).done(function(){
+						Paperwork.saved();
+					});
+				}
+				
 				
 				// VALIDATION //
 				var v = new Validation;
@@ -249,34 +393,7 @@
 				});
 				v.input($('.job_number'), $('.job_number button'), 'jobNumber');
 				
-				var j = $('.jobstatus ul');
-				$('[new-status]').click(function(){
-					j.append('<li><input type="text" placeholder="Status name" /></li>');
-				});
-				
-				$('[job-status-btn]').click(function(){
-					k = [];
-					j.find('input').each(function(){
-						if($(this).data('id') != undefined){
-							if($(this).val() != undefined){
-								k.push({
-									id: $(this).data('id'),
-									name: $(this).val(),
-								});
-							}
-						}else if($(this).val() != undefined){
-							k.push({
-								name: $(this).val()
-							});
-						}
-					});
-					$.post('{{path.root}}/post/status', {
-						data: k
-					}).done(function(){
-						location.reload();
-					});
-				});
-				
+				// Trash
 				$('.trash').on('click', 'a', function(){
 					rmv($(this));
 				});

@@ -5,18 +5,30 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none;">
-			<div class="box wrapper material">
-				<br>
-				<div class="alert alert-success">
-					<strong>Hi {{user.first}}</strong>
-				</div>
-				{% include path.flash %}
-				<br><br>
-				<i>Email <a href="mailto:hello@paperwork.nz">hello@paperwork.nz</a> if you need help or to report an issue!</i><br><br>
-				<a href="{{path.root}}/get/logout">Logout</a>
-				</div>
-			</div>
+        <div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<box class="box-std">
+					<part class="container-top">
+						<div class="h3 title">
+							Hi {{user.first}}
+						</div>
+					</part>
+					<part class="container">
+					</part>
+					<part class="container">
+					</part>
+					<part class="container-bottom">
+						<a href="{{path.root}}/get/logout">
+							Logout
+						</a>
+					</part>
+				</box>
+			</module>
         </div>
 		<script>
 		var environment = {

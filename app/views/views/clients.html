@@ -5,39 +5,47 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none;">
-            <div style="width:610px">{% include path.flash %}</div>
-            <div class="box material" style="padding: 0">
-                <div class="n-new center">
-					<div id="create-new" class="h4 ac w1 noselect">
-						New Client
-					</div>
-					<div id="new-content" style="display:none">
-						<table style="margin-bottom: 20px;">
-							<tbody>
-								<tr>
-									<td class="ar">
-										Full Name
-									</td>
-									<td>
-										<input type="text" required client-name>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<button class="wolfe-btn uc" href="{{path.root}}/post/client" create-btn>CREATE</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<hr style="margin-top: 0;">
-				<div id="the-basics" style="padding: 15px;">
-					<input type="text" class="typeahead" placeholder="Quick Search" />
-				</div>
-            </div>
+        <div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<box class="box-std">
+					<part class="container">
+						<div class="h4 title centered create-new noselect">
+							New Client
+						</div>
+						<div id="new-content" class="container-bottom" style="display:none">
+							<table class="central">
+								<tbody>
+									<tr>
+										<td class="ar">
+											Full name
+										</td>
+										<td>
+											<input type="text" name="name" required />
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td>
+											<button type="submit" class="button" href="{{path.root}}/post/client">Create</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</part>
+					<hr />
+					<part class="container">
+						<div id="the-basics">
+							<input type="text" class="typeahead" placeholder="Quick Search" />
+						</div>
+					</part>
+				</box>
+			</module>
         </div>
 		<script>
 		var environment = {
@@ -66,7 +74,7 @@
 				v.input($('#new-content'), $('#new-content button'), 'clients');
 				
 				// New object
-				$("#create-new").on('click', function(){$("#new-content").slideToggle(100);});
+				$('.create-new').on('click', function(){$("#new-content").slideToggle(100);});
 				
 				var clientTypeahead = function(){
 					var go = function(){
@@ -94,10 +102,10 @@
 				};
 				
 				// New Client
-				$('[create-btn]').on('click', function(){
-					if($('[client-name]').val().length > 0){
+				$('#new-content .button').on('click', function(){
+					if($('#new-content input[name=name]').val().length > 0){
 						$.post($(this).attr('href'), {
-							name: $('[client-name]').val()
+							name: $('#new-content input[name=name]').val()
 						}).done(function(data){
 							data = JSON.parse(data);
 							if(data.type == 'success'){
@@ -106,7 +114,15 @@
 								$('#the-basics').html('<input type="text" class="typeahead" placeholder="Quick Search" />');
 								clientTypeahead();
 							}else{
-								$('#content').prepend('<div style="width:610px" class="alert alert-danger">'+data.message+'</div>');
+								$('#content').prepend(`
+									<module>
+										<flash class="box-std">
+											<div class="alert alert-danger">
+												${data.message}
+											</div>
+										</flash>
+									</module>
+								`);
 							}
 						});
 					}

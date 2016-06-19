@@ -1,17 +1,14 @@
-<div class="wrapper">
+<div class="wrap">
 	<style scoped>
 		.wt-wrap {
 			font-size: 0;
-		}
-		.wt-wrap {
-			display:inline-block;
-			white-space:nowrap;
+			display: inline-block;
+			white-space: nowrap;
 		}
 		.wt-column {
 			display: inline-block;
 			min-width: 44px;
 			font-size: 14px;
-			width: 125px;
 		}
 		.wt-column-ghost {
 			opacity: 0.5
@@ -47,6 +44,8 @@
 			background-color:#eee
 		}
 		.wt-settings {
+			height: 28px;
+			line-height: 28px;
 			cursor: pointer;
 			color: #337ab7;
 		}
@@ -66,7 +65,7 @@
 			border: none;
 			min-height: 50px;
 			opacity: 0;
-			padding: 15px;
+			box-shadow: 0 1px 2px rgba(0,0,0,.1);
 		}
 		
 		/* New Filter */
@@ -92,7 +91,7 @@
 		}
 		.wt-title {
 			font-weight: 600;
-			margin-bottom: 10px;
+			padding-bottom: 10px;
 		}
 		.wt-filter-facade {
 			height: 30px;
@@ -146,11 +145,11 @@
 		}
 	</style>
 	<div class="wt-table" style="display:none">
-		<div class="wrapper" style="margin-bottom:5px">
-			<div class="wt-settings pull-left" title="Edit Filters and Preferences">
+		<div class="wrap" style="margin-bottom:5px">
+			<div class="wt-settings left" title="Edit Filters and Preferences">
 				Filter Settings
 			</div>
-			<div class="pull-right">
+			<div class="right">
 				<select class="wt-filter">
 					<option value="All">All</option>
 					{% for s in status %}
@@ -159,7 +158,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="wrapper" style="overflow-x:auto;">
+		<div class="wrap" style="overflow-x:auto;">
 			<div id="sortable" class="wt-wrap">
 				{% set i = 0 %}
 				{% for a,b in head %}

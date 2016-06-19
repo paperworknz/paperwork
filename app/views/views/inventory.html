@@ -5,29 +5,40 @@
 	</head>
     <body>
         {% include path.scaffolding %}
-        <div id="content" style="display:none;">
-            <div class="box material">
-				<div class="h3">Inventory</div>
-				<div class="entry" style="width:276px">
-					<input id="name" type='text' name='name' placeholder='Name' class="input-big" style="width:150px" required/>
-					<input id="price" type="text" name='price' placeholder='$0.00' class="input-big" style='width:60px'/>
-					<div class="pull-right">
-						<button id="ajax" class="wolfe-btn">ADD</button>
-					</div>
-				</div>
-				<hr>
-				<ul class="inventory">
-					{% for item in inventory %}
-					<li data-id="{{item.id}}">
-						<div class="item">
-							<input type="text" data-type="name" class="w1" value="{{item.name}}">
-							<input type="text" data-type="price" class="firm-right "value="{{item.price}}">
+        <div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<box class="box-std">
+					<part class="container">
+						<div class="h3">Inventory</div>
+						<div class="entry" style="width:276px">
+							<input id="name" type='text' name='name' placeholder='Name' class="input-big" style="width:150px" required/>
+							<input id="price" type="text" name='price' placeholder='$0.00' class="input-big" style='width:60px'/>
+							<div class="right">
+								<button id="ajax" class="button">ADD</button>
+							</div>
 						</div>
-						<div class="invremove">x</div>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
+					</part>
+					<hr>
+					<part class="container">
+						<ul class="inventory">
+							{% for item in inventory %}
+							<li data-id="{{item.id}}">
+								<div class="item">
+									<input type="text" data-type="name" style="width: 100%;" value="{{item.name}}">
+									<input type="text" data-type="price" class="firm-right "value="{{item.price}}">
+								</div>
+								<div class="invremove">x</div>
+							</li>
+							{% endfor %}
+						</ul>
+					</part>
+				</box>
+			</module>
         </div>
 		<script>
 		var environment = {

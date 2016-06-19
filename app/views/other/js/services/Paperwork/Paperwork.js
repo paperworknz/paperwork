@@ -1,12 +1,9 @@
 var Paperwork = (function(){
 	
-	const $document = $(document);
+	const $document = $('body');
 	var darkIndex = 49;
 	
-	preventBackspace();
-	flow();
-	
-	function preventBackspace(){
+	var preventBackspace = (function(){
 		let exclusions = 'input, select, textarea, [contenteditable]';
 		$document.on('keydown', function(event){
 			let code = event.keyCode || event.which,
@@ -14,20 +11,23 @@ var Paperwork = (function(){
 			
 			if(code === 8 && !$target.is(exclusions)) event.preventDefault();
 		});
-	}
+	})();
 	
-	function flow(){
+	var flow = (function(){
 		let elements = 'input[type=text], input[type=email], input[type=password]';
 		$document.on('keydown', elements, function(event){
 			let code = event.keyCode || event.which,
 				$next = $(`:input:eq(${($(':input').index(this) + 1)})`);
 			
-			if(code === 13) $next.focus();
+			if(code === 13){
+				$next.focus();
+				if(!$next.is('button')) event.preventDefault();
+			}
 		});
-	}
+	})();
 	
 	function wait($element){
-		$element.addClass('wolfe-btn-wait');
+		$element.addClass('button-wait');
 		$element.html(`
 			<div class="wait la-ball-fall">
 				<div></div>
@@ -38,72 +38,13 @@ var Paperwork = (function(){
 	}
 	
 	function ready($element, html, callback){
-		$element.removeClass('wolfe-btn-wait');
+		$element.removeClass('button-wait');
 		$element.html(html);
 		if(callback != undefined) callback();
 	}
 	
-	function saved(message, length){
-		let $element = $document.find('.pw-notification');
-		
-		if(message === undefined) message = 'Saved';
-		if(length === undefined) length = 1000;
-		
-		$element.html(message);
-		
-		$element.animate({
-			opacity: 0.75,
-		}, 100, function(){
-		setTimeout(function(){
-			$element.animate({
-				opacity: 0
-			}, 1000, function(){
-				$element.html(' ');
-			});
-		}, length);
-		});
-	}
-	
-	function dark(container) {
-		var container = container != undefined ? con : $('#content'),
-			dc = 'dark_container',
-			chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-			result = '';
-		
-		darkIndex++;
-		
-		// Generate random string, length of 6
-		for(var i = 6; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-		
-		// Fade
-		container.after(`
-			<div class="${dc}" data-module="${result}">
-				<div class="dark_object" disable>
-				</div>
-			</div>
-		`);
-		
-		var $dark_module = $(`.${dc}`).filter(`[data-module="${result}"]`);
-		$dark_module.css('z-index', darkIndex);
-		
-		// Return dark_instance
-		return {
-			object: $dark_module,
-			run: function(callback){
-				$dark_module.find(`.dark_object`).animate({
-					opacity: 0.66,
-				}, 150, function(){
-					if(callback != undefined) callback();
-				});
-			},
-			remove: function(callback){
-				$dark_module.find(`.dark_object`).fadeOut(150, function(){
-					$dark_module.remove();
-					if(callback != undefined) callback();
-				});
-			},
-		};
-	}
+	//-> parts/notification.js
+	//-> parts/dark.js
 	
 	return {
 		wait: wait,
@@ -116,6 +57,45 @@ var Paperwork = (function(){
 	};
 	
 })();
+
+function since(timeStamp) {
+	var now = new Date(),
+		stamp = timeStamp.split(/[- :]/),
+		timeStamp = new Date(stamp[0], stamp[1]-1, stamp[2], stamp[3], stamp[4], stamp[5]),
+		secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
+	
+	if(secondsPast < 60){
+		return parseInt(secondsPast) + 's ago';
+	}
+	if(secondsPast < 3600){
+		return parseInt(secondsPast/60) + 'm ago';
+	}
+	if(secondsPast <= 86400){
+		return parseInt(secondsPast/3600) + 'h ago';
+	}
+	if(secondsPast > 86400){
+		let day = timeStamp.getDate();
+		let month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(' ','');
+		let year = timeStamp.getFullYear() == now.getFullYear() ? '' :  ' '+timeStamp.getFullYear();
+		return day + ' ' + month + year;
+	}
+};
+
+function goto(location) {
+	
+	$('#content').animate({
+		opacity: 0,
+	}, 'fast');
+	
+	window.location = location;
+};
+
+$('a').on('click', function(e){
+	if($(this).attr('href')){
+		e.preventDefault();
+		goto($(this).attr('href'));
+	}
+});
 
 // *************** MENU
 var thumb = $('.thumb');
@@ -136,10 +116,10 @@ $(window).resize(width); // On resize, run width();
 
 if(localStorage.sidebar != undefined){
 	if(localStorage.sidebar == 'small'){
-		$('#content').css({
-			marginLeft: '25px',
-			padding: '15px 0px 0px 15px',
-		});
+		// $('#content').css({
+		// 	marginLeft: '25px',
+		// 	padding: '15px 0px 0px 15px',
+		// });
 	}
 }
 
@@ -178,10 +158,10 @@ $('.navbar-hide').on('click', function(){
 		$('#sidebar').animate({
 			width: '160px'
 		}, 100, function(){
-			$('#content').animate({
-				marginLeft: '160px',
-				padding: '15px 0px 15px 15px'
-			}, 100);
+			// $('#content').animate({
+			// 	marginLeft: '160px',
+			// 	padding: '15px 0px 15px 15px'
+			// }, 100);
 			$('#sidebar li').each(function(){
 				$(this).css({
 					textIndent: '20px',
@@ -211,10 +191,10 @@ $('.navbar-hide').on('click', function(){
 		$('#sidebar').animate({
 			width: '25px'
 		}, 100, function(){
-			$('#content').animate({
-				marginLeft: '25px',
-				padding: '15px 0px 0px 15px',
-			}, 100);
+			// $('#content').animate({
+			// 	marginLeft: '25px',
+			// 	padding: '15px 0px 0px 15px',
+			// }, 100);
 			$('.navbar-hide').html(' > ');
 			$('.navbar-hide').addClass('small');
 		});
@@ -224,44 +204,5 @@ $('.navbar-hide').on('click', function(){
 		document.cookie = c; // Post/put cookie
 		
 		localStorage.sidebar = 'small';
-	}
-});
-
-function since(timeStamp) {
-	var now = new Date(),
-		stamp = timeStamp.split(/[- :]/),
-		timeStamp = new Date(stamp[0], stamp[1]-1, stamp[2], stamp[3], stamp[4], stamp[5]),
-		secondsPast = (now.getTime() - timeStamp.getTime()) / 1000;
-	
-	if(secondsPast < 60){
-		return parseInt(secondsPast) + 's ago';
-	}
-	if(secondsPast < 3600){
-		return parseInt(secondsPast/60) + 'm ago';
-	}
-	if(secondsPast <= 86400){
-		return parseInt(secondsPast/3600) + 'h ago';
-	}
-	if(secondsPast > 86400){
-		let day = timeStamp.getDate();
-		let month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(' ','');
-		let year = timeStamp.getFullYear() == now.getFullYear() ? '' :  ' '+timeStamp.getFullYear();
-		return day + ' ' + month + year;
-	}
-};
-
-function goto(location) {
-	
-	$('#content').animate({
-		opacity: 0,
-	}, 'fast');
-	
-	window.location = location;
-};
-
-$('a').on('click', function(e){
-	if($(this).attr('href')){
-		e.preventDefault();
-		goto($(this).attr('href'));
 	}
 });
