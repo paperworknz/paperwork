@@ -116,14 +116,13 @@
 									</li>
 									{% endfor %}
 								</ul>
-								<a style="cursor: pointer;padding: 5px 0px;display: block;" new-status>
+								<a style="cursor: pointer;padding: 5px 0px;display: block;width: 180px;" new-status>
 									{% if status is empty %}
 									New Status
 									{% else %}
 									Another One
 									{% endif %}
 								</a>
-								<button class="button" job-status-btn>UPDATE</button>
 							</part>
 						</part>
 						<hr>
@@ -228,7 +227,7 @@
 							<part class="container-bottom">
 							{% for job in jobs %}
 								<part>
-									{{job.job_number}} - {{job.name}} - 
+									Job {{job.job_number}} - {{job.name}} - 
 									<span style="color:#999">
 										{{job.client.name}}
 									</span>
@@ -242,13 +241,13 @@
 							<hr>
 							<part class="container-top">
 								<div class="h4 title">
-									Job Quotes and Invoices
+									Quotes and Invoices
 								</div>
 							</part>
 							<part class="container-bottom">
 							{% for form in forms %}
 								<part>
-									{{form.job.job_number}} - {{form.name}}
+									Job {{form.job.job_number}} - {{form.name}}
 									<span style="color:#999">
 										{{form.client.name}}
 									</span>
@@ -337,9 +336,6 @@
 						updateStatus();
 					}
 				});
-				
-				// Listen to button
-				$('[job-status-btn]').on('click', updateStatus);
 				
 				// Listen to change
 				$status.on('change', 'input', updateStatus);
