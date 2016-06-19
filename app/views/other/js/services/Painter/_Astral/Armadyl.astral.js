@@ -93,7 +93,7 @@ Painter.prototype.append = function(selected, data){
 			'<div style="float:right;border-left: 1px solid black;"><div class="qq-total"></div></div>'+
 			'<div style="float:right;border-left: 1px solid black;"><div style="position:relative"><div class="qq-price" contenteditable>'+data.price+'</div></div></div>'+
 			'<div style="float:right;border-left: 1px solid black;"><div class="qq-qty" contenteditable>'+data.quantity+'</div></div>'+
-			'<div style="width:auto;overflow:hidden"><div class="qq-item wrapper" style="position:relative"><div contenteditable style="outline:0">'+data.item+'</div><div class="twig-remove noselect">x</div></div></div></div>'+
+			'<div style="width:auto;"><div class="qq-item wrapper" style="position:relative"><div contenteditable style="outline:0">'+data.item+'</div><div class="twig-remove noselect">x</div></div></div></div>'+
 		'</div>'
 	);
 };
