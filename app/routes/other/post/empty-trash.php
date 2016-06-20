@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/post/empty-trash', 'uac', function() use ($app){
+$app->post('/post/empty-trash', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
