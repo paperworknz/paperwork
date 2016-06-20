@@ -108,9 +108,9 @@ function render(notification){
 				if(notifications[chain]) render(notifications[chain]);
 			}
 			
-			// $.post(environment.root+'/delete/notification', {
-			// 	id: notification.id,
-			// });
+			$.post(environment.root+'/delete/notification', {
+				id: notification.id,
+			});
 		});
 	}
 }
