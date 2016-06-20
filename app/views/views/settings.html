@@ -320,15 +320,15 @@
 		}%}
 		<script>
 			$(function(){
-				// var tab = new Tab({
-				// 	cookie: {
-				// 		name: 'settings',
-				// 		value: '{{user.first}}'
-				// 	}
-				// });
+				var tab = new Tab({
+					cookie: {
+						name: 'settings',
+						value: '{{user.first}}'
+					}
+				});
 				
-				// // STATUS //
-				// var $status = $('.jobstatus ul');
+				// STATUS //
+				var $status = $('.jobstatus ul');
 				
 				// new Sortable(document.getElementById('job-status'), {
 				// 	handle: '.status-handle',
@@ -339,138 +339,138 @@
 				// 	}
 				// });
 				
-				// // Listen to change
-				// $status.on('change', 'input', updateStatus);
+				// Listen to change
+				$status.on('change', 'input', updateStatus);
 				
-				// // New status
-				// $('[new-status]').click(function(){
-				// 	$status.append(`
-				// 		<li>
-				// 			<input type="text" placeholder="Status name" />
-				// 			<div class="status-handle">
-				// 			</div>
-				// 		</li>
-				// 	`);
-				// });
+				// New status
+				$('[new-status]').click(function(){
+					$status.append(`
+						<li>
+							<input type="text" placeholder="Status name" />
+							<div class="status-handle">
+							</div>
+						</li>
+					`);
+				});
 				
-				// function updateStatus(){
-				// 	let map = [];
+				function updateStatus(){
+					let map = [];
 					
-				// 	$status.find('input').each(function(){
-				// 		if($(this).data('id') != undefined){
-				// 			if($(this).val() != undefined){
-				// 				map.push({
-				// 					id: $(this).data('id'),
-				// 					name: $(this).val(),
-				// 				});
-				// 			}
-				// 		}else if($(this).val() != undefined){
-				// 			map.push({
-				// 				name: $(this).val()
-				// 			});
-				// 		}
-				// 	});
+					$status.find('input').each(function(){
+						if($(this).data('id') != undefined){
+							if($(this).val() != undefined){
+								map.push({
+									id: $(this).data('id'),
+									name: $(this).val(),
+								});
+							}
+						}else if($(this).val() != undefined){
+							map.push({
+								name: $(this).val()
+							});
+						}
+					});
 					
-				// 	$.post('{{path.root}}/post/status', {
-				// 		data: map
-				// 	}).done(function(){
-				// 		Paperwork.saved();
-				// 	});
-				// }
+					$.post('{{path.root}}/post/status', {
+						data: map
+					}).done(function(){
+						Paperwork.saved();
+					});
+				}
 				
 				
-				// // VALIDATION //
-				// var v = new Validation;
-				// v.input($('.user-details'), $('.user-details button'), 'user', {
-				// 	allowDuplicates: true,
-				// 	visible: true,
-				// });
-				// v.input($('.email-settings'), $('.email-settings button'), 'email');
-				// v.input($('.password-settings'), $('.password-settings button'), 'password', {
-				// 	allowDuplicates: true
-				// });
-				// v.input($('.job_number'), $('.job_number button'), 'jobNumber');
+				// VALIDATION //
+				var v = new Validation;
+				v.input($('.user-details'), $('.user-details button'), 'user', {
+					allowDuplicates: true,
+					visible: true,
+				});
+				v.input($('.email-settings'), $('.email-settings button'), 'email');
+				v.input($('.password-settings'), $('.password-settings button'), 'password', {
+					allowDuplicates: true
+				});
+				v.input($('.job_number'), $('.job_number button'), 'jobNumber');
 				
-				// // Trash
-				// $('.trash').on('click', 'a', function(){
-				// 	rmv($(this));
-				// });
+				// Trash
+				$('.trash').on('click', 'a', function(){
+					rmv($(this));
+				});
 				
-				// $('.empty').on('click', function(){
-				// 	$('.trash').addClass('no-click');
-				// 	$('.trash').css('opacity', '0.5');
+				$('.empty').on('click', function(){
+					$('.trash').addClass('no-click');
+					$('.trash').css('opacity', '0.5');
 					
-				// 	$.post('{{path.root}}/post/empty-trash')
-				// 	.done(function(data){
-				// 		location.reload();
-				// 	});
-				// });
+					$.post('{{path.root}}/post/empty-trash')
+					.done(function(data){
+						location.reload();
+					});
+				});
 				
-				// rmv = function(element, callback){
-				// 	var type = id = 0;
-				// 	$('.trash').addClass('no-click');
-				// 	$('.trash').css('opacity', '0.5');
-				// 	if(element.attr('data-jobid') != undefined){
-				// 		type = 'job',
-				// 		id = element.attr('data-jobid');
-				// 	}
-				// 	if(element.attr('data-formid') != undefined){
-				// 		type = 'form',
-				// 		id = element.attr('data-formid');
-				// 	}
-				// 	if(element.attr('data-clientid') != undefined){
-				// 		type = 'client',
-				// 		id = element.attr('data-clientid');
-				// 	}
-				// 	if(element.attr('data-inventoryid') != undefined){
-				// 		type = 'inventory',
-				// 		id = element.attr('data-inventoryid');
-				// 	}
+				rmv = function(element, callback){
+					var type = id = 0;
+					$('.trash').addClass('no-click');
+					$('.trash').css('opacity', '0.5');
+					if(element.attr('data-jobid') != undefined){
+						type = 'job',
+						id = element.attr('data-jobid');
+					}
+					if(element.attr('data-formid') != undefined){
+						type = 'form',
+						id = element.attr('data-formid');
+					}
+					if(element.attr('data-clientid') != undefined){
+						type = 'client',
+						id = element.attr('data-clientid');
+					}
+					if(element.attr('data-inventoryid') != undefined){
+						type = 'inventory',
+						id = element.attr('data-inventoryid');
+					}
 					
-				// 	$.post('{{path.root}}/put/restore', {
-				// 		type: type,
-				// 		id: id
-				// 	}).done(function(data){
-				// 		element.parent().remove();
-				// 		$('.trash').removeClass('no-click');
-				// 		callback === undefined ? location.reload() : callback();
-				// 	});
-				// };
+					$.post('{{path.root}}/put/restore', {
+						type: type,
+						id: id
+					}).done(function(data){
+						element.parent().remove();
+						$('.trash').removeClass('no-click');
+						callback === undefined ? location.reload() : callback();
+					});
+				};
 				
-				// // EMAIL SETTINGS //
-				// $('.email-address').on('blur', function(){
-				// 	var address = $(this).val(),
-				// 		smtp = $('.email-settings input[name=smtp]'),
-				// 		protocol = $('.email-settings input[name=protocol]'),
-				// 		port = $('.email-settings input[name=port]');
+				// EMAIL SETTINGS //
+				$('.email-address').on('blur', function(){
+					var address = $(this).val(),
+						smtp = $('.email-settings input[name=smtp]'),
+						protocol = $('.email-settings input[name=protocol]'),
+						port = $('.email-settings input[name=port]');
 					
-				// 	if(address.indexOf('@gmail') != -1){
-				// 		smtp.val('smtp.gmail.com');
-				// 		protocol.val('TLS');
-				// 		port.val('587');
-				// 	}
+					if(address.indexOf('@gmail') != -1){
+						smtp.val('smtp.gmail.com');
+						protocol.val('TLS');
+						port.val('587');
+					}
 					
-				// 	if(address.indexOf('@hotmail') != -1 || address.indexOf('@live') != -1){
-				// 		smtp.val('smtp.live.com');
-				// 		protocol.val('');
-				// 		port.val('465');
-				// 	}
+					if(address.indexOf('@hotmail') != -1 || address.indexOf('@live') != -1){
+						smtp.val('smtp.live.com');
+						protocol.val('');
+						port.val('465');
+					}
 					
-				// 	if(address.indexOf('@outlook') != -1){
-				// 		smtp.val('smtp-mail.outlook.com');
-				// 		protocol.val('TLS');
-				// 		port.val('587');
-				// 	}
+					if(address.indexOf('@outlook') != -1){
+						smtp.val('smtp-mail.outlook.com');
+						protocol.val('TLS');
+						port.val('587');
+					}
 					
-				// });
+				});
 				
-				// $('.email-signature button').on('click', function(){
-				// 	$.post('{{path.root}}/put/email-signature', {
-				// 		signature: $('.signature').html()
-				// 	}).done(function(){
-				// 		location.reload();
-				// 	});
-				// });
+				$('.email-signature button').on('click', function(){
+					$.post('{{path.root}}/put/email-signature', {
+						signature: $('.signature').html()
+					}).done(function(){
+						location.reload();
+					});
+				});
 				
 				{% include path.load %}
 			});
