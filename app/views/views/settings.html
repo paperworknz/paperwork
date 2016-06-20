@@ -353,30 +353,30 @@
 					`);
 				});
 				
-				// function updateStatus(){
-				// 	let map = [];
+				function updateStatus(){
+					let map = [];
 					
-				// 	$status.find('input').each(function(){
-				// 		if($(this).data('id') != undefined){
-				// 			if($(this).val() != undefined){
-				// 				map.push({
-				// 					id: $(this).data('id'),
-				// 					name: $(this).val(),
-				// 				});
-				// 			}
-				// 		}else if($(this).val() != undefined){
-				// 			map.push({
-				// 				name: $(this).val()
-				// 			});
-				// 		}
-				// 	});
+					$status.find('input').each(function(){
+						if($(this).data('id') != undefined){
+							if($(this).val() != undefined){
+								map.push({
+									id: $(this).data('id'),
+									name: $(this).val(),
+								});
+							}
+						}else if($(this).val() != undefined){
+							map.push({
+								name: $(this).val()
+							});
+						}
+					});
 					
-				// 	$.post('{{path.root}}/post/status', {
-				// 		data: map
-				// 	}).done(function(){
-				// 		Paperwork.saved();
-				// 	});
-				// }
+					$.post('{{path.root}}/post/status', {
+						data: map
+					}).done(function(){
+						Paperwork.saved();
+					});
+				}
 				
 				
 				// VALIDATION //
