@@ -2,6 +2,11 @@
 <html lang="en">
 	<head>
     	{% include path.head %}
+		<script>
+			window.onerror = function(error){
+				alert(error);
+			};
+		</script>
 	</head>
     <body>
         {% include path.scaffolding %}
