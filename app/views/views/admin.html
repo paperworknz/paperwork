@@ -108,6 +108,10 @@
 										<td><input type="text" name="position" placeholder="right-center" required></td>
 									</tr>
 									<tr>
+										<td>Commands</td>
+										<td><input type="text" name="commands" placeholder="command, command" required></td>
+									</tr>
+									<tr>
 										<td></td>
 										<td style="height:40px">
 											<button class="button notification-post" style="margin-top:3px">POST</button>
@@ -311,6 +315,7 @@
 						text: $notification.find('[name="text"]').val().trim(),
 						anchor: $notification.find('[name="anchor"]').val().trim(),
 						position: $notification.find('[name="position"]').val().trim(),
+						commands: $notification.find('[name="commands"]').val().trim(),
 					}).done(function(data){
 						if(data == 'success'){
 							alert('Success');

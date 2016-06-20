@@ -158,9 +158,9 @@
 						{% if email != true %}
 						<hr>
 						{% endif %}
-						<part class="container">
+						<part class="container email-settings">
 							<form method="post" action="{{path.root}}/put/email-settings">
-								<table class="email-settings">
+								<table>
 									<tbody>
 										<tr>
 											<td>Email</td>
@@ -318,7 +318,7 @@
 		}%}
 		<script>
 			$(function(){
-				new Tab({
+				var tab = new Tab({
 					cookie: {
 						name: 'settings',
 						value: '{{user.first}}'

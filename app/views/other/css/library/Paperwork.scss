@@ -27,6 +27,7 @@
 	outline: none;
 	cursor: pointer;
 	-webkit-user-select: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .button:hover { background-color: #40d47e; }

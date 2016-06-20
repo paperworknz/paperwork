@@ -1,4 +1,4 @@
-var Notification = (function($, environment){
+var Notification = (function($, environment, Events){
 	
 	var chain,
 		notifications = [];
@@ -8,7 +8,19 @@ function render(notification){
 		dark = Paperwork.dark(),
 		dark_container = dark.object,
 		fade = dark.object.find('.dark_object'),
-		adjustments = {};
+		adjustments = {},
+		commands;
+	
+	// Commands
+	if(notification.commands){
+		if(commands = JSON.parse(notification.commands)){
+			for(let i in commands){
+				const value = commands[i];
+				
+				if(i.toLowerCase() == 'tab') Events.post('activateTab', value);
+			}
+		}
+	}
 	
 	if(!$anchor.length){
 		console.warn('Notification failed: No anchor');
@@ -32,7 +44,7 @@ function render(notification){
 		$anchor.css('background-color', 'white');
 	}
 	
-	$anchor.css('z-index', '51'); // New z-index
+	$anchor.css('z-index', '1000'); // New z-index
 	$anchor.css('box-shadow', '0 1px 2px rgba(0,0,0,.1)'); // Box shadow
 	
 	// Append notification after fade
@@ -96,9 +108,9 @@ function render(notification){
 				if(notifications[chain]) render(notifications[chain]);
 			}
 			
-			$.post(environment.root+'/delete/notification', {
-				id: notification.id,
-			});
+			// $.post(environment.root+'/delete/notification', {
+			// 	id: notification.id,
+			// });
 		});
 	}
 }
@@ -108,11 +120,12 @@ function render(notification){
 			page: environment.page,
 		}).done(function(data){
 			if(data){
-				data = JSON.parse(data);
-				notifications = data;
-				if(data.length > 1) chain = 0;
-				
-				render(data[0]);
+				if(data = JSON.parse(data)){
+					notifications = data;
+					if(data.length > 1) chain = 0;
+					
+					render(data[0]);
+				}
 			}
 		});
 	}
@@ -122,4 +135,4 @@ function render(notification){
 		render: render,
 	};
 	
-})(jQuery, environment);
+})(jQuery, environment, Events);
