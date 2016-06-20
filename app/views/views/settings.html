@@ -328,55 +328,55 @@
 				});
 				
 				// STATUS //
-				// var $status = $('.jobstatus ul');
+				var $status = $('.jobstatus ul');
 				
-				// new Sortable(document.getElementById('job-status'), {
-				// 	handle: '.status-handle',
-				// 	animation: 150,
-				// 	ghostClass: 'status-hover',
-				// 	onEnd: function(event){
-				// 		updateStatus();
-				// 	}
-				// });
+				new Sortable(document.getElementById('job-status'), {
+					handle: '.status-handle',
+					animation: 150,
+					ghostClass: 'status-hover',
+					onEnd: function(event){
+						updateStatus();
+					}
+				});
 				
 				// Listen to change
-				// $status.on('change', 'input', updateStatus);
+				$status.on('change', 'input', updateStatus);
 				
-				// New status
-				// $('[new-status]').click(function(){
-				// 	$status.append(`
-				// 		<li>
-				// 			<input type="text" placeholder="Status name" />
-				// 			<div class="status-handle">
-				// 			</div>
-				// 		</li>
-				// 	`);
-				// });
+				New status
+				$('[new-status]').click(function(){
+					$status.append(`
+						<li>
+							<input type="text" placeholder="Status name" />
+							<div class="status-handle">
+							</div>
+						</li>
+					`);
+				});
 				
-				// function updateStatus(){
-				// 	let map = [];
+				function updateStatus(){
+					var map = [];
 					
-				// 	$status.find('input').each(function(){
-				// 		if($(this).data('id') != undefined){
-				// 			if($(this).val() != undefined){
-				// 				map.push({
-				// 					id: $(this).data('id'),
-				// 					name: $(this).val(),
-				// 				});
-				// 			}
-				// 		}else if($(this).val() != undefined){
-				// 			map.push({
-				// 				name: $(this).val()
-				// 			});
-				// 		}
-				// 	});
+					$status.find('input').each(function(){
+						if($(this).data('id') != undefined){
+							if($(this).val() != undefined){
+								map.push({
+									id: $(this).data('id'),
+									name: $(this).val(),
+								});
+							}
+						}else if($(this).val() != undefined){
+							map.push({
+								name: $(this).val()
+							});
+						}
+					});
 					
-				// 	$.post('{{path.root}}/post/status', {
-				// 		data: map
-				// 	}).done(function(){
-				// 		Paperwork.saved();
-				// 	});
-				// }
+					$.post('{{path.root}}/post/status', {
+						data: map
+					}).done(function(){
+						Paperwork.saved();
+					});
+				}
 				
 				
 				// VALIDATION //
