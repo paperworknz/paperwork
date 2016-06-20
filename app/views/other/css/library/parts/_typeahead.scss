@@ -5,10 +5,17 @@
 	width: 100%;
 	box-shadow: rgba(0, 0, 0, 0.329412) 0px 0px 5px;
 	cursor: default;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-.tt-cursor { background-color: #eee; }
-.tt-suggestion { padding: 5px; }
-.tt-suggestion:hover { background-color: #eee; }
-.twitter-typeahead { width:100%; }
-.typeahead { width:100%; background-color:white; }
+.tt-cursor, .tt-suggestion:hover {
+	background-color: #eee;
+}
+.tt-suggestion {
+	padding: 5px;
+}
+.twitter-typeahead {
+	width:100%;
+}
+.typeahead {
+	width:100%;
+	background-color:white;
+}
