@@ -2,10 +2,11 @@
 	background-color: white;
 	cursor: pointer;
 	padding-top: 20px;
-}
-
-.create-new:hover {
-	text-decoration: underline;
+	
+	&:hover {
+		background-color: white;
+		text-decoration: underline;
+	}
 }
 
 #new-content td {

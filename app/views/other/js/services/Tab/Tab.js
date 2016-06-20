@@ -6,6 +6,7 @@ of this ele should be text and equal to the form's name.
 
 */
 var Tab = function(data){
+	var a = this;
 	this.activeTab	= data.activeTab != undefined ? data.activeTab : 'active';
 	this.activeObj	= data.activeObj != undefined ? data.activeObj : 'tabopen';
 	this.tabParent	= data.tabParent != undefined ? data.tabParent : '.tabs';
@@ -18,6 +19,10 @@ var Tab = function(data){
 	this.current	= 0;
 	this.name;
 	this.method;
+	
+	Events.on('activateTab', function(response){
+		a.activate($(`[${a.tabhook}=${response}]`));
+	});
 	
 	// Tab.js instance name, method of storage
 	if(data.name == undefined){

@@ -1,4 +1,4 @@
-var Notification = (function($, environment){
+var Notification = (function($, environment, Events){
 	
 	var chain,
 		notifications = [];
@@ -10,11 +10,12 @@ var Notification = (function($, environment){
 			page: environment.page,
 		}).done(function(data){
 			if(data){
-				data = JSON.parse(data);
-				notifications = data;
-				if(data.length > 1) chain = 0;
-				
-				render(data[0]);
+				if(data = JSON.parse(data)){
+					notifications = data;
+					if(data.length > 1) chain = 0;
+					
+					render(data[0]);
+				}
 			}
 		});
 	}
@@ -24,4 +25,4 @@ var Notification = (function($, environment){
 		render: render,
 	};
 	
-})(jQuery, environment);
+})(jQuery, environment, Events);

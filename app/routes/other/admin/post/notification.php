@@ -7,6 +7,7 @@ $app->post('/admin/post/notification', 'admin', function() use ($app){
 	$text = isset($_POST['text']) ? $_POST['text'] : false;
 	$anchor = isset($_POST['anchor']) ? $_POST['anchor'] : false;
 	$position = isset($_POST['position']) ? $_POST['position'] : false;
+	$commands = isset($_POST['commands']) ? $_POST['commands'] : false;
 	
 	/* Construction */
 	$user_id = $app->parse->jsonToArray($user_id);
@@ -22,6 +23,9 @@ $app->post('/admin/post/notification', 'admin', function() use ($app){
 		}
 	}
 	
+	// JSON
+	$commands = '{'.$commands.'}';
+	
 	// Iterate each notification
 	foreach($user_id as $key => $value){
 		$app->sql->post('notification')->with([
@@ -30,6 +34,7 @@ $app->post('/admin/post/notification', 'admin', function() use ($app){
 			'text' => $text,
 			'anchor' => $anchor,
 			'position' => $position,
+			'commands' => $commands,
 		])->root()->run();
 	}
 	

@@ -1,11 +1,12 @@
 {
-	"Tab": "Tab.js?rUzjlM",
+	"Tab": "Tab.js?TMrgsL",
 	"Table": "Table.js?rdO1w8",
 	"Typeahead": "Typeahead.js?xibwJj",
 	"Paint": "Paint.js?qn4ohi",
 	"Validation": "Validation.js?NoDmge",
 	"Form": "Form.js?SuZuwn",
 	"Paperwork": "Paperwork.js?9SruFL",
-	"Notification": "Notification.js?D9wPeE",
-	"Armadyl": "Armadyl.js?pu0wBZ"
+	"Notification": "Notification.js?ZcGQKo",
+	"Armadyl": "Armadyl.js?pu0wBZ",
+	"Events": "Events.js?wkge1J"
 }

@@ -1,0 +1,1 @@
+"use strict";var Events=function(){function n(n,t){o[n]=o[n]||[],o[n].push(t)}function t(n,t){if(o[n])for(var f=0;f<o[n].length;f++)o[n][f]===t&&o[n].splice(f,1)}function f(n,t){o[n]&&o[n].forEach(function(n){n(t)})}var o={};return{on:n,off:t,post:f}}();

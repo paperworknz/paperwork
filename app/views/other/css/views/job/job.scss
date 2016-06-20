@@ -118,6 +118,7 @@
 	border: 1px solid transparent;
 	margin-bottom: 5px;
 	cursor:pointer;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	@include transition((background 0.3s ease, border-color 0.3s ease));
 }
 
