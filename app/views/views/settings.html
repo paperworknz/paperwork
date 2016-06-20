@@ -320,24 +320,24 @@
 		}%}
 		<script>
 			$(function(){
-				var tab = new Tab({
-					cookie: {
-						name: 'settings',
-						value: '{{user.first}}'
-					}
-				});
+				// var tab = new Tab({
+				// 	cookie: {
+				// 		name: 'settings',
+				// 		value: '{{user.first}}'
+				// 	}
+				// });
 				
 				// STATUS //
 				var $status = $('.jobstatus ul');
 				
-				// new Sortable(document.getElementById('job-status'), {
-				// 	handle: '.status-handle',
-				// 	animation: 150,
-				// 	ghostClass: 'status-hover',
-				// 	onEnd: function(event){
-				// 		updateStatus();
-				// 	}
-				// });
+				new Sortable(document.getElementById('job-status'), {
+					handle: '.status-handle',
+					animation: 150,
+					ghostClass: 'status-hover',
+					onEnd: function(event){
+						updateStatus();
+					}
+				});
 				
 				// Listen to change
 				$status.on('change', 'input', updateStatus);
