@@ -16,7 +16,7 @@ function parseCommands(commands){
 				break;
 			
 			case 'chain':
-				if(value !== true || value !== 'true' || value != '1') data['chain'] = false;
+				if(value !== true && value !== 'true' && value != '1') data['chain'] = false;
 				break;
 			
 			case 'return':
