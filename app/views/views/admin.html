@@ -18,7 +18,7 @@
 						<li data-tab="1" class="tab">UAC</li>
 						<li data-tab="2" class="tab">Toggles</li>
 						<li data-tab="3" class="tab">Backup</li>
-						<li data-tab="4" class="tab">Notifications</li>
+						<li data-tab="4" class="tab">Tour</li>
 					</ul>
 				</part>
 				<part class="obj">
@@ -85,7 +85,7 @@
 					</box>
 					<box data-obj="4" class="tabobj box-std">
 						<part class="container" style="padding: 30px;">
-							<table class="new-notification">
+							<table class="new-tour">
 								<tbody>
 									<tr>
 										<td>user_id</td>
@@ -105,16 +105,34 @@
 									</tr>
 									<tr>
 										<td>Position</td>
-										<td><input type="text" name="position" placeholder="right-center" required></td>
+										<td><input type="text" name="position" placeholder="right-center"></td>
 									</tr>
 									<tr>
-										<td>Commands</td>
-										<td><input type="text" name="commands" placeholder="command, command" required></td>
+										<td style="vertical-align: top;line-height: 20px;">Commands</td>
+										<td>
+											<part>
+												<part>
+													{
+												</part>
+												<part class="commands">
+													<div class="new-command wrap">
+														<select style="width: 100%;">
+															<option>
+																
+															</option>
+														</select>
+													</div>
+												</part>
+												<part>
+													}
+												</part>
+											</part>
+										</td>
 									</tr>
 									<tr>
 										<td></td>
 										<td style="height:40px">
-											<button class="button notification-post" style="margin-top:3px">POST</button>
+											<button class="button tour-post" style="margin-top:3px">POST</button>
 										</td>
 									</tr>
 								</tbody>
@@ -294,13 +312,66 @@
 					});
 				});
 				
-				// Notification
-				v.input($('.new-notification'), $('.notification-post'), 'notification', {
+				// Tour
+				v.input($('.new-tour'), $('.tour-post'), 'tour', {
 					allowDuplicates: true
 				});
-				$('.notification-post').on('click', function(){
-					var $notification = $('.new-notification');
-					var user_id = $notification.find('[name="user_id"]').val();
+				
+				// Commands
+				var commands = ['event', 'return', 'href', 'chain', ],
+					$commands = $('.commands'),
+					$ckey = $commands.find('select');
+				
+				commands.forEach(function(value, index, array){
+					$ckey.append('<option value="' + value + '">' + value + '</option>');
+				});
+				
+				$ckey.on('change', function(){
+					var value = $(this).val(),
+						$newc = $commands.find('.new-command'),
+						placeholder = '';
+					
+					if(value){
+						switch(value){
+							case 'return': placeholder = 'anchor | item'; break;
+							case 'href': placeholder = '/page'; break;
+							case 'chain': placeholder = 'true | false'; break;
+							case 'event':
+								$newc.before(
+									'<div class="wrap commands-event">'+
+										'<input type="text" class="commands-width" style="text-align: right;" name="key" placeholder="Event Name" />'+
+										' : '+
+										'<input type="text" class="commands-width" name="value" placeholder="Data" />'+
+									'</div>'
+								);
+								
+								$(this).val('');
+								return;
+								break;
+						}
+						
+						$newc.before(
+							'<div class="wrap">'+
+								'<div class="left commands-print">'+
+									value+
+								'</div>'+
+								'<div class="left commands-colon">:</div>'+
+								'<div class="left commands-width">'+
+									'<input type="text" class="commands-value" data-command="' + value + '" placeholder="' + placeholder + '"/>'+
+								'</div>'+
+							'</div>'
+						);
+						
+						$(this).find('option[value="' + value + '"]').remove();
+						$(this).val('');
+						
+						if($(this).find('option').length === 1) $newc.remove();
+					}
+				});
+				
+				$('.tour-post').on('click', function(){
+					var $tour = $('.new-tour');
+					var user_id = $tour.find('[name="user_id"]').val();
 					if(user_id == 'all' || user_id == '*' || user_id == 'All'){
 						user_id = '*';
 					}else{
@@ -309,25 +380,41 @@
 					
 					user_id = JSON.stringify(user_id);
 					
-					$.post(environment.root+'/admin/post/notification', {
+					var commands = {};
+					$('.commands-value').each(function(){
+						var index = $(this).attr('data-command'),
+							value = $(this).val();
+						
+						if(value) commands[index] = value;
+					});
+					
+					$('.commands-event').each(function(){
+						var index = $(this).find('input[name="key"]').val().trim(),
+							value = $(this).find('input[name="value"]').val().trim();
+						
+						if(index && value) commands['e.' + index] = value;
+					});
+					
+					commands = JSON.stringify(commands);
+					
+					$.post(environment.root+'/admin/post/tour', {
 						user_id: user_id,
-						page: $notification.find('[name="page"]').val().trim(),
-						text: $notification.find('[name="text"]').val().trim(),
-						anchor: $notification.find('[name="anchor"]').val().trim(),
-						position: $notification.find('[name="position"]').val().trim(),
-						commands: $notification.find('[name="commands"]').val().trim(),
+						page: $tour.find('[name="page"]').val().trim(),
+						text: $tour.find('[name="text"]').val().trim(),
+						anchor: $tour.find('[name="anchor"]').val().trim(),
+						position: $tour.find('[name="position"]').val().trim(),
+						commands: commands,
 					}).done(function(data){
 						if(data == 'success'){
 							alert('Success');
 						}else{
 							console.log(data);
-							alert('Notification post failed');
+							alert('Tour post failed');
 						}
 					}).fail(function(data){
 						console.log(data);
-						alert('Notification post failed');
-					})
-					
+						alert('Tour post failed');
+					});
 				});
 				
 				{% include path.load %}

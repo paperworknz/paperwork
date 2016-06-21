@@ -43,6 +43,15 @@ var Paperwork = (function(){
 		if(callback != undefined) callback();
 	}
 	
+	function goto(location) {
+		
+		$('#content').animate({
+			opacity: 0,
+		}, 'fast');
+		
+		window.location = location;
+	};
+	
 function saved(message, length){
 	var $element,
 		$notification,
@@ -131,6 +140,7 @@ function dark(container) {
 		wait: wait,
 		ready: ready,
 		saved: saved,
+		goto: goto,
 		dark: dark,
 		dark_instance: function(){
 			return dark_instance;

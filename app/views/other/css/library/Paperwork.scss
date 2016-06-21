@@ -6,6 +6,8 @@
 @import 'parts/typeahead';
 @import 'parts/tab';
 @import 'parts/right-click';
+@import 'parts/tour';
+@import 'parts/notification';
 
 //
 //
@@ -270,24 +272,6 @@ box {
 	overflow: hidden;
 }
 
-//---------------------- Need to tidy up tour vs notification
-.pw-notification-container {
-	position: absolute;
-}
-
-.pw-notification-text {
-	z-index: 1;
-	position: relative;
-	top: 0;
-	float: left;
-	background-color: #53aee0;
-	padding: 10px 16px;
-	color: white;
-	box-shadow: 0 1px 2px rgba(0,0,0,.1);
-	cursor: pointer;
-}
-//-----------------------------------------------------------
-
 .triangle-parent {
 	position: relative;
 	float: left;
@@ -313,45 +297,6 @@ box {
 .not-ok { border: 1px solid red; }
 .not-ok:focus { border: 1px solid #ccc; }
 .spotlight { opacity: 0.6; }
-
-//
-//
-// Notification
-.pw-notification {
-	position: absolute;
-	right: 15px;
-	bottom: 15px;
-	
-	notification {
-		z-index: 9001;
-		display: block;
-		position: relative;
-		line-height: 36px;
-		height: 36px;
-		width: 150px;
-		right: 0;
-		border-radius: 50px;
-		background-color:#333;
-		min-width: 150px;
-		opacity: 0;
-		color: white;
-		text-align:center;
-		padding: 0px 10px;
-		margin-bottom: 5px;
-		
-		@include mobile {
-			margin-left: auto;
-			margin-right: auto;
-		}
-	}
-	
-	@include mobile {
-		width: 100%;
-		left: 0;
-		right: 0;
-		bottom: 15px;
-	}
-}
 
 //
 //
