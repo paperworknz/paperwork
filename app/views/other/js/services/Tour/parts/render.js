@@ -108,7 +108,7 @@ function render(item){
 					Paperwork.goto(commands.href);
 				}else{
 					// Chain next item or end
-					if(chain === 0 && commands.chain){
+					if(chain === 0 && (commands.chain == undefined || commands.chain)){
 						chain++;
 						if(items[chain]) render(items[chain]);
 					}
