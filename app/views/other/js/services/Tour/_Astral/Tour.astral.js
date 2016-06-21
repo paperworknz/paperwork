@@ -65,7 +65,7 @@ function render(item){
 			$item.find('.pw-item-text').css('cursor', 'default');
 		}else if(commands.return == 'item'){
 			$item.on('click', remove);
-			$anchor.css('pointer-events', 'none');
+			// $anchor.css('pointer-events', 'none');
 		}else{
 			$anchor.on('click', remove);
 			$item.on('click', remove);
