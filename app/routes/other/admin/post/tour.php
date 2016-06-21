@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/admin/post/notification', 'admin', function() use ($app){
+$app->post('/admin/post/tour', 'admin', function() use ($app){
 	/* Methods */
 	$user_id = isset($_POST['user_id']) ? $_POST['user_id'] : false;
 	$page = isset($_POST['page']) ? $_POST['page'] : false;
@@ -23,12 +23,20 @@ $app->post('/admin/post/notification', 'admin', function() use ($app){
 		}
 	}
 	
-	// JSON
-	$commands = '{'.$commands.'}';
+	// Command manipulation
+	$commands = $app->parse->jsonToArray($commands);
+	if(isset($commands['href'])){
+		$href = $commands['href'];
+		
+		$href = trim($href);
+		if($href) $commands['href'] = $app->root.$href;
+	}
 	
-	// Iterate each notification
+	$commands = $app->parse->arrayToJson($commands);
+	
+	// Iterate each tour
 	foreach($user_id as $key => $value){
-		$app->sql->post('notification')->with([
+		$app->sql->post('tour')->with([
 			'user_id' => $value,
 			'page' => $page,
 			'text' => $text,

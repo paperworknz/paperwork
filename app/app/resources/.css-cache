@@ -1,5 +1,5 @@
 {
-	"admin": "admin.css?7fK6F6",
+	"admin": "admin.css?1AffsC",
 	"app": "app.css?NJyOCB",
 	"clients": "clients.css?SiUzI2",
 	"inventory": "inventory.css?p0Wkbg",
@@ -12,6 +12,6 @@
 	"job/archived": "job/archived.css?M8Kpqi",
 	"job/job": "job/job.css?uD3Q0F",
 	"user/user": "user/user.css?W02BWF",
-	"@Paperwork": "Paperwork.css?gwCNiT",
+	"@Paperwork": "Paperwork.css?rK5Uxp",
 	"@Public": "Public.css?hXWOow"
 }

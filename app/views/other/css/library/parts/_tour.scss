@@ -1,0 +1,15 @@
+.pw-item-container {
+	position: absolute;
+}
+
+.pw-item-text {
+	z-index: 1;
+	position: relative;
+	top: 0;
+	float: left;
+	background-color: #53aee0;
+	padding: 10px 16px;
+	color: white;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	cursor: pointer;
+}

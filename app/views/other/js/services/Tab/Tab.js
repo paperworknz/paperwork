@@ -21,7 +21,7 @@ var Tab = function(data){
 	this.method;
 	
 	Events.on('activateTab', function(response){
-		a.activate($(`[${a.tabhook}=${response}]`));
+		a.activate($(`[${a.tabhook}="${response}"]`));
 	});
 	
 	// Tab.js instance name, method of storage
