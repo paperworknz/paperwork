@@ -12,6 +12,7 @@ var Tour = (function($, environment, Events){
 		}).done(function(data){
 			if(data){
 				data = JSON.parse(data);
+				items = data;
 				if(data.length > 1) chain = 0;
 				render(data[0]);
 			}

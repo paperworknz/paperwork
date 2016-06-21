@@ -113,7 +113,8 @@ function render(item){
 					Paperwork.goto(commands.href);
 				}else{
 					// Chain next item or end
-					if(chain === 0 && (commands.chain == undefined || commands.chain)){
+					if(chain === 0){
+						if(commands.chain != undefined) if(!commands.chain) return;
 						chain++;
 						if(items[chain]) render(items[chain]);
 					}
@@ -140,7 +141,7 @@ function parseCommands(commands){
 				break;
 			
 			case 'chain':
-				if(value !== true || value !== 'true' || value != '1') data['chain'] = false;
+				if(value !== true && value !== 'true' && value != '1') data['chain'] = false;
 				break;
 			
 			case 'return':
@@ -160,6 +161,7 @@ function parseCommands(commands){
 		}).done(function(data){
 			if(data){
 				data = JSON.parse(data);
+				items = data;
 				if(data.length > 1) chain = 0;
 				render(data[0]);
 			}
