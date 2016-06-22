@@ -1,6 +1,6 @@
 var Events = (function(){
 	
-	var events = {};
+	const events = {};
 	
 	function on(event, fn){
 		events[event] = events[event] || [];
