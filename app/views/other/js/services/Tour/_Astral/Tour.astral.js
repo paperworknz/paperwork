@@ -131,7 +131,7 @@ function position(item, $anchor, dark){
 		switch(state){
 			case 'top':
 				$item.css({
-					top: (top - $anchor.outerHeight() + margin),
+					top: (top - height - margin),
 					left: left + (($anchor.outerWidth() / 2) - (width / 2)),
 				});
 				
