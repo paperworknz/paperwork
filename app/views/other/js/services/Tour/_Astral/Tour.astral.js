@@ -185,7 +185,7 @@ function position(item, $anchor, dark){
 					return recur('top');
 				}
 			}else{
-				console.warn('Notification skipped: Screen size too small.');
+				console.warn('Tour skipped: Screen size too small.');
 				remove(item, $anchor, dark, false);
 			}
 		}
@@ -208,7 +208,7 @@ function render(item){
 	
 	// Anchor undefined
 	if(!$anchor.length){
-		console.warn('Item failed: No anchor');
+		console.warn('Tour failed: No anchor - notification removed.');
 		remove(item, $anchor, dark);
 		return;
 	}

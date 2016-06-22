@@ -316,14 +316,15 @@ footer {
 	height:53px;
 }
 
-.wolfe-btn-wait{
+.button-wait {
 	padding:7px!important;
 	opacity:0.5!important;
 	pointer-events:none!important;
-}
-
-.wolfe-btn-wait .wait {
-	margin: auto;
+	
+	.wait {
+		margin-left: auto!important;
+		margin-right: auto!important;
+	}
 }
 
 .price {

@@ -149,7 +149,7 @@ function position(item, $anchor, dark){
 					return recur('top');
 				}
 			}else{
-				console.warn('Notification skipped: Screen size too small.');
+				console.warn('Tour skipped: Screen size too small.');
 				remove(item, $anchor, dark, false);
 			}
 		}
