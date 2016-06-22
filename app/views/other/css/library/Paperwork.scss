@@ -272,24 +272,6 @@ box {
 	overflow: hidden;
 }
 
-.triangle-parent {
-	position: relative;
-	float: left;
-	left: 0;
-	top: 0;
-	width: 6px;
-	z-index: 2;
-}
-
-.triangle-left {
-	position: relative;
-	width: 0;
-	height: 0;
-	border-top: 5px solid transparent;
-	border-right: 6px solid #53aee0;
-	border-bottom: 5px solid transparent;
-}
-
 //
 //
 // Validation

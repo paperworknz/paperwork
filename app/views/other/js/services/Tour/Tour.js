@@ -3,18 +3,19 @@ var Tour = (function($, environment, Events){
 	var chain,
 		items = [];
 	
-	//-> parts/render.js
 	//-> parts/commands.js
+	//-> parts/position.js
+	//-> parts/render.js
+	//-> parts/remove.js
 	
 	function run(){
 		$.post(environment.root+'/get/tour', {
 			page: environment.page,
 		}).done(function(data){
 			if(data){
-				data = JSON.parse(data);
-				items = data;
-				if(data.length > 1) chain = 0;
-				render(data[0]);
+				items = JSON.parse(data);
+				if(items.length > 1) chain = 0;
+				render(items[0]);
 			}
 		});
 	}
