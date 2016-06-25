@@ -50,6 +50,7 @@ var Form = function(){
 //-> parts/Core/strip.js
 //-> parts/Core/update.js
 //-> parts/Core/margin.js
+//-> parts/Core/mobile.js
 
 //-> parts/Extensions/copy.js
 //-> parts/Extensions/email.js

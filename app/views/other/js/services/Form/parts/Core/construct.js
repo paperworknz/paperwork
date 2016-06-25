@@ -19,6 +19,8 @@ Form.prototype.construct = function(form){
 	
 	a.update(form); // Update abstraction
 	
+	// if($(window).width() < 710) a.mobile(form);
+	
 	// Fade form in, allow mouse interaction
 	form.css('pointer-events', 'auto');
 	form.animate({

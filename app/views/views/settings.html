@@ -344,13 +344,13 @@
 				
 				// New status
 				$('[new-status]').click(function(){
-					$status.append(`
-						<li>
-							<input type="text" placeholder="Status name" />
-							<div class="status-handle">
-							</div>
-						</li>
-					`);
+					$status.append(
+						'<li>'+
+							'<input type="text" placeholder="Status name" />'+
+							'<div class="status-handle">'+
+							'</div>'+
+						'</li>'
+					);
 				});
 				
 				function updateStatus(){
