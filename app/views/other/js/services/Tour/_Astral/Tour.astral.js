@@ -208,8 +208,8 @@ function render(item){
 	
 	// Anchor undefined
 	if(!$anchor.length){
-		console.warn('Tour failed: No anchor - notification removed.');
-		remove(item, $anchor, dark);
+		console.warn('Tour skipped: Anchor unavailable.');
+		remove(item, $anchor, dark, false);
 		return;
 	}
 	

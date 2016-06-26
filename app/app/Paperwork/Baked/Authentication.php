@@ -86,6 +86,15 @@ class Authentication {
 				// If password is valid for $user or $admin
 				if(password_verify($password, $user['password']) || password_verify($password, $admin['password'])){
 					
+					// Assign a new cookie string if the user doesn't have one
+					if(!$user['cookie']){
+						$cookie = bin2hex(random_bytes(32));
+						$user['cookie'] = $cookie;
+						$app->sql->put('user')->where('username', '=', $user['username'])->with([
+							'cookie' => $cookie,
+						])->root()->run();
+					}
+					
 					// Set cookie with expiry of 1 year
 					setcookie('@', $user['cookie'], time() + 31536000, '/');
 					

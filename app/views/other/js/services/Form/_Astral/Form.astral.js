@@ -112,6 +112,8 @@ Form.prototype.construct = function(form){
 	
 	a.update(form); // Update abstraction
 	
+	// if($(window).width() < 710) a.mobile(form);
+	
 	// Fade form in, allow mouse interaction
 	form.css('pointer-events', 'auto');
 	form.animate({
@@ -534,6 +536,21 @@ Form.prototype.margin = function(form){
 		});
 	});
 	
+};
+Form.prototype.mobile = function(form){
+	/*
+	This layer constructs a mobile interface
+	*/
+	var a= this,
+		form_id= form.attr('data-formid'),
+		map = a.map[form_id];
+	
+	if(form.find('[form-date]')) map.date = form.find('[form-date]').html();
+	if(form.find('[form-jobid]')) map.job_number = form.find('[form-jobid]').html();
+	if(form.find('[form-clientblob]')) map.client = form.find('[form-clientblob]').html();
+	if(form.find('[form-jobd]')) map.description = form.find('[form-jobb]').html();
+	
+	console.log(a.map);
 };
 
 Form.prototype.copy = function(form, templates){
