@@ -26,10 +26,10 @@ Painter.prototype.each = function(what, selected, callback){
 			var itemID = $(this).attr('data-item');
 			var event = {
 				itemID: itemID,
-				item: selected.find('[data-item="'+itemID+'"] .qq-item [contenteditable]').html(),
-				quantity: selected.find('[data-item="'+itemID+'"] .qq-qty').html(),
-				price: selected.find('[data-item="'+itemID+'"] .qq-price').html(),
-				total: selected.find('[data-item="'+itemID+'"] .qq-total').html()
+				item: selected.find('[data-item="'+itemID+'"] .qq-item [contenteditable]').text(),
+				quantity: selected.find('[data-item="'+itemID+'"] .qq-qty').text(),
+				price: selected.find('[data-item="'+itemID+'"] .qq-price').text(),
+				total: selected.find('[data-item="'+itemID+'"] .qq-total').text()
 			};
 		}
 		callback(event);
