@@ -2,14 +2,14 @@
 <html lang="en">
 	<head>
 		{% include path.head_public %}
-		<link href="{{path.root}}/css/app/{{path.css}}" rel='stylesheet' type="text/css">
+		<link rel="stylesheet" type="text/css" href="{{path.root}}/css/views/{{path.page_css}}" />
 	</head>
 	<body>
 		<header>
-			<div class="wrapper width">
+			<div class="wrap width">
 				<div class="nav">
 					<div class="major_title logo">Paperwork</div>
-					<ul class="nav_list_less wrapper">
+					<ul class="nav_list_less wrap">
 						<li>
 							<span class="color_hint" home>Home</span>
 						</li>
@@ -42,7 +42,7 @@
 									<li><input type="text" placeholder="Template Name" value="Invoice" required disabled></li>
 								</ul>
 							</div>
-							<button class="wolfe-btn large next-step" style="margin-top:30px;">NEXT STEP</button>
+							<button class="button large next-step" style="margin-top:30px;">NEXT STEP</button>
 						</div>
 					</div>
 				</section>
@@ -65,7 +65,6 @@
 		{% include path.js with {
 			include: ['Validation']
 		}%}
-		<script>var pw = new Paperwork;</script>
 		<script>var v = new Validation;</script>
 		<script>
 			$(function(){
@@ -99,7 +98,7 @@
 					}, 'fast', function(){
 						
 						$(this).html(
-							'<div class="interest wrapper">'+
+							'<div class="interest wrap">'+
 								'<div class="template template-first">'+
 									'<img src="{{path.root}}/css/media/template-1.png" height="400px">'+
 								'</div>'+
@@ -108,7 +107,7 @@
 								'</div>'+
 							'</div>'
 						);
-						$('.interest').after('<button class="wolfe-btn large last-step" style="margin-top:30px;">DONE</button>');
+						$('.interest').after('<button class="button large last-step" style="margin-top:30px;">DONE</button>');
 						$(this).css('margin-left', 0);
 						$(this).animate({
 							opacity: 1

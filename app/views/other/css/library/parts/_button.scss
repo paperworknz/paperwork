@@ -1,0 +1,50 @@
+.button {
+	background-color: #2ecc71;
+	color: white;
+	font-size: 10pt;
+	padding: 7px 14px;
+	text-transform: uppercase;
+	border: none;
+	border-bottom: 4px solid #27ae60;
+	outline: none;
+	cursor: pointer;
+	-webkit-user-select: none;
+}
+
+.button:hover { background-color: #40d47e; }
+
+.button:active {
+	border: none;
+	margin-top: 4px;
+	outline: 0;
+}
+
+.delete {
+	background-color:#e74c3c;
+	border-bottom: 4px solid #c0392b;
+}
+
+.blue {
+	background-color: #3a9bdc;
+	border-bottom: 4px solid #2d8ac8;
+}
+
+.delete:hover { background-color: #eb6d60; }
+.blue:hover { background-color: #67b2e4; }
+
+.button-wait {
+	padding: 7px;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.wait {
+	width: inherit;
+	height: inherit;
+	margin: auto;
+}
+
+.wait > div{
+	width: 8px;
+	height: 8px;
+}

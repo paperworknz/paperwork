@@ -9,10 +9,10 @@
 	</head>
 	<body>
 		<header>
-			<div class="wrapper width">
+			<div class="wrap width">
 				<div class="nav">
 					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{path.root}}'">Paperwork</div>
-					<ul class="nav_list_less wrapper">
+					<ul class="nav_list_less wrap">
 						<li>
 							<span class="color_hint" home>Home</span>
 						</li>
@@ -39,7 +39,7 @@
 										First Name
 									</td>
 									<td>
-										<input type="text" name="first" placeholder="">
+										<input type="text" name="first" placeholder="" required>
 									</td>
 								</tr>
 								<tr>
@@ -47,7 +47,7 @@
 										Last Name
 									</td>
 									<td>
-										<input type="text" name="last" placeholder="">
+										<input type="text" name="last" placeholder="" required>
 									</td>
 								</tr>
 								<tr>
@@ -55,7 +55,7 @@
 										Company/Trade Name
 									</td>
 									<td>
-										<input type="text" name="company" placeholder="">
+										<input type="text" name="company" placeholder="" required>
 									</td>
 								</tr>
 								<tr>
@@ -63,7 +63,7 @@
 										Email
 									</td>
 									<td>
-										<input type="email" name="email" placeholder="">
+										<input type="email" name="email" placeholder="" required>
 									</td>
 								</tr>
 								<tr>
@@ -71,7 +71,7 @@
 										Username
 									</td>
 									<td>
-										<input type="text" name="username" placeholder="">
+										<input type="text" name="username" placeholder="" required>
 									</td>
 								</tr>
 								<tr>
@@ -79,7 +79,7 @@
 										Password
 									</td>
 									<td>
-										<input type="password" name="password" placeholder="">
+										<input type="password" name="password" placeholder="" required>
 									</td>
 								</tr>
 								<tr>
@@ -87,7 +87,7 @@
 										Confirm Password
 									</td>
 									<td>
-										<input type="password" name="confirm" placeholder="">
+										<input type="password" name="confirm" placeholder="" required>
 									</td>
 								</tr>
 								<tr>
@@ -97,7 +97,7 @@
 								<tr>
 									<td></td>
 									<td>
-										<button class="wolfe-btn next-step" style="float:left;outline:none">LOG IN</button>
+										<button class="button next-step left" style="width: 50%">LOG IN</button>
 									</td>
 								</tr>
 							</tbody>
@@ -120,7 +120,9 @@
 			page: '{{path.page}}',
 		};
 		</script>
-		{% include path.js %}
+		{% include path.js with {
+			include: ['Validation']
+		} %}
 		<script>
 			$(function(){
 				// Nav
@@ -131,13 +133,18 @@
 					window.location = '{{path.root}}/login';
 				});
 				
+				var v = new Validation;
+				v.input($('.user-information'), $('.next-step'), 'register', {
+					allowDuplicates: true,
+				});
+				
 				// Helpers
 				$('input[name=first]').on('blur', function(){
 					$('input[name=username]').val($(this).val().toLowerCase());
 				});
 				
 				var register = function(){
-					if(!$('.next-step').hasClass('wolfe-btn-wait')){
+					if(!$('.next-step').hasClass('button-wait')){
 						Paperwork.wait($('.next-step'));
 						
 						$.post('{{path.root}}/post/register', {
@@ -175,7 +182,7 @@
 								}else{
 									$('table').before('<div class="alert alert-danger">'+a.message+'</div>');
 								}
-								Paperwork.ready($('.next-step'), 'NEXT STEP');
+								Paperwork.ready($('.next-step'), 'LOG IN');
 							}
 						});
 					}

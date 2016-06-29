@@ -19,7 +19,7 @@ class Route_builder {
 		$views	= [];
 		
 		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename => $file) {
-			if(!strpos($file, '_')){
+			if(strpos($file, '$') === false){
 				$file = str_replace('\\', '/', $file);
 				$file = str_replace('/..', '/', $file);
 				$file = str_replace('/.', '/', $file);
@@ -38,7 +38,7 @@ class Route_builder {
 		$routes	= [];
 		
 		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename => $file) {
-			if(!strpos($file, '_')){
+			if(strpos($file, '$') === false){
 				$file = str_replace('\\', '/', $file);
 				$file = str_replace('/..', '/', $file);
 				$file = str_replace('/.', '/', $file);
@@ -62,7 +62,7 @@ class Route_builder {
 		foreach($this->views as $key => $pair){
 			if(!array_key_exists($key, $this->routes)){
 				// We've found a new html file that doesn't have a route!
-				$this->createRoute($key);
+				// $this->createRoute($key);
 			}
 		}
 	}
@@ -77,9 +77,9 @@ class Route_builder {
 		$routepath = $path;
 		$viewpath = implode('/', $temp);
 		
-		if(!file_exists($this->routespath.$viewpath.'.php')){
-			mkdir($this->routespath.$viewpath, 0777, true);
-		}
+		if(strpos($viewpath, '$')) return;
+		
+		if(!file_exists($this->routespath.$viewpath.'.php')) mkdir($this->routespath.$viewpath, 0777, true);
 		
 		$new = fopen($this->routespath.$viewpath.'/'.$file.'.php', 'w');
 		fwrite($new, '<?php');

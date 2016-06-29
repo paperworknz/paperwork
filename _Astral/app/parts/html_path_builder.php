@@ -30,21 +30,6 @@ class Html_path_builder {
 			}
 		}
 		
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path.'/other')) as $filename => $file) {
-			$file = str_replace($path, '', $file);
-			$file = str_replace('\\', '/', $file);
-			$file = str_replace('/..', '/', $file);
-			$file = str_replace('/.', '/', $file);
-			if(substr($file, -1) != '/'){
-				$name = str_replace('.html', '', $file);
-				$name = str_replace('/other/', '', $name);
-				$name = str_replace('-', '', $name);
-				if(!strpos($name, '/')){
-					$patharray[$name] = $file;
-				}
-			}
-		}
-		
 		$fp = fopen('../_Astral/app/temp/patharray.php', 'w');
 		fwrite($fp, "'patharray' => [".PHP_EOL);
 		foreach($patharray as $key => $pair){

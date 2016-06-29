@@ -15,7 +15,7 @@ style="width:25px;text-align:center;"
 				3: 'inventory',
 				4: 'settings'
 			}%}
-			{% if user.admin %}
+			{% if user.privilege == 'admin' %}
 				{% set nav = nav|merge(['admin', 'user']) %}
 			{% endif %}
 			
