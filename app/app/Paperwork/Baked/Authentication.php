@@ -154,9 +154,7 @@ class Authentication {
 			$app->sql->delete('client')->hard()->run();
 			$app->sql->delete('inventory')->hard()->run();
 			$app->sql->delete('job')->hard()->run();
-			$app->sql->delete('job_cache')->hard()->run();
 			$app->sql->delete('job_form')->hard()->run();
-			$app->sql->delete('job_form_template')->hard()->run();
 			$app->sql->delete('user_email_settings')->hard()->run();
 			
 			$app->event->log('Temporary user '.$app->user['username'].' data purged');
