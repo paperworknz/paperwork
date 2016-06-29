@@ -157,6 +157,13 @@ class Authentication {
 			$app->sql->delete('job_form')->hard()->run();
 			$app->sql->delete('user_email_settings')->hard()->run();
 			
+			// Reset user_number
+			$app->sql->put('user_number')->with([
+				'client_number' => '1',
+				'job_number' => '1',
+				'job_status_number' => '1',
+			])->run();
+			
 			$app->event->log('Temporary user '.$app->user['username'].' data purged');
 		}
 		
