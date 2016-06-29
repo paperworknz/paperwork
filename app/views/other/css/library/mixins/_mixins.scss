@@ -58,3 +58,9 @@ $break: 800px;
         @content;
     }
 }
+
+@mixin size($size) {
+    @media (max-width: #{$size} - 1px) {
+        @content;
+    }
+}

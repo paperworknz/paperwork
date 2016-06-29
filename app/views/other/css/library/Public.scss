@@ -1,12 +1,84 @@
-@import 'bootstrap/bootstrap.scss';
+// Mixins
+@import 'mixins/mixins';
 
-/* Infrastructure */
-body {
-	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	overflow-x: hidden;
+// Modules
+@import 'core/core';
+@import 'parts/typeahead';
+@import 'parts/tab';
+@import 'parts/right-click';
+@import 'parts/validation';
+@import 'parts/button';
+@import 'parts/hud';
+
+//
+//
+// Scroll bars
+::-webkit-scrollbar {
+	width: 10px;
+    height: 10px;
+    overflow: visible;
 }
-ul {-webkit-padding-start:0px!important;margin:0!important}
-li {list-style-type:none!important}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.33);
+    min-height: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0,0,0,.5);
+	@include transition(background-color 1000ms linear);
+}
+
+//
+//
+// Fundamental DOM
+
+body, html {
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+input, select {
+	@include border-radius(0);
+	@include transition(border-color 0.3s ease);
+}
+
+input:hover {
+	border: 1px solid #ccc;
+}
+
+feature {
+	position: relative;
+	display: block;
+	float: left;
+	width: 50%;
+	padding: 15px;
+	
+	@include size(921px){
+		width: 100%;
+	}
+	
+	@include size(500px){
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+
+footer {
+	padding: 15px 0px 100px;
+}
+
+//
+//
+// Paperwork structures
+
+.left { float: left; }
+.right { float: right; }
+.noselect { -webkit-user-select: none; }
+.centered { text-align: center; }
+.central { margin-left: auto; margin-right: auto; }
+.title { padding-top: 10px; }
+.color_hint {color: #999}
+.color_blue {color: #0db7ed}
 
 .width {
 	width: 100%;
@@ -15,6 +87,10 @@ li {list-style-type:none!important}
 	margin-right:auto;
 	padding: 0px 60px;
 	min-width: 300px;
+	
+	@include size(500px){
+		padding: 0;
+	}
 }
 
 .nav_list span, .nav_list_less span {
@@ -27,75 +103,16 @@ li {list-style-type:none!important}
 	background-color:white;
 }
 
-@media screen and (max-width:921px){
-	feature {width: 100%!important}
-	feature .minor_title {text-align:center}
+video, feature img, .video_tint {
+	min-width: 400px;
+	
+	@include size(500px){
+		min-width: 300px;
+	}
 }
-
-@media screen and (max-width:700px){
-	.logo {float: none!important;text-align:center}
-	.nav_list {float: none!important;width:320px!important;margin: 0 auto!important;}
-	.nav_list_less {float: none!important;width:220px;margin: 0 auto!important;}
-	.feature {text-align:center}
-	.quote {font-size: 24px!important;}
-	.quote_lead {font-size: 34px!important;line-height:24px!important;}
-	.quote_author {font-size: 13px!important;}
-}
-
-@media screen and (max-width:500px){
-	.width {padding: 0px!important;}
-	video, feature img, .video_tint {min-width: 300px!important}
-	feature {padding-left: 5px!important;padding-right: 5px!important}
-	feature .minor_title {text-align:center}
-	.form {min-width:300px!important}
-	.large {font-size:18px!important}
-	.user-information td {padding: 5px!important;}
-	.user-information td:nth-child(odd) {font-size: 13px!important;}
-	.user-information input {font-size: 16px!important;}
-	.nav_list {width:150px!important;}
-	.negligible {display:none!important;}
-	.quote {text-align:center!important;padding-left:15px!important;padding-right:15px!important;}
-}
-
-input[type=text], input[type=email], input[type=password] {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	border:1px solid #ccc;
-	border-radius: 0px !important;
-	-webkit-border-radius: 0 !important;
-	-moz-border-radius: 0 !important;
-	-webkit-transition: border-color 0.3s ease;
-         -moz-transition: border-color 0.3s ease;
-           -o-transition: border-color 0.3s ease;
-          -ms-transition: border-color 0.3s ease;
-              transition: border-color 0.3s ease;
-}
-
-/********** Scroll **************/
-::-webkit-scrollbar {
-	width: 10px;
-    height: 10px;
-    overflow: visible;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.33);
-    min-height: 28px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background-color: rgba(0,0,0,.5);
-	-webkit-transition: background-color 1000ms linear;
-	-moz-transition: background-color 1000ms linear;
-	-o-transition: background-color 1000ms linear;
-	-ms-transition: background-color 1000ms linear;
-	transition: background-color 1000ms linear;
-}
-
-/* */
 
 .no-click{
-	pointer-events:none!important;
+	pointer-events: none;
 	cursor: default;
 }
 
@@ -104,35 +121,39 @@ input[type=text], input[type=email], input[type=password] {
 	cursor: default;
 }
 
-/* Structure */
-.wrapper:before{
-	display:table;
-	content: " ";
-}
-.wrapper:after{
-	display:table;
-	content: " ";
-	clear:both;
-}
-
-section:before{
-	display:table;
-	content: " ";
-}
-
-section:after{
-	display: table;
-	content: " ";
-}
-
 .nav {
 	padding-top: 30px;
 	padding-bottom: 30px;
+	
+	@include size(700px) {
+		padding-bottom: 0;
+	}
 }
 
 .nav_list, .nav_list_less {
 	display: block;
 	float: right;
+	
+	@include size(700px) {
+		float: none;
+		margin: 0 auto;
+	}
+}
+
+.nav_list {
+	@include size(700px) {
+		width: 320px;
+	}
+	
+	@include size(500px){
+		width: 150px;
+	}
+}
+
+.nav_list_less {
+	@include size(700px) {
+		width: 220px;
+	}
 }
 
 .nav_list li, .nav_list_less li {
@@ -141,32 +162,41 @@ section:after{
 	cursor: pointer;
 }
 
-.color_hint {color: #999}
-.color_blue {color: #0db7ed}
-
-/* Elements */
-.logo {
-	display: block;
-	float: left;
-}
-
 .main {
 	padding: 50px 0px;
 	position: relative;
 }
 
-.major_title {
-	font-size: 46px;
-	line-height:46px;
-	font-weight:300;
+.atf {
+	@include size(700px) {
+		padding-top: 25px;
+	}
 }
 
-.main_title {
-	font-size: 26px;
-	line-height: 26px;
-	font-weight: 300;
-	padding-bottom: 15px;
+.top {
+	padding-bottom: 80px;
+}
+
+.large {
+	padding: 0px 10px;
+	font-size:20px;
+	line-height:51px;
+	
+	@include size(500px){
+		font-size: 18px;
+	}
+}
+
+.facade {
 	display: block;
+}
+
+.feature {
+	background-color: #53aee0;
+	
+	@include size(700px) {
+		text-align: center;
+	}
 }
 
 .div_fade:before {
@@ -186,76 +216,53 @@ section:after{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
 }
 
-.feature {
-	background-color: #53aee0;
+.logo {
+	display: block;
+	float: left;
+	
+	@include size(700px){
+		float: none;
+		text-align: center;
+	}
+}
+
+.major_title {
+	font-size: 46px;
+	line-height:46px;
+	font-weight:300;
+}
+
+.main_title {
+	font-size: 26px;
+	line-height: 26px;
+	font-weight: 300;
+	padding-bottom: 15px;
+	display: block;
 }
 
 .content_white {
 	color: white;
 }
 
-feature {
-	position: relative;
-	display: block;
-	float: left;
-	width: 50%;
-	padding: 15px;
-}
-
 .minor_title {
 	font-size: 20px;
-	line-height: 25px;
 	font-weight: 300;
 	padding-bottom: 12px;
 	display: block;
+	
+	@include size(910px){
+		text-align: center;
+		font-size: 18px;
+	}
+	
+	@include size(500px){
+		text-align: center;
+		font-size: 16px;
+	}
 }
 
 .spotlight {
 	opacity: 0.6;
-}
-
-.centered {text-align:center}
-
-.large {
-	padding: 0px 10px;
-	font-size:20px;
-	line-height:51px;
-}
-
-.wolfe-btn {
-	background-color:#2ecc71;
-	color:white;
-	text-transform:uppercase;
-	border:none;
-	border-bottom:4px solid #27ae60;
-	outline:none
-}
-
-.wolfe-btn:hover {
-	background-color:#40d47e;
-	cursor:pointer;
-}
-
-.wolfe-btn:active {
-	border:none;
-	margin-top:4px;
-	outline:0;
-}
-
-.wolfe-btn:focus {
-	background-color:#40d47e;
-	animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-	0% { background-color: #40d47e; }
-	45% { background-color: #2ecc71; }
-	55% { background-color: #2ecc71; }
-	100% { background-color: #40d47e; }
-}
-
-.facade {
-	display:block;
 }
 
 .special {
@@ -263,14 +270,14 @@ feature {
 	font-weight: 600;
 }
 
-video, feature img, .video_tint {
-	min-width: 400px;
-}
-
 .form {
 	margin: 0 auto;
 	max-width: 750px;
 	padding:10px;
+	
+	@include size(500px){
+		min-width: 300px;
+	}
 }
 
 .form_input {
@@ -284,46 +291,40 @@ video, feature img, .video_tint {
 	padding-left:5px;
 }
 
-.top {padding-bottom:80px}
-footer {
-	padding:15px 0px 100px;
-}
-
-/* Login/Registration */
-
-.user-information td:nth-child(odd) {
-	color: #999;
+.quote {
 	text-align: right;
-}
-
-.user-information td:nth-child(even) {
-	font-size: 20px;
-}
-
-.user-information td {padding: 5px 10px;}
-.user-information input, .user-information button {
-	padding: 8px;
-}
-
-.user-information input {width:100%;}
-
-.login input, .login button {
-	display:block;
-	margin: 15px 0px;
-	font-size:16px;
-	padding: 15px;
-	width:100%;
-	height:53px;
-}
-
-.button-wait {
-	padding:7px!important;
-	opacity:0.5!important;
-	pointer-events:none!important;
+	font-size: 30px;
+	font-weight: 200;
+	padding: 100px 0px;
 	
-	.wait {
-		margin-left: auto!important;
-		margin-right: auto!important;
+	@include size(700px) {
+		font-size: 24px;
+	}
+	
+	@include size(500px){
+		text-align: center;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+
+.quote_author {
+	display: block;
+	font-size: 18px;
+	
+	@include size(700px) {
+		font-size: 13px;
+	}
+}
+
+.quote_lead {
+	font-family: Helvetica;
+	font-size: 50px;
+	line-height: 30px;
+	
+	@include size(700px) {
+		font-size: 34px;
+		line-height: 24px;
 	}
 }
 
@@ -377,21 +378,6 @@ video::-webkit-media-controls {
     display:none !important;
 }
 
-/********** Typeahead **********/
-.tt-menu {
-	background-color:white;
-	border: 1px solid #eee;
-	width:100%;
-	box-shadow:rgba(0, 0, 0, 0.329412) 0px 0px 5px;
-	cursor:default;
-}
-.tt-cursor{background-color:#eee}
-.tt-suggestion {padding:5px}
-.tt-suggestion:hover{background-color:#eee}
-.twitter-typeahead {width:100%}
-.typeahead {width:100%;background-color:white}
-
-
 .fb {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
@@ -405,20 +391,61 @@ video::-webkit-media-controls {
 	filter: grayscale(0%);
 }
 
-.quote {
-	text-align: right;
-	font-size: 30px;
-	font-weight: 200;
-	padding: 100px 0px;
+//
+//
+// Login and Registration
+
+.user-information {
+	.container {
+		margin: 15px 0;
+	}
+	
+	td {
+		padding: 5px 10px;
+		
+		@include size(500px){
+			padding: 5px;
+		}
+	}
+	
+	td:nth-child(odd) {
+		color: #999;
+		text-align: right;
+		
+		@include size(500px){
+			font-size: 13px;
+		}
+	}
+	
+	td:nth-child(even) {
+		font-size: 20px;
+	}
+	
+	input {
+		padding: 8px;
+		width: 100%;
+		
+		@include size(500px){
+			font-size: 16px;
+		}
+	}
 }
 
-.quote_author {
+.login input {
 	display: block;
-	font-size: 18px;
+	font-size: 16px;
+	padding: 15px;
+	width: 100%;
 }
 
-.quote_lead {
-	font-family: Helvetica;
-	font-size: 50px;
-	line-height: 30px;
+.next-step {
+	padding: 15px;
+	font-size: 16px;
+	width: 100%;
+}
+
+.negligible {
+	@include size(500px){
+		display: none;
+	}
 }

@@ -14,7 +14,7 @@ class Url_builder {
 	
 	public function crawl($path){
 		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path.'/other')) as $filename => $file) {
-			if(!strpos($file, '_')){
+			if(strpos($file, '$') === false){
 				$file = str_replace('\\', '/', $file);
 				$file = str_replace('/..', '/', $file);
 				$file = str_replace('/.', '/', $file);
@@ -28,7 +28,7 @@ class Url_builder {
 		}
 		
 		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path.'/routes')) as $filename => $file) {
-			if(!strpos($file, '_')){
+			if(strpos($file, '$') === false){
 				$file = str_replace('\\', '/', $file);
 				$file = str_replace('/..', '/', $file);
 				$file = str_replace('/.', '/', $file);

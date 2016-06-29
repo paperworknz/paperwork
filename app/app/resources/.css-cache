@@ -12,6 +12,8 @@
 	"job/archived": "job/archived.css?M8Kpqi",
 	"job/job": "job/job.css?uD3Q0F",
 	"user/user": "user/user.css?W02BWF",
-	"@Paperwork": "Paperwork.css?mktpe0",
-	"@Public": "Public.css?BBI1Lq"
+	"@Paperwork": "Paperwork.css?rbDW5x",
+	"@Public": "Public.css?LWn8qz",
+	"@core/": "core/?yfnQgB",
+	"@core": "core?fFXtLK"
 }
