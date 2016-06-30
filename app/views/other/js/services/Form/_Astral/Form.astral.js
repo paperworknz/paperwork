@@ -186,11 +186,24 @@ Form.prototype.refresh = function(form){
 	a.dark(form); // Remove jQuery listeners
 	$(a.tab.objParent).on('change', function(){ a.update(form) });
 	a.p.on('qty', $(a.tab.objParent), 'input', function(){ a.update(form) });
-	a.p.on('price', $(a.tab.objParent), 'blur', function(){ a.update(form) });
-	a.p.on('price', $(a.tab.objParent), 'input', function(event){
-		if(event.event.keyCode == 13){
+	a.p.on('qty', $(a.tab.objParent), 'keypress', function(event){
+		if(event.event.which == 13){
 			event.event.preventDefault();
-			event.element.blur();
+			a.update(form);
+		}
+	});
+	a.p.on('price', $(a.tab.objParent), 'blur', function(event){
+		if(event.event.which == 13){
+			event.event.preventDefault();
+			$('.tt-input').focus();
+		}
+		
+		a.update(form);
+	});
+	a.p.on('price', $(a.tab.objParent), 'keypress', function(event){
+		if(event.event.which == 13){
+			event.event.preventDefault();
+			$('.tt-input').focus();
 		}
 	});
 	form.on('click', '.twig-remove', function(){
