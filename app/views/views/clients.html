@@ -114,15 +114,15 @@
 								$('#the-basics').html('<input type="text" class="typeahead" placeholder="Quick Search" />');
 								clientTypeahead();
 							}else{
-								$('#content').prepend(`
-									<module>
-										<flash class="box-std">
-											<div class="alert alert-danger">
-												${data.message}
-											</div>
-										</flash>
-									</module>
-								`);
+								$('#content').prepend(
+									'<module>'+
+										'<flash class="box-std">'+
+											'<div class="alert alert-danger">'+
+												data.message+
+											'</div>'+
+										'</flash>'+
+									'</module>'+
+								);
 							}
 						});
 					}
