@@ -155,7 +155,9 @@ class Authentication {
 			$app->sql->delete('inventory')->hard()->run();
 			$app->sql->delete('job')->hard()->run();
 			$app->sql->delete('job_form')->hard()->run();
+			$app->sql->delete('job_status')->hard()->run();
 			$app->sql->delete('user_email_settings')->hard()->run();
+			$app->sql->delete('tour')->hard()->run();
 			
 			// Reset user_number
 			$app->sql->put('user_number')->with([
@@ -175,9 +177,7 @@ class Authentication {
 	public function register($user, $arguments){
 		$app = \Slim\Slim::getInstance();
 		
-		if($app->sql->get('user')->where('company', '=', $user['company'])->root()->one()){
-			return 'Company Exists';
-		}else if($app->sql->get('user')->where('email', '=', $user['email'])->root()->one()){
+		if($app->sql->get('user')->where('email', '=', $user['email'])->root()->one()){
 			return 'Email Exists';
 		}else if($app->sql->get('user')->where('username', '=', $user['username'])->root()->one()){
 			return 'Username Exists';
@@ -185,9 +185,22 @@ class Authentication {
 			return 'Password Mismatch';
 		}else{
 			
-			// Return first 16 chars of compressed company name
-			$easy = str_replace(' ', '', $user['company']);
-			$easy = substr($easy, 0, 16);
+			// Create storage directories, recur if the dir name already exists
+			do {
+				// Random 16 alphanumeric
+				$easy = substr(str_shuffle(md5(time())), 0, 16);
+				
+				// Create storage directories
+				if($_ENV['MODE'] == 'dev'){
+					$dir = '../app/app/storage/clients/'.$easy;
+				}else{
+					$dir = '/var/www/Dropbox/Paperwork/'.$easy;
+				}
+				
+				mkdir($dir, 0777);
+				mkdir($dir.'/pdf', 0777);
+			} while(!file_exists($dir));
+			
 			
 			// Hash password
 			$user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
@@ -221,7 +234,7 @@ class Authentication {
 				'job_status_number'	=> 1,
 			])->root()->run();
 			
-			// Status
+			// Built in statuses
 			$app->sql->post('job_status')->with([
 				'user_id' => $user['id'],
 				'name' => 'New',
@@ -234,8 +247,13 @@ class Authentication {
 			])->root()->run();
 			$app->sql->post('job_status')->with([
 				'user_id' => $user['id'],
-				'name' => 'Completed',
+				'name' => 'Invoiced Out',
 				'job_status_number' => 3,
+			])->root()->run();
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'Completed',
+				'job_status_number' => 4,
 			])->root()->run();
 			
 			// Templates
@@ -277,19 +295,8 @@ class Authentication {
 				])->root()->run();
 			}
 			
+			
 			$app->event->log('registered with username: '.$user['username']);
-			
-			// Create storage directories
-			if($_ENV['MODE'] == 'dev'){
-				$dir = '../app/app/storage/clients/'.$easy;
-			}else{
-				$dir = '/var/www/Dropbox/Paperwork/'.$easy;
-			}
-			
-			mkdir($dir, 0777);
-			mkdir($dir.'/pdf', 0777);
-			
-			$app->event->log('created new storage dir: '.$dir);
 			
 			// EMAIL //
 			
@@ -333,7 +340,7 @@ class Authentication {
 			}
 			
 			// Return
-			return 'Registration Successful';
+			return 'Registered Successfully';
 		}
 	}
 	

@@ -18,9 +18,12 @@
 							Hi {{user.first}}
 						</div>
 					</part>
-					<part class="container">
-					</part>
-					<part class="container">
+					<part class="container-mid">
+						{% if user.privilege == 'guest' %}
+						<div class="alert alert-success">
+							As a Guest, your data will be deleted after 24 hours or when you log out, whichever comes first.
+						</div>
+						{% endif %}
 					</part>
 					<part class="container-bottom">
 						<a href="{{path.root}}/get/logout">
