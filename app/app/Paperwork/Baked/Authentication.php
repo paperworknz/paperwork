@@ -315,7 +315,23 @@ class Authentication {
 				];
 				
 				$subject = 'Welcome to Paperwork';
-				$body = 'Hello '.$user['first'].'!<br><br>Welcome to Paperwork. Please feel free to reply to this email with any questions, feedback, or to report any problems!<br><br><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="2"><b>Cade Murphy</b></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Director</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="6" face="arial, helvetica, sans-serif">Paperwork</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Web:&nbsp;<a href="http://paperwork.nz/" target="_blank" style="color: rgb(17, 85, 204);">paperwork.nz</a></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Support:&nbsp;</font><a href="mailto:hello@paperwork.nz" target="_blank" style="color: rgb(17, 85, 204);">hello@paperwork.nz</a></div>';
+				$body = 'Hello '.$user['first'].'!
+
+<br><br>Welcome to Paperwork.
+
+<br><br>As a paying user, you have a big say in how Paperwork is shaped moving forward, and you can trust we\'re here everyday to support your needs.
+
+<br><br>Please make an internet banking payment of $56.35 ($49 + GST) to 38-9017-0691961-00, with reference '.$user['id'].' at your convenience. Any 
+questions, please reply to this email.
+
+<br><br>I\'d also like to invite you to our referral program as thanks for being an early supporter. Our referral program is simple: If you introduce 
+someone to Paperwork, and they become a paying Paperwork user, you will get <b>$5</b> knocked off your monthly bill <b>forever</b> - up to a maximum of 10 
+people at which point Paperwork would be free of charge.
+
+<br><br>Feel free to email us at hello@paperwork.nz at anytime if you have any questions. All the best!
+
+<br><br>
+<div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="2"><b>Cade Murphy</b></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Director</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="6" face="arial, helvetica, sans-serif">Paperwork</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Web:&nbsp;<a href="http://paperwork.nz/" target="_blank" style="color: rgb(17, 85, 204);">paperwork.nz</a></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Support:&nbsp;</font><a href="mailto:hello@paperwork.nz" target="_blank" style="color: rgb(17, 85, 204);">hello@paperwork.nz</a></div>';
 				
 				$mail->isSMTP();
 				$mail->Host = $meta['smtp'];
