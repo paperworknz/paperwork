@@ -20,7 +20,12 @@
 					</part>
 					<part class="container-mid">
 						{% if user.privilege == 'guest' %}
-						<div class="alert alert-success">
+						<div class="alert alert-success mobile">
+							Paperwork is best used on a desktop or laptop. You can still use the full functionality on mobile, 
+							but making Quotes/Invoices is trickier at this stage. This is going to be improved in the near 
+							future.
+						</div>
+						<div class="alert alert-info">
 							As a Guest, your data will be deleted after 24 hours or when you log out, whichever comes first.
 						</div>
 						{% endif %}
