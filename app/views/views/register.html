@@ -175,7 +175,7 @@
 									data = JSON.parse(data);
 									
 									if(data.type == 'success'){
-										window.location = '{{path.root}}/register-settings';
+										window.location = '{{path.root}}/app';
 									}else{
 										$('table').before('<div class="alert alert-danger">'+data.message+'</div>');
 									}
