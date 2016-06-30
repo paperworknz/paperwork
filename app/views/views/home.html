@@ -7,7 +7,7 @@
 	<body>
 		<header>
 			<div class="wrap width">
-				<div class="nav">
+				<div class="nav wrap">
 					<div class="major_title logo" style="cursor:pointer" onclick="window.location='{{path.root}}'">Paperwork</div>
 					<ul class="nav_list wrap">
 						<li class="negligible">
@@ -37,7 +37,7 @@
 						</span>
 					</section>
 					<div class="main">
-						<button guest-login class="facade button large" style="margin-left: auto;margin-right: auto;">TRY NOW</button>
+						<button guest-login class="facade button large central">TRY NOW</button>
 					</div>
 				</div>
 				<div class="centered top">
@@ -141,11 +141,11 @@
 				<div class="main">
 					<div class="centered">
 						{% if env.user_registration %}
-						<div class="wrap" style="display:inline-block;">
+						<div class="wrap" style="display: inline-block;">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
-								<div class="major_title" style="padding:10px 0px 15px;">
-									$49<span style="font-size:14px">/MO</span>
+								<div class="major_title" style="padding: 10px 0px 15px;">
+									$49<span style="font-size: 14px;">/MO</span>
 								</div>
 							</price>
 						</div>
@@ -153,7 +153,7 @@
 							Create your own account today - it takes less than a minute.
 						</div>
 						<div class="main">
-							<button class="facade button large" style="margin-left: auto;margin-right: auto;" onclick="window.location='{{path.root}}/register'">SIGN UP</button>
+							<button class="facade button large central" onclick="window.location='{{path.root}}/register'">SIGN UP</button>
 						</div>
 						{% else %}
 						<span class="main_title">We're Not Public Yet</span>
@@ -162,7 +162,7 @@
 						<div class="wrap form">
 							<input type="email" name="email" class="form_input facade large pull-left" placeholder="hello@domain.com" required>
 							<div class="form_button wrap pull-left">
-								<button class="facade button large" style="width:100%">SIGN UP</button>
+								<button class="facade button large" style="width: 100%;">SIGN UP</button>
 							</div>
 						</div>
 						</form>
