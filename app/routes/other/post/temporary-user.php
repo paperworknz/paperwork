@@ -114,7 +114,7 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 		'text' => 'Label your job as it progresses to keep on top of things!'.PHP_EOL.'Make your own labels from the settings page.',
 		'page' => 'job/*',
 		'anchor' => '.status',
-		'position' => 'right',
+		'position' => 'left',
 	])->run();
 	
 	// Return
