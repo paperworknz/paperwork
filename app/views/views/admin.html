@@ -308,7 +308,11 @@
 					Paperwork.wait(button);
 					$.post('{{path.root}}/admin/post/backup')
 					.done(function(data){
-						if(data == 'Success') Paperwork.ready(button, 'BACKUP');
+						if(data == 'Success'){
+							Paperwork.ready(button, 'BACKUP');
+						}else{
+							console.log(data);
+						}
 					});
 				});
 				
