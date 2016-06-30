@@ -28,12 +28,15 @@
 						<div class="alert alert-info">
 							As a Guest, your data will be deleted after 24 hours or when you log out, whichever comes first.
 						</div>
+						<div>
+							<button class="button" onclick="window.location='{{path.root}}/get/register'">Sign Up</button>
+						</div>
 						{% endif %}
 					</part>
-					<part class="container-bottom">
-						<a href="{{path.root}}/get/logout">
-							Logout
-						</a>
+					<part class="container">
+						<div>
+							<button class="button blue" onclick="window.location='{{path.root}}/get/logout'">Log Out</button>
+						</div>
 					</part>
 				</box>
 			</module>

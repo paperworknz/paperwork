@@ -17,6 +17,8 @@ style="width:25px;text-align:center;"
 			}%}
 			{% if user.privilege == 'admin' %}
 				{% set nav = nav|merge(['admin', 'user']) %}
+			{% elseif user.privilege == 'guest' %}
+				{% set nav = nav|merge(['Sign Up']) %}
 			{% endif %}
 			
 			{% for item in nav %}
@@ -27,6 +29,11 @@ style="width:25px;text-align:center;"
 					{% set location = item %}
 				{% endif %}
 				{% if sidebar == 'big' %}
+					{% if item == 'Sign Up' %}
+					<li val="{{item}}" class="nav-register" href="{{path.root}}/get/register">
+						{{item}}
+					</li>
+					{% else %}
 					{% set item = item|capitalize %}
 					<li val="{{item}}" href="{{path.root}}/{{location}}" 
 					{% if path.page in location %}
@@ -34,6 +41,7 @@ style="width:25px;text-align:center;"
 					{% endif %}>
 						{{item}}
 					</li>
+					{% endif %}
 				{% else %}
 					<li val="{{item|capitalize}}" href="{{path.root}}/{{location}}" 
 					{% if path.page in location %}

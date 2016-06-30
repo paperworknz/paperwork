@@ -18,6 +18,7 @@ return [
 '/get/logout' => '../app/routes/other/get/logout.php',
 '/get/pdf-json' => '../app/routes/other/get/pdf-json.php',
 '/get/pdf' => '../app/routes/other/get/pdf.php',
+'/get/register' => '../app/routes/other/get/register.php',
 '/get/template' => '../app/routes/other/get/template.php',
 '/get/tour' => '../app/routes/other/get/tour.php',
 '/post/client' => '../app/routes/other/post/client.php',
