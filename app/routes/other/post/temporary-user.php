@@ -8,31 +8,57 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 	$user = $app->sql->get('user')->where('privilege', '=', 'guest')->and('active', '=', '0')->root()->one();
 	
 	if($user){
+		$action = $app->auth->login($user['username'], '', true); // Third param = force login, password not used
 		
-		$action = $app->auth->login($user['username'], 'password', true); // Third param = force login
-		
+		// Handle result of login
 		if($action == 'Authenticated Successfully'){
-			echo $app->build->success([
-				'location' => $app->root.'/jobs'
-			]);
-		}else{
 			
+			// Purge statuses just incase
+			$app->sql->delete('job_status')->where('user_id', '=', $user['id'])->hard()->root()->run();
+			
+			// Built in statuses
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'New',
+				'job_status_number' => 1,
+			])->root()->run();
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'In Progress',
+				'job_status_number' => 2,
+			])->root()->run();
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'Invoiced Out',
+				'job_status_number' => 3,
+			])->root()->run();
+			$app->sql->post('job_status')->with([
+				'user_id' => $user['id'],
+				'name' => 'Completed',
+				'job_status_number' => 4,
+			])->root()->run();
+			
+			$user = $app->sql->get('user')->where('id', '=', $user['id'])->root()->one();
+			// -> continue
+			
+		}else{
 			$app->event->log([
-				'user_id' => 0,
-				'text' => 'Guest user failed to authenticate with username',
+				'text' => 'Guest user authentication failed',
 				'icon' => 'error.png',
 			]);
 			
-			echo $app->build->error('We\'re so sorry, there was a problem with our Guest login');
+			echo $app->build->error('We\'re sorry - this is unavailable right now.');
+			return;
 		}
 	}else{
-		
-		// No guest users available
+		// Create random string
 		$random = substr(str_shuffle(md5(time())), 0, 6);
+		
+		// Register new user, no email
 		$action = $app->auth->register([
-			'first' => 'Friend',
-			'last' => 'Last Name',
-			'company' => $random,
+			'first' => 'Guest',
+			'last' => 'User',
+			'company' => 'Your Company Name',
 			'username' => $random,
 			'password' => $random,
 			'confirm' => $random,
@@ -42,39 +68,57 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 			'email' => false,
 		]);
 		
-		switch($action){
-			case 'Company Exists':
-				echo $app->build->error('Company is already signed up!<br>Please contact support if you can\'t access your account.');
-				break;
-			case 'Email Exists':
-				echo $app->build->error('Email is already registered.<br>Please contact support if you can\'t access your account.');
-				break;
-			case 'Username Exists':
-				echo $app->build->error('Sorry, the username is taken!<br>Please try something else.');
-				break;
-			case 'Password Mismatch':
-				echo $app->build->error('Sorry, the passwords your entered did not match.');
-				break;
-			case 'Registration Successful':
+		// Handle result of registration
+		if($action == 'Registered Successfully'){
+			
+			$login = $app->auth->login($random, '', true); // Third param = force login, password not used
+			if($login = 'Authenticated Successfully'){
 				
-				$action = $app->auth->login($random, $random, true); // Third param = force login
-				
-				if($action == 'Authenticated Successfully'){
-					echo $app->build->success([
-						'location' => $app->root.'/jobs'
-					]);
-				}else{
-					
-					$app->event->log([
-						'user_id' => 0,
-						'text' => 'Guest user failed to authenticate with username',
-						'icon' => 'error.png',
-					]);
-					
-					echo $app->build->error('We\'re so sorry, there was a problem with our Guest login');
-				}
-				break;
+				$user = $app->sql->get('user')->where('username', '=', $random)->root()->one();
+				// -> continue
+			}
+		}else{
+			$app->event->log([
+				'text' => 'Guest user registration failed, reason: '.$action,
+				'icon' => 'error.png',
+			]);
+			
+			echo $app->build->error('We\'re sorry - this is unavailable right now.');
 		}
 	}
 	
+	// Post Tour
+	$app->sql->post('tour')->with([
+		'text' => 'Create a new Client and Job from this button',
+		'page' => 'jobs',
+		'anchor' => '.create-new',
+		'position' => 'right',
+	])->run();
+	
+	$app->sql->post('tour')->with([
+		'text' => 'Most text boxes will save automatically, try add some information!',
+		'page' => 'client/*',
+		'anchor' => '#bottom',
+		'position' => 'bottom',
+	])->run();
+	
+	$app->sql->post('tour')->with([
+		'text' => 'Click this button to open the Quote/Invoice screen',
+		'page' => 'job/*',
+		'anchor' => '[data-tab="+"]',
+		'position' => 'right',
+		'commands' => '{"chain":false}',
+	])->run();
+	
+	$app->sql->post('tour')->with([
+		'text' => 'Label your job as it progresses to keep on top of things!'.PHP_EOL.'Make your own labels from the settings page.',
+		'page' => 'job/*',
+		'anchor' => '.status',
+		'position' => 'right',
+	])->run();
+	
+	// Return
+	echo $app->build->success([
+		'location' => $app->root.'/app',
+	]);
 });

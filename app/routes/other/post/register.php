@@ -2,7 +2,6 @@
 
 $app->post('/post/register', 'app', function() use ($app){
 	/* Methods */
-	$app->event->log('started a new registration');
 	
 	/* Construction */
 	if($_POST['first'] &&  $_POST['last'] &&  $_POST['username'] &&  $_POST['company'] &&  $_POST['email'] &&  $_POST['password']){
@@ -30,9 +29,6 @@ $app->post('/post/register', 'app', function() use ($app){
 		
 		
 		switch($action){
-			case 'Company Exists':
-				echo $app->build->error('<b>'.$company.'</b> is already signed up!<br>Please contact support if you can\'t access your account.');
-				break;
 			case 'Email Exists':
 				echo $app->build->error('<b>'.$email.'</b> is already registered.<br>Please contact support if you can\'t access your account.');
 				break;
@@ -42,9 +38,9 @@ $app->post('/post/register', 'app', function() use ($app){
 			case 'Password Mismatch':
 				echo $app->build->error('Sorry, the passwords your entered did not match.');
 				break;
-			case 'Registration Successful':
+			case 'Registered Successfully':
 				echo $app->build->success([
-					'message' => 'Registration Successful'
+					'message' => 'Registered Successfully'
 				]);
 				break;
 		}
