@@ -166,7 +166,6 @@
 				var regist = 0;
 				var newuser = 0;
 				var playcount = 0;
-				var tempcount = 0;
 				
 				function dump(obj) {
 					var out = '';
@@ -180,13 +179,10 @@
 						newuser++;
 					}else if(out.indexOf('played the') !== -1){
 						playcount++;
-					}else if(out.indexOf('Temporary') !== -1){
-						tempcount++;
 					}
 					
 					$('[insights]').html(
 						'Landing Page: '+landing+
-						'<br>Guest Logins: '+tempcount+
 						'<br>Video play count: '+playcount+
 						'<br>Registration Page: '+regist+
 						'<br>New Users: '+newuser
