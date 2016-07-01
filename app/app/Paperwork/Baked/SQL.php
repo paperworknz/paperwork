@@ -106,7 +106,7 @@ class SQL {
 		return $this;
 	}
 	
-	// condition //
+	// CONDITION //
 	
 	public function where($column, $operator, $values, $conjunction = '*'){
 		
@@ -209,7 +209,7 @@ class SQL {
 		return $this->run();
 	}
 	
-	// CONDITIONAL RUN //
+	// RESULT //
 	
 	public function one(){
 		$this->query['return'] = 'one';
