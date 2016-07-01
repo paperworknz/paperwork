@@ -1071,3 +1071,11 @@ input, select {
 	border: 1px solid #ccc;
 	border-radius: 0px;
 }
+
+::selection {
+  background: #D6EDFF;
+}
+
+::-moz-selection {
+  background: #D6EDFF;
+}
