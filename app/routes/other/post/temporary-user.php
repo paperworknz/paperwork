@@ -117,6 +117,9 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 		'position' => 'left',
 	])->run();
 	
+	// Log
+	$app->event->log('Guest user logged in with IP: '.$app->ip);
+	
 	// Return
 	echo $app->build->success([
 		'location' => $app->root.'/app',
