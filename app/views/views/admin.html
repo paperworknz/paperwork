@@ -207,7 +207,7 @@
 					var q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
 					
 					$('[console]').html('');
-					landing = regist = newuser = playcount = 0;
+					landing = regist = newuser = playcount = guestcount = 0;
 					
 					$.post('{{path.root}}/admin/post/query', {
 						'query': q
