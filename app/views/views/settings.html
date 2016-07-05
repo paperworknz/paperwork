@@ -309,6 +309,7 @@
 				</part>
 			</module>
 		</div>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -316,7 +317,7 @@
 		};
 		</script>
 		{% include path.js with {
-			include: ['Tab', 'Validation', 'sortable']
+			include: ['Tab', 'sortable']
 		}%}
 		<script>
 			$(function(){
@@ -374,22 +375,21 @@
 					$.post('{{path.root}}/post/status', {
 						data: map
 					}).done(function(){
-						Paperwork.saved();
+						Box.Application.broadcast('notification', 'Saved');
 					});
 				}
 				
 				
 				// VALIDATION //
-				var v = new Validation;
-				v.input($('.user-details'), $('.user-details button'), 'user', {
-					allowDuplicates: true,
-					visible: true,
-				});
-				v.input($('.email-settings'), $('.email-settings button'), 'email');
-				v.input($('.password-settings'), $('.password-settings button'), 'password', {
-					allowDuplicates: true
-				});
-				v.input($('.job_number'), $('.job_number button'), 'jobNumber');
+				// v.input($('.user-details'), $('.user-details button'), 'user', {
+				// 	allowDuplicates: true,
+				// 	visible: true,
+				// });
+				// v.input($('.email-settings'), $('.email-settings button'), 'email');
+				// v.input($('.password-settings'), $('.password-settings button'), 'password', {
+				// 	allowDuplicates: true
+				// });
+				// v.input($('.job_number'), $('.job_number button'), 'jobNumber');
 				
 				// Trash
 				$('.trash').on('click', 'a', function(){

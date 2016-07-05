@@ -55,6 +55,7 @@
 				<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
 			</div>
 		</footer>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -77,8 +78,6 @@
 				
 				var login = function(){
 					$('.next-step').focus();
-					Paperwork.wait($('.next-step'));
-					// Front-end validation //
 					
 					$.post('{{path.root}}/post/login', {
 						username: $('input[name=username]').val(),

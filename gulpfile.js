@@ -35,6 +35,11 @@ gulp.task('watch', function(){
 		servicesJS(file);
 	});
 	
+	// Library js
+	gulp.watch('app/views/other/js/library/*.js').on('change', function(file){
+		libraryJS(file);
+	});
+	
 });
 
 // Update JSON, generates and appends ?xxxxxx to value
@@ -172,6 +177,31 @@ function servicesJS(file){
 			.pipe(concat(file.name))
 			.pipe(uglify())
 			.pipe(gulp.dest('public/js/services'));
+		
+		// Log
+		return console.log(file.log_name + ' updated');
+	});
+	
+}
+
+function libraryJS(file){
+	
+	var file = deconstruct(file, {});
+	
+	// Update .js-cache
+	updateCache(
+		path.js_cache,
+		('@' + file.name.split('.js')[0]),
+		(file.name)
+	);
+	
+	exec('php "' + path.astral + '" ' + file.fqn, function(e, stdout, stderr){
+		// Run gulp task with full dir name
+		gulp.src(stdout)
+			.pipe(babel())
+			.pipe(concat(file.name))
+			.pipe(uglify())
+			.pipe(gulp.dest('public/js/library'));
 		
 		// Log
 		return console.log(file.log_name + ' updated');

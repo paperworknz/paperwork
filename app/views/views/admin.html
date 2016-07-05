@@ -44,11 +44,11 @@
 						</part>
 					</box>
 					<box data-obj="1" class="tabobj box-std">
-						<part class="wrap container" style="width: 270px;">
+						<part class="wrap container" style="width: 270px;" data-validate="on">
 							<div class="h3 title">
 								Generate Password
 							</div>
-							<input type="text" class="left" pw style="height: 37px;">
+							<input type="text" class="left" pw style="height: 37px;" required>
 							<button pw-get class="button left" style="margin-left: 5px;">GET</button>
 						</part>
 						<part class="container">
@@ -85,7 +85,7 @@
 					</box>
 					<box data-obj="4" class="tabobj box-std">
 						<part class="container" style="padding: 30px;">
-							<table class="new-tour">
+							<table class="new-tour" data-validate="on">
 								<tbody>
 									<tr>
 										<td>user_id</td>
@@ -142,6 +142,7 @@
 				</div>
 			</part>
 		</module>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -149,7 +150,7 @@
 		};
 		</script>
 		{% include path.js with {
-			include: ['Tab', 'sweetalert', 'Validation']
+			include: ['Tab', 'sweetalert']
 		}%}
 		<script>
 			$(function(){
@@ -159,8 +160,6 @@
 						name: 'admin'
 					}
 				});
-				
-				var v = new Validation;
 				
 				var landing = 0;
 				var regist = 0;
@@ -271,6 +270,7 @@
 					$.post('{{path.root}}/admin/get/password', {
 						pw: p
 					}).done(function(data){
+						Paperwork.ready($('[pw-get]'), 'GET');
 						$('[pw-console]').html('');
 						$('[pw-console]').html(data);
 					});
@@ -309,7 +309,6 @@
 				$('[pw-backup]').on('click', function(){
 					var button = $(this);
 					
-					Paperwork.wait(button);
 					$.post('{{path.root}}/admin/post/backup')
 					.done(function(data){
 						if(data == 'Success'){
@@ -321,9 +320,9 @@
 				});
 				
 				// Tour
-				v.input($('.new-tour'), $('.tour-post'), 'tour', {
-					allowDuplicates: true
-				});
+				// v.input($('.new-tour'), $('.tour-post'), 'tour', {
+				// 	allowDuplicates: true
+				// });
 				
 				// Commands
 				var commands = ['event', 'return', 'href', 'chain', ],
@@ -379,6 +378,7 @@
 				
 				$('.tour-post').on('click', function(){
 					var $tour = $('.new-tour');
+					var $button = $(this);
 					var user_id = $tour.find('[name="user_id"]').val();
 					if(user_id == 'all' || user_id == '*' || user_id == 'All'){
 						user_id = '*';
@@ -414,14 +414,17 @@
 						commands: commands,
 					}).done(function(data){
 						if(data == 'success'){
-							alert('Success');
+							Box.Application.broadcast('notification', 'Saved');
+							Paperwork.ready($button, 'POST');
 						}else{
 							console.log(data);
 							alert('Tour post failed');
+							Paperwork.ready($button, 'POST');
 						}
 					}).fail(function(data){
 						console.log(data);
 						alert('Tour post failed');
+						Paperwork.ready($button, 'POST');
 					});
 				});
 				

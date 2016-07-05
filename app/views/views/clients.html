@@ -18,7 +18,7 @@
 							New Client
 						</div>
 						<div id="new-content" class="container-bottom" style="display: none;padding: 0 0 15px;">
-							<table class="central">
+							<table class="central" data-validate="on">
 								<tbody>
 									<tr>
 										<td class="ar">
@@ -47,6 +47,7 @@
 				</box>
 			</module>
         </div>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -54,7 +55,7 @@
 		};
 		</script>
 		{% include path.js with {
-			include: ['typeahead', 'Validation']
+			include: ['typeahead']
 		}%}
 		<script>
 			$(function(){
@@ -70,15 +71,14 @@
 					limit: 1000000
 				});
 				
-				var v = new Validation;
-				v.input($('#new-content'), $('#new-content button'), 'clients');
+				// v.input($('#new-content'), $('#new-content button'), 'clients');
 				
 				// New object
 				$('.create-new').on('click', function(){$("#new-content").slideToggle(100);});
 				
 				var clientTypeahead = function(){
 					var go = function(){
-						goto("{{path.root}}/client/" + clients[$('.tt-input').val()]);
+						Paperwork.goto("{{path.root}}/client/" + clients[$('.tt-input').val()]);
 					}
 					ta.run($('#content'));
 					// Enter key to select the first suggestion

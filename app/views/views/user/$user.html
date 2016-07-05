@@ -52,6 +52,7 @@
 				</part>
 			</module>
 		</div>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -83,7 +84,7 @@
 								${img}
 								<span style="color:#27ae60">{{host.first}} {{host.last}}</span> ${data.text}
 							</event-title>
-							<event-date>${since(data.date_created)}</event-date>
+							<event-date>${Paperwork.since(data.date_created)}</event-date>
 						</event>
 					`);
 				};

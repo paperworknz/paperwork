@@ -32,7 +32,7 @@
 					<span class="main_title">Welcome to Paperwork</span>
 					<div style="padding-bottom:20px;">Please fill in the boxes below</div>
 					<div style="display:inline-block">
-						<table class="user-information">
+						<table class="user-information" data-validate="on">
 							<tbody>
 								<tr>
 									<td>
@@ -118,15 +118,14 @@
 				<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
 			</div>
 		</footer>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
 			page: '{{path.page}}',
 		};
 		</script>
-		{% include path.js with {
-			include: ['Validation']
-		} %}
+		{% include path.js %}
 		<script>
 			$(function(){
 				// Nav
@@ -137,10 +136,9 @@
 					window.location = '{{path.root}}/login';
 				});
 				
-				var v = new Validation;
-				v.input($('.user-information'), $('.next-step'), 'register', {
-					allowDuplicates: true,
-				});
+				// v.input($('.user-information'), $('.next-step'), 'register', {
+				// 	allowDuplicates: true,
+				// });
 				
 				// Helpers
 				$('input[name=first]').on('blur', function(){
@@ -149,7 +147,6 @@
 				
 				var register = function(){
 					if(!$('.next-step').hasClass('button-wait')){
-						Paperwork.wait($('.next-step'));
 						
 						$.post('{{path.root}}/post/register', {
 							first: $('input[name=first]').val(),

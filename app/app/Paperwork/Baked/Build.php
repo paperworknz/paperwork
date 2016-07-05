@@ -34,6 +34,7 @@ class Build {
 				'paperwork_css' => $css_cache['@Paperwork'],
 				'public_css' => $css_cache['@Public'],
 				'page_css' => $css,
+				'paperwork_js' => $js_cache['@Paperwork'],
 				'js_cache' => $js_cache,
 				'page' => ltrim($app->request->getResourceUri(), '/'),
 			],
