@@ -56,16 +56,14 @@
 				<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
 			</div>
 		</footer>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
 			page: '{{path.page}}',
 		};
 		</script>
-		{% include path.js with {
-			include: ['Validation']
-		}%}
-		<script>var v = new Validation;</script>
+		{% include path.js %}
 		<script>
 			$(function(){
 				// Nav
@@ -77,7 +75,7 @@
 				});
 				
 				// Validation for template-list input
-				v.input($('.template-list'), $('.next-step'), 'templates');
+				// v.input($('.template-list'), $('.next-step'), 'templates');
 				
 				$('.next-step').on('click', function(){
 					$('.next-step').addClass('no-click');

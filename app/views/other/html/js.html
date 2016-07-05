@@ -1,7 +1,10 @@
 <script src="{{path.root}}/js/3rd/jquery.2.1.4.js"></script>
+<script src="{{path.root}}/js/3rd/t3.min.js"></script>
+<script src="{{path.root}}/js/modules/Notification.js"></script>
+<script src="{{path.root}}/js/library/{{path.paperwork_js}}"></script>
 <script src="{{path.root}}/js/services/{{path.js_cache.Events}}"></script>
-<script src="{{path.root}}/js/services/{{path.js_cache.Paperwork}}"></script>
 <script src="{{path.root}}/js/services/{{path.js_cache.Tour}}"></script>
+<script src="{{path.root}}/js/services/{{path.js_cache.Menu}}"></script>
 
 {% for link in include %}
 {% if link == 'typeahead' %}
@@ -25,8 +28,6 @@
 <script src="{{path.root}}/js/3rd/jquery.contextMenu.js"></script>
 {% elseif link == 'selection' %}
 <script src="{{path.root}}/js/3rd/jquery.selection.js"></script>
-{% elseif link == 'Validation' %}
-<script src="{{path.root}}/js/services/{{path.js_cache.Validation}}"></script>
 {% elseif link == 'sortable' %}
 <script src="{{path.root}}/js/3rd/sortable.js"></script>
 {% endif %}

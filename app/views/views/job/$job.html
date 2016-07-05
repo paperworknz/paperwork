@@ -140,6 +140,7 @@
 				</box>
 			</module>
 		</div>
+		<div class="pw-notification" data-module="notification"></div>
 		<div class="email-signature-raw" hidden>{{email.signature|raw}}</div>
 		<script>
 		var environment = {
@@ -154,7 +155,7 @@
 		};
 		</script>
 		{% include path.js with {
-			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu', 'selection', 'Validation', 'sortable']
+			include: ['Tab', 'typeahead', 'sweetalert', 'interact', 'contextmenu', 'selection', 'sortable']
 		}%}
 		<script>
 		var tab	= new Tab({
@@ -165,7 +166,6 @@
 				value: '{{job.job_number}}',
 			}
 		});
-		var v = new Validation;
 		</script>
 		<script src="{{path.root}}/js/services/{{path.js_cache[job.painter]}}"></script>
 		<script src="{{path.root}}/js/services/{{path.js_cache.Form}}"></script>
@@ -200,7 +200,7 @@
 						status: $(this).val()
 					}).done(function(data){
 						if(data != '0'){
-							Paperwork.saved();
+							Box.Application.broadcast('notification', 'Saved');
 							if(data == 'Completed'){
 								location.reload();
 							}
@@ -223,7 +223,7 @@
 						id: '{{job.id}}',
 					}).done(function(){
 						notes = $('.notepad').html();
-						Paperwork.saved();
+						Box.Application.broadcast('notification', 'Saved');
 					});
 				}
 			});
@@ -235,7 +235,7 @@
 						name: $('.job-name').val(),
 						id: '{{job.id}}',
 					}).done(function(){
-						Paperwork.saved();
+						Box.Application.broadcast('notification', 'Saved');
 					});
 				}
 			});
@@ -244,7 +244,6 @@
 			$(document).on('click', '[job-del-btn]', function(){
 				$this = $(this);
 				
-				Paperwork.wait($this);
 				swal({
 					title: 'Are you sure you want to delete this job?',
 					text: 'Deleting this job will delete ALL quotes and invoices attached',
@@ -337,14 +336,13 @@
 			$(document).on('click', '[form-save-btn]', function(){
 				var button = $(this);
 				
-				Paperwork.wait(button);
 				form.put({
 					url: '{{path.root}}/put/form',
 					id: $(form.s).find('[form-blob]').attr('data-formid'),
 				}, function(bool){
 					if(bool){
 						Paperwork.ready(button, 'SAVE');
-						Paperwork.saved();
+						Box.Application.broadcast('notification', 'Saved');
 					}else{
 						Paperwork.ready(button, 'SAVE');
 						Paperwork.saved('Failed to save');
@@ -356,7 +354,6 @@
 			$(document).on('click', '[form-del-btn]', function(){
 				var button = $(this);
 				
-				Paperwork.wait(button);
 				$(form.s+' '+form.form).addClass('form-loading');
 				swal({
 					title: 'Are you sure you want to delete this?',
@@ -402,7 +399,6 @@
 				var button = $(this),
 					html = button.html();
 				
-				Paperwork.wait(button);
 				form.put({
 					url: '{{path.root}}/put/form',
 					id: $(form.s).find('[form-blob]').attr('data-formid'),
@@ -436,9 +432,7 @@
 			// EMAIL
 			$(document).on('click', '[form-email-btn]', function(){
 				form.email($(form.s+' [form-blob]'));
-				v.input($('body .email-parent'), $('body [email-send]'), 'email', {
-					allowDuplicates: true
-				}); // Validation for template-list input
+				Paperwork.validate($('body .email-parent'), $('body [email-send]'), 'email');
 			});
 			
 			// FORM PUT after 2 seconds after last keyup

@@ -179,6 +179,7 @@
 				<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
 			</div>
 		</footer>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -201,7 +202,6 @@
 					}, 'slow');
 				});
 				$('[guest-login]').on('click', function(){
-					Paperwork.wait($(this));
 					$.post('{{path.root}}/post/temporary-user')
 					.done(function(data){
 						data = JSON.parse(data);

@@ -1,26 +1,26 @@
-function dark(container) {
-	var container = container != undefined ? con : $('#content'),
-		dc = 'dark_container',
-		chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-		result = '';
+function dark($container) {
+	var dc = 'dark_container',
+		result = '',
+		dark_index,
+		$dark_module;
 	
-	darkIndex++;
+	if($container == undefined) $container = $('#content');
+	result = random(6);
 	
-	// Generate random string, length of 6
-	for(var i = 6; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+	// Index
+	dark_index = 50;
 	
 	// Fade
-	container.after(`
+	$container.after(`
 		<div class="${dc}" data-module="${result}">
 			<div class="dark_object" disable>
 			</div>
 		</div>
 	`);
 	
-	var $dark_module = $(`.${dc}`).filter(`[data-module="${result}"]`);
-	$dark_module.css('z-index', darkIndex);
+	$dark_module = $(`.${dc}`).filter(`[data-module="${result}"]`);
+	$dark_module.css('z-index', dark_index);
 	
-	// Return dark_instance
 	return {
 		object: $dark_module,
 		run: function(callback){

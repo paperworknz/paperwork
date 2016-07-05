@@ -15,7 +15,7 @@
 				<box class="box-std">
 					<part class="container add-inventory">
 						<div class="h3">Inventory</div>
-						<div class="entry" style="width:276px">
+						<div class="entry" style="width: 276px;" data-validate="on">
 							<input id="name" type='text' name='name' placeholder='Name' class="input-big" style="width:150px" required/>
 							<input id="price" type="text" name='price' placeholder='$0.00' class="input-big" style='width:60px'/>
 							<div class="right">
@@ -40,6 +40,7 @@
 				</box>
 			</module>
         </div>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -47,14 +48,13 @@
 		};
 		</script>
 		{% include path.js with {
-			include: ['sweetalert', 'Validation']
+			include: ['sweetalert']
 		}%}
 		<script>
 			$(function(){
 				var inv = [{% for item in inventory %}{id:"{{item.id}}", name:"{{item.name}}", price:"{{item.price}}"},{% endfor %}];
 				
-				var v = new Validation;
-				v.input($('.entry'), $('.entry button'), 'inventory');
+				Box.Application.init();
 				
 				// Check for inventory name/price change
 				$(document).on('change', '.inventory input', function(){
@@ -75,7 +75,7 @@
 								price: price,
 								id: id
 							}).done(function(){
-								Paperwork.saved();
+								Box.Application.broadcast('notification', 'Saved');
 							});
 						}
 					}else{
@@ -93,7 +93,7 @@
 							$('#name').val('');
 							$('#price').val('');
 							$('#name').focus();
-							Paperwork.saved();
+							Box.Application.broadcast('notification', 'Saved');
 						});
 					}
 				});

@@ -29,9 +29,9 @@ function bind(){
 	// Reset Changes
 	$settings.on('click', newFilter);
 
-	// When a row is clicked, goto(href)
+	// When a row is clicked, Paperwork.goto(href)
 	$row.on('click', function(){
-		goto($(this).attr('href'));
+		Paperwork.goto($(this).attr('href'));
 	});
 
 	// Click column head to run state()
@@ -450,14 +450,14 @@ function newFilter(){
 						<tr>
 							<td>
 								<div class="wrap">
-									<button class="button right wt-existing-filter-apply">
+									<button class="button right wt-existing-filter-apply" data-button-state="off">
 										APPLY
 									</button>
 								</div>
 							</td>
 							<td>
 								<div class="wrap">
-									<button class="button right wt-new-filter-apply">
+									<button class="button right wt-new-filter-apply" data-button-state="off">
 										APPLY
 									</button>
 								</div>
@@ -584,7 +584,7 @@ function newFilter(){
 			$filter.find(`option[value="${id}"]`).remove();
 			
 			render();
-			Paperwork.saved();
+			Box.Application.broadcast('notification', 'Saved');
 			
 		});
 	});

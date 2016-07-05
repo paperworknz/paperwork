@@ -21,26 +21,26 @@
 					<part class="container-mid">
 						{% if user.privilege == 'guest' %}
 						<div class="alert alert-success mobile">
-							Paperwork is best used on a desktop or laptop. You can still use the full functionality on mobile, 
-							but making Quotes/Invoices is trickier at this stage. This is going to be improved in the near 
-							future.
+							Paperwork is best used on a computer!
 						</div>
 						<div class="alert alert-info">
-							As a Guest, your data will be deleted after 24 hours or when you log out, whichever comes first.
+							As a Guest, your data will be deleted after 24 hours, or when you log out.
 						</div>
 						<div>
 							<button class="button" onclick="window.location='{{path.root}}/get/register'">Sign Up</button>
 						</div>
 						{% endif %}
 					</part>
-					<part class="container">
-						<div>
-							<button class="button blue" onclick="window.location='{{path.root}}/get/logout'">Log Out</button>
-						</div>
+					<part class="container" data-module="log-out">
+						<script type="text/x-config">
+						{"url": "{{path.root}}/get/logout"}
+						</script>
+						<button data-type="log-out-btn" class="button blue" onclick="window.location='{{path.root}}/get/logout'">Log Out</button>
 					</part>
 				</box>
 			</module>
         </div>
+		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
 			root: '{{path.root}}',
@@ -50,6 +50,7 @@
 		{% include path.js %}
 		<script>
 			$(function(){
+				Box.Application.init();
 				{% include path.load %}
 			});
 		</script>

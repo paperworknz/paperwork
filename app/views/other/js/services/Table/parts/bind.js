@@ -7,9 +7,9 @@ function bind(){
 	// Reset Changes
 	$settings.on('click', newFilter);
 
-	// When a row is clicked, goto(href)
+	// When a row is clicked, Paperwork.goto(href)
 	$row.on('click', function(){
-		goto($(this).attr('href'));
+		Paperwork.goto($(this).attr('href'));
 	});
 
 	// Click column head to run state()

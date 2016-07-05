@@ -23,12 +23,12 @@
 			</box>
 			<box class="left">
 				<part class="container centered" style="width:125px;">
-					<button class="button blue" form-margin-btn>MARGIN</button>
+					<button class="button blue" data-button-state="off" form-margin-btn>MARGIN</button>
 				</part>
 			</box>
 			<box class="left">
 				<part class="container centered" style="width:140px;">
-					<button class="button blue" form-copy-btn>MAKE COPY</button>
+					<button class="button blue" data-button-state="off" form-copy-btn>MAKE COPY</button>
 				</part>
 			</box>
 			{% if email %}
@@ -40,7 +40,7 @@
 						<input type="hidden" name="name" />
 						<input type="hidden" name="email" value="true" />
 					</form>
-					<button class="button blue" type="submit" form-email-btn>EMAIL</button>
+					<button class="button blue" data-button-state="off" form-email-btn>EMAIL</button>
 				</part>
 			</box>
 			{% endif %}
