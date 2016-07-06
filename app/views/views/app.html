@@ -32,10 +32,7 @@
 						{% endif %}
 					</part>
 					<part class="container" data-module="log-out">
-						<script type="text/x-config">
-						{"url": "{{path.root}}/get/logout"}
-						</script>
-						<button data-type="log-out-btn" class="button blue" onclick="window.location='{{path.root}}/get/logout'">Log Out</button>
+						<button data-type="logout-btn" class="button blue">Log Out</button>
 					</part>
 				</box>
 			</module>
@@ -51,6 +48,12 @@
 		<script>
 			$(function(){
 				Box.Application.init();
+				
+				// ActiveCampaign
+				$('[data-type="logout-btn"]').on('click', function(){
+					window.location = '{{path.root}}/get/logout';
+				});
+				
 				{% include path.load %}
 			});
 		</script>

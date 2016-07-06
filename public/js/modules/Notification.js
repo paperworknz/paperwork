@@ -10,23 +10,23 @@ Box.Application.addModule('notification', function(context){
 		
 		// Append new notification container if none exist
 		if($element.length < 1){
-			$('body').append(`
-				<div class="pw-notification">
-				</div>
-			`);
+			$('body').append(
+				'<div class="pw-notification">'+
+				'</div>'
+			);
 			
 			$element = $('.pw-notification');
 		}
 		
 		if(message == undefined) message = 'Saved';
 		
-		$element.append(`
-			<notification class="${id}" style="margin-bottom: -15px;">
-				${message}
-			</notification>
-		`);
+		$element.append(
+			'<notification class="' + id + '" style="margin-bottom: -15px;">'+
+				message+
+			'</notification>'
+		);
 		
-		$notification = $(`.${id}`);
+		$notification = $('.' +  id);
 		
 		$notification.animate({
 			opacity: 0.75,
