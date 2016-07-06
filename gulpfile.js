@@ -110,7 +110,7 @@ function deconstruct(file, data){
 		path: path,
 		fqn: file.path,
 		log_name: log_name,
-	};
+	}
 }
 
 function libraryCSS(file){
@@ -159,31 +159,6 @@ function viewCSS(file){
 	return console.log(file.log_name + ' updated');
 }
 
-function servicesJS(file){
-	
-	var file = deconstruct(file, {});
-	
-	// Update .js-cache
-	updateCache(
-		path.js_cache,
-		(file.name.split('.js')[0]),
-		(file.name)
-	);
-	
-	exec('php "' + path.astral + '" ' + file.fqn, function(e, stdout, stderr){
-		// Run gulp task with full dir name
-		gulp.src(stdout)
-			.pipe(babel())
-			.pipe(concat(file.name))
-			.pipe(uglify())
-			.pipe(gulp.dest('public/js/services'));
-		
-		// Log
-		return console.log(file.log_name + ' updated');
-	});
-	
-}
-
 function libraryJS(file){
 	
 	var file = deconstruct(file, {});
@@ -202,6 +177,31 @@ function libraryJS(file){
 			.pipe(concat(file.name))
 			.pipe(uglify())
 			.pipe(gulp.dest('public/js/library'));
+		
+		// Log
+		return console.log(file.log_name + ' updated');
+	});
+	
+}
+
+function servicesJS(file){
+	
+	var file = deconstruct(file, {});
+	
+	// Update .js-cache
+	updateCache(
+		path.js_cache,
+		(file.name.split('.js')[0]),
+		(file.name)
+	);
+	
+	exec('php "' + path.astral + '" ' + file.fqn, function(e, stdout, stderr){
+		// Run gulp task with full dir name
+		gulp.src(stdout)
+			.pipe(babel())
+			.pipe(concat(file.name))
+			.pipe(uglify())
+			.pipe(gulp.dest('public/js/services'));
 		
 		// Log
 		return console.log(file.log_name + ' updated');

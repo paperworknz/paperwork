@@ -20,19 +20,26 @@
 					</part>
 					<part class="container-mid">
 						{% if user.privilege == 'guest' %}
-						<div class="alert alert-success mobile">
-							Paperwork is best used on a computer!
-						</div>
 						<div class="alert alert-info">
 							As a Guest, your data will be deleted after 24 hours, or when you log out.
-						</div>
-						<div>
-							<button class="button" onclick="window.location='{{path.root}}/get/register'">Sign Up</button>
+							<div class="mobile">
+								<br>
+								By the way: Paperwork is best used on a computer!
+							</div>
 						</div>
 						{% endif %}
 					</part>
 					<part class="container" data-module="log-out">
-						<button data-type="logout-btn" class="button blue">Log Out</button>
+						<ul class="list-inline">
+							{% if user.privilege == 'guest' %}
+							<li>
+								<button class="button" onclick="window.location='{{path.root}}/get/register'">Sign Up</button>
+							</li>
+							{% endif %}
+							<li>
+								<button data-type="logout-btn" class="button blue">Log Out</button>
+							</li>
+						</ul>
 					</part>
 				</box>
 			</module>
