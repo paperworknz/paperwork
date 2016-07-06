@@ -20,7 +20,7 @@
 	color: #2F2F2F;
 	padding: 3px 28px;
 	position: relative;
-	user-select: none;
+	@include select(none);
 }
 
 .context-menu-separator {

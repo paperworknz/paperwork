@@ -64,3 +64,15 @@ $break: 800px;
         @content;
     }
 }
+
+//
+//
+// No select
+@mixin select($property) {
+    -webkit-touch-callout: $property; /* iOS Safari */
+	-webkit-user-select: $property;   /* Chrome/Safari/Opera */
+	-khtml-user-select: $property;    /* Konqueror */
+	-moz-user-select: $property;      /* Firefox */
+	-ms-user-select: $property;       /* IE/Edge */
+	user-select: $property;
+}

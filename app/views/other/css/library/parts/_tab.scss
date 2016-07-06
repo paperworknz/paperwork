@@ -22,7 +22,7 @@
 	text-transform: uppercase;
 	margin-right: 1px;
 	cursor: pointer;
-	-webkit-user-select: none;
+	@include select(none);
 }
 
 .active {
