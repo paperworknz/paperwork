@@ -174,7 +174,7 @@ class Authentication {
 		);
 	}
 	
-	public function register($user, $arguments){
+	public function register($user){
 		$app = \Slim\Slim::getInstance();
 		
 		if($app->sql->get('user')->where('email', '=', $user['email'])->root()->one()){
@@ -295,67 +295,8 @@ class Authentication {
 				])->root()->run();
 			}
 			
-			
 			$app->event->log('registered with username: '.$user['username']);
 			
-			// EMAIL //
-			
-			if($arguments['email']){
-				// Send Mail
-				$mail = new PHPMailer;
-				$meta = [
-					'protocol' => 'TLS',
-					'smtp' => 'smtp.gmail.com',
-					'port' => '587',
-					'from.name' => 'Paperwork',
-					'from.email' => 'hello@paperwork.nz',
-					'from.pw' => 'Dasistdank420',
-					'to.name' => $user['first'].' '.$user['last'],
-					'to.email' => $user['email'],
-				];
-				
-				$subject = 'Welcome to Paperwork';
-				$body = 'Hello '.$user['first'].'!
-
-<br><br>Welcome to Paperwork.
-
-<br><br>As a paying user, you have a big say in how Paperwork is shaped moving forward, and you can trust we\'re here everyday to support your needs.
-
-<br><br>Please make an internet banking payment of $56.35 ($49 + GST) to 38-9017-0691961-00, with reference '.$user['id'].' at your convenience. Any 
-questions, please reply to this email.
-
-<br><br>I\'d also like to invite you to our referral program as thanks for being an early supporter. Our referral program is simple: If you introduce 
-someone to Paperwork, and they become a paying Paperwork user, you will get <b>$5</b> knocked off your monthly bill <b>forever</b> - up to a maximum of 10 
-people at which point Paperwork would be free of charge.
-
-<br><br>Feel free to email us at hello@paperwork.nz at anytime if you have any questions. All the best!
-
-<br><br>
-<div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="2"><b>Cade Murphy</b></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Director</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666" size="6" face="arial, helvetica, sans-serif">Paperwork</font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666"><br></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Web:&nbsp;<a href="http://paperwork.nz/" target="_blank" style="color: rgb(17, 85, 204);">paperwork.nz</a></font></div><div style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: small; line-height: normal;"><font color="#666666">Support:&nbsp;</font><a href="mailto:hello@paperwork.nz" target="_blank" style="color: rgb(17, 85, 204);">hello@paperwork.nz</a></div>';
-				
-				$mail->isSMTP();
-				$mail->Host = $meta['smtp'];
-				$mail->SMTPAuth = true;
-				$mail->Username = $meta['from.email'];
-				$mail->Password = $meta['from.pw'];
-				
-				if(isset($meta['protocol'])) $mail->SMTPSecure = $meta['protocol'];
-				$mail->Port = $meta['port'];
-				
-				$mail->setFrom($meta['from.email'], $meta['from.name']);
-				$mail->addAddress($meta['to.email'], $meta['to.name']);
-				$mail->addReplyTo($meta['from.email'], $meta['from.name']);
-				$mail->addBCC('cademurphynz@gmail.com');
-				
-				$mail->isHTML(true);
-				$mail->Subject = $subject;
-				$mail->Body    = $body;
-				$mail->AltBody = $body;
-				
-				if($mail->send()) $app->event->log('Welcome email sent to '.$user['first'].' '.$user['last'].' at address: '.$user['email']);
-			}
-			
-			// Return
 			return 'Registered Successfully';
 		}
 	}

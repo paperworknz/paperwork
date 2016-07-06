@@ -12,6 +12,7 @@
 		"symfony/http-foundation": "^2.8",
 		"phpmailer/phpmailer": "~5.2",
 		"PHPOffice/PHPExcel": "^1.8",
-		"league/oauth2-google": "^1.0"
+		"league/oauth2-google": "^1.0",
+		"guzzlehttp/guzzle": "^6.2"
     }
 }
