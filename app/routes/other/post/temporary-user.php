@@ -1,13 +1,7 @@
 <?php
 
-use GuzzleHttp\Client;
-
 $app->post('/post/temporary-user', 'app', function() use ($app){
 	/* Methods */
-	$client = new Client([
-		'base_uri' => 'https://paperwork.api-us1.com/admin/api.php',
-		'verify' => false,
-	]);
 	
 	/* Construction */
 	// Check for available users
@@ -68,7 +62,7 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 			'username' => $random,
 			'password' => $random,
 			'confirm' => $random,
-			'email' => $random.'@email.com',
+			'email' => $random.'@paperwork.nz',
 			'privilege' => 'guest',
 		]);
 		

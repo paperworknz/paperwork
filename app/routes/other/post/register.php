@@ -31,7 +31,6 @@ $app->post('/post/register', 'app', function() use ($app){
 			'privilege' => 'user',
 		]);
 		
-		
 		switch($action){
 			case 'Email Exists':
 				echo $app->build->error('<b>'.$email.'</b> is already registered.<br>Please contact support if you can\'t access your account.');
@@ -43,6 +42,13 @@ $app->post('/post/register', 'app', function() use ($app){
 				echo $app->build->error('Sorry, the passwords your entered did not match.');
 				break;
 			case 'Registered Successfully':
+				
+				if(strpos($email, 'paperwork.nz') !== false){
+					echo $app->build->success([
+						'message' => 'Registered Successfully'
+					]);
+					break;
+				}
 				
 				// ActiveCampaign add contact
 				$params = [
@@ -60,6 +66,7 @@ $app->post('/post/register', 'app', function() use ($app){
 					'first_name' => $first,
 					'last_name' => $last,
 					'orgname' => $company,
+					'p[1]' => 1,
 				];
 				
 				// Send API request
