@@ -56,10 +56,13 @@ input:hover {
 
 .left { float: left; }
 .right { float: right; }
-.noselect { -webkit-user-select: none; }
 .centered { text-align: center; }
 .central { margin-left: auto; margin-right: auto; }
 .title { padding-top: 10px; }
+
+.noselect {
+	@include select(none);
+}
 
 #sidebar {
 	position: fixed;

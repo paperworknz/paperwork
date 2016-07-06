@@ -73,12 +73,15 @@ footer {
 
 .left { float: left; }
 .right { float: right; }
-.noselect { -webkit-user-select: none; }
 .centered { text-align: center; }
 .central { margin-left: auto; margin-right: auto; }
 .title { padding-top: 10px; }
 .color_hint {color: #999}
 .color_blue {color: #0db7ed}
+
+.noselect {
+	@include select(none);
+}
 
 .width {
 	width: 100%;
@@ -94,12 +97,7 @@ footer {
 }
 
 .nav_list span, .nav_list_less span {
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none;   /* Chrome/Safari/Opera */
-	-khtml-user-select: none;    /* Konqueror */
-	-moz-user-select: none;      /* Firefox */
-	-ms-user-select: none;       /* IE/Edge */
-	user-select: none;
+	@include select(none);
 	background-color:white;
 }
 
