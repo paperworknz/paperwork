@@ -906,8 +906,14 @@ Form.prototype.pdf = function(form, callback){
 	<!DOCTYPE html>
 	<html lang='en'>
 	<head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+		<link rel="stylesheet" type="text/css" href="http://paperwork.nz/css/library/Paperwork.css?w6Z7RC">
+		<style>
+			body, html {
+				background-color: white;
+				background: white;
+			}
+		</style>
 	</head>
 	<body>
 	${html}

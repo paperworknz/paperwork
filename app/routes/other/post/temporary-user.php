@@ -113,6 +113,7 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 		'page' => 'job/*',
 		'anchor' => '.status',
 		'position' => 'left',
+		'commands' => '{"e.activateTab":0}',
 	])->run();
 	
 	// Log
