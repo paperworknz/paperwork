@@ -1084,3 +1084,18 @@ ul, ol {
   padding: 0;
   margin: 0;
 }
+
+.list-inline {
+  position: relative;
+  font-size: 0;
+  
+  li {
+    display: table-cell;
+    vertical-align: bottom;
+    padding-right: 5px;
+  }
+  
+  li:last-child {
+    padding-right: 0;
+  }
+}
