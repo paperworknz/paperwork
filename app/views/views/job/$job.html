@@ -410,8 +410,8 @@
 						$(form.s).find('[form-pdf-form]').submit();
 						
 						window.onfocus = function(){
-							Paperwork.ready(button, html);
-						};
+							Paperwork.ready($('[form-pdf-btn]'), 'PDF');
+						}
 						
 					});
 				});
