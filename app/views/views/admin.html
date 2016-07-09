@@ -164,7 +164,6 @@
 				var landing = 0;
 				var regist = 0;
 				var newuser = 0;
-				var playcount = 0;
 				var guestcount = 0;
 				
 				function dump(obj) {
@@ -177,8 +176,6 @@
 						regist++;
 					}else if(out.indexOf('Welcome') !== -1){
 						newuser++;
-					}else if(out.indexOf('played the') !== -1){
-						playcount++;
 					}else if(out.indexOf('Guest user logged in') !== -1){
 						guestcount++;
 					}
@@ -186,7 +183,6 @@
 					$('[insights]').html(
 						'Landing Page: '+landing+
 						'<br>Guest User logins: '+guestcount+
-						'<br>Video play count: '+playcount+
 						'<br>Registration Page: '+regist+
 						'<br>New Users: '+newuser
 					);
@@ -206,7 +202,7 @@
 					var q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
 					
 					$('[console]').html('');
-					landing = regist = newuser = playcount = guestcount = 0;
+					landing = regist = newuser = guestcount = 0;
 					
 					$.post('{{path.root}}/admin/post/query', {
 						'query': q
