@@ -4,9 +4,6 @@
 		{% include path.head_public %}
 		<link rel="stylesheet" type="text/css" href="{{path.root}}/css/views/{{path.page_css}}" />
 		{% include path.pixel %}
-		{% if state == 'prod' %}
-		<script>fbq('track', 'Lead');</script>
-		{% endif %}
 	</head>
 	<body>
 		<header>
@@ -151,11 +148,9 @@
 							a = JSON.parse(a);
 							
 							if(a.type == 'success'){
-								
 								{% if state == 'prod' %}
 								fbq('track', 'CompleteRegistration');
 								{% endif %}
-								
 								$.post('{{path.root}}/post/login', {
 									username: $('input[name=username]').val(),
 									password: $('input[name=password]').val(),
