@@ -2,14 +2,14 @@
 
 // ADMIN ONLY //
 
-$app->get('/user', 'admin', function() use ($app){
+$app->get('/user', 'uac', 'admin', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
 	$app->redirect($app->root.'/user/0');
 });
 
-$app->get('/user/:a', 'admin', function($a) use ($app){
+$app->get('/user/:a', 'uac', 'admin', function($a) use ($app){
 	/* Methods */
 	
 	/* Construction */

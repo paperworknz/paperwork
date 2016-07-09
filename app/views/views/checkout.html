@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	{% include path.head %}
+	</head>
+    <body>
+        {% include path.scaffolding %}
+        <div id="content">
+			<module>
+				<flash class="box-std">
+					{% include path.flash %}
+				</flash>
+			</module>
+			<module>
+				<box class="box-std">
+					<part class="container-top">
+						<div class="h3 title">
+							Checkout
+						</div>
+						<div>
+							You are paying <b>$56.35</b> ($49 + 15%) This payment will be billed monthly - don't worry, you can toggle 
+							this payment on and off in your settings later.
+						</div>
+						<div style="padding-top: 15px;">
+							We accept the following payment options:
+							<img alt="Paypal" title="Paypal" src="{{path.root}}/css/media/paypal_account.png" width="40px">
+							<img alt="Mastercard" title="Mastercard" src="{{path.root}}/css/media/mastercard.png" width="40px">
+							<img alt="Visa" title="Visa" src="{{path.root}}/css/media/visa.png" width="40px">
+						</div>
+					</part>
+					<part class="container">
+						<form action="{{path.root}}/post/pay" method="post">
+							<div id="braintree" class="container" style="padding-left: 0;padding-right: 0;">
+								<div id="braintree-loading" class="centered">
+									<img src="{{path.root}}/css/media/plane.gif" width="200px" />
+								</div>
+							</div>
+							<button class="button">Pay $56.35</button>
+						</form>
+					</part>
+				</box>
+			</module>
+        </div>
+		<div class="pw-notification" data-module="notification"></div>
+		<script>
+		var environment = {
+			root: '{{path.root}}',
+			page: '{{path.page}}'
+		};
+		</script>
+		{% include path.js %}
+		<script src="https://js.braintreegateway.com/js/braintree-2.26.0.min.js"></script>
+		<script>
+			$(function(){
+				
+				// Logout
+				$('[data-type="logout-btn"]').on('click', function(){
+					window.location = '{{path.root}}/get/logout';
+				});
+				
+				Braintree
+				$.get('{{path.root}}/get/braintree-token')
+				.done(function(token){
+					if(token){
+						$('#braintree-loading').fadeOut();
+						braintree.setup(token, 'dropin', {
+							container: 'braintree'
+						});
+					}else{
+						alert('We\'re sorry - there is a problem with our payments right now.');
+					}
+				});
+				
+				{% include path.load %}
+			});
+		</script>
+    </body>
+</html>

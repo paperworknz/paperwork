@@ -28,7 +28,7 @@ $app->post('/post/register', 'app', function() use ($app){
 			'password' => $password,
 			'confirm' => $confirm,
 			'email' => $email,
-			'privilege' => 'user',
+			'privilege' => 'baby',
 		]);
 		
 		switch($action){
@@ -43,7 +43,8 @@ $app->post('/post/register', 'app', function() use ($app){
 				break;
 			case 'Registered Successfully':
 				
-				if(strpos($email, 'paperwork.nz') !== false){
+				// Don't email if mode is dev
+				if($_ENV['MODE'] == 'dev'){
 					echo $app->build->success([
 						'message' => 'Registered Successfully'
 					]);
@@ -88,6 +89,6 @@ $app->post('/post/register', 'app', function() use ($app){
 		
 	}else{
 		$app->flash('error', 'Please fill out all of the fields!');
-		$app->redirect($app->root);
+		$app->redirect($app->root.'/register');
 	}
 });

@@ -2,7 +2,7 @@
 
 // ADMIN ONLY //
 
-$app->get('/admin', 'admin', function() use ($app){
+$app->get('/admin', 'uac', 'admin', function() use ($app){
 	/* Methods */
 
 	/* Construction */

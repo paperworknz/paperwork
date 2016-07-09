@@ -398,27 +398,6 @@ video::-webkit-media-controls {
 		margin: 15px 0;
 	}
 	
-	td {
-		padding: 5px 10px;
-		
-		@include size(500px){
-			padding: 5px;
-		}
-	}
-	
-	td:nth-child(odd) {
-		color: #999;
-		text-align: right;
-		
-		@include size(500px){
-			font-size: 13px;
-		}
-	}
-	
-	td:nth-child(even) {
-		font-size: 20px;
-	}
-	
 	input {
 		padding: 8px;
 		width: 100%;
@@ -427,6 +406,28 @@ video::-webkit-media-controls {
 			font-size: 16px;
 		}
 	}
+}
+
+.register-information {
+	
+	display: inline-block;
+	padding-bottom: 50px;
+	
+	label {
+		display: block;
+		text-align: left;
+		padding-bottom: 3px;
+	}
+	
+	part {
+		width: 250px;
+		font-size: 18px;
+	}
+	
+	section {
+		padding-bottom: 20px;
+	}
+	
 }
 
 .login input {

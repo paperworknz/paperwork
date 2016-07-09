@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/get/tour', 'uac', function() use ($app){
+$app->post('/get/tour', function() use ($app){
 	/* Methods */
 	$page = isset($_POST['page']) ? $_POST['page'] : false;
 	

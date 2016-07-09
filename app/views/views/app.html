@@ -7,19 +7,17 @@
         {% include path.scaffolding %}
         <div id="content">
 			<module>
-				<flash class="box-std">
-					{% include path.flash %}
-				</flash>
-			</module>
-			<module>
 				<box class="box-std">
 					<part class="container-top">
 						<div class="h3 title">
 							Hi {{user.first}}
 						</div>
 					</part>
+					<flash class="box-std container-mid">
+						{% include path.flash %}
+					</flash>
+					{% if user.privilege == 'guest' %}
 					<part class="container-mid">
-						{% if user.privilege == 'guest' %}
 						<div class="alert alert-info">
 							As a Guest, your data will be deleted after 24 hours, or when you log out.
 							<div class="mobile">
@@ -27,8 +25,8 @@
 								By the way: Paperwork is best used on a computer!
 							</div>
 						</div>
-						{% endif %}
 					</part>
+					{% endif %}
 					<part class="container" data-module="log-out">
 						<ul class="list-inline">
 							{% if user.privilege == 'guest' %}
@@ -54,9 +52,8 @@
 		{% include path.js %}
 		<script>
 			$(function(){
-				Box.Application.init();
 				
-				// ActiveCampaign
+				// Logout
 				$('[data-type="logout-btn"]').on('click', function(){
 					window.location = '{{path.root}}/get/logout';
 				});
