@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/kappa', function() use ($app){
+$app->get('/kappa', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
