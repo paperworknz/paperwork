@@ -31,7 +31,7 @@
 						</div>
 					</part>
 					<part class="container wrap">
-						<form action="{{path.root}}/post/pay" method="post">
+						<form action="{{path.root}}/post/pay" method="post" class="wrap">
 							<div id="braintree" class="container" style="padding-left: 0;padding-right: 0;">
 								<div id="braintree-loading" class="centered">
 									<img src="{{path.root}}/css/media/plane.gif" width="200px" />
@@ -39,6 +39,9 @@
 							</div>
 							<button class="button right">Pay $56.35</button>
 						</form>
+						<div class="wrap" style="padding-top: 5px;">
+							<button class="button blue right" onclick="window.location='{{path.root}}/get/logout'">LOGOUT</button>
+						</div>
 					</part>
 				</box>
 			</module>
