@@ -47,9 +47,10 @@ class SQLBackup {
 					' -p'.$this->password.
 					' '.$this->database.
 					' > '.
-					$this->path.$name
+					$this->path.$name,
+					
+					$result
 				);
-				exec('dropbox start', $result);
 			}else{
 				$test = fopen($this->path.$name, 'w');
 				$stuff = file_get_contents('../app/app/bin/phpToPDF.php');
