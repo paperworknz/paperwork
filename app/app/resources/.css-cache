@@ -13,5 +13,7 @@
 	"job/job": "job/job.css?ObVuY4",
 	"user/user": "user/user.css?W02BWF",
 	"@Paperwork": "Paperwork.css?w6Z7RC",
-	"@Public": "Public.css?OjNlXh"
+	"@Public": "Public.css?p9oXF5",
+	"register": "register.css?uH1P3M",
+	"checkout": "checkout.css?Ejscdw"
 }

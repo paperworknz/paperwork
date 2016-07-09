@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		{% include path.head_public %}
+		<link rel="stylesheet" type="text/css" href="{{path.root}}/css/views/{{path.page_css}}" />
 		{% include path.pixel %}
 		{% if state == 'prod' %}
 		<script>fbq('track', 'Lead');</script>
@@ -28,86 +29,75 @@
 		</header>
 		<section>
 			<div class="width">
-				<div class="main top centered">
-					<span class="main_title">Welcome to Paperwork</span>
-					<div style="padding-bottom:20px;">Please fill in the boxes below</div>
-					<div style="display:inline-block">
-						<table class="user-information" data-validate="on">
-							<tbody>
-								<tr>
-									<td>
-										First Name
-									</td>
-									<td>
-										<input type="text" name="first" placeholder="" required>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										Last Name
-									</td>
-									<td>
-										<input type="text" name="last" placeholder="" required>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										Company/Trade Name
-									</td>
-									<td>
-										<input type="text" name="company" placeholder="" required>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										Email
-									</td>
-									<td>
-										<input type="email" name="email" placeholder="" required>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										Username
-									</td>
-									<td>
-										<input type="text" name="username" placeholder="" required>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										Password
-									</td>
-									<td>
-										<input type="password" name="password" placeholder="" required>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										Confirm Password
-									</td>
-									<td>
-										<input type="password" name="confirm" placeholder="" required>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td style="font-size: 11px;text-align:left;padding-bottom:10px">By registering you agree to our <a href="{{path.root}}/privacy-policy">Privacy Policy</a></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<button class="button next-step left" style="width: 50%">LOG IN</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+				<section class="main centered">
+					<div class="main_title">Welcome to Paperwork</div>
+					<div>
+						Please fill in the boxes below. You can always change these later.
 					</div>
-					<div style="padding: 15px;">
-						<b>Important:</b> Please note that you will be asked for payment via email upon registering.<br>
-						Automatic payment options will be available in future.
-					</div>
-				</div>
+				</section>
+				<section class="user-information centered central">
+					<part class="register-information" data-validate="on">
+						<section>
+							<label>
+								First name
+							</label>
+							<part>
+								<input type="text" name="first" required>
+							</part>
+						</section>
+						<section>
+							<label>
+								Last name
+							</label>
+							<part>
+								<input type="text" name="last" required>
+							</part>
+						</section>
+						<section>
+							<label>
+								Company name
+							</label>
+							<part>
+								<input type="text" name="company" required>
+							</part>
+						</section>
+						<section>
+							<label>
+								Email address
+							</label>
+							<part>
+								<input type="email" name="email" required>
+							</part>
+						</section>
+						<section>
+							<label>
+								Username
+							</label>
+							<part>
+								<input type="text" name="username" required>
+							</part>
+						</section>
+						<section>
+							<label>
+								Password
+							</label>
+							<part>
+								<input type="password" name="password" required>
+							</part>
+						</section>
+						<section style="padding-bottom: 35px;">
+							<label>
+								Confirm password
+							</label>
+							<part>
+								<input type="password" name="confirm" required>
+							</part>
+						</section>
+						<section style="display: inline-block;">
+							<button class="button next-step left" style="width: 100px">NEXT</button>
+						</section>
+					</part>
+				</section>
 			</div>
 		</section>
 		<footer>
@@ -115,7 +105,9 @@
 				<a href="https://www.facebook.com/paperworkapp" target="_blank">
 					<img class="fb" title="Our Facebook Page" src="{{path.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
 				</a>
-				<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
+				<div style="padding:15px 0px;">
+					<a href="{{path.root}}/privacy-policy">Privacy Policy</a>
+				</div>
 			</div>
 		</footer>
 		<div class="pw-notification" data-module="notification"></div>
@@ -136,16 +128,15 @@
 					window.location = '{{path.root}}/login';
 				});
 				
-				// v.input($('.user-information'), $('.next-step'), 'register', {
-				// 	allowDuplicates: true,
-				// });
-				
 				// Helpers
 				$('input[name=first]').on('blur', function(){
 					$('input[name=username]').val($(this).val().toLowerCase());
 				});
 				
-				var register = function(){
+				// Login on click (focusing also triggers this)
+				$('.next-step').on('click', register);
+				
+				function register(){
 					if(!$('.next-step').hasClass('button-wait')){
 						
 						$.post('{{path.root}}/post/register', {
@@ -172,7 +163,7 @@
 									data = JSON.parse(data);
 									
 									if(data.type == 'success'){
-										window.location = '{{path.root}}/app';
+										window.location = '{{path.root}}/checkout';
 									}else{
 										$('table').before('<div class="alert alert-danger">'+data.message+'</div>');
 									}
@@ -187,10 +178,7 @@
 							}
 						});
 					}
-				};
-				
-				// Login on click (focusing also triggers this)
-				$('.next-step').on('click', register);
+				}
 				
 			});
 		</script>

@@ -272,23 +272,23 @@ function remove(item, $anchor, dark, bool){
 		
 		// Bool
 		if(bool == undefined) bool = true;
-		if(bool)
-		$.post(environment.root+'/delete/tour', {
-			id: item.id,
-		}).done(function(){
-			if(item.commands.href){
-				$('body').css('pointer-events', 'none');
-				Paperwork.goto(item.commands.href);
-			}else{
-				// Chain next item or end
-				if(chain === 0){
-					if(item.commands.chain != undefined) if(!item.commands.chain) return;
-					chain++;
-					if(items[chain]) render(items[chain]);
+		if(bool){
+			$.post(environment.root+'/delete/tour', {
+				id: item.id,
+			}).done(function(){
+				if(item.commands.href){
+					$('body').css('pointer-events', 'none');
+					Paperwork.goto(item.commands.href);
+				}else{
+					// Chain next item or end
+					if(chain === 0){
+						if(item.commands.chain != undefined) if(!item.commands.chain) return;
+						chain++;
+						if(items[chain]) render(items[chain]);
+					}
 				}
-			}
-		});
-		
+			});
+		}
 	});
 }
 	

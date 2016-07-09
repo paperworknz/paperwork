@@ -277,6 +277,7 @@ function dark($container) {
 		wait: wait,
 		ready: ready,
 		validate: validate,
+		nodes: validationNodes,
 		dark: dark,
 	}
 	

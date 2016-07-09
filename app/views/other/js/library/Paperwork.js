@@ -26,6 +26,7 @@ var Paperwork = (function(){
 		wait: wait,
 		ready: ready,
 		validate: validate,
+		nodes: validationNodes,
 		dark: dark,
 	}
 	
