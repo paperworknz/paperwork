@@ -23,19 +23,21 @@
 						</div>
 						<div style="padding-top: 15px;">
 							We accept the following payment options:
-							<!--<img alt="Paypal" title="Paypal" src="{{path.root}}/css/media/paypal_account.png" width="40px">-->
-							<img alt="Visa" title="Visa" src="{{path.root}}/css/media/visa.png" width="40px">
-							<img alt="Mastercard" title="Mastercard" src="{{path.root}}/css/media/mastercard.png" width="40px">
+							<div style="display: inline-block;">
+								<!--<img alt="Paypal" title="Paypal" src="{{path.root}}/css/media/paypal_account.png" width="40px">-->
+								<img alt="Visa" title="Visa" src="{{path.root}}/css/media/visa.png" width="40px">
+								<img alt="Mastercard" title="Mastercard" src="{{path.root}}/css/media/mastercard.png" width="40px">
+							</div>
 						</div>
 					</part>
-					<part class="container">
+					<part class="container wrap">
 						<form action="{{path.root}}/post/pay" method="post">
 							<div id="braintree" class="container" style="padding-left: 0;padding-right: 0;">
 								<div id="braintree-loading" class="centered">
 									<img src="{{path.root}}/css/media/plane.gif" width="200px" />
 								</div>
 							</div>
-							<button class="button">Pay $56.35</button>
+							<button class="button right">Pay $56.35</button>
 						</form>
 					</part>
 				</box>

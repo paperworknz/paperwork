@@ -12,7 +12,7 @@ $app->post('/post/login', 'app', function() use ($app){
 	switch($action){
 		case 'Invalid Password':
 			$app->event->log('entered a wrong password with username: '.$username.'. IP: '.$app->ip);
-			echo $app->build->error('Your username or password was incorrect.');
+			echo $app->build->error('Your username or password was incorrect');
 			break;
 		
 		case 'User Disabled':
@@ -22,11 +22,12 @@ $app->post('/post/login', 'app', function() use ($app){
 		
 		case 'User Does Not Exist':
 			$app->event->log('tried to log into a non-existant account with username: '.$username.'. IP: '.$app->ip);
-			echo $app->build->error('Your username or password was incorrect.');
+			echo $app->build->error('Your username or password was incorrect');
 			break;
 		
 		case 'Authenticated Successfully':
 			echo $app->build->success([
+				'message' => 'Welcome back, '.$app->user['first'].'!',
 				'location' => $app->root.'/jobs'
 			]);
 			break;

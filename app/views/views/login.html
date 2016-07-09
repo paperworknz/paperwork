@@ -84,14 +84,25 @@
 						password: $('input[name=password]').val(),
 					}).done(function(data){
 						data = JSON.parse(data);
+						
+						// Put alert on screen if it doesn't exist
+						if($('.alert').length < 1){
+							$('.next-step').before('<div class="alert">'+data.message+'</div>');
+						}else{
+							$('.alert').removeClass('alert-success');
+							$('.alert').removeClass('alert-danger');
+							$('.alert').html(data.message);
+						}
+						
+						if(data.type == 'success'){
+							$('.alert').addClass('alert-success');
+						}else{
+							$('.alert').addClass('alert-danger');
+						}
+						
 						if(data.type == 'success'){
 							window.location = data.location;
 						}else{
-							if($('.alert').length > 0){
-								$('.alert').html(data.message);
-							}else{
-								$('.next-step').before('<div class="alert alert-danger">'+data.message+'</div>');
-							}
 							Paperwork.ready($('.next-step'), 'LOG IN');
 						}
 					});
