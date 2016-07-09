@@ -68,6 +68,7 @@ $app->post('/post/register', 'app', function() use ($app){
 					'last_name' => $last,
 					'orgname' => $company,
 					'p[1]' => 1,
+					'ip4' => $app->ip,
 				];
 				
 				// Send API request
