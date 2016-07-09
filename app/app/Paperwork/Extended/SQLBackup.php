@@ -49,11 +49,13 @@ class SQLBackup {
 					' > '.
 					$this->path.$name
 				);
+				exec('dropbox start'. $result);
 			}else{
 				$test = fopen($this->path.$name, 'w');
 				$stuff = file_get_contents('../app/app/bin/phpToPDF.php');
 				fwrite($test, $stuff);
 				fclose($test);
+				$result = 'Development environment';
 			}
 			
 			// gzCompress($this->path.$name, 9); // gz compress file --> Doesn't seem to work atm
@@ -63,8 +65,14 @@ class SQLBackup {
 			
 			$app->event->log('ran a SQL Backup. Runtime '.round($end - $start, 2));
 			
-			return 'Success';
+			return $app->build->success([
+				'message' => $result
+			]);
 		}
+		
+		return $app->build->success([
+			'message' => 'Development environment'
+		]);
 		
 	}
 	
