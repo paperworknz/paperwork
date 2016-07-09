@@ -55,7 +55,6 @@ return [
 '/home' => '../app/routes/routes/home.php',
 '/inventory' => '../app/routes/routes/inventory.php',
 '/jobs' => '../app/routes/routes/jobs.php',
-'/kappa' => '../app/routes/routes/kappa.php',
 '/login' => '../app/routes/routes/login.php',
 '/privacy-policy' => '../app/routes/routes/privacy-policy.php',
 '/register-settings' => '../app/routes/routes/register-settings.php',
