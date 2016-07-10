@@ -18,13 +18,21 @@
 					</flash>
 					{% if user.privilege == 'guest' %}
 					<part class="container-mid">
-						<div class="alert alert-info">
+						<div class="alert alert-success" style="margin-bottom: 5px;">
+							Welcome to Paperwork! Browse around using the menu bar and get a feel for what Paperwork can do for you!
+						</div>
+						<div class="alert alert-info" style="margin-bottom: 5px;">
 							As a Guest, your data will be deleted after 24 hours, or when you log out.
 							<div class="mobile">
 								<br>
 								By the way: Paperwork is best used on a computer!
 							</div>
 						</div>
+						{% if promo %}
+						<div class="alert alert-warning" style="margin-bottom: 0;">
+							Your <b>Facebook Promotion</b> opportunity will only be available for another <b><span style="white-space: nowrap;" promo-time></span></b>
+						</div>
+						{% endif %}
 					</part>
 					{% endif %}
 					<part class="container" data-module="log-out">
@@ -57,6 +65,11 @@
 				$('[data-type="logout-btn"]').on('click', function(){
 					window.location = '{{path.root}}/get/logout';
 				});
+				
+				{% if promo %}
+				// Timer
+				Paperwork.countdown('{{promo}}', $('[promo-time]'));
+				{% endif %}
 				
 				{% include path.load %}
 			});

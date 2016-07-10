@@ -18,6 +18,7 @@ var Paperwork = (function(){
 	//-> parts/button.js
 	//-> parts/validation.js
 	//-> parts/dark.js
+	//-> parts/countdown.js
 	
 	return {
 		random: random,
@@ -28,6 +29,7 @@ var Paperwork = (function(){
 		validate: validate,
 		nodes: validationNodes,
 		dark: dark,
+		countdown: countdown,
 	}
 	
 })();
