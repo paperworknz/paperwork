@@ -43,6 +43,9 @@ $app->post('/post/register', 'app', function() use ($app){
 				break;
 			case 'Registered Successfully':
 				
+				// Clear Facebook promo cookie
+				setcookie('promo', 1, 1, '/');
+				
 				// Don't email if mode is dev
 				if($_ENV['MODE'] == 'dev'){
 					echo $app->build->success([

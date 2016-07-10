@@ -27,6 +27,19 @@ class Build {
 			$sidebar = 'big';
 		}
 		
+		// Update promo cookie value
+		if(isset($_COOKIE['promo'])) $_COOKIE['promo'] = $_COOKIE['promo'] - time();
+		
+		// Get promo cookie value
+		if(isset($_COOKIE['promo'])){
+			$promo = $_COOKIE['promo'];
+		}elseif(isset($_GET['src'])){
+			// First time viewing, cookie not available in PHP
+			$promo = 3600;
+		}else{
+			$promo = false;
+		}
+		
 		// Template array, all datasets contain these following values
 		$result = [
 			'path' => [
@@ -43,6 +56,7 @@ class Build {
 			'date'	=> date('d/m/Y'),
 			'state'	=> $_ENV['MODE'],
 			'sidebar' => $sidebar,
+			'promo' => $promo,
 		];
 		
 		$result['path'] = array_merge($result['path'], $app->schema['patharray']);	// Merge this path with $app's path
