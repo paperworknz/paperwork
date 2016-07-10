@@ -11,6 +11,7 @@ $app->get('/', 'app', function() use($app){
 		if($src == 'facebook'){
 			if(!isset($_COOKIE['promo'])){
 				setcookie('promo', time() + 3600, time() + 3600, '/');
+				$app->event->log('came from facebook with IP: '.$app->ip);
 			}
 		}
 	}
