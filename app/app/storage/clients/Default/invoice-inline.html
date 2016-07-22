@@ -32,10 +32,10 @@
 	<header style="width:100%;display:table;" >
 		<div style="float:left;" >
 			<div  contenteditable style="font-weight:600;min-width:160px;" >
-				{{user.company}}</br>
-				{{user.first}} {{user.last}}<br>
-				{{user.phone}}<br>
-				{{user.email}}
+				@company</br>
+				@name<br>
+				@phone<br>
+				@email
 			</div>
 		</div>
 		<div style="float:right;" >
@@ -46,8 +46,8 @@
 					<li  contenteditable style="padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;list-style-type:none;" >GST#</li>
 				</ul>
 				<ul style="float:left;text-align:right;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;" >
-					<li  contenteditable form-date style="border-width:1px;border-style:solid;border-color:black;padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;text-align:center;min-width:86px;list-style-type:none;" ></li>
-					<li  contenteditable form-jobID style="border-width:1px;border-style:solid;border-color:black;border-top-style:none;padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;text-align:center;min-width:86px;list-style-type:none;" ></li>
+					<li  contenteditable style="border-width:1px;border-style:solid;border-color:black;padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;text-align:center;min-width:86px;list-style-type:none;" >@date</li>
+					<li  contenteditable style="border-width:1px;border-style:solid;border-color:black;border-top-style:none;padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;text-align:center;min-width:86px;list-style-type:none;" >@id</li>
 					<li  contenteditable style="border-width:1px;border-style:solid;border-color:black;border-top-style:none;padding-top:2px;padding-bottom:2px;padding-right:10px;padding-left:10px;text-align:center;min-width:86px;list-style-type:none;" ></li>
 				</ul>
 			</section>
@@ -57,8 +57,9 @@
 		<header style="width:100%;display:table;" >
 			<span  contenteditable style="text-align:center;width:100%;display:block;background-color:#c4dff6;font-weight:600;border-width:1px;border-style:solid;border-color:black;" >CUSTOMER</span>
 		</header>
-		<section  contenteditable form-clientblob style="width:100%;border-width:1px;border-style:solid;border-color:black;border-top-style:none;text-align:center;padding-top:2px;padding-bottom:2px;padding-right:2px;padding-left:2px;display:block;" >
-			<br><br>
+		<section  contenteditable style="width:100%;border-width:1px;border-style:solid;border-color:black;border-top-style:none;text-align:center;padding-top:2px;padding-bottom:2px;padding-right:2px;padding-left:2px;display:block;" >
+			@clientname<br>
+			@clientaddress
 		</section>
 	</section>
 	<section style="width:100%;padding-top:15px;" >
@@ -86,7 +87,7 @@
 					Details for Direct Crediting:<br>
 					Bank Account Name: {{user.first}} {{user.last}}<br>
 					Bank Account Number: <br>
-					Reference: <span form-jobID></span>
+					Reference: @id
 				</span>
 				<span  contenteditable style="text-align:center;width:100%;display:block;background-color:#c4dff6;border-width:1px;border-style:solid;border-color:black;" >TERMS & CONDITIONS</span>
 			</header>
