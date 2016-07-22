@@ -4,20 +4,23 @@
 	.box-job {
 		width: 710px;
 	}
-
+	
 	.job-name {
 		width: 455px;
 		font-size: 24px;
 		line-height: 26px;
 		border: 1px solid white;
 		width: 75%;
+		&:hover {
+			border: 1px solid #ccc;
+		}
 	}
-
+	
 	.status {
 		height: 36px;
 		line-height: 36px;
 	}
-
+	
 	.notes {
 		display: inline-block;
 		width: 250px;
@@ -52,7 +55,7 @@
 			width: 610px;
 		}
 	}
-
+	
 	.form-settings {
 		margin-top: 5px;
 		
@@ -60,7 +63,7 @@
 			margin-right: 5px;
 		}
 	}
-
+	
 	.twig-remove {
 		position: absolute;
 		top: 0;
@@ -70,21 +73,21 @@
 		text-align: center;
 		cursor: pointer;
 	}
-
+	
 	.blob_item:hover .twig-remove { color: red; }
-
+	
 	.client-details td { height:28px; }
 	.client-details { width:75% }
-
+	
 	.pdf-load {
 		width: 52px;
 		height: 25px;
 		background-color: white;
 		padding: 0px;
 	}
-
+	
 	.pdf-load .la-ball-fall div { background-color: #999; }
-
+	
 	.form {
 		position: relative;
 		min-width: 710px;
@@ -92,7 +95,7 @@
 		min-height: 10px;
 	}
 	.p0 { padding: 0; }
-
+	
 	.client-details td:nth-child(2n+1) {
 		text-align: right;
 		font-size: 9pt;
@@ -101,7 +104,7 @@
 		padding: 0px 10px;
 		width: 50px;
 	}
-
+	
 	.twitter-typeahead {
 		border: 1px solid black;
 		border-bottom: 1px dashed #999;
@@ -133,8 +136,6 @@
 }
 
 .margin-content {
-	
-	
 	.percent {
 		width: 60px;
 	}

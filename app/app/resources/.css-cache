@@ -1,6 +1,6 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?Dj7eP3",
+		"Paperwork": "Paperwork.css?lzWUpp",
 		"Public": "Public.css?TDiuvg"
 	},
 	"views": {
@@ -13,7 +13,7 @@
 		"settings": "settings.css?vs4h8v",
 		"user": "user.css?E1ktyM",
 		"admin": "admin.css?kOdBIC",
-		"job": "job.css?Whz3Iw",
+		"job": "job.css?zND4bb",
 		"jobs": "jobs.css?I3ktku",
 		"client": "client.css?Y9NNnh"
 	}
