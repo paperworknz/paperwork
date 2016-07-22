@@ -12,15 +12,14 @@
 			</module>
         </div>
 		{% include js %}
+		{% if cname|length > 1 %}
 		<script>
 			$(function(){
-				// Open new-content if a client name is provided w GET
-				{% if cname|length > 1 %}
 				$('#new-content').slideToggle(100);
 				$('.typeahead').val('{{cname | raw}}');
 				$("input[name='name']").focus();
-				{% endif %}
 			});
 		</script>
+		{% endif %}
     </body>
 </html>

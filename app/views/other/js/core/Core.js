@@ -131,6 +131,7 @@ var Core = (function($, undefined){
 				
 				start(name);
 				
+				dark.object.find('.dark_content').addClass('pop');
 				$module.animate({
 					opacity: 1,
 				}, 100);

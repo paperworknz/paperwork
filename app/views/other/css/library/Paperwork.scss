@@ -193,6 +193,10 @@ module {
 	}
 }
 
+.pop {
+	-webkit-animation: PaperworkPop 0.25s ease forwards;
+}
+
 //
 //
 // Dark Container
@@ -206,7 +210,7 @@ module {
 	bottom: 0;
 	left: 0;
 	
-	& > part {
+	& > .dark_content {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -216,7 +220,6 @@ module {
 		right: 15px;
 		bottom: 15px;
 		left: 15px;
-		-webkit-animation: PaperworkPop 0.25s ease forwards;
 		
 		> module {
 			z-index: 9999;
