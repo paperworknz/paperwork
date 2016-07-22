@@ -19,7 +19,7 @@ var Table = (function($, environment){
 		}
 	};
 	
-	run();
+	if($('.wt-table').length) run();
 	
 	// Binds
 function bind(){
