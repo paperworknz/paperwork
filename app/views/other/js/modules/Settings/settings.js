@@ -165,7 +165,7 @@ Core.addModule('settings', function(context){
 		if(!annyang){
 			return $body.find('[data-type="annyang"]').append(`
 				<part class="container">
-					Apple has not adopted the Speech Recognition standard yet - sorry!
+					Your browser has not adopted the Speech Recognition standard yet - sorry!
 				</part>
 			`);
 		}
