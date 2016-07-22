@@ -2,5 +2,7 @@
 
 $app->module->add('admin', function($request) use ($app){
 	
-	return;
+	return [
+		'behaviors' => ['tab'],
+	];
 });
