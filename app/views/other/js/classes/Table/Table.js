@@ -3,8 +3,18 @@ var Table = (function($, environment){
 	var map,
 		filters;
 	
-	const $table = $('.wt-table'),
-		$row = $table.find('.wt-row'),
+	var $table;
+	
+	if(!$('.wt-table').length < 0) return;
+	
+	$('.wt-table').each(function(){
+		if(!$(this).data('id')){
+			$(this).attr('data-id', Paperwork.random(6));
+			$table = $(this);
+		}
+	});
+	
+	const $row = $table.find('.wt-row'),
 		$column = $table.find('.wt-column'),
 		$filter = $table.find('.wt-filter'),
 		$settings = $table.find('.wt-settings');
@@ -19,7 +29,7 @@ var Table = (function($, environment){
 		}
 	};
 	
-	if($('.wt-table').length) run();
+	run();
 	
 	// Binds
 	//-> parts/bind.js
@@ -35,10 +45,7 @@ var Table = (function($, environment){
 	// API
 	function configure(data){
 		
-		if(!data){
-			console.warn('No configuration supplied');
-			return false;
-		}
+		if(!data) return console.warn('No configuration supplied');
 		
 		getMap();
 		

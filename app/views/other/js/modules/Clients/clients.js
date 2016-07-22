@@ -84,7 +84,7 @@ Core.addModule('clients', function(context){
 		$body.on('typeahead:selected', '.typeahead', goto);
 		
 		// Focus on typeahead
-		$body.find('.tt-input').focus();
+		$body.find('input.tt-input').focus();
 		
 	}
 	

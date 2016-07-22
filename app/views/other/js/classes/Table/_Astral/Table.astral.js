@@ -3,8 +3,18 @@ var Table = (function($, environment){
 	var map,
 		filters;
 	
-	const $table = $('.wt-table'),
-		$row = $table.find('.wt-row'),
+	var $table;
+	
+	if(!$('.wt-table').length < 0) return;
+	
+	$('.wt-table').each(function(){
+		if(!$(this).data('id')){
+			$(this).attr('data-id', Paperwork.random(6));
+			$table = $(this);
+		}
+	});
+	
+	const $row = $table.find('.wt-row'),
 		$column = $table.find('.wt-column'),
 		$filter = $table.find('.wt-filter'),
 		$settings = $table.find('.wt-settings');
@@ -19,7 +29,7 @@ var Table = (function($, environment){
 		}
 	};
 	
-	if($('.wt-table').length) run();
+	run();
 	
 	// Binds
 function bind(){
@@ -247,7 +257,7 @@ function render(){
 	
 	for(let i in index){
 		const value = index[i];
-		$('.wt-wrap').append(value);
+		$table.find('.wt-wrap').append(value);
 	}
 	
 	
@@ -320,7 +330,7 @@ function sort(id, state){
 			break;
 	}
 	
-	$(`.wt-column[data-id="${id}"] .wt-row`).each(function(){
+	$table.find(`.wt-column[data-id="${id}"] .wt-row`).each(function(){
 		order.push($(this).attr('data-row'));
 	});
 	
@@ -345,10 +355,7 @@ function sort(id, state){
 function filter(filter){
 	
 	if(!filter) filter = 'All';
-	
-	if(!$filter.find(`[value="${filter}"]`).length){
-		console.warn(`Filter ${filter} unavailable`);
-	}
+	if(!$filter.find(`[value="${filter}"]`).length) console.warn(`Filter ${filter} unavailable`);
 	
 	map.filter = filter;
 	setMap();
@@ -356,10 +363,7 @@ function filter(filter){
 
 function getFilters(){
 	
-	if(!localStorage){
-		console.warn('Unable to access localStorage');
-		return;
-	}
+	if(!localStorage) return console.warn('Unable to access localStorage');
 	
 	// Make empty object if no filters exist
 	if(!localStorage.filter) localStorage.filter = JSON.stringify({});
@@ -372,10 +376,7 @@ function pushFilter(name, filter){
 	
 	let filters = getFilters();
 	
-	if(!typeof name === 'string'){
-		console.warn('No filter name given for new filter');
-		return;
-	}
+	if(!typeof name === 'string') return console.warn('No filter name given for new filter');
 	
 	// Set filter by name (may override)
 	filters[name] = filter;
@@ -631,10 +632,7 @@ function newFilter(){
 	// API
 	function configure(data){
 		
-		if(!data){
-			console.warn('No configuration supplied');
-			return false;
-		}
+		if(!data) return console.warn('No configuration supplied');
 		
 		getMap();
 		
