@@ -1,19 +1,20 @@
 {
-	"admin": "admin.css?1AffsC",
-	"app": "app.css?exqzRs",
-	"clients": "clients.css?SiUzI2",
-	"inventory": "inventory.css?p0Wkbg",
-	"jobs": "jobs.css?RLgcTz",
-	"login": "login.css?gRtWQC",
-	"register-settings": "register-settings.css?e3grKi",
-	"settings": "settings.css?7ZnRvk",
-	"templates": "templates.css?HQgp8l",
-	"client/client": "client/client.css?z49ya6",
-	"job/archived": "job/archived.css?M8Kpqi",
-	"job/job": "job/job.css?ObVuY4",
-	"user/user": "user/user.css?W02BWF",
-	"@Paperwork": "Paperwork.css?Opbtfi",
-	"@Public": "Public.css?p9oXF5",
-	"register": "register.css?uH1P3M",
-	"checkout": "checkout.css?Ejscdw"
+	"library": {
+		"Paperwork": "Paperwork.css?Dj7eP3",
+		"Public": "Public.css?TDiuvg"
+	},
+	"views": {
+		"login": "login.css?JiGeeo"
+	},
+	"modules": {
+		"template": "template.css?2qIl3a",
+		"inventory": "inventory.css?te4Kp9",
+		"clients": "clients.css?KdGSt3",
+		"settings": "settings.css?vs4h8v",
+		"user": "user.css?E1ktyM",
+		"admin": "admin.css?kOdBIC",
+		"job": "job.css?Whz3Iw",
+		"jobs": "jobs.css?I3ktku",
+		"client": "client.css?Y9NNnh"
+	}
 }

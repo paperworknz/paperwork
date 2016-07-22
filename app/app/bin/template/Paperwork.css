@@ -1,0 +1,157 @@
+body,
+html {
+  width: 100%;
+}
+
+body,
+html {
+  position: relative;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+*,
+:after,
+:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+ul {
+  -webkit-padding-start: 0;
+}
+
+/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
+
+footer,
+header,
+section {
+  display: block;
+}
+
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner,
+button::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring,
+button:-moz-focusring {
+  outline: ButtonText dotted 1px;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+
+@media print {
+  img {
+    page-break-inside: avoid;
+  }
+
+  *,
+  :after,
+  :before {
+    color: #000!important;
+    text-shadow: none!important;
+    background: 0 0!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+  }
+
+  img {
+    max-width: 100%!important;
+  }
+}
+
+footer,
+header,
+section {
+  display: block;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-size: 10px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.h2 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.h2 {
+  font-size: 30px;
+}
+
+.h2 {
+  padding-bottom: 20px;
+  font-weight: 500;
+}
+
+.h2 {
+  font-size: 24px;
+}
+
+section:after,
+section:before {
+  display: table;
+  content: " ";
+}
+
+section:after {
+  clear: both;
+}
+
+::selection {
+  background: #D6EDFF;
+}
+
+::-moz-selection {
+  background: #D6EDFF;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+body,
+html {
+  background-color: #e8e8e8;
+}
+
+.h2 {
+  font-size: 30px;
+}

@@ -1,0 +1,57 @@
+<box class="box-std">
+	<part class="container top">
+		<div class="h4 title centered create-new noselect">
+			New Job
+		</div>
+		<div id="new-content" class="container-bottom" style="display: none;padding: 0 0 15px;">
+			<form method="post" action="{{environment.root}}/post/job">
+				<table class="central">
+					<tbody>
+						<tr>
+							<td class="ar">
+								Client
+							</td>
+							<td>
+								<div id="the-basics">
+									<input type="text" class="typeahead" name="client_name" placeholder="Quick Search" required />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="ar">
+								Job name
+							</td>
+							<td>
+								<input type="text" name="name" required />
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button data-type="submit-btn" type="submit" class="button">Create</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</part>
+	<hr>
+	<part class="container">
+		{% if modules.jobs.data.jobs %}
+			{% include path.html.table with {
+				data: modules.jobs.data.jobs,
+				head: {
+					id: '_id',
+					job_number: 'ID',
+					name: 'Name',
+					'client.name': 'Client',
+					'job_status.name': 'Status',
+				},
+				status: modules.jobs.data.status,
+			}%}
+		{% else %}
+		<div class="centered">Start your first job by hitting New Job!</div>
+		{% endif %}
+	</part>
+</box>

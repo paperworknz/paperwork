@@ -1,0 +1,58 @@
+@import '../library/mixins/mixins';
+
+[data-module="template"] {
+	width: 843px;
+	min-height: 50px;
+	
+	.template-name {
+		font-size: 24px;
+		line-height: 26px;
+		border: 1px solid white;
+		width: 100%;
+		
+		&:hover {
+			border: 1px solid #ccc;
+		}
+	}
+	
+	.template-icon {
+		display: inline-block;
+		
+		img {
+			cursor: pointer;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			height: 200px;
+			width: 160px;
+			@include transition(all 0.1s ease-in-out);
+			
+			&:hover, &.img-active {
+				margin-left: -5px;
+				margin-top: -5px;
+				height: 210px;
+				width: 170px;
+			}
+			
+			&.img-active {
+				border: 1px solid #3a9bdc;
+			}
+		}
+	}
+	
+	.new-template {
+		width: 710px;
+	}
+	
+	.template-form {
+		padding: 30px;
+	}
+	
+	.legend {
+		margin-top: 27px;
+		margin-left: 5px;
+	}
+	
+	.tabobj {
+		width: 710px;
+	}
+}

@@ -1,0 +1,106 @@
+@import '../library/mixins/mixins';
+
+[data-module="inventory"] {
+	
+	@include size(600px) {
+		&> .box-std .container {
+			text-align: center;
+		}
+		
+		.inventory-add {
+			float: none!important;
+			display: inline-block;
+		}
+		
+		.inventory-search {
+			float: none;
+			display: inline-block;
+			width: 100%;
+			max-width: 290px;
+			
+			input {
+				width: 100%;
+			}
+		}
+	}
+	
+	.inventory-add {
+		float: left;
+		
+		> * {
+			float: left;
+			margin-right: 4px;
+			
+			&*:last-child {
+				margin-right: 0;
+			}
+		}
+		
+		input {
+			height: 36px;
+			line-height: 36px;
+		}
+		
+		input[name=name] {
+			width: 160px;
+		}
+		
+		input[name=price] {
+			width: 54px;
+		}
+	}
+	
+	.inventory-list {
+		
+		li {
+			position: relative;
+		}
+		
+		.item {
+			white-space: nowrap;
+			overflow: hidden;
+			position: relative;
+			
+			input {
+				border: none;
+				outline: none;
+			}
+			
+			.firm-right {
+				position: absolute;
+				right: 0px;
+				padding-left: 10px;
+				width: 70px;
+				text-align: right;
+			}
+			
+			&.item_hover {
+				input {
+					background-color: #eee;
+				}
+			}
+		}
+		
+		.invremove {
+			position: absolute;
+			color: red;
+			opacity: 0;
+			top: 0;
+			right: -10px;
+			height: 28px;
+			line-height: 28px;
+			text-indent: 1px;
+			text-align: center;
+			
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+	.filter {
+		width: 150px;
+		height: 36px;
+		line-height: 36px;
+	}
+}

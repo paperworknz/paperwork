@@ -43,11 +43,9 @@ $app->post('/post/register', 'app', function() use ($app){
 				break;
 			case 'Registered Successfully':
 				
-				// Clear Facebook promo cookie
-				setcookie('promo', 1, 1, '/');
-				
 				// Don't email if mode is dev
 				if($_ENV['MODE'] == 'dev'){
+					$app->event->log('Welcome email sent to '.$first.' '.$last);
 					echo $app->build->success([
 						'message' => 'Registered Successfully'
 					]);
@@ -85,6 +83,7 @@ $app->post('/post/register', 'app', function() use ($app){
 				
 				if($result['result_code'] != 1) $app->event->log('ActiveCampaign error: '.$result['result_code'].PHP_EOL.'Message: '.$result['result_message']);
 				
+				$app->event->log('Welcome email sent to '.$first.' '.$last);
 				echo $app->build->success([
 					'message' => 'Registered Successfully'
 				]);

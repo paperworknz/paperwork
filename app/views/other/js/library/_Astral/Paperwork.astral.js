@@ -1,6 +1,7 @@
 var Paperwork = (function(){
 	
 	const $body = $('body');
+	const events = {};
 	var validationNodes = {};
 	
 	preventBackspace(); // preventBackspace.js
@@ -8,6 +9,9 @@ var Paperwork = (function(){
 	applyWaitToButtons(); // button.js
 	formFlow(); // formFlow.js
 	validateDOM(); // validation.js
+	
+	// Append notification container to body
+	if(!$body.find('.pw-notification').length) $body.append(`<div class="pw-notification" data-module="notification"></div>`);
 	
 function preventBackspace(){
 	let exclusions = 'input, select, textarea, [contenteditable]';
@@ -33,6 +37,20 @@ function formFlow(){
 	});
 }
 	
+function on(event, fn){
+	events[event] = events[event] || [];
+	events[event].push(fn);
+}
+
+function off(event, fn){
+	// Remove event from events object
+	if(events[event]) for(let i = 0; i < events[event].length; i++) if(events[event][i] === fn) events[event].splice(i, 1);
+}
+
+function send(event, response){
+	// Fire all functions in event object that match event
+	if(events[event]) events[event].forEach(function(fn){ fn(response); });
+}
 function random(length, type){
 	let characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 		result = '';
@@ -256,7 +274,7 @@ function dark($container) {
 		object: $dark_module,
 		run: function(callback){
 			$dark_module.find(`.dark_object`).animate({
-				opacity: 0.66,
+				opacity: 0.50,
 			}, 150, function(){
 				if(callback != undefined) callback();
 			});
@@ -286,17 +304,39 @@ function countdown(duration, display){
 		}
 	}, 1000);
 }
+function dollar(i, options){
+	
+	if(!options) options = {};
+	
+	i = i.replace('$', '');
+	i = i.replace(',', '');
+	
+	if(!Number(i)) i = 0;
+	
+	i = Number(i);
+	i = i.toFixed(2);
+	i = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	
+	
+	if(options.sign == undefined || options.sign) i = '$' + i;
+	
+	return i;
+}
 	
 	return {
+		body: $body,
+		on: on,
+		off: off,
+		send: send,
 		random: random,
 		goto: goto,
 		since: since,
 		wait: wait,
 		ready: ready,
 		validate: validate,
-		nodes: validationNodes,
 		dark: dark,
 		countdown: countdown,
+		dollar: dollar,
 	}
 	
 })();

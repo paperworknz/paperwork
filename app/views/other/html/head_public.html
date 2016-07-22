@@ -2,22 +2,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="date" content="{{date}}">
 <title>Paperwork</title>
-<link rel="icon" type="image/x-icon" href="{{path.root}}/favicon.ico" />
-
-<!-- Page stylesheets -->
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="{{path.root}}/css/library/{{path.public_css}}" />
-<link rel="stylesheet" type="text/css" href="{{path.root}}/css/3rd/sweetalert.css" />
-
-<!-- JS error -->
-<script>
-	window.onerror = function(message, url, line, column, error){
-		$.post('{{path.root}}/post/error', {
-			message: message,
-			url: url,
-			line: line,
-			column: column,
-			error: error,
-		});
-	};
-</script>
+<link rel="icon" type="image/x-icon" href="{{environment.root}}/favicon.ico">
+<link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400'>
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/library/{{path.css.library.Public}}">
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/3rd/sweetalert.css">
+{% if path.css.views[environment.page] %}
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/views/{{path.css.views[environment.page]}}">
+{% endif %}

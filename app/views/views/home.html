@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include path.head_public %}
-		{% include path.pixel %}
+		{% include path.html.head_public %}
+		{% include path.html.pixel %}
 	</head>
 	<body>
 		<header>
 			<div class="wrap width">
 				<div class="nav wrap">
-					<div class="major_title logo" style="cursor:pointer" onclick="window.location='{{path.root}}'">Paperwork</div>
+					<div class="major_title logo" style="cursor:pointer" onclick="window.location='{{environment.root}}'">Paperwork</div>
 					<ul class="nav_list wrap">
 						<li class="negligible">
 							<span class="color_hint" features>Features</span>
@@ -17,10 +17,10 @@
 							<span class="color_hint" pricing>Pricing</span>
 						</li>
 						<li>
-							<span onclick="window.location='{{path.root}}/login'">Log In</span>
+							<span onclick="window.location='{{environment.root}}/login'">Log In</span>
 						</li>
 						<li>
-							<span class="special" onclick="window.location='{{path.root}}/register'">Sign Up</span>
+							<span class="special" onclick="window.location='{{environment.root}}/register'">Sign Up</span>
 						</li>
 					</ul>
 				</div>
@@ -28,17 +28,7 @@
 		</header>
 		<section>
 			<div class="width">
-				{% include path.flash %}
-				{% if promo %}
-				<div class="central centered" style="max-width: 840px;padding:0 15px;">
-					<div class="alert alert-success" style="margin-bottom: 0;">
-						<b>Facebook Promotion</b> We'd like to invite you to our referral program!<br>
-						If you become a Paperwork user, and you get a friend using Paperwork, you will 
-						get <b>$5 knocked off your subscription fee forever.</b> This promotion <b>will never expire</b>, 
-						and can be used until your Paperwork subscription is free!
-					</div>
-				</div>
-				{% endif %}
+				{% include path.html.flash %}
 				<div class="centered main atf" style="padding-bottom: 0;">
 					<section>
 						<span class="minor_title" style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;">
@@ -71,7 +61,7 @@
 									</span>
 								</feature>
 								<feature>
-									<img src="{{path.root}}/css/media/new-invoice.png" width="100%" />
+									<img src="{{environment.root}}/css/media/new-invoice.png" width="100%" />
 								</feature>
 							</div>
 						</section>
@@ -110,7 +100,7 @@
 										<video name="inventory" width="100%" loop>
 											<source src="css/media/inventory.webm" type="video/webm">
 											<source src="css/media/inventory.mp4" type="video/mp4">
-											<img src="{{path.root}}/css/media/inventory.png" />
+											<img src="{{environment.root}}/css/media/inventory.png" />
 										</video>
 									</div>
 								</feature>
@@ -136,7 +126,7 @@
 										<video name="margin" width="100%" loop>
 											<source src="css/media/margin.webm" type="video/webm">
 											<source src="css/media/margin.mp4" type="video/mp4">
-											<img src="{{path.root}}/css/media/margin.png" />
+											<img src="{{environment.root}}/css/media/margin.png" />
 										</video>
 									</div>
 								</feature>
@@ -150,7 +140,7 @@
 			<div class="width">
 				<div class="main">
 					<div class="centered">
-						{% if env.user_registration %}
+						{% if environment.user_registration %}
 						<div class="wrap" style="display: inline-block;">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
@@ -165,20 +155,13 @@
 						<div>
 							<span style="font-size: 11px;">Note: Prices exclude GST.</span>
 						</div>
-						{% if promo %}
-						<div class="central centered" style="max-width: 600px;padding: 15px 15px 0px 15px;">
-							<div class="alert alert-warning" style="margin-bottom: 0;">
-								Your <b>Facebook Promotion</b> invitation is only available for another <b><span style="white-space: nowrap;" promo-time></span></b>
-							</div>
-						</div>
-						{% endif %}
 						<div class="main">
-							<button class="facade button large central" onclick="window.location='{{path.root}}/register'">SIGN UP</button>
+							<button class="facade button large central" onclick="window.location='{{environment.root}}/register'">SIGN UP</button>
 						</div>
 						{% else %}
 						<span class="main_title">We're Not Public Yet</span>
 						<div>Pop your email in below and we'll let you know when Paperwork is available.</div>
-						<form method="post" action="{{path.root}}/post/email-register">
+						<form method="post" action="{{environment.root}}/post/email-register">
 						<div class="wrap form">
 							<input type="email" name="email" class="form_input facade large pull-left" placeholder="hello@domain.com" required>
 							<div class="form_button wrap pull-left">
@@ -194,21 +177,20 @@
 		<footer>
 			<div class="centered">
 				<a href="https://www.facebook.com/paperworkapp" target="_blank">
-					<img class="fb" title="Our Facebook Page" src="{{path.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
+					<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
 				</a>
 				<div style="padding:15px 0px;">
-					<a href="{{path.root}}/privacy-policy">Privacy Policy</a>
+					<a href="{{environment.root}}/privacy-policy">Privacy Policy</a>
 				</div>
 			</div>
 		</footer>
-		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
-			root: '{{path.root}}',
+			root: '{{environment.root}}',
 			page: '{{path.page}}',
 		};
 		</script>
-		{% include path.js %}
+		{% include path.html.js %}
 		<script>
 			$(function(){
 				
@@ -224,7 +206,7 @@
 					}, 'slow');
 				});
 				$('[guest-login]').on('click', function(){
-					$.post('{{path.root}}/post/temporary-user')
+					$.post('{{environment.root}}/post/temporary-user')
 					.done(function(data){
 						data = JSON.parse(data);
 						if(data.type == 'success'){
@@ -249,7 +231,7 @@
 						icon.removeClass('play');
 						icon.addClass('pause');
 						video.get(0).play();
-						$.post('{{path.root}}/post/play-video', {
+						$.post('{{environment.root}}/post/play-video', {
 							video: video.attr('name')
 						});
 					}else{
@@ -260,11 +242,6 @@
 						video.get(0).pause();
 					}
 				});
-				
-				{% if promo %}
-				// Timer
-				Paperwork.countdown('{{promo}}', $('[promo-time]'));
-				{% endif %}
 			});
 		</script>
 	</body>

@@ -1,0 +1,1 @@
+"use strict";Core.addModule("app",function(t){function o(){e.on("click",'[data-type="logout"]',function(){Paperwork["goto"](environment.root+"/get/logout")})}var e=t.element;return{start:o}});

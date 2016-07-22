@@ -1,0 +1,29 @@
+<box class="box-std">
+	<part class="container wrap">
+		<div class="h3">Inventory</div>
+		<div class="inventory-add wrap" data-validate="on">
+			<input type='text' name='name' placeholder='Name' required>
+			<input type="text" name='price' placeholder='$0.00'>
+			<div>
+				<button class="button">ADD</button>
+			</div>
+		</div>
+		<div class="inventory-search right">
+			<input type="text" class="filter" placeholder="Quick Search">
+		</div>
+	</part>
+	<hr>
+	<part class="container">
+		<ul class="inventory-list">
+			{% for item in modules.inventory.data.inventory %}
+			<li data-id="{{item.id}}">
+				<div class="item">
+					<input type="text" name="name" style="width: 100%;" value="{{item.name}}" placeholder="{{item.name}}">
+					<input type="text" name="price" class="firm-right" value="{{item.price}}" placeholder="{{item.price}}">
+				</div>
+				<div data-type="remove" class="invremove">x</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</part>
+</box>

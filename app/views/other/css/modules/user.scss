@@ -1,0 +1,48 @@
+[data-module="user"] {
+	td input {
+		margin:2px 0px;
+		width: 225px;
+	}
+
+	tr {
+		margin-bottom:5px;
+	}
+
+	.client-details table td:nth-child(2n+1) {
+		text-align:right;
+		font-size:9pt;
+		line-height:9pt;
+		color:#7f8c8d;
+		padding:0px 6px;
+	}
+
+	.empty {
+		color:#337ab7;
+		cursor:pointer;
+		padding-bottom:5px;
+	}
+
+	.empty:hover {
+		text-decoration:underline;
+	}
+
+	event {
+		display: block;
+		border-bottom: 1px solid #ccc;
+		padding:10px 20px;
+	}
+
+	event-title, event-text, event-date {
+		display: block;
+	}
+
+	event-title img {
+		margin-right: 10px;
+	}
+
+	event-date {
+		padding-left: 26px;
+		font-size: 11px;
+		line-height: 20px;
+	}
+}

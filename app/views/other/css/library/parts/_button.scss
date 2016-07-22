@@ -8,6 +8,7 @@
 	border-bottom: 4px solid #27ae60;
 	outline: none;
 	cursor: pointer;
+	min-width: 68px; // button-wait is 54px, + 7px padding left/right
 	@include select(none);
 }
 

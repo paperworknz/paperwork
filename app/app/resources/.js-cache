@@ -1,12 +1,39 @@
 {
-	"Tab": "Tab.js?B6ueoV",
-	"Table": "Table.js?q581Do",
-	"Typeahead": "Typeahead.js?xibwJj",
-	"Paint": "Paint.js?qn4ohi",
-	"Form": "Form.js?s2bqu9",
-	"Armadyl": "Armadyl.js?Uqi7TV",
-	"Events": "Events.js?ci601G",
-	"Tour": "Tour.js?3qheRZ",
-	"Menu": "Menu.js?2I8FhL",
-	"@Paperwork": "Paperwork.js?Zii66k"
+	"core": {
+		"Core": "Core.js?60jPdf"
+	},
+	"library": {
+		"Paperwork": "Paperwork.js?6aHN25"
+	},
+	"modules": {
+		"inventory": "inventory.js?z6kg9B",
+		"notification": "notification.js?lSeO1F",
+		"template": "template.js?d7Av7H",
+		"tab": "tab.js?LVBgld",
+		"client": "client.js?7A2d5u",
+		"settings": "settings.js?OtApzo",
+		"admin": "admin.js?pAaB5w",
+		"job": "job.js?9WQFzs",
+		"user": "user.js?Xsu4GW",
+		"app": "app.js?RhRQjZ",
+		"clients": "clients.js?EoBrim",
+		"jobs": "jobs.js?9ujEnX",
+		"flash": "flash.js?2PcK1G"
+	},
+	"behaviors": {
+		"tab": "tab.js?e796sY",
+		"table": "table.js?D9Co6H"
+	},
+	"services": {
+		"annyang": "annyang.js?9gXQr2",
+		"dark": "dark.js?XjxTsc"
+	},
+	"classes": {
+		"Table": "Table.js?UZFXZJ",
+		"Typeahead": "Typeahead.js?xibwJj",
+		"Form": "Form.js?VRX43m",
+		"Armadyl": "Armadyl.js?Uqi7TV",
+		"Tour": "Tour.js?4D3UHM",
+		"Menu": "Menu.js?FNsPwR"
+	}
 }

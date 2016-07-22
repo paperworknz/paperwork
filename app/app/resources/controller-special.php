@@ -8,3 +8,4 @@ include '../app/routes/routes/job/$job.php';
 include '../app/routes/other/get/pdf.php';
 include '../app/routes/other/get/pdf-json.php';
 include '../app/routes/other/get/form.php';
+include '../app/routes/other/get/module.php';

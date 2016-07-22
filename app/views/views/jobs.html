@@ -1,158 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-    	{% include path.head %}
+   		{% include head %}
 	</head>
     <body>
-        {% include path.scaffolding %}
+        {% include menu %}
         <div id="content">
-			<module>
-				<flash class="box-std">
-					{% include path.flash %}
-				</flash>
+			<flash data-module="flash" class="box-std">{% include path.html.flash %}</flash>
+			<module data-module="jobs">
+				{% include 'other/modules/jobs.html' %}
 			</module>
-			<module>
-				<box class="box-std">
-					<part data-module="new-job" class="container top">
-						<div class="h4 title centered create-new noselect">
-							New Job
-						</div>
-						<div id="new-content" class="container-bottom" style="display: none;padding: 0 0 15px;">
-							<form method="post" action="{{path.root}}/post/job">
-								<table class="central">
-									<tbody>
-										<tr>
-											<td class="ar">
-												Client
-											</td>
-											<td>
-												<div id="the-basics">
-													<input type="text" class="typeahead" name="client_name" placeholder="Quick Search" required />
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="ar">
-												Job name
-											</td>
-											<td>
-												<input type="text" name="name" required />
-											</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td>
-												<button data-type="submit-btn" type="submit" class="button">Create</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</form>
-						</div>
-					</part>
-					<hr>
-					<part class="container">
-						{% if jobs %}
-							{% include path.table with {
-								'data': jobs,
-								'head': {
-									'id': '_id',
-									'job_number': 'ID',
-									'name': 'Name',
-									'client.name': 'Client',
-									'job_status.name': 'Status',
-								}
-							}%}
-						{% else %}
-						<div class="centered">Start your first job by hitting New Job!</div>
-						{% endif %}
-					</part>
-				</box>
-			</module>
-		</div>
-		<div class="pw-notification" data-module="notification"></div>
-		<script>
-		var environment = {
-			root: '{{path.root}}',
-			page: '{{path.page}}',
-		};
-		</script>
-		{% include path.js with {
-			include: ['typeahead', 'Table', 'contextmenu']
-		}%}
+        </div>
+		{% include js %}
 		<script>
 			$(function(){
-				
-				{% if jobs %}
-				Table.run();
-				{% endif %}
-				
-				var src = [{% for client in clients %} "{{client.name | raw}}", {% endfor %}];
-				
-				var ta = new Typeahead(src, {
-					hint: true,
-					highlight: true,
-					minLength: 1
-				}, {
-					name: 'Clients',
-					source: substringMatcher(src)
-				});
-				
-				// v.input($('#new-content'), $('#new-content button'), 'jobs', {
-				// 	allowDuplicates: true,
-				// });
-				
-				// New object
-				$('.create-new').on('click', function(){$("#new-content").slideToggle(100);});
-				
-				ta.run($('#content'));
-				
 				// Open new-content if a client name is provided w GET
 				{% if cname|length > 1 %}
-					$('#new-content').slideToggle(100);
-					$('.tt-input').val('{{cname | raw}}');
-					$("input[name='name']").focus();
+				$('#new-content').slideToggle(100);
+				$('.typeahead').val('{{cname | raw}}');
+				$("input[name='name']").focus();
 				{% endif %}
-				
-				{% if jobs %}
-				// Right click context menu
-				$('.wt-wrap').contextMenu({
-					selector: '.wt-row',
-					callback: function(key){
-						if(key != 'cancel'){
-							var item = $(this).attr('data-row'),
-								id = $('[data-id="_id"]').find('[data-row="'+item+'"]').html();
-							if(id != undefined && key != undefined){
-								$.post('{{path.root}}/put/job-details', {
-									id: id,
-									status: key
-								}).done(function(data){
-									if(data != '0'){
-										$('[data-id="Status"]').find('[data-row="'+item+'"]').html(data);
-										Box.Application.broadcast('notification', 'Status Updated');
-									}
-								});
-							}
-						}
-					},
-					items: {
-						status: {
-							name: 'Update Status',
-							items: {
-				{% for item in status %}
-				'{{item.name}}': {'name':'{{item.name}}'},
-				{% endfor %}
-							}
-						},
-						sep: '-',
-						cancel: {
-							name: 'Cancel'
-						}
-					}
-				});
-				{% endif %}
-				
-				{% include path.load %}
 			});
 		</script>
     </body>

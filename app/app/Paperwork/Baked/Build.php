@@ -8,75 +8,68 @@ class Build {
 		$app	= \Slim\Slim::getInstance();
 		$view	= $app->view();
 		
-		// CSS Cache
-		$css = str_replace(['views/', '$', '.html'], '', $html);
+		// Cache
 		$css_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.css-cache'));
-		$css = isset($css_cache[$css]) ? $css_cache[$css] : $css = $css.'.css';
-		
-		// JS Cache
 		$js_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.js-cache'));
+		$css = str_replace(['views/', '$', '.html'], '', $html);
+		$css = isset($css_cache['views'][$css]) ? $css_cache['views'][$css] : false;
 		
 		// Cookies
-		if(isset($_COOKIE['sidebar'])){
-			if($_COOKIE['sidebar'] === 'big'){
-				$sidebar = 'big';
-			}elseif($_COOKIE['sidebar'] === 'small'){
-				$sidebar = 'small';
+		$menu_state = 'big';
+		if(isset($_COOKIE['menu'])){
+			if($_COOKIE['menu'] === 'small'){
+				$menu_state = 'small';
 			}
-		}else{
-			$sidebar = 'big';
 		}
 		
-		// Update promo cookie value
-		if(isset($_COOKIE['promo'])) $_COOKIE['promo'] = $_COOKIE['promo'] - time();
-		
-		// Get promo cookie value
-		if(isset($_COOKIE['promo'])){
-			$promo = $_COOKIE['promo'];
-		}elseif(isset($_GET['src'])){
-			// First time viewing, cookie not available in PHP
-			$promo = 3600;
-		}else{
-			$promo = false;
-		}
-		
-		// Template array, all datasets contain these following values
-		$result = [
-			'path' => [
-				'root' => $app->root,
-				'paperwork_css' => $css_cache['@Paperwork'],
-				'public_css' => $css_cache['@Public'],
-				'page_css' => $css,
-				'paperwork_js' => $js_cache['@Paperwork'],
-				'js_cache' => $js_cache,
-				'page' => ltrim($app->request->getResourceUri(), '/'),
-			],
-			'env'	=> $app->env,
-			'user'	=> $app->user,
-			'date'	=> date('d/m/Y'),
-			'state'	=> $_ENV['MODE'],
-			'sidebar' => $sidebar,
-			'promo' => $promo,
+		// Environment
+		$environment = [
+			'mode' => $_ENV['MODE'],
+			'root' => $_ENV['ROOT'],
+			'page' => ltrim($app->request->getResourceUri(), '/'),
+			'menu' => $menu_state,
+			'date' => date('d/m/Y'),
 		];
 		
-		$result['path'] = array_merge($result['path'], $app->schema['patharray']);	// Merge this path with $app's path
-		$result = array_merge($result, $data); // Merge $result with data, creating the resulting data
+		// Merge with SQL config flags
+		$environment = array_merge($app->env, $environment);
 		
-		// Check if the model has ommitted the render parameter
-		if($render === true){ // The default mode: Rendering is delegated to this function
-			$app->render($html, $result);
-		}else if($render === false){ // If render is false this function returns the dataset and the Model will have to render the view
-			return $view->render($html, $result);
+		// All templates contain the following values
+		$result = [
+			'environment' => $environment,
+			'user' => $app->user,
+			'head' => $app->schema['patharray']['head'],
+			'head_public' => $app->schema['patharray']['head_public'],
+			'menu' => $app->schema['patharray']['menu'],
+			'js' => $app->schema['patharray']['js'],
+			'path' => [
+				'html' => $app->schema['patharray'],
+				'page_css' => $css,
+				'css' => $css_cache,
+				'js' => $js_cache,
+			],
+		];
+		
+		function deep_merge(array & $array1, array & $array2){
+			$merged = $array1;
+
+			foreach($array2 as $key => & $value){
+				if(is_array($value) && isset($merged[$key]) && is_array($merged[$key])){
+					$merged[$key] = deep_merge($merged[$key], $value);
+				}elseif(is_numeric($key)){
+					if(!in_array($value, $merged)) $merged[] = $value;
+				}else{
+					$merged[$key] = $value;
+				}
+
+				return $merged;
+			}
 		}
+		
+		$result = array_merge($result, $data);
+		return $render ? $app->render($html, $result) : $view->render($html, $result);
 	}
 	
-	// $app->build->error('Everything broke!'); ==> 'message' => 'Everything broke!'
-	// or
-	/* $app->build->error([
-		'message' => 'Everything broke!',
-		'log' => $errorlog,
-		'helpfuldata' => $helpfuldata
-	]); */
 	public function error($input){
 		$app	= \Slim\Slim::getInstance();
 		$return	= [
@@ -92,10 +85,6 @@ class Build {
 		return $app->parse->arrayToJson($return);
 	}
 	
-	/* $app->build->success([
-		'client' => $client,
-		'job' => $job,
-	]); */
 	public function success($array){
 		$app	= \Slim\Slim::getInstance();
 		$return	= [

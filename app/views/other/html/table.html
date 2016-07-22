@@ -173,7 +173,7 @@
 					<li class="wt-head noselect" data-state="def">
 						<div wt-head>
 							<span>{{b}}</span>
-							<img src="{{path.root}}/css/media/up.png" style="display:none;float:right;padding:5px 0px" height="20" alt="Ascending">
+							<img src="{{environment.root}}/css/media/up.png" style="display:none;float:right;padding:5px 0px" height="20" alt="Ascending">
 						</div>
 						<div class="wt-head-handle">
 						</div>
@@ -181,10 +181,10 @@
 					{% for e in data %}
 						{% if e[a] %}
 							{% set i = i + 1 %}
-							<li class="wt-row" href="{{path.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[a]}}</li>
+							<li class="wt-row" href="{{environment.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[a]}}</li>
 						{% elseif z %}
 							{% set i = i + 1 %}
-							<li class="wt-row" href="{{path.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[z[0]][z[1]]}}</li>
+							<li class="wt-row" href="{{environment.root}}/job/{{e.job_number}}" data-row="{{i}}">{{e[z[0]][z[1]]}}</li>
 						{% endif %}
 					{% endfor %}
 					{% set i = 0 %}

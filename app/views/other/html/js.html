@@ -1,34 +1,75 @@
-<script src="{{path.root}}/js/3rd/jquery.2.1.4.js"></script>
-<script src="{{path.root}}/js/3rd/t3.min.js"></script>
-<script src="{{path.root}}/js/modules/Notification.js"></script>
-<script src="{{path.root}}/js/library/{{path.paperwork_js}}"></script>
-<script src="{{path.root}}/js/services/{{path.js_cache.Events}}"></script>
-<script src="{{path.root}}/js/services/{{path.js_cache.Tour}}"></script>
-<script src="{{path.root}}/js/services/{{path.js_cache.Menu}}"></script>
+<script>
+window.onerror = function(message, url, line, column, error){
+	$.post('{{environment.root}}/post/error', {
+		message: message,
+		url: url,
+		line: line,
+		column: column,
+		error: error,
+	});
+};
+var environment = {
+	root: '{{environment.root}}',
+	page: '{{environment.page}}',
+};
+</script>
 
-{% for link in include %}
-{% if link == 'typeahead' %}
-<script src="{{path.root}}/js/3rd/typeahead.js"></script>
-<script src="{{path.root}}/js/3rd/thebasics.js"></script>
-<script src="{{path.root}}/js/services/{{path.js_cache.Typeahead}}"></script>
-{% elseif link == 'areyousure' %}
-<script src="{{path.root}}/js/3rd/jquery.are-you-sure.js"></script>
-{% elseif link == 'sweetalert' %}
-<script src="{{path.root}}/js/3rd/sweetalert.min.js"></script>
-{% elseif link == 'Tab' %}
-<script src="{{path.root}}/js/services/{{path.js_cache.Tab}}"></script>
-{% elseif link == 'Table' %}
-<script src="{{path.root}}/js/3rd/tinysort.js"></script>
-<script src="{{path.root}}/js/3rd/sortable.js"></script>
-<script src="{{path.root}}/js/3rd/interact.js"></script>
-<script src="{{path.root}}/js/services/{{path.js_cache.Table}}"></script>
-{% elseif link == 'interact' %}
-<script src="{{path.root}}/js/3rd/interact.js"></script>
-{% elseif link == 'contextmenu' %}
-<script src="{{path.root}}/js/3rd/jquery.contextMenu.js"></script>
-{% elseif link == 'selection' %}
-<script src="{{path.root}}/js/3rd/jquery.selection.js"></script>
-{% elseif link == 'sortable' %}
-<script src="{{path.root}}/js/3rd/sortable.js"></script>
-{% endif %}
+<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
+<script src="{{environment.root}}/js/3rd/sweetalert.js"></script>
+<script src="{{environment.root}}/js/3rd/annyang.js"></script>
+
+<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
+<script src="{{environment.root}}/js/core/{{path.js.core.Core}}"></script>
+<script src="{{environment.root}}/js/modules/{{path.js.modules.notification}}"></script>
+<script src="{{environment.root}}/js/modules/{{path.js.modules.flash}}"></script>
+<script src="{{environment.root}}/js/classes/{{path.js.classes.Menu}}"></script>
+{% for name, value in path.js.services %}
+<script src="{{environment.root}}/js/services/{{value}}"></script>
 {% endfor %}
+
+{% set third = [] %}
+{% set classes = [] %}
+{% set services = [] %}
+{% set behaviors = [] %}
+{% for name, data in modules if name != '_global' %}
+	
+	{% for item in data.third %}
+		{% if not third[item] %}
+			<script src="{{environment.root}}/js/3rd/{{item}}.js"></script>
+			{% set third = third|merge([item]) %}
+		{% endif %}
+	{% endfor %}
+	
+	{% for class in data.classes %}
+		{% if not classes[class] %}
+			<script src="{{environment.root}}/js/classes/{{path.js.classes[class]}}"></script>
+			{% set classes = classes|merge([class]) %}
+		{% endif %}
+	{% endfor %}
+	
+	{% for behavior in data.behaviors %}
+		{% if not behaviors[behavior] %}
+			<script src="{{environment.root}}/js/behaviors/{{path.js.behaviors[behavior]}}"></script>
+			{% set behaviors = behaviors|merge([behavior]) %}
+		{% endif %}
+	{% endfor %}
+	
+	{% for service in data.services %}
+		{% if not services[service] %}
+			<script src="{{environment.root}}/js/services/{{path.js.services[service]}}"></script>
+			{% set services = services|merge([service]) %}
+		{% endif %}
+	{% endfor %}
+	
+	<script src="{{environment.root}}/js/modules/{{path.js.modules[name]}}"></script>
+	
+{% endfor %}
+
+<script>
+$(function(){
+	Core.require('annyang');
+	Core.startAll();
+	$('#content').css('display', 'block');
+	$('#content').animate({ opacity: 1 }, 'fast');
+});
+</script>

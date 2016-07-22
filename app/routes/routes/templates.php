@@ -4,8 +4,11 @@ $app->get('/templates', 'uac', function() use ($app){
 	/* Methods */
 
 	/* Construction */
-	$templates = $app->sql->get('job_form_template')->all()->run();
+	$template = $app->module->require('template');
+	
 	$app->build->page('views/templates.html', [
-		'templates' => $templates
+		'modules' => [
+			'template' => $template,
+		],
 	]);
 });

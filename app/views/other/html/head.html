@@ -2,27 +2,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="date" content="{{date}}">
 <title>Paperwork</title>
-<link rel="icon" type="image/x-icon" href="{{path.root}}/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="{{environment.root}}/favicon.ico">
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/library/{{path.css.library.Paperwork}}">
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/3rd/sweetalert.css">
 
-<!-- Page stylesheets -->
-<link rel="stylesheet" type="text/css" href="{{path.root}}/css/library/{{path.paperwork_css}}" />
-<link rel="stylesheet" type="text/css" href="{{path.root}}/css/views/{{path.page_css}}" />
-<link rel="stylesheet" type="text/css" href="{{path.root}}/css/3rd/sweetalert.css" />
-{% if state == 'dev' %}
-<style>
-	#sidebar {color:pink}
-</style>
+{% if path.css.views[environment.page] %}
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/views/{{path.css.views[environment.page]}}">
 {% endif %}
 
-<!-- JS error -->
-<script>
-	window.onerror = function(message, url, line, column, error){
-		$.post('{{path.root}}/post/error', {
-			message: message,
-			url: url,
-			line: line,
-			column: column,
-			error: error,
-		});
-	};
-</script>
+{% for name, value in modules %}
+{% if path.css.modules[name] %}
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/modules/{{path.css.modules[name]}}">
+{% endif %}
+{% endfor %}
+{% if environment.mode == 'dev' %}
+<style>#sidebar {color:pink}</style>
+{% endif %}

@@ -1,10 +1,14 @@
 <?php
 
-// ADMIN ONLY //
-
 $app->get('/admin', 'uac', 'admin', function() use ($app){
 	/* Methods */
 
 	/* Construction */
-	$app->build->page('views/admin.html');
+	$admin = $app->module->require('admin');
+	
+	$app->build->page('views/admin.html', [
+		'modules' => [
+			'admin' => $admin,
+		],
+	]);
 });

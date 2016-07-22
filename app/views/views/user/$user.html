@@ -1,88 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include path.head %}
+		{% include head %}
 	</head>
     <body>
-        {% include path.scaffolding %}
+        {% include menu %}
         <div id="content">
-			<module>
-				<part class="tabs">
-					<ul class="wrap box-std">
-						<li data-tab="0" class="tab">Activity Log</li>
-						{% if host.first %}
-						<li data-tab="1" class="tab">{{host.first}}</li>
-						{% endif %}
-					</ul>
-				</part>
-				<part class="obj">
-					<box data-obj="0" class="tabobj box-std">
-						<part class="container" style="padding:15px 20px; font-weight: 600; border-bottom: 1px solid #ccc">
-							RECENT
-							<span class="right update" style="font-weight:300;cursor:pointer;color:#337ab7">Update</span>
-							<span class="right" style="margin-right:15px;"><span style="padding: 0px 15px;cursor:pointer" prev> < </span> <span style="cursor:pointer" next> > </span></span>
-						</part>
-						<part events>
-						</part>
-					</box>
-					{% if host.first %}
-					<box data-obj="1" id="jobs" class="tabobj box-std">
-						<part class="client-details container">
-							<form method="post" action="{{path.root}}/admin/put/settings">
-								<table>
-									<tbody>
-										{% for a,b in host %}
-										<tr>
-											<td>{{a}}</td>
-											<td><input type="text" name="{{a}}" value="{{b}}"></td>
-										</tr>
-										{% endfor %}
-										<tr>
-											<td></td>
-											<td style="height:40px">
-												<button class="button" style="margin-top:3px">UPDATE</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</form>
-						</part>
-					</box>
-					{% endif %}
-				</part>
+			<module data-module="user">
+				{% include 'other/modules/user.html' %}
 			</module>
 		</div>
-		<div class="pw-notification" data-module="notification"></div>
-		<script>
-		var environment = {
-			root: '{{path.root}}',
-			page: '{{path.page}}',
-		};
-		</script>
-		{% include path.js with {
-			include: ['Tab']
-		}%}
+		{% include js %}
 		<script>
 			$(function(){
-				new Tab({
-					cookie: {
-						name: 'tab',
-						value: "{{host.id}}"
-					}
-				});
+				
 				var events = $('[events]'),
 					img;
 				var draw = function(data){
 					if(data.icon){
-						img = `<img class="event-icon" src="{{path.root}}/css/media/icon/activity/${data.icon}" />`;
+						img = `<img class="event-icon" src="{{environment.root}}/css/media/icon/activity/${data.icon}" />`;
 					}else{
-						img = `<img class="event-icon" src="{{path.root}}/css/media/icon/activity/default.png" />`;
+						img = `<img class="event-icon" src="{{environment.root}}/css/media/icon/activity/default.png" />`;
 					}
 					events.append(`
 						<event>
 							<event-title>
 								${img}
-								<span style="color:#27ae60">{{host.first}} {{host.last}}</span> ${data.text}
+								<span style="color:#27ae60">{{modules.user.data.host.first}} {{modules.user.data.host.last}}</span> ${data.text}
 							</event-title>
 							<event-date>${Paperwork.since(data.date_created)}</event-date>
 						</event>
@@ -90,8 +34,8 @@
 				};
 				
 				var update = function(){
-					$.post('{{path.root}}/admin/get/activity', {
-						user_id: '{{host.id}}'
+					$.post('{{environment.root}}/admin/get/activity', {
+						user_id: '{{modules.user.data.host.id}}'
 					}).done(function(data){
 						
 						events.css('opacity', '1');
@@ -103,7 +47,7 @@
 						}else{
 							events.html(`
 								<div class="container centered" style="font-weight: 600;">
-									No Activity For {{host.first}}
+									No Activity For {{modules.user.data.host.first}}
 								</div>
 							`);
 						}
@@ -115,7 +59,7 @@
 						
 						events.html(`
 							<div style="text-align:center;padding-top:40px;font-weight:600">
-								There was a problem getting {{host.first}}\'s events
+								There was a problem getting {{modules.user.data.host.first}}\'s events
 							</div>
 						`);
 					});
@@ -129,16 +73,16 @@
 				$('[prev]').on('click', function(){
 					var id = location.href.split('/'),
 						next = Number(id.pop()) - 1;
-					location = '{{path.root}}/user/' + next;
+					location = '{{environment.root}}/user/' + next;
 				});
 				
 				$('[next]').on('click', function(){
 					var id = location.href.split('/'),
 						next = Number(id.pop()) + 1;
-					location = '{{path.root}}/user/' + next;
+					location = '{{environment.root}}/user/' + next;
 				});
 				
-				{% include path.load %}
+				
 				update();
 			});
 		</script>

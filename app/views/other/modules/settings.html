@@ -1,0 +1,339 @@
+<part data-type="tab-container" class="tabs">
+	<ul class="wrap box-std">
+		<li data-type="tab" data-id="0" class="tab">My Account</li>
+		<li data-type="tab" data-id="1" class="tab">Jobs</li>
+		<li data-type="tab" data-id="2" class="tab">Email</li>
+		<li data-type="tab" data-id="3" class="tab">Voice Control</li>
+		<li data-type="tab" data-id="4" class="tab">Trash</li>
+	</ul>
+</part>
+<part data-type="obj-container" class="obj">
+	<box data-type="obj" data-id="0" class="tabobj box-std">
+		<part data-type="account-container">
+			<part class="container-top">
+				<div class="h4 title">
+					My Details
+				</div>
+			</part>
+			<part class="uac container-bottom">
+				<form method="post" action="{{environment.root}}/put/settings">
+					<table class="user-details">
+						<tbody>
+							<tr>
+								<td>First name</td>
+								<td><input type="text" name="first" value="{{user.first}}" required></td>
+							</tr>
+							<tr>
+								<td>Last name</td>
+								<td><input type="text" name="last" value="{{user.last}}"></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><input type="text" name="email" type="email" value="{{user.email}}" required></td>
+							</tr>
+							<tr>
+								<td>Company</td>
+								<td><input type="text" name="company" value="{{user.company}}" required></td>
+							</tr>
+							<tr>
+								<td>Phone</td>
+								<td><input type="text" name="phone" value="{{user.phone}}"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="height:40px">
+									<button class="button">UPDATE</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</part>
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
+					Change Your Password
+				</div>
+			</part>
+			<part class="uac container-bottom">
+				<form method="post" action="{{environment.root}}/put/password">
+					<table class="password-settings">
+						<tbody>
+							<tr>
+								<td>Password</td>
+								<td><input name="oldpw" type="password" placeholder="Old Password" required></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input name="newpw" type="password" placeholder="New Password" required></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input name="confirmpw" type="password" placeholder="Confirm New Password" required></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="height:40px">
+									<input type="hidden" name="my">
+									<button class="button">UPDATE</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</part>
+			{% if user.privilege != 'guest' %}
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
+					Payment Options
+				</div>
+			</part>
+			<part class="uac container-bottom">
+				Please send an email to hello@paperwork.nz for enquiries regarding your subscription.
+			</part>
+			{% endif %}
+		</part>
+	</box>
+	<box data-type="obj" data-id="1" class="tabobj box-std">
+		<part data-type="job-container">
+			<part class="jobstatus">
+				<part class="container-top">
+					<div class="h4 title">
+						Job Statuses
+					</div>
+				</part>
+				<part class="container-bottom">
+					<ul id="job-status">
+						{% for item in modules.settings.data.status %}
+						<li>
+							<input type="text" data-id="{{item.id}}" value="{{item.name}}" 
+							{% if item.name == 'Completed' %}
+							disabled title="This is a built-in status" 
+							{% endif %}
+							/>
+							<div class="status-handle">
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+					<a style="cursor: pointer;padding: 5px 0px;display: block;width: 180px;" data-type="new-status">
+						{% if status is empty %}
+						New Status
+						{% else %}
+						Another One
+						{% endif %}
+					</a>
+				</part>
+			</part>
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
+					Change the next Job number
+				</div>
+			</part>
+			<part class="container-bottom">
+				<div class="job_number">
+					<form method="post" action="{{environment.root}}/post/job-number">
+						<part style="padding: 5px 0px;">
+							Next Job Number <input type="text" name="job_number" value="{{modules.settings.data.job_number}}" required>
+						</part>
+						<button class="button">UPDATE</button>
+					</form>
+				</div>
+			</part>
+		</part>
+	</box>
+	<box data-type="obj" data-id="2" class="tabobj box-std">
+		<part data-type="email-container">
+			<part class="container-top">
+				<div class="h4 title">
+					Email Integration
+				</div>
+				{% if modules.settings.data.email != true %}
+				<div class="alert alert-success">
+					For Paperwork to send emails on your behalf, you may need to change some email settings with your email provider.<br><br>
+					For Gmail, please follow <a href="https://www.google.com/settings/security/lesssecureapps" target="_blank"><b>this link</b></a>. Otherwise, you will need to ask your email provider how to allow "less secure apps" 
+					to use their SMTP server.<br><br>You can always try enter your email and password below, then try to send an email from a <a href="{{environment.root}}/jobs"><b>job</b></a> to see if it works.
+				</div>
+				{% endif %}
+			</part>
+			{% if email != true %}
+			<hr>
+			{% endif %}
+			<part class="container email-settings">
+				<form method="post" action="{{environment.root}}/put/email-settings">
+					<table>
+						<tbody>
+							<tr>
+								<td>Email</td>
+								<td><input class="email-address" type="email" name="address" value="{{modules.settings.data.email.address}}" placeholder="hello@domain.com" required></td>
+							</tr>
+							<tr>
+								<td>Password</td>
+								<td><input type="password" name="password" placeholder="Email Password" value="" required></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><hr style="margin: 15px 0px; max-width: 225px;"></td>
+							</tr>
+							<tr>
+								<td>SMTP</td>
+								<td><input type="text" name="smtp" value="{{modules.settings.data.email.smtp}}" placeholder="smtp.domain.com" required></td>
+							</tr>
+							<tr>
+								<td>Protocol</td>
+								<td><input type="text" name="protocol" value="{{modules.settings.data.email.protocol}}" placeholder="Protocol"></td>
+							</tr>
+							<tr>
+								<td>Port</td>
+								<td><input type="text" name="port" value="{{modules.settings.data.email.port}}" placeholder="000" required></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="height:40px">
+									<button class="button">UPDATE</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</part>
+			<hr>
+			<part class="container">
+				<table class="email-signature">
+					<tbody>
+						<tr>
+							<td style="vertical-align:top;padding-top:6px;">Signature</td>
+							<td>
+								<div class="signature" contenteditable>{{modules.settings.data.email.signature|raw}}</div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td style="height:40px">
+								<button class="button">UPDATE</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</part>
+		</part>
+	</box>
+	<box data-type="obj" data-id="3" class="tabobj box-std">
+		<part data-type="annyang">
+		</part>
+	</box>
+	<box data-type="obj" data-id="4" class="tabobj box-std">
+		<part data-type="trash-container">
+			{% if (modules.settings.data.jobs is not empty) or 
+				(modules.settings.data.forms is not empty) or 
+				(modules.settings.data.clients is not empty) or 
+				(modules.settings.data.inventory is not empty) or 
+				(modules.settings.data.templates is not empty) 
+			%}
+			<part class="container-top">
+				<div class="h4 title">
+					Jobs
+				</div>
+			</part>
+			<part class="container-bottom">
+			{% for job in modules.settings.data.jobs %}
+				<part>
+					Job {{job.job_number}} - {{job.name}} - 
+					<span style="color:#999">
+						{{job.client.name}}
+					</span>
+					&nbsp&nbsp
+					<a data-type="trash" data-item="job" data-id="{{job.id}}">
+						Undo
+					</a>
+				</part>
+			{% endfor %}
+			</part>
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
+					Quotes and Invoices
+				</div>
+			</part>
+			<part class="container-bottom">
+			{% for form in modules.settings.data.forms %}
+				<part>
+					Job {{form.job.job_number}} - {{form.name}}
+					<span style="color:#999">
+						{{form.client.name}}
+					</span>
+					&nbsp&nbsp
+					<a data-type="trash" data-item="form" data-id="{{form.id}}">
+						Undo
+					</a>
+				</part>
+			{% endfor %}
+			</part>
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
+					Clients
+				</div>
+			</part>
+			<part class="container-bottom">
+			{% for client in modules.settings.data.clients %}
+				<part>
+					{{client.client_number}} - {{client.name}}
+					&nbsp&nbsp
+					<a data-type="trash" data-item="client" data-id="{{client.id}}">
+						Undo
+					</a>
+				</part>
+			{% endfor %}
+			</part>
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
+					Inventory
+				</div>
+			</part>
+			<part class="container-bottom">
+			{% for item in modules.settings.data.inventory %}
+				<part>
+					{{item.name}} - {{item.price}}
+					&nbsp&nbsp
+					<a data-type="trash" data-item="inventory" data-id="{{item.id}}">
+						Undo
+					</a>
+				</part>
+			{% endfor %}
+			</part>
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
+					Templates
+				</div>
+			</part>
+			<part class="container-bottom">
+			{% for template in modules.settings.data.templates %}
+				<part>
+					{{template.name}}
+					&nbsp&nbsp
+					<a data-type="trash" data-item="template" data-id="{{template.id}}">
+						Undo
+					</a>
+				</part>
+			{% endfor %}
+			</part>
+			<hr>
+			<part data-type="empty-trash" class="centered empty container-top">
+				Empty Trash
+			</part>
+			<part class="centered container">
+				<i>Items older than 30 days will be cleaned automatically</i>
+			</part>
+			{% else %}
+			<div class="centered h3 title" style="padding: 50px 0px;">
+				Trash is empty
+			</div>
+			{% endif %}
+		</part>
+	</box>
+</part>

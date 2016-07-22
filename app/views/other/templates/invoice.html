@@ -1,0 +1,90 @@
+<link rel="stylesheet" type="text/css" href="//localhost/paperwork/public/css/library/Paperwork.css">
+<paperwork-form>
+	<header style="width:100%;display: table;">
+		<div style="float:left" form-logo><img src="logo.png" alt=""></div>
+		<div style="float:right">
+			<div class="h2" style="padding-left:10px" contenteditable form-type>INVOICE</div>
+		</div>
+	</header>
+	<header style="width:100%;display: table;">
+		<div style="float:left">
+			<div style="font-weight:600;min-width:160px" contenteditable>
+				Logan Rear<br>
+				027 5077 187<br>
+				40 Seddon Street<br>
+				Waikanae<br>
+				logan.rear@hotmail.co.nz
+			</div>
+		</div>
+		<div style="float:right">
+			<section>
+				<ul style="float:left;text-align:right;padding:0;margin:0">
+					<li style="padding:2px 10px" contenteditable>Date</li>
+					<li style="padding:2px 10px" contenteditable>Reference#</li>
+					<li style="padding:2px 10px" contenteditable>GST#</li>
+				</ul>
+				<ul style="float:left;text-align:right;padding:0;margin:0">
+					<li style="border:1px solid black;padding:2px 10px;text-align:center;min-width:86px;" contenteditable form-date></li>
+					<li style="border:1px solid black;border-top:none;padding:2px 10px;text-align:center;min-width:86px;" contenteditable form-jobID></li>
+					<li style="border:1px solid black;border-top:none;padding:2px 10px;text-align:center;min-width:86px;" contenteditable>73-232-678</li>
+				</ul>
+			</section>
+		</div>
+	</header>
+	<section style="width:50%;padding-top:15px">
+		<header style="width:100%">
+			<span style="text-align:center;width:100%;display:block;background-color:#39B0EB;font-weight:600;border:1px solid black" contenteditable>CUSTOMER</span>
+		</header>
+		<section style="width:100%;border:1px solid black;border-top:none;text-align:center;padding:2px;display:block" contenteditable form-clientblob>
+			<br><br>
+		</section>
+	</section>
+	<section style="width:100%;padding-top:15px">
+		<header style="width:100%">
+			<span style="text-align:center;width:100%;display:block;background-color:#39B0EB;font-weight:600;border:1px solid black" contenteditable>JOB DESCRIPTION</span>
+		</header>
+		<section style="width:100%;border:1px solid black;border-top:none;text-align:left;padding:5px;display:block" contenteditable form-jobd>
+			<br>
+		</section>
+	</section>
+	<section style="width:100%;padding-top:15px">
+		<div style="border: 1px solid black;font-size:11px;font-weight:600">
+			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">TOTAL</div>
+			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">UNIT PRICE</div>
+			<div style="text-align:center;float:right;background-color:#39B0EB;min-width:71px;border-left:1px solid black;height:20px;line-height:20px">QTY UNIT</div>
+			<div style="text-align:center;background-color:#39B0EB;width:auto;overflow:hidden;height:20px;line-height:20px">CONTRACTORS & MATERIALS</div>
+		</div>
+		<div style="position:relative;margin-top:-1px" form-inventory></div>
+		<div form-content></div>
+	</section>
+	<footer style="width:100%;padding-top:15px;display: table;">
+		<div style="float:left;width:410px;font-size:11px">
+			<header style="width:100%">
+				<span style="font-weight:600;font-style:italic;display:block;padding-bottom:5px" contenteditable>
+					Details for Direct Crediting:<br>
+					Bank Account Name: Logan Rear<br>
+					Bank Account Number: 01 0731 0239787 00<br>
+					Reference: LR<span form-jobID></span>
+				</span>
+				<span style="text-align:center;width:100%;display:block;background-color:#39B0EB;border:1px solid black" contenteditable>TERMS & CONDITIONS</span>
+			</header>
+			<section style="width:100%;border:1px solid black;border-top:none;text-align:left;padding:2px;display:block" contenteditable>
+				<div form-terms><br></div>
+			</section>
+		</div>
+		<div style="float:right;margin:10px 0px 0px 10px">
+			<section>
+				<ul style="float:left;text-align:right;padding:0;margin:0">
+					<li style="padding:2px 10px" contenteditable>Sub Total</li>
+					<li style="padding:2px 10px" contenteditable>GST</li>
+					<li style="padding:2px 10px;font-weight:600;background-color:#39B0EB;border:1px solid black" contenteditable>TOTAL TO PAY</li>
+				</ul>
+				<ul style="float:left;text-align:right;padding:0;margin:0">
+					<li style="padding:2px 4px;text-align:right;height:22px;min-width:100px" form-subtotal></li>
+					<li style="padding:2px 4px;text-align:right;height:22px" form-tax></li>
+					<li style="border:1px solid black;border-left:none;padding:2px 4px;text-align:right;height:24px;font-weight:600" form-total></li>
+				</ul>
+			</section>
+		</div>
+	</footer>
+</paperwork-form>
