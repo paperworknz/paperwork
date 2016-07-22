@@ -20,10 +20,7 @@ var Core = (function($, undefined){
 	}
 	
 	function addBehavior(name, fn){
-		if(behaviors[name]){
-			console.warn(`Behavior name '${name}' already assigned`);
-			return false;
-		}
+		if(behaviors[name]) return true;
 		
 		return behaviors[name] = fn;
 	}
@@ -133,10 +130,7 @@ var Core = (function($, undefined){
 	}
 	
 	function loadBehavior(name, callback){
-		if(behaviors[name]){
-			console.log('cached tab');
-			return callback ? callback() : true;
-		}
+		if(behaviors[name]) return callback ? callback() : true;
 		
 		$.getScript(`${environment.root}/js/behaviors/${name}.js`)
 		.done(callback);
