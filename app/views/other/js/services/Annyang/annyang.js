@@ -1,12 +1,13 @@
 Core.addService('annyang', function(){
 	
+	var commands;
 	construct();
 	
 	function construct(){
 		if(!localStorage.annyang) return localStorage.annyang = 'false';
 		if(localStorage.annyang == 'false') return;
 		
-		var commands = {
+		commands = {
 			'go to job :job': goto,
 			'open *command': open,
 		};
