@@ -5,7 +5,7 @@ $app->get('/client/:a', 'uac', function($a) use ($app){
 	
 	/* Construction */
 	
-	$client = $app->module->require('client', $a);
+	$client = $app->module->require('client', [$a]);
 	
 	$app->build->page('views/client/$client.html', [
 		'modules' => [

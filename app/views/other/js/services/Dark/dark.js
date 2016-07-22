@@ -25,7 +25,10 @@ Core.addService('dark', function(){
 		
 		$dark_module.css('z-index', dark_index);
 		
-		$dark_module.on('click', '.dark_object', remove);
+		$(`.${dc}`).on('click', remove);
+		$(`.${dc}`).on('click', 'module', function(event){
+			event.stopPropagation();
+		});
 	}
 	
 	function run(callback){

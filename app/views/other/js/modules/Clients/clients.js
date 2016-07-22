@@ -23,9 +23,7 @@ Core.addModule('clients', function(context){
 	}
 	
 	function bind(){
-		
 		$body.off();
-		
 		
 		// Toggle new client view
 		$body.on('click', '.create-new', function(){
@@ -37,25 +35,22 @@ Core.addModule('clients', function(context){
 			
 			var name = $body.find('input[name=name]').val();
 			
-			if(name.length > 0){
-				$.post(request.post, {
-					name: name,
-				}).done(function(response){
-					var data = JSON.parse(response);
-					
-					if(data.type == 'success'){
-						add(data.client.client_number, data.client.name);
-					}else{
-						$('#content').prepend(`
-							<flash class="box-std">
-								<div class="alert alert-danger">
-									${data.message}
-								</div>
-							</flash>
-						`);
-					}
-				});
-			}
+			if(!name.length) return;
+			
+			$.post(request.post, {
+				name: name,
+			}).done(function(response){
+				var response = JSON.parse(response);
+				
+				if(data.type != 'success'){
+					return Paperwork.send('flash', {
+						type: 'error',
+						message: response.message,
+					});
+				}
+				
+				add(data.client.client_number, data.client.name);
+			});
 		});
 		
 		// Run typeahead

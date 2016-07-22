@@ -1,6 +1,6 @@
 {
 	"core": {
-		"Core": "Core.js?XaYWs7"
+		"Core": "Core.js?60jPdf"
 	},
 	"library": {
 		"Paperwork": "Paperwork.js?6aHN25"
@@ -16,7 +16,7 @@
 		"job": "job.js?9WQFzs",
 		"user": "user.js?Xsu4GW",
 		"app": "app.js?RhRQjZ",
-		"clients": "clients.js?MtXjD7",
+		"clients": "clients.js?EoBrim",
 		"jobs": "jobs.js?9ujEnX",
 		"flash": "flash.js?2PcK1G"
 	},
@@ -26,7 +26,7 @@
 	},
 	"services": {
 		"annyang": "annyang.js?9gXQr2",
-		"dark": "dark.js?JvvdEa"
+		"dark": "dark.js?XjxTsc"
 	},
 	"classes": {
 		"Table": "Table.js?UZFXZJ",

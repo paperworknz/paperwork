@@ -57,9 +57,11 @@ var Core = (function($, undefined){
 			dark.run();
 			
 			$module = $(`
-				<module data-module="${name}" style="opacity: 0;">
-					${response.module}
-				</module>
+				<part class="dark_content" style="opacity: 0;">
+					<module data-module="${name}">
+						${response.module}
+					</module>
+				</part>
 			`).appendTo(dark.object);
 			
 			// If module is already defined, skip script/css loading
