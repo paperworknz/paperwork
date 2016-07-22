@@ -64,7 +64,7 @@ var Core = (function($, undefined){
 				</part>
 			`).appendTo(dark.object);
 			
-			// If module is already defined, skip script/css loading
+			// If module is already defined, skip all css/script loading
 			if(modules[name]){
 				stop(name);
 				return render();
@@ -107,29 +107,20 @@ var Core = (function($, undefined){
 			}
 			
 			function loadSelf(){
-				if(response.css)
-					$('<link type="text/css" rel="stylesheet">').appendTo('head').attr('href', `${environment.root}/css/modules/${response.css}`);
-				
-				if(!response.js)
-					return console.warn('Module js does not exist in cache');
+				if(response.css) $('<link type="text/css" rel="stylesheet">').appendTo('head').attr('href', `${environment.root}/css/modules/${response.css}`);
+				if(!response.js) return console.warn('Module js does not exist in cache');
 				
 				$.getScript(`${environment.root}/js/modules/${response.js}`, render);
 			}
 			
 			function wait(fn){
-				for(let i in map){
-					const value = map[i];
-					
-					if(value === false) return;
-				}
+				for(let i in map) if(map[i] === false) return;
 				
 				clearInterval(depend);
 				fn();
 			}
 			
 			function render(){
-				
-				start(name);
 				
 				dark.object.find('.dark_content').addClass('pop');
 				$module.animate({

@@ -58,7 +58,7 @@ function render(){
 	
 	for(let i in index){
 		const value = index[i];
-		$('.wt-wrap').append(value);
+		$table.find('.wt-wrap').append(value);
 	}
 	
 	
@@ -131,7 +131,7 @@ function sort(id, state){
 			break;
 	}
 	
-	$(`.wt-column[data-id="${id}"] .wt-row`).each(function(){
+	$table.find(`.wt-column[data-id="${id}"] .wt-row`).each(function(){
 		order.push($(this).attr('data-row'));
 	});
 	
