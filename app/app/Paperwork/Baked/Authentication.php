@@ -258,16 +258,7 @@ class Authentication {
 			
 			// Templates
 			if(null !== file_get_contents('../app/app/storage/clients/Default/quote-inline.html')){
-				
 				$template = file_get_contents('../app/app/storage/clients/Default/quote-inline.html');
-				
-				foreach($user as $key => $value){
-					if(strpos($template, '{{user.'.$key.'}}') === false){
-						$template = str_replace('{{user.'.$key.'}}', '', $template);
-					}else{
-						$template = str_replace('{{user.'.$key.'}}', $value, $template);
-					}
-				}
 				
 				$app->sql->post('job_form_template')->with([
 					'user_id' => $user['id'],
@@ -277,16 +268,7 @@ class Authentication {
 			}
 
 			if(null !== file_get_contents('../app/app/storage/clients/Default/invoice-inline.html')){
-				
 				$template = file_get_contents('../app/app/storage/clients/Default/invoice-inline.html');
-				
-				foreach($user as $key => $value){
-					if(strpos($template, '{{user.'.$key.'}}') === false){
-						$template = str_replace('{{user.'.$key.'}}', '', $template);
-					}else{
-						$template = str_replace('{{user.'.$key.'}}', $value, $template);
-					}
-				}
 				
 				$app->sql->post('job_form_template')->with([
 					'user_id' => $user['id'],
