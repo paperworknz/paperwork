@@ -161,6 +161,15 @@ Core.addModule('settings', function(context){
 	}
 	
 	function speechRender(){
+		
+		if(!annyang){
+			return $body.find('[data-type="annyang"]').append(`
+				<part class="container">
+					Apple has not adopted the Speech Recognition standard yet - sorry!
+				</part>
+			`);
+		}
+		
 		if(!localStorage.annyang || localStorage.annyang !== 'true'){
 			localStorage.annyang = 'false';
 			$body.find('[data-type="annyang"]').append(`
