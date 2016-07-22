@@ -7,11 +7,13 @@ Core.addService('annyang', function(){
 		if(!localStorage.annyang) return localStorage.annyang = 'false';
 		if(localStorage.annyang == 'false') return;
 		
-		annyang.addCommands({
-			'go to job :job': goto,
-			'open *command': open,
-		});
-		annyang.start();
+		if(annyang){
+			annyang.addCommands({
+				'go to job :job': goto,
+				'open *command': open,
+			});
+			annyang.start();
+		}
 	}
 	
 	function goto(job){
