@@ -1,0 +1,50 @@
+[data-module="client"] {
+	.client-name {
+		font-size: 24px;
+		line-height: 26px;
+		border: 1px solid white;
+		width: 65%;
+		
+		&:hover {
+			border: 1px solid #ccc;
+		}
+	}
+	
+	.client-details {
+		width: 100%;
+		max-width: 450px;
+		
+		table {
+			width: 100%;
+		}
+		
+		td:nth-child(2n+1) {
+			text-align: right;
+			font-size: 9pt;
+			line-height:9 pt;
+			color: #7f8c8d;
+			padding: 0px 6px;
+			width: 55px;
+		}
+	}
+
+	.input {
+		margin: 2px 0px;
+		line-height: 15px;
+		border: 1px solid white;
+		width: 100%;
+		
+		&:hover {
+			border: 1px solid #ccc;
+		}
+	}
+
+	#notes {
+		width: 100%;
+		max-width: 580px;
+		height: 100px;
+		border: 1px solid #ccc;
+		padding: 5px;
+		outline: none;
+	}
+}

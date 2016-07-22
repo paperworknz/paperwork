@@ -11,27 +11,20 @@ $app->post('/put/settings', 'uac', function() use ($app){
 	$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 	
 	if(!$app->sql->get('user')->where('email', '=', $email)->and('id', '<>', $app->user['id'])->root()->one()){
-		if(!$app->sql->get('user')->where('company', '=', $company)->and('id', '<>', $app->user['id'])->root()->one()){
-			
-			$app->sql->put('user')->with([
-				'email'		=> $email,
-				'first'		=> $first,
-				'last'		=> $last,
-				'company'	=> $company,
-				'phone'		=> $phone,
-			])->where('id', '=', $app->user['id'])->root()->run();
-			
-			$app->event->log('updated their details');
-			
-			$app->flash('success', 'Updated');
-			$app->redirect($app->root.'/settings');
-			
-		}else{
-			$app->event->log('tried to change their company name to another user\'s name: '.$company);
-			
-			$app->flash('error', 'Uh oh. Your new Company name already exists in Paperwork. Please contact support if you think this is wrong.');
-			$app->redirect($app->root.'/settings');
-		}
+		
+		$app->sql->put('user')->with([
+			'email'		=> $email,
+			'first'		=> $first,
+			'last'		=> $last,
+			'company'	=> $company,
+			'phone'		=> $phone,
+		])->where('id', '=', $app->user['id'])->root()->run();
+		
+		$app->event->log('updated their details');
+		
+		$app->flash('success', 'Updated');
+		$app->redirect($app->root.'/settings');
+		
 	}else{
 		$app->event->log('tried to change their email address to another user\'s address: '.$email);
 		

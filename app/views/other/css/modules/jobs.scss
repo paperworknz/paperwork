@@ -1,0 +1,16 @@
+[data-module="jobs"] {
+	.create-new {
+		background-color: white;
+		cursor: pointer;
+		padding-top: 20px;
+		
+		&:hover {
+			background-color: white;
+			text-decoration: underline;
+		}
+	}
+
+	#new-content td {
+		padding: 2px 5px;
+	}
+}

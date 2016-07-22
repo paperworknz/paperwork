@@ -13,6 +13,7 @@ $app->post('/put/restore', 'uac', function() use ($app){
 		case 'form': $table = 'job_form'; break;
 		case 'client': $table = 'client'; break;
 		case 'inventory': $table = 'inventory'; break;
+		case 'template': $table = 'job_form_template'; break;
 	}
 	
 	

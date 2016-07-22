@@ -23,6 +23,10 @@
 	margin-right: 1px;
 	cursor: pointer;
 	@include select(none);
+	
+	&:last-child {
+		margin-right: 0;
+	}
 }
 
 .active {
@@ -34,8 +38,12 @@
 }
 
 .tabobj {
-	display: block;
+	display: none;
 	position: relative;
+}
+
+.tabopen {
+	display: block;
 }
 
 .token {

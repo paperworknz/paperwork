@@ -1,0 +1,1 @@
+"use strict";Core.addModule("admin",function(d){d.use("tab")});

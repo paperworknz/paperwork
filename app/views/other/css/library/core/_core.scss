@@ -689,18 +689,6 @@ th {
   }
 }
 
-* {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-*:before,
-*:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
 html {
   font-size: 10px;
 
@@ -932,18 +920,10 @@ hr {
 	margin: 0;
 }
 
-ul, ol {
-	-webkit-padding-start: 0;
-	margin: 0;
-	
-	li {
-		list-style-type: none;
-	}
-}
-
 .alert {
+	cursor: pointer;
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border: 1px solid transparent;
     border-radius: 4px;
 }
@@ -1055,12 +1035,12 @@ box {
 	
 }
 
-.wrap:before, module:before, section:before {
+.wrap:before, module:before, section:before, .container:before {
 	display: table;
 	content: " ";
 }
 
-.wrap:after, module:after, section:after {
+.wrap:after, module:after, section:after, .container:after {
 	display: table;
 	content: " ";
 	clear: both;

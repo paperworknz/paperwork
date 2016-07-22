@@ -4,9 +4,11 @@ $app->get('/inventory', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$inventory = $app->sql->get('inventory')->also('ORDER BY id DESC')->all();
+	$inventory = $app->module->require('inventory');
 	
 	$app->build->page('views/inventory.html', [
-		'inventory' => $inventory,
+		'modules' => [
+			'inventory' => $inventory,
+		],
 	]);
 });

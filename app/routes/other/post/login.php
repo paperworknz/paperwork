@@ -27,7 +27,6 @@ $app->post('/post/login', 'app', function() use ($app){
 		
 		case 'Authenticated Successfully':
 			echo $app->build->success([
-				'message' => 'Welcome back, '.$app->user['first'].'!',
 				'location' => $app->root.'/jobs'
 			]);
 			break;

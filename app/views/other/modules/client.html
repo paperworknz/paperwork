@@ -1,0 +1,79 @@
+<part data-type="tab-container" class="tabs">
+	<ul class="wrap box-std">
+		<li data-type="tab" data-id="0" class="tab">Client</li>
+		{% if modules.client.data.jobs %}
+			<li data-type="tab" data-id="1" class="tab">Jobs</li>
+		{% endif %}
+	</ul>
+</part>
+<part data-type="obj-container" class="obj">
+	<box data-type="obj" data-id="0" class="tabobj box-std">
+		<part class="container wrap">
+			<input type="text" class="client-name" value="{{modules.client.data.client.name}}" placeholder="{{modules.client.data.client.name}}" client-name />
+			<div class="right">
+				<span class="firm-right">
+					<form method="get" action="{{environment.root}}/jobs">
+						<input type="hidden" name="id" value="{{modules.client.data.client.client_number}}" />
+						<button type="submit" class="button">
+							New Job
+						</button>
+					</form>
+				</span>
+			</div>
+		</part>
+		<part class="container-mid client-details">
+			<table>
+				<tbody>
+					<tr>
+						<td>Address</td>
+						<td>
+							<input type="text" class="input" value="{{modules.client.data.client.address}}" placeholder="..." client-address />
+						</td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td>
+							<input type="text" class="input" value="{{modules.client.data.client.email}}" placeholder="..." client-email />
+						</td>
+					</tr>
+					<tr>
+						<td>Phone</td>
+						<td>
+							<input type="text" class="input" value="{{modules.client.data.client.phone}}" placeholder="..." client-phone />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</part>
+		<part class="container">
+			<form name="delete" method="post" action="{{environment.root}}/delete/client">
+				<input type="hidden" name="id" value="{{modules.client.data.client.id}}" />
+			</form>
+			<button type="submit" class="button delete">Delete Client</button>
+		</part>
+		<hr>
+		<part class="container" id="bottom">
+			<div style="color: #7f8c8d">
+				Notes
+			</div>
+			<textarea id="notes">{{modules.client.data.client.notes | raw}}</textarea>
+		</part>
+	</box>
+	{% if modules.client.data.jobs %}
+	<box data-type="obj" data-id="1" class="tabobj box-std">
+		<part class="container">
+			{% include path.html.table with {
+				data: modules.client.data.jobs,
+				head: {
+					id: '_id',
+					job_number: 'ID',
+					name: 'Name',
+					'client.name': 'Client',
+					'job_status.name': 'Status',
+				},
+				status: modules.client.data.status,
+			}%}
+		</part>
+	</box>
+	{% endif %}
+</part>

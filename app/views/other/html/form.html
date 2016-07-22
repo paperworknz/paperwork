@@ -1,20 +1,20 @@
 <part class="wrap form">
-	<part class="container" style="background-color: white;padding: 30px;">
+	<box class="container" style="background-color: white;padding: 30px;">
 		<div data-formid="{{id}}" style="pointer-events: none;opacity: 0.25" form-blob>
 			{{ html | raw }}
 		</div>
-	</part>
+	</box>
 	<part class="form-settings">
 		<part class="wrap">
 			<box class="left">
 				<part class="container centered" style="width: 100px;">
-					<button class="button" href="{{path.root}}/put/form" form-save-btn>SAVE</button>
+					<button class="button" href="{{environment.root}}/put/form" form-save-btn>SAVE</button>
 				</part>
 			</box>
 			<box class="left">
 				<part class="container centered" style="width:100px;">
-					<form method="post" action="{{path.root}}/post/pdf" form-pdf-form>
-						<input type="hidden" name="job_number" value="{{job.job_number}}" form-pdf-job_number />
+					<form method="post" action="{{environment.root}}/post/pdf" form-pdf-form>
+						<input type="hidden" name="job_number" value="{{modules.job.data.job.job_number}}" form-pdf-job_number />
 						<input type="hidden" name="name" form-pdf-name />
 						<input type="hidden" name="html" form-pdf-html/>
 					</form>
@@ -31,12 +31,12 @@
 					<button class="button blue" data-button-state="off" form-copy-btn>MAKE COPY</button>
 				</part>
 			</box>
-			{% if email %}
+			{% if modules.job.data.email %}
 			<box class="left">
 				<part class="container centered" style="width:105px;">
-					<form method="post" action="{{path.root}}/post/pdf" form-email-form>
+					<form method="post" action="{{environment.root}}/post/pdf" form-email-form>
 						<input type="hidden" name="data" value="" form-email-data/>
-						<input type="hidden" name="id" value="{{job.id}}" />
+						<input type="hidden" name="id" value="{{modules.job.data.job.id}}" />
 						<input type="hidden" name="name" />
 						<input type="hidden" name="email" value="true" />
 					</form>
@@ -46,7 +46,7 @@
 			{% endif %}
 			<box style="right: 0;position: absolute;">
 				<part class="container centered">
-					<button class="button delete" href="{{path.root}}/delete/form" form-del-btn>DELETE</button>
+					<button class="button delete" href="{{environment.root}}/delete/form" form-del-btn>DELETE</button>
 				</part>
 			</box>
 		</part>

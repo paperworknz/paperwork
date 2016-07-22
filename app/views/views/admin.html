@@ -1,167 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-    	{% include path.head %}
+    	{% include head %}
 	</head>
     <body>
-        {% include path.scaffolding %}
+        {% include menu %}
 		<div id="content">
-			<module>
-				<flash class="box-std">
-					{% include path.flash %}
-				</flash>
+			<flash data-module="flash" class="box-std">{% include path.html.flash %}</flash>
+			<module data-module="admin">
+				{% include 'other/modules/admin.html' %}
 			</module>
-			<module>
-				<part class="tabs">
-					<ul class="wrap box-std">
-						<li data-tab="0" class="tab">SQL</li>
-						<li data-tab="1" class="tab">UAC</li>
-						<li data-tab="2" class="tab">Toggles</li>
-						<li data-tab="3" class="tab">Backup</li>
-						<li data-tab="4" class="tab">Tour</li>
-					</ul>
-				</part>
-				<part class="obj">
-					<box data-obj="0" class="tabobj box-std">
-						<part class="wrap container">
-							<input type="text" class="prompt" placeholder="SQL" />
-						</part>
-						<part class="wrap container-bottom">
-							<a event class="left" style="cursor: pointer">Events</a>
-							<a clear-event class="right" style="cursor: pointer;">Clear events</a>
-						</part>
-						<part class="output" style="display: none;">
-							<hr>
-							<part class="container">
-								<div insights>
-								</div>
-							</part>
-							<hr>
-							<part class="container">
-								<div console>
-								</div>
-							</part>
-						</part>
-					</box>
-					<box data-obj="1" class="tabobj box-std">
-						<part class="wrap container" style="width: 270px;" data-validate="on">
-							<div class="h3 title">
-								Generate Password
-							</div>
-							<input type="text" class="left" pw style="height: 37px;" required>
-							<button pw-get class="button left" style="margin-left: 5px;">GET</button>
-						</part>
-						<part class="container">
-							<div pw-console>
-							</div>
-						</part>
-					</box>
-					<box data-obj="2" class="tabobj box-std">
-						<part class="container" style="padding: 30px 15px;">
-							<table class="toggle-table">
-								<tbody>
-									{% for a,b in env %}
-									<tr>
-										<td>{{a}}</td>
-										<td>
-											{% if b %}
-											<img src="{{path.root}}/css/media/toggle-on.png" data-name="{{a}}" data-value="{{b}}" height="26" />
-											{% else %}
-											<img src="{{path.root}}/css/media/toggle-off.png" data-name="{{a}}" data-value="{{b}}" height="26" />
-											{% endif %}
-										</td>
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						</part>
-					</box>
-					<box data-obj="3" class="tabobj box-std">
-						<part class="container" style="padding: 30px 15px;">
-							<button pw-backup class="button">
-								BACKUP
-							</button>
-							<div backup-console class="container-top" style="padding-left: 0;padding-right: 0;">
-							</div>
-						</part>
-					</box>
-					<box data-obj="4" class="tabobj box-std">
-						<part class="container" style="padding: 30px;">
-							<table class="new-tour" data-validate="on">
-								<tbody>
-									<tr>
-										<td>user_id</td>
-										<td><input type="text" name="user_id" placeholder="1,2,3 || All, all, *" required></td>
-									</tr>
-									<tr>
-										<td>Text</td>
-										<td><input type="text" name="text" placeholder="What arm thing homie?" required></td>
-									</tr>
-									<tr>
-										<td>Page</td>
-										<td><input type="text" name="page" placeholder="jobs" required></td>
-									</tr>
-									<tr>
-										<td>Anchor</td>
-										<td><input type="text" name="anchor" placeholder=".box" required></td>
-									</tr>
-									<tr>
-										<td>Position</td>
-										<td><input type="text" name="position" placeholder="right-center"></td>
-									</tr>
-									<tr>
-										<td style="vertical-align: top;line-height: 20px;">Commands</td>
-										<td>
-											<part>
-												<part>
-													{
-												</part>
-												<part class="commands">
-													<div class="new-command wrap">
-														<select style="width: 100%;">
-															<option>
-																
-															</option>
-														</select>
-													</div>
-												</part>
-												<part>
-													}
-												</part>
-											</part>
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td style="height:40px">
-											<button class="button tour-post" style="margin-top:3px">POST</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</part>
-					</box>
-				</div>
-			</part>
-		</module>
-		<div class="pw-notification" data-module="notification"></div>
-		<script>
-		var environment = {
-			root: '{{path.root}}',
-			page: '{{path.page}}',
-		};
-		</script>
-		{% include path.js with {
-			include: ['Tab', 'sweetalert']
-		}%}
+		{% include js %}
 		<script>
 			$(function(){
-				
-				new Tab({
-					cookie: {
-						name: 'admin'
-					}
-				});
 				
 				var landing = 0;
 				var regist = 0;
@@ -176,7 +27,7 @@
 						landing++;
 					}else if(out.indexOf('registration page') !== -1){
 						regist++;
-					}else if(out.indexOf('Welcome') !== -1){
+					}else if(out.indexOf('Welcome email') !== -1){
 						newuser++;
 					}else if(out.indexOf('Guest user logged in') !== -1){
 						guestcount++;
@@ -206,7 +57,7 @@
 					$('[console]').html('');
 					landing = regist = newuser = guestcount = 0;
 					
-					$.post('{{path.root}}/admin/post/query', {
+					$.post('{{environment.root}}/admin/post/query', {
 						'query': q
 					}).done(function(data){
 						if(data = JSON.parse(data)){
@@ -222,7 +73,7 @@
 				$('[clear-event]').on('click', function(){
 					var q = 'DELETE from event';
 					
-					$.post('{{path.root}}/admin/post/query', {
+					$.post('{{environment.root}}/admin/post/query', {
 						'query': q
 					}).done(function(data){
 						if(data = JSON.parse(data)){
@@ -249,7 +100,7 @@
 							if(q.toUpperCase() == 'event'.toUpperCase()) q = 'SELECT * FROM event WHERE user_id<>1 ORDER BY id DESC';
 							if(q.toUpperCase() == 'clear event'.toUpperCase()) q = 'TRUNCATE event';
 							
-							$.post('{{path.root}}/admin/post/query', {
+							$.post('{{environment.root}}/admin/post/query', {
 								'query': q
 							}).done(function(data){
 								if(data = JSON.parse(data)){
@@ -265,7 +116,7 @@
 				
 				$('[pw-get]').on('click', function(){
 					p = $('[pw]').val();
-					$.post('{{path.root}}/admin/get/password', {
+					$.post('{{environment.root}}/admin/get/password', {
 						pw: p
 					}).done(function(data){
 						Paperwork.ready($('[pw-get]'), 'GET');
@@ -283,15 +134,15 @@
 					
 					$(this).addClass('fade');
 					
-					$.post('{{path.root}}/admin/post/config', {
+					$.post('{{environment.root}}/admin/post/config', {
 						name: name
 					}).done(function(data){
 						if(data == 'Success'){
 							if(value == 0){
-								src = '{{path.root}}/css/media/toggle-on.png';
+								src = '{{environment.root}}/css/media/toggle-on.png';
 								value = 1;
 							}else{
-								src = '{{path.root}}/css/media/toggle-off.png';
+								src = '{{environment.root}}/css/media/toggle-off.png';
 								value = 0;
 							}
 							ele.attr('src', src);
@@ -308,7 +159,7 @@
 					var button = $(this);
 					
 					$('[backup-console]').html('');
-					$.post('{{path.root}}/admin/post/backup')
+					$.post('{{environment.root}}/admin/post/backup')
 					.done(function(data){
 						data = JSON.parse(data);
 						
@@ -416,7 +267,7 @@
 						commands: commands,
 					}).done(function(data){
 						if(data == 'success'){
-							Box.Application.broadcast('notification', 'Saved');
+							Paperwork.send('notification', 'Saved');
 							Paperwork.ready($button, 'POST');
 						}else{
 							console.log(data);
@@ -430,7 +281,7 @@
 					});
 				});
 				
-				{% include path.load %}
+				
 			});
 		</script>
     </body>

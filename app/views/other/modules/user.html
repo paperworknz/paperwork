@@ -1,0 +1,43 @@
+<part data-type="tab-container" class="tabs">
+	<ul class="wrap box-std">
+		<li data-type="tab" data-id="0" class="tab">Activity Log</li>
+		{% if modules.user.data.host.first %}
+		<li data-type="tab" data-id="1" class="tab">{{modules.user.data.host.first}}</li>
+		{% endif %}
+	</ul>
+</part>
+<part data-tye="obj-container" class="obj">
+	<box data-type="obj" data-id="0" class="tabobj box-std">
+		<part class="container" style="padding:15px 20px; font-weight: 600; border-bottom: 1px solid #ccc">
+			RECENT
+			<span class="right update" style="font-weight:300;cursor:pointer;color:#337ab7">Update</span>
+			<span class="right" style="margin-right:15px;"><span style="padding: 0px 15px;cursor:pointer" prev> < </span> <span style="cursor:pointer" next> > </span></span>
+		</part>
+		<part events>
+		</part>
+	</box>
+	{% if modules.user.data.host.first %}
+	<box data-type="obj" data-id="1" id="jobs" class="tabobj box-std">
+		<part class="client-details container">
+			<form method="post" action="{{environment.root}}/admin/put/settings">
+				<table>
+					<tbody>
+						{% for a,b in modules.user.data.host %}
+						<tr>
+							<td>{{a}}</td>
+							<td><input type="text" name="{{a}}" value="{{b}}"></td>
+						</tr>
+						{% endfor %}
+						<tr>
+							<td></td>
+							<td style="height:40px">
+								<button class="button" style="margin-top:3px">UPDATE</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</part>
+	</box>
+	{% endif %}
+</part>

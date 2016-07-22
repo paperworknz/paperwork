@@ -1,0 +1,138 @@
+<part data-type="tab-container" class="tabs-job">
+	<ul class="wrap box-std">
+		<li data-type="tab" data-id="0" class="tab">Job</li>
+		{% set i = 0 %}
+		{% for form in modules.job.data.forms %}
+			{% set i = i + 1 %}
+			<li data-type="tab" data-id="{{i}}" class="tab">{{form.name}}</li>
+		{% endfor %}
+		{% set i = i + 1 %}
+		<li data-type="tab" data-id="+" class="tab">+</li>
+	</ul>
+</part>
+<part data-type="obj-container" class="obj-job">
+	<box data-type="obj" data-id="0" class="tabobj box-std">
+		<part class="container wrap" style="padding-top: 20px;">
+			<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name" />
+			<select title="Status" class="status right" job-status-select>
+				{% for item in modules.job.data.status %}
+					{% if modules.job.data.job.job_status.name == item.name %}
+					<option value="{{item.name}}" selected="selected">{{item.name}}</option>
+					{% else %}
+					<option value="{{item.name}}">{{item.name}}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</part>
+		<hr>
+		<part class="container-top">
+			<table class="client-details">
+				<tbody>
+					<tr>
+						<td>Job</td>
+						<td title="Job #{{modules.job.data.job.job_number}}">#{{modules.job.data.job.job_number}}</td>
+					</tr>
+					<tr>
+						<td>Client</td>
+						<td><a href="{{environment.root}}/client/{{modules.job.data.client.client_number}}" title="{{modules.job.data.client.name}}'s Page">{{modules.job.data.client.name}}</a></td>
+					</tr>
+					{% if modules.job.data.client.email %}
+					<tr>
+						<td>Email</td>
+						<td><a href="mailto:{{modules.job.data.client.email}}" title="Send Email" target="_blank">{{modules.job.data.client.email}}</a></td>
+					</tr>
+					{% endif %}
+					{% if client.address %}
+					<tr>
+						<td>Address</td>
+						<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
+					</tr>
+					{% endif %}
+					{% if client.phone %}
+					<tr>
+						<td>Phone</td>
+						<td><a href="tel:{{client.phone}}" title="Call {{modules.job.data.client.name}}">{{client.phone}}</a></td>
+					</tr>
+					{% endif %}
+					{% if modules.job.data.job.date_created %}
+					<tr>
+						<td>Started</td>
+						<td title="{{modules.job.data.job.date_created}}">{{modules.job.data.job.date_created_pretty}}</td>
+					</tr>
+					{% endif %}
+					{% if modules.job.data.job.date_invoiced %}
+					<tr>
+						<td>Invoiced</td>
+						<td title="{{modules.job.data.job.date_invoiced}}">{{modules.job.data.job.date_invoiced_pretty}}</td>
+					</tr>
+					{% endif %}
+					{% if modules.job.data.job.date_completed %}
+					<tr>
+						<td>Closed</td>
+						<td title="{{modules.job.data.job.date_completed}}">{{modules.job.data.job.date_completed_pretty}}</td>
+					</tr>
+					{% endif %}
+					<tr>
+						<td class="token pdf-title" style="padding-top:6px;vertical-align:top;"></td>
+						<td>
+							<div class="pdf-load"></div>
+							<div class="pdf-list"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</part>
+		<part class="container-bottom wrap">
+			<form method="post" action="{{environment.root}}/delete/job" job-del-form>
+				<input type="hidden" name="id" value="{{modules.job.data.job.id}}"/>
+			</form>
+			<button class="button delete right" job-del-btn>Delete Job</button>
+		</part>
+	</box>
+	{% set i = 0 %}
+	{% for a,b in modules.job.data.forms %}
+		{% set i = i + 1 %}
+		<part data-type="obj" data-id="{{i}}" class="tabobj">
+			{% include path.html.form with {
+				id: a,
+				html: b.html
+			} %}
+		</part>
+	{% endfor %}
+	{% set i = i + 1 %}
+	<box data-type="obj" data-id="+" class="tabobj box-std">
+		<part class="container">
+			{% for a,b in modules.job.data.templates %}
+			<div class="new-template" new-template data-templateid="{{a}}">
+				{{b.name}}
+			</div>
+			{% endfor %}
+		</part>
+	</box>
+</part>
+<box class="notes">
+	<part style="padding: 5px;">
+		<div class="notes-label">
+			Notes
+		</div>
+		<div class="note-wrap wrap">
+			<div class="notepad" contenteditable>
+				{{modules.job.data.job.notes | raw}}
+			</div>
+		</div>
+	</part>
+</box>
+<div class="email-signature-raw" hidden>{{modules.job.data.email.signature|raw}}</div>
+<script>
+var job = {
+	job_id: '{{modules.job.data.job.id}}',
+	job_number: '{{modules.job.data.job.job_number}}',
+	client_id: '{{modules.job.data.client.id}}',
+	client_number: '{{modules.job.data.client.client_number}}',
+	client_name: '{{modules.job.data.client.name}}',
+	client_email: '{{modules.job.data.client.email}}',
+};
+var templates = {
+	{% for a, b in modules.job.data.templates %}{{a}}: '{{b.name}}',{% endfor %}
+};
+</script>

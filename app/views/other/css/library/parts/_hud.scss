@@ -1,27 +1,5 @@
 //
 //
-// Dark Container
-.dark_container {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-}
-
-.dark_object {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 10000px;
-	height: 10000px;
-	background-color: black;
-	opacity: 0;
-	overflow: hidden;
-}
-
-//
-//
 // Notification
 .pw-notification {
 	position: absolute;

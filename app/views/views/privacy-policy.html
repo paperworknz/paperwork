@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include path.head_public %}
-		{% include path.pixel %}
+		{% include head_public %}
+		{% include path.html.pixel %}
 	</head>
 	<body>
 		<header>
 			<div class="wrap width">
 				<div class="nav">
-					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{path.root}}'">Paperwork</div>
+					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{environment.root}}'">Paperwork</div>
 					<ul class="nav_list_less wrap">
 						<li>
 							<span class="color_hint" home>Home</span>
@@ -68,32 +68,25 @@
 				<footer>
 					<div class="centered">
 						<a href="https://www.facebook.com/paperworkapp" target="_blank">
-							<img class="fb" title="Our Facebook Page" src="{{path.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
+							<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
 						</a>
-						<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
+						<div style="padding:15px 0px;"><a href="{{environment.root}}/privacy-policy">Privacy Policy</a></div>
 					</div>
 				</footer>
 			</div>
 		</section>
-		<div class="pw-notification" data-module="notification"></div>
-		<script>
-		var environment = {
-			root: '{{path.root}}',
-			page: '{{path.page}}',
-		};
-		</script>
-		{% include path.js %}
+		{% include js %}
 		<script>
 			$(function(){
 				// Nav
 				$('[home]').on('click', function(){
-					window.location = '{{path.root}}';
+					window.location = '{{environment.root}}';
 				});
 				$('[login]').on('click', function(){
-					window.location = '{{path.root}}/login';
+					window.location = '{{environment.root}}/login';
 				});
 				$('[register]').on('click', function(){
-					window.location = '{{path.root}}/register';
+					window.location = '{{environment.root}}/register';
 				});
 				
 				// Interaction

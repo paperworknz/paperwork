@@ -19,18 +19,35 @@ $app->post('/post/form', 'uac', function() use ($app){
 		
 		if($template = $templates[$template_id]){
 			
+			// Parse
+			$html = $template['content'];
+			$html = str_replace('@firstname', $app->user['first'], $html);
+			$html = str_replace('@lastname', $app->user['last'], $html);
+			$html = str_replace('@name', $app->user['first'].' '.$app->user['last'], $html);
+			$html = str_replace('@company', $app->user['company'], $html);
+			$html = str_replace('@email', $app->user['email'], $html);
+			$html = str_replace('@address', $app->user['address'], $html);
+			$html = str_replace('@phone', $app->user['phone'], $html);
+			
+			$html = str_replace('@clientname', $client['name'], $html);
+			$html = str_replace('@clientaddress', $client['address'], $html);
+			$html = str_replace('@clientemail', $client['email'], $html);
+			$html = str_replace('@clientphone', $client['phone'], $html);
+			$html = str_replace('@date', date("d/m/Y"), $html);
+			$html = str_replace('@id', $job['job_number'], $html);
+			
 			// Post a new form
 			$id = $app->sql->post('job_form')->with([
 				'job_id'	=> $job['id'],
 				'client_id'	=> $client['id'],
 				'name'		=> $template['name'],
-				'html'		=> $template['content']
+				'html'		=> $html
 			])->run();
 			
 			$email = $app->sql->get('user_email_settings')->all();
 			
 			$html = $app->build->page('other/html/form.html', [
-				'html' => $template['content'],
+				'html' => $html,
 				'email' => $email,
 				'job' => $job,
 			], false);

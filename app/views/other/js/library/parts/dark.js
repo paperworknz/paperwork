@@ -25,7 +25,7 @@ function dark($container) {
 		object: $dark_module,
 		run: function(callback){
 			$dark_module.find(`.dark_object`).animate({
-				opacity: 0.66,
+				opacity: 0.50,
 			}, 150, function(){
 				if(callback != undefined) callback();
 			});

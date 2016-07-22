@@ -24,6 +24,11 @@ $app->post('/post/empty-trash', 'uac', function() use ($app){
 		->hard()
 		->run();
 	
+	$app->sql->delete('job_form_template')
+		->where('date_deleted', '<>', '0000-00-00 00:00:00')
+		->hard()
+		->run();
+	
 	$app->event->log('emptied their trash');
 	
 });

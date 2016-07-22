@@ -1,0 +1,116 @@
+<part class="left">
+	<part data-type="tab-container" class="tabs">
+		<ul class="wrap">
+			{% set i = 0 %}
+			{% for template in modules.template.data.templates %}
+				<li data-type="tab" data-id="{{i}}" class="tab">{{template.name}}</li>
+				{% set i = i + 1 %}
+			{% endfor %}
+			{% if modules.template.data.themes %}
+				<li data-type="tab" data-id="+" class="tab">+</li>
+			{% endif %}
+		</ul>
+	</part>
+	<part data-type="obj-container" class="obj">
+		{% set i = 0 %}
+		{% for template in modules.template.data.templates %}
+			<box data-type="obj" data-id="{{i}}" data-template-id="{{template.id}}" class="tabobj">
+				<div class="container wrap">
+					<div class="left" style="width: 50%;">
+						<input type="text" class="template-name" placeholder="{{template.name}}" value="{{template.name}}">
+					</div>
+				</div>
+				<hr>
+				<div class="container template-form">
+					{{template.content | raw}}
+				</div>
+				<hr>
+				<div class="container wrap">
+					<ul class="list-inline left">
+						<li>
+							<button class="button template-publish">PUBLISH</button>
+						</li>
+					</ul>
+					<ul class="list-inline right">
+						<li>
+							<button class="button delete template-delete">DELETE</button>
+						</li>
+					</ul>
+				</div>
+			</box>
+			{% set i = i + 1 %}
+		{% endfor %}
+		{% if modules.template.data.themes %}
+			<box data-type="obj" data-id="+" class="tabobj">
+				<div class="new-template" data-validate="on">
+					<div class="container wrap">
+						<div class="left" style="width: 33%;">
+							<input type="text" class="template-name" placeholder="Template name" required>
+						</div>
+					</div>
+					<hr>
+					<div class="container centered">
+						<input type="text" class="template-shell" required hidden>
+						{% for name in modules.template.data.themes %}
+						<div class="template-icon">
+							<img data-name="{{name}}" src="{{environment.root}}/css/media/{{name}}.png" height="400px">
+						</div>
+						{% endfor %}
+					</div>
+					<div class="container centered">
+						<ul class="list-inline" style="display: inline-block;">
+							<li>
+								<button class="button template-create">CREATE</button>
+							</li>
+							<li>
+								<button class="button blue template-close" data-button-state="off">CANCEL</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</box>
+		{% endif %}
+	</part>
+</part>
+<part class="left">
+	<part class="legend">
+		<box>
+			<part class="container">
+				<div class="h4">
+					You
+				</div>
+				<ul>
+					<li>@firstname</li>
+					<li>@lastname</li>
+					<li>@name</li>
+					<li>@company</li>
+					<li>@email</li>
+					<li>@address</li>
+					<li>@phone</li>
+				</ul>
+			</part>
+			<hr>
+			<part class="container">
+				<div class="h4">
+					Client
+				</div>
+				<ul>
+					<li>@clientname</li>
+					<li>@clientaddress</li>
+					<li>@clientemail</li>
+					<li>@clientphone</li>
+				</ul>
+			</part>
+			<hr>
+			<part class="container">
+				<div class="h4">
+					Other
+				</div>
+				<ul>
+					<li>@date</li>
+					<li>@id</li>
+				</ul>
+			</part>
+		</box>
+	</part>
+</part>

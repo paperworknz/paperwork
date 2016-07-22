@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include path.head_public %}
-		{% include path.pixel %}
+		{% include path.html.head_public %}
+		{% include path.html.pixel %}
 	</head>
 	<body>
 		<header>
 			<div class="wrap width">
 				<div class="nav">
-					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{path.root}}'">Paperwork</div>
+					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{environment.root}}'">Paperwork</div>
 					<ul class="nav_list_less wrap">
 						<li>
 							<span class="color_hint" home>Home</span>
@@ -34,7 +34,7 @@
 							<div class="container">
 								<input type="password" name="password" placeholder="Password">
 							</div>
-							{% if env.maintenance %}
+							{% if environment.maintenance %}
 							<div class="alert alert-info" style="margin-bottom:10px;">
 								We're currently offline for maintenance and will be back up as soon as we can. Sorry about this!
 							</div>
@@ -50,54 +50,55 @@
 		<footer>
 			<div class="centered">
 				<a href="https://www.facebook.com/paperworkapp" target="_blank">
-					<img class="fb" title="Our Facebook Page" src="{{path.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
+					<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
 				</a>
-				<div style="padding:15px 0px;"><a href="{{path.root}}/privacy-policy">Privacy Policy</a></div>
+				<div style="padding:15px 0px;"><a href="{{environment.root}}/privacy-policy">Privacy Policy</a></div>
 			</div>
 		</footer>
-		<div class="pw-notification" data-module="notification"></div>
 		<script>
 		var environment = {
-			root: '{{path.root}}',
+			root: '{{environment.root}}',
 			page: '{{path.page}}',
 		};
 		</script>
-		{% include path.js %}
+		{% include path.html.js %}
 		<script>
 			$(function(){
 				// Nav
 				$('[home]').on('click', function(){
-					window.location = '{{path.root}}';
+					window.location = '{{environment.root}}';
 				});
 				$('[login]').on('click', function(){
-					window.location = '{{path.root}}/login';
+					window.location = '{{environment.root}}/login';
 				});
 				$('[register]').on('click', function(){
-					window.location = '{{path.root}}/register';
+					window.location = '{{environment.root}}/register';
 				});
 				
 				var login = function(){
 					$('.next-step').focus();
 					
-					$.post('{{path.root}}/post/login', {
+					$.post('{{environment.root}}/post/login', {
 						username: $('input[name=username]').val(),
 						password: $('input[name=password]').val(),
 					}).done(function(data){
 						data = JSON.parse(data);
 						
 						// Put alert on screen if it doesn't exist
-						if($('.alert').length < 1){
-							$('.next-step').before('<div class="alert">'+data.message+'</div>');
-						}else{
-							$('.alert').removeClass('alert-success');
-							$('.alert').removeClass('alert-danger');
-							$('.alert').html(data.message);
-						}
-						
-						if(data.type == 'success'){
-							$('.alert').addClass('alert-success');
-						}else{
-							$('.alert').addClass('alert-danger');
+						if(data.message){
+							if($('.alert').length < 1){
+								$('.next-step').before('<div class="alert">'+data.message+'</div>');
+							}else{
+								$('.alert').removeClass('alert-success');
+								$('.alert').removeClass('alert-danger');
+								$('.alert').html(data.message);
+							}
+							
+							if(data.type == 'success'){
+								$('.alert').addClass('alert-success');
+							}else{
+								$('.alert').addClass('alert-danger');
+							}
 						}
 						
 						if(data.type == 'success'){

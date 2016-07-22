@@ -2,6 +2,7 @@
 @import 'mixins/mixins';
 
 // Modules
+@import 'core/globals';
 @import 'core/core';
 @import 'parts/typeahead';
 @import 'parts/tab';
@@ -134,7 +135,12 @@ input:hover {
 }
 
 .box-std {
+	width: 610px;
 	max-width: 610px;
+	
+	@include size(610px) {
+		width: auto;
+	}
 }
 
 .container {
@@ -159,4 +165,66 @@ input:hover {
 .ar { text-align: right; }
 .h2 { 
 	font-size: 30px;
+}
+
+//
+//
+// Modules
+module {
+	position: relative;
+	margin-bottom: 15px;
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+@keyframes PaperworkPop {
+	0% {
+		transform: scale(0.5);
+	}
+	
+	66% {
+		transform: scale(1.1);
+	}
+	
+	100% {
+		transform: scale(1);
+	}
+}
+
+//
+//
+// Dark Container
+.dark_container {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	
+	& > module {
+		-webkit-animation: PaperworkPop 0.25s ease forwards;
+		z-index: 9999;
+		
+		box, .tabs ul {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+}
+
+.dark_object {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 10000px;
+	height: 10000px;
+	background-color: black;
+	opacity: 0;
+	overflow: hidden;
 }
