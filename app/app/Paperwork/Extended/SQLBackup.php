@@ -17,7 +17,6 @@ class SQLBackup {
 	public function __construct(){
 		$app = \Slim\Slim::getInstance();
 		
-		$easy = $app->user['easy'];
 		$this->database = $_ENV['DATABASE'];
 		$this->username = $_ENV['DB_USER'];
 		$this->password = $_ENV['DB_PASSWORD'];
