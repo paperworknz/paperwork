@@ -22,7 +22,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 		$dir = "/var/www/Dropbox/Paperwork/{$id}/pdf/{$job_number}";
 	}
 	
-	if(!file_exists($dir)) mkdir($dir, 0775); // Make directory for job_number if it doesn't exist
+	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for job_number if it doesn't exist
 	
 	$file = "{$name}.pdf"; // File name
 	
