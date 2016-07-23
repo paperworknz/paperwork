@@ -45,6 +45,11 @@ class Authentication {
 				// Re/start user session
 				$this->session($user);
 				
+				if($user['privilege'] == 'admin'){
+					ini_set('display_errors', 'on');
+					$app->config('debug', true);
+				}
+				
 				// -> continue to route
 			}else{
 				// Invalid cookie, logout
