@@ -231,9 +231,6 @@
 						icon.removeClass('play');
 						icon.addClass('pause');
 						video.get(0).play();
-						$.post('{{environment.root}}/post/play-video', {
-							video: video.attr('name')
-						});
 					}else{
 						box.css('display', 'inline-block');
 						box.css('opacity', 0.25);

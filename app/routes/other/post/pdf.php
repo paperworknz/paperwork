@@ -14,15 +14,15 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	$html = $_POST['html'];
 	
 	// Directory and file
-	$easy = $app->user['easy'];
+	$id = $app->user['id'];
 	
 	if($_ENV['MODE'] == 'dev'){
-		$dir = "../app/app/storage/clients/{$easy}/pdf/{$job_number}";
+		$dir = "../app/app/storage/clients/{$id}/pdf/{$job_number}";
 	}else{
-		$dir = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$job_number}";
+		$dir = "/var/www/Dropbox/Paperwork/{$id}/pdf/{$job_number}";
 	}
 	
-	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for job_number if it doesn't exist
+	if(!file_exists($dir)) mkdir($dir, 0775); // Make directory for job_number if it doesn't exist
 	
 	$file = "{$name}.pdf"; // File name
 	
@@ -40,7 +40,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	]);
 	
 	// DOWNLOAD
-	$response = new Response(file_get_contents($dir.'/'.$file), 200, [
+	$response = new Response(file_get_contents("{$dir}/{$file}"), 200, [
 		'Content-Description' => 'File Transfer',
 		'Content-Disposition' => 'attachment; filename="'.$file.'"',
 		'Content-Transfer-Encoding'	=> 'binary',
@@ -48,7 +48,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	]);
 	
 	$app->event->log([
-		'text' => 'created a PDF for job_number: '.$job_number,
+		'text' => "created a PDF for job_number: {$job_number}",
 		'icon' => 'pdf.png',
 	]);
 	

@@ -10,7 +10,7 @@ Core.addModule('job', function(context){
 			putDetails: `${environment.root}/put/job-details`,
 		},
 		form: {
-			getPDFList: `${environment.root}/get/pdf-json/${job.job_id}`,
+			getPDFList: `${environment.root}/get/pdf-json/${job.job_number}`,
 			post: `${environment.root}/post/form`,
 			put: `${environment.root}/put/form`,
 			delete: `${environment.root}/delete/form`,
