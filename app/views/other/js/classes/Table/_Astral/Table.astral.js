@@ -1,11 +1,12 @@
 var Table = (function($, environment){
 	
 	var map,
-		filters;
+		filters,
+		config;
 	
-	var $table;
+	var $table, $row, $column, $filter, $settings;
 	
-	if(!$('.wt-table').length < 0) return;
+	if($('.wt-table').length < 1) return;
 	
 	$('.wt-table').each(function(){
 		if(!$(this).data('id')){
@@ -14,12 +15,12 @@ var Table = (function($, environment){
 		}
 	});
 	
-	const $row = $table.find('.wt-row'),
-		$column = $table.find('.wt-column'),
-		$filter = $table.find('.wt-filter'),
-		$settings = $table.find('.wt-settings');
+	$row = $table.find('.wt-row'),
+	$column = $table.find('.wt-column'),
+	$filter = $table.find('.wt-filter'),
+	$settings = $table.find('.wt-settings');
 	
-	const config = {
+	config = {
 		filter: 'All',
 		width: {
 			ID: '44px',
