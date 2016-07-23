@@ -1,5 +1,5 @@
 /node_modules
 /public/.htaccess
 /app/app/.environment
-/app/app/storage/clients/*
+/app/app/storage/clients/*/pdf/*
 /app/app/storage/temp/*
