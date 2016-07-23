@@ -202,7 +202,6 @@ class Authentication {
 				'first'		=> $user['first'],
 				'last'		=> $user['last'],
 				'company'	=> $user['company'],
-				'easy'		=> $easy,
 				'email'		=> $user['email'],
 				'privilege'	=> $user['privilege'],
 				'disabled'	=> 0,
