@@ -185,23 +185,6 @@ class Authentication {
 			return 'Password Mismatch';
 		}else{
 			
-			// Create storage directories, recur if the dir name already exists
-			do {
-				// Random 16 alphanumeric
-				$easy = substr(str_shuffle(md5(time())), 0, 16);
-				
-				// Create storage directories
-				if($_ENV['MODE'] == 'dev'){
-					$dir = '../app/app/storage/clients/'.$easy;
-				}else{
-					$dir = '/var/www/Dropbox/Paperwork/'.$easy;
-				}
-				
-				mkdir($dir, 0777);
-				mkdir($dir.'/pdf', 0777);
-			} while(!file_exists($dir));
-			
-			
 			// Hash password
 			$user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
 			
@@ -225,6 +208,16 @@ class Authentication {
 			
 			// Get user
 			$user = $app->sql->get('user')->where('username', '=', $user['username'])->root()->one();
+			
+			// Create storage directories under user_id
+			if($_ENV['MODE'] == 'dev'){
+				$dir = '../app/app/storage/clients/'.$user['id'];
+			}else{
+				$dir = '/var/www/Dropbox/Paperwork/'.$user['id'];
+			}
+			
+			mkdir($dir, 0775);
+			mkdir("{$dir}/pdf", 0775);
 			
 			// Add user to user_number
 			$app->sql->post('user_number')->with([
@@ -257,8 +250,8 @@ class Authentication {
 			])->root()->run();
 			
 			// Templates
-			if(null !== file_get_contents('../app/app/storage/clients/Default/quote-inline.html')){
-				$template = file_get_contents('../app/app/storage/clients/Default/quote-inline.html');
+			if(null !== file_get_contents('../app/app/storage/templates/Default/quote-inline.html')){
+				$template = file_get_contents('../app/app/storage/templates/Default/quote-inline.html');
 				
 				$app->sql->post('job_form_template')->with([
 					'user_id' => $user['id'],
@@ -267,8 +260,8 @@ class Authentication {
 				])->root()->run();
 			}
 
-			if(null !== file_get_contents('../app/app/storage/clients/Default/invoice-inline.html')){
-				$template = file_get_contents('../app/app/storage/clients/Default/invoice-inline.html');
+			if(null !== file_get_contents('../app/app/storage/templates/Default/invoice-inline.html')){
+				$template = file_get_contents('../app/app/storage/templates/Default/invoice-inline.html');
 				
 				$app->sql->post('job_form_template')->with([
 					'user_id' => $user['id'],

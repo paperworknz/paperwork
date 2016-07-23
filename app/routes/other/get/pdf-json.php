@@ -4,12 +4,12 @@ $app->get('/get/pdf-json/:a', 'uac', function($a) use($app){
 	/* Methods */
 	
 	/* Construction */
-	$easy = $app->user['easy'];
+	$id = $app->user['id'];
 	
 	if($_ENV['MODE'] == 'dev'){
-		$path = "../app/app/storage/clients/{$easy}/pdf/{$a}";
+		$path = "../app/app/storage/clients/{$id}/pdf/{$a}";
 	}elseif($_ENV['MODE'] == 'prod'){
-		$path = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$a}";
+		$path = "/var/www/Dropbox/Paperwork/{$id}/pdf/{$a}";
 	}
 	
 	$pdfs = [];
