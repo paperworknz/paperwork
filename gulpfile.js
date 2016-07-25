@@ -47,6 +47,11 @@ gulp.task('watch', function(){
 	gulp.watch(['app/views/other/js/modules/*/*.js', 'app/views/other/js/behaviors/*/*.js', 'app/views/other/js/services/*/*.js']).on('change', function(file){
 		js(file);
 	});
+	
+	// Templates
+	gulp.watch(['app/views/other/templates/*.html']).on('change', function(file){
+		template(file);
+	});
 });
 
 // Update JSON, generates and appends ?xxxxxx to value
@@ -204,4 +209,21 @@ function libraryJS(file){
 		return console.log(file.log_name + ' updated');
 	});
 	
+}
+
+function template(file){
+	
+	var file = deconstruct(file, {
+		delimiter: 'templates',
+	});
+	
+	gulp.src(file.fqn)
+		.pipe(inline({
+			removeStyleTags: true,
+			removeLinkTags: true,
+			url: 'http://',
+		}))
+		.pipe(gulp.dest('app/views/other/templates/published'));
+	
+	return console.log(file.log_name + ' updated');
 }

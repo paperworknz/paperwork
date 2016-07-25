@@ -45,7 +45,7 @@ Core.addModule('welcome-guest', function(context){
 				<p>Go to the <b>Inventory</b> page to get started.</p>`,
 		},
 		7: {
-			title: 'Get Your Hands Dirty',
+			title: `Let's get into it`,
 			body: `<p>We recommend you start by going to your <b>Settings</b> and update your details. Then go and set up your <b>Templates</b>, 
 				then create a new <b>Client</b> and <b>Job</b>.</p>
 				<p class="negligible">By the way, Paperwork is best used on a larger screen with a keyboard.</p>`,
