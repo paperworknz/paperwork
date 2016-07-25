@@ -189,10 +189,7 @@ var Core = (function($, undefined){
 	}
 	
 	function require(name){
-		if(!services[name]){
-			console.warn(`Service ${name} is undefined`);
-			return;
-		}
+		if(!services[name]) return console.warn(`Service ${name} is undefined`);
 		
 		return services[name]();
 	}
