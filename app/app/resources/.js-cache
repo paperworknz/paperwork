@@ -19,7 +19,8 @@
 		"clients": "clients.js?u6a3fw",
 		"jobs": "jobs.js?9ujEnX",
 		"flash": "flash.js?2PcK1G",
-		"welcome-guest": "welcome-guest.js?BIJRIy"
+		"welcome-guest": "welcome-guest.js?BIJRIy",
+		"checkout": "checkout.js?PqxI1l"
 	},
 	"behaviors": {
 		"tab": "tab.js?e796sY",
