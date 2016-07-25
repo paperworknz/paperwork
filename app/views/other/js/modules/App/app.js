@@ -4,7 +4,7 @@ Core.addModule('app', function(context){
 	
 	function start(){
 		$body.on('click', '[data-type="logout"]', function(){
-			Paperwork.goto(`${environment.root}/get/logout`);
+			Paperwork.goto(`${environment.root}/get/logout`, false);
 		});
 	}
 	
