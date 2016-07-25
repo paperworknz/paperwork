@@ -150,9 +150,10 @@ class Authentication {
 		setcookie('@', '', -1, '/');	// Delete @ cookie
 		session_destroy();				// Delete PHP session
 		
-		$app->sql->put('user')->where('id', '=', $app->user['id'])->with([
-			'active' => '0'
-		])->root()->run();
+		// Inactive
+		$app->sql->put('user')->with([
+			'active' => '0',
+		])->where('id', '=', $app->user['id'])->root()->run();
 		
 		// Purge temporary user data
 		if($app->user['privilege'] == 'guest'){
@@ -164,12 +165,23 @@ class Authentication {
 			$app->sql->delete('user_email_settings')->hard()->run();
 			$app->sql->delete('tour')->hard()->run();
 			
+			// Reset user
+			$app->sql->put('user')->with([
+				'first' => 'Guest',
+				'last' => 'User',
+				'company' => 'Your Company Name',
+				'email' => '',
+				'address' => '',
+				'phone' => '',
+				'active' => '0',
+			])->where('id', '=', $app->user['id'])->root()->run();
+			
 			// Reset user_number
-			$app->sql->put('user_number')->with([
+			$app->sql->put('user_number')->where('user_id', '=', $app->user['id'])->with([
 				'client_number' => '1',
 				'job_number' => '1',
 				'job_status_number' => '1',
-			])->run();
+			])->root()->run();
 			
 			$app->event->log('Temporary user '.$app->user['username'].' data purged');
 		}

@@ -23,15 +23,16 @@ $app->post('/admin/post/backup', 'admin', function() use ($app){
 		$app->sql->delete('user_email_settings')->where('user_id', '=', $user['id'])->hard()->root()->run();
 		$app->sql->delete('tour')->where('user_id', '=', $user['id'])->hard()->root()->run();
 		
-		// Set to inactive
-		$app->sql->put('user')->where('id', '=', $user['id'])->with([
+		// Reset user
+		$app->sql->put('user')->with([
 			'first' => 'Guest',
 			'last' => 'User',
-			'email' => 'your@email.com',
 			'company' => 'Your Company Name',
+			'email' => '',
+			'address' => '',
+			'phone' => '',
 			'active' => '0',
-			'privilege' => 'guest',
-		])->root()->run();
+		])->where('id', '=', $user['id'])->root()->run();
 		
 		// Reset user_number
 		$app->sql->put('user_number')->where('user_id', '=', $user['id'])->with([
