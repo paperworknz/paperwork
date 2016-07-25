@@ -1,0 +1,14 @@
+@import '../library/mixins/mixins';
+
+[data-module="welcome-guest"] {
+	[data-type="message"] {
+		@include transition(height 5s ease-in-out);
+	}
+	
+	.negligible {
+		display: none;
+		@include size(800px) {
+			display: block;
+		}
+	}
+}

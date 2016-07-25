@@ -1,6 +1,6 @@
 {
 	"core": {
-		"Core": "Core.js?qtBSBE"
+		"Core": "Core.js?0SmKWI"
 	},
 	"library": {
 		"Paperwork": "Paperwork.js?6aHN25"
@@ -11,14 +11,15 @@
 		"template": "template.js?d7Av7H",
 		"tab": "tab.js?LVBgld",
 		"client": "client.js?7A2d5u",
-		"settings": "settings.js?7kuaFL",
+		"settings": "settings.js?MNPbDb",
 		"admin": "admin.js?pAaB5w",
 		"job": "job.js?AEMAI6",
 		"user": "user.js?Xsu4GW",
 		"app": "app.js?RhRQjZ",
-		"clients": "clients.js?8pddTF",
+		"clients": "clients.js?u6a3fw",
 		"jobs": "jobs.js?9ujEnX",
-		"flash": "flash.js?2PcK1G"
+		"flash": "flash.js?2PcK1G",
+		"welcome-guest": "welcome-guest.js?BIJRIy"
 	},
 	"behaviors": {
 		"tab": "tab.js?e796sY",
@@ -26,7 +27,7 @@
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",
-		"dark": "dark.js?XjxTsc"
+		"dark": "dark.js?qg4dVG"
 	},
 	"classes": {
 		"Table": "Table.js?ywQ6Y2",

@@ -42,14 +42,14 @@ Core.addModule('clients', function(context){
 			}).done(function(response){
 				var response = JSON.parse(response);
 				
-				if(data.type != 'success'){
+				if(response.type != 'success'){
 					return Paperwork.send('flash', {
 						type: 'error',
 						message: response.message,
 					});
 				}
 				
-				add(data.client.client_number, data.client.name);
+				add(response.client.client_number, response.client.name);
 			});
 		});
 		
