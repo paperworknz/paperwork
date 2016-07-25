@@ -1,8 +1,9 @@
-function goto(location) {
-	
-	$('#content').animate({
-		opacity: 0,
-	}, 'fast');
+function goto(location, fade) {
+	if(fade === undefined || fade === true){
+		$('#content').animate({
+			opacity: 0,
+		}, 'fast');
+	}
 	
 	window.location = location;
 }

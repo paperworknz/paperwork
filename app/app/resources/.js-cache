@@ -3,7 +3,7 @@
 		"Core": "Core.js?0SmKWI"
 	},
 	"library": {
-		"Paperwork": "Paperwork.js?6aHN25"
+		"Paperwork": "Paperwork.js?rDgBl7"
 	},
 	"modules": {
 		"inventory": "inventory.js?z6kg9B",
@@ -15,7 +15,7 @@
 		"admin": "admin.js?pAaB5w",
 		"job": "job.js?AEMAI6",
 		"user": "user.js?Xsu4GW",
-		"app": "app.js?RhRQjZ",
+		"app": "app.js?mpFgQx",
 		"clients": "clients.js?u6a3fw",
 		"jobs": "jobs.js?9ujEnX",
 		"flash": "flash.js?2PcK1G",
