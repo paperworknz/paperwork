@@ -1,53 +1,53 @@
+<link rel="stylesheet" type="text/css" href="http://localhost/paperwork/public/css/library/Paperwork.css">
 <style>
 	.pw-form {
 		width: 650px;
 	}
-	body, html {
-		background-color: white;
-	}
-	part {
+	
+	.pw-form part {
 		width: 50%;
 		float: left;
 	}
 	
-	row {
+	.pw-form row {
 		display: block;
+		width: 100%;
 	}
 	
-	row:before {
+	.pw-form row:before {
 		display: table;
 		content: " ";
 	}
 
-	row:after {
+	.pw-form row:after {
 		display: table;
 		content: " ";
 		clear: both;
 	}
 	
-	column {
+	.pw-form column {
 		float: left;
 		padding: 6px 10px;
 	}
 	
-	row column:nth-child(odd) {
+	.pw-form row column:nth-child(odd) {
 		font-weight: 600;
 		width: 33%;
 	}
 	
-	row column:nth-child(even) {
+	.pw-form row column:nth-child(even) {
 		width: 67%;
 	}
 	
-	.table row:last-child {
+	.pw-form .table row:last-child {
 		border-bottom: 1px solid #ccc;
 	}
 	
-	.table row {
+	.pw-form .table row {
 		border-top: 1px solid #ccc;
 	}
 	
-	.inv-head {
+	.pw-form .inv-head {
 		text-align: center;
 		float: right;
 		min-width: 71px;
@@ -68,24 +68,24 @@
 					<column>
 						To
 					</column>
-					<column form-clientblob>
-						Cade Murphy
+					<column>
+						@clientname
 					</column>
 				</row>
 				<row>
 					<column>
 						Number
 					</column>
-					<column form-jobid>
-						105
+					<column>
+						@id
 					</column>
 				</row>
 				<row>
 					<column>
 						Date
 					</column>
-					<column form-date>
-						10/10/16
+					<column>
+						@date
 					</column>
 				</row>
 				<row>
@@ -93,7 +93,7 @@
 						GST
 					</column>
 					<column>
-						88-8888-888
+						
 					</column>
 				</row>
 			</div>
@@ -105,8 +105,8 @@
 						From
 					</column>
 					<column>
-						Cade Murphy
-						105 Swamp Road,<br>RD 1, Otaki
+						@name<br>
+						@address
 					</column>
 				</row>
 			</div>
@@ -115,10 +115,10 @@
 		</part>
 	</section>
 	<section style="padding-top: 25px;">
-		<div style="font-weight: 600;padding: 6px 10px;">
+		<div style="font-weight: 600;padding: 6px 10px;" contenteditable>
 			Description
 		</div>
-		<div style="padding: 6px 10px;border: 1px solid #ccc;">
+		<div style="padding: 6px 10px;" contenteditable>
 			<br>
 		</div>
 	</section>
@@ -131,5 +131,10 @@
 		</div>
 		<div style="position: relative;margin-top: -1px;" form-inventory></div>
 		<div form-content></div>
+	</section>
+	<section style="padding-top: 25px;">
+		<div contenteditable style="padding: 15px 6px 15px 6px;">
+			Thanks for your business!
+		</div>
 	</section>
 </section>
