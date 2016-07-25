@@ -21,7 +21,8 @@ class Module {
 		$file = "$this->module_dir/$name.php";
 		
 		// Require module
-		file_exists($file) ? require $file : null;
+		if(!file_exists($file)) return [];
+		require $file;
 		
 		// Evaluate module
 		return $this->evaluate($name, $data);
