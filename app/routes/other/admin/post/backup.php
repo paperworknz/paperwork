@@ -20,6 +20,7 @@ $app->post('/admin/post/backup', 'admin', function() use ($app){
 		$app->sql->delete('job')->where('user_id', '=', $user['id'])->hard()->root()->run();
 		$app->sql->delete('job_form')->where('user_id', '=', $user['id'])->hard()->root()->run();
 		$app->sql->delete('job_status')->where('user_id', '=', $user['id'])->hard()->root()->run();
+		$app->sql->delete('job_form_template')->where('user_id', '=', $user['id'])->hard()->root()->run();
 		$app->sql->delete('user_email_settings')->where('user_id', '=', $user['id'])->hard()->root()->run();
 		$app->sql->delete('tour')->where('user_id', '=', $user['id'])->hard()->root()->run();
 		

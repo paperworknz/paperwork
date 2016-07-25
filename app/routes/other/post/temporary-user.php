@@ -13,8 +13,27 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 		// Handle result of login
 		if($action == 'Authenticated Successfully'){
 			
-			// Purge statuses just incase
-			$app->sql->delete('job_status')->where('user_id', '=', $user['id'])->hard()->root()->run();
+			// Rebuild Quote template
+			if(null !== file_get_contents('../app/app/storage/templates/Default/quote-inline.html')){
+				$template = file_get_contents('../app/app/storage/templates/Default/quote-inline.html');
+				
+				$app->sql->post('job_form_template')->with([
+					'user_id' => $user['id'],
+					'name' => 'Quote',
+					'content' => $template,
+				])->root()->run();
+			}
+			
+			// Rebuild Invoice template
+			if(null !== file_get_contents('../app/app/storage/templates/Default/invoice-inline.html')){
+				$template = file_get_contents('../app/app/storage/templates/Default/invoice-inline.html');
+				
+				$app->sql->post('job_form_template')->with([
+					'user_id' => $user['id'],
+					'name' => 'Invoice',
+					'content' => $template,
+				])->root()->run();
+			}
 			
 			// Built in statuses
 			$app->sql->post('job_status')->with([
