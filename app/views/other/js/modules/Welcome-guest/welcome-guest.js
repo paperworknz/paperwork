@@ -8,7 +8,7 @@ Core.addModule('welcome-guest', function(context){
 	var messages = {
 		0: {
 			title: 'Welcome to Paperwork',
-			body: `<p>Let's run through a quick introduction!</p>`,
+			body: `<p>We're going to run you through a quick introduction.</p>`,
 		},
 		1: {
 			title: 'Navigation',
