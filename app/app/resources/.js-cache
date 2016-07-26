@@ -20,7 +20,8 @@
 		"jobs": "jobs.js?9ujEnX",
 		"flash": "flash.js?2PcK1G",
 		"welcome-guest": "welcome-guest.js?2KXUi5",
-		"checkout": "checkout.js?PqxI1l"
+		"checkout": "checkout.js?PqxI1l",
+		"$template": "$template.js?7ldeS8"
 	},
 	"behaviors": {
 		"tab": "tab.js?e796sY",

@@ -15,11 +15,24 @@ $app->post('/post/template', 'uac', function() use ($app){
 	}
 	
 	// Get theme content
-	if(!file_exists("../app/app/storage/templates/$theme.html")){
+	if(!file_exists("../app/app/storage/templates/$theme")){
 		die($app->build->error("Template theme $theme does not exist"));
 	}
 	
-	$theme = file_get_contents("../app/app/storage/templates/$theme.html");
+	$theme = file_get_contents("../app/app/storage/templates/$theme");
+	
+	// Remove redundent inline css
+	$theme = str_replace('-moz-box-sizing: border-box;', '', $theme);
+	$theme = str_replace('-webkit-box-sizing: border-box;', '', $theme);
+	$theme = str_replace('box-sizing: border-box;', '', $theme);
+	$theme = str_replace('border-spacing: 0;', '', $theme);
+	$theme = str_replace('border-collapse: collapse;', '', $theme);
+	$theme = str_replace('list-style-type: none;', '', $theme);
+	
+	// Tidy up spaces
+	$theme = preg_replace('/\s+/', ' ', $theme); // Turn 2+ spaces into 1 space
+	$theme = str_replace('style=" "', '', $theme);
+	$theme = str_replace('style=" ', 'style="', $theme);
 	
 	$id = $app->sql->post('job_form_template')->with([
 		'name' => $name,

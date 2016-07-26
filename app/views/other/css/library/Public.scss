@@ -1,15 +1,15 @@
 // Mixins
 @import 'mixins/mixins';
 
-// Modules
+// Core
 @import 'core/globals';
-@import 'core/core';
-@import 'parts/typeahead';
-@import 'parts/tab';
-@import 'parts/right-click';
+@import 'core/normalise';
+@import 'core/bootstrap-core';
+@import 'core/paperwork-core';
+
+// Parts
 @import 'parts/validation';
 @import 'parts/button';
-@import 'parts/hud';
 
 //
 //

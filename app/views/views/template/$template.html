@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include head %}
+		<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/library/{{path.css.library.Form}}">
+	</head>
+    <body>
+        {% include menu %}
+        <div id="content">
+			<flash data-module="flash" class="box-std">{% include path.html.flash %}</flash>
+			<module data-module="$template">
+				{% include 'other/modules/$template.html' %}
+			</module>
+        </div>
+		{% include js %}
+    </body>
+</html>
