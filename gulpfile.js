@@ -16,6 +16,7 @@ var exec	= require('child_process').exec;
 var path = {
 	'css_cache'	: 'app/app/resources/.css-cache',
 	'js_cache'	: 'app/app/resources/.js-cache',
+	'template_cache': 'app/app/resources/.template-cache',
 	'bootstrap'	: 'public/css/3rd/bootstrap.3.3.6.css',
 	'jquery'	: 'public/js/3rd/jquery.2.1.4.js',
 	'astral'	: 'C:\\Bitnami\\wampstack-7.0.0-0\\apache2\\htdocs\\paperwork\\_Astral\\js.php',
@@ -116,11 +117,11 @@ function deconstruct(file, data){
 	
 	// If there are directories, loop and concat into a string
 	if(dir.length > 0){
-		delimiter = dir[0];
+		delimiter = dir[0] || dir;
 		dir.splice(0, 1);
 		for(i=0; i < dir.length; i++) path += (dir[i] + '/');
 	}else{
-		delimiter = dir[0];
+		delimiter = dir[0] || dir;
 		path = '';
 	}
 	
@@ -217,13 +218,24 @@ function template(file){
 		delimiter: 'templates',
 	});
 	
+	gulp.src(path.template_cache)
+		.pipe(jeditor(function(json){
+			
+			json[file.name.split('.html')[0]] = file.name;
+			return json;
+		}))
+		.pipe(gulp.dest('app/app/resources'));
+	
 	gulp.src(file.fqn)
 		.pipe(inline({
-			removeStyleTags: true,
-			removeLinkTags: true,
 			url: 'http://',
+			applyStyleTags: false,
+			removeStyleTags: false,
+			applyLinkTags: true,
+			removeLinkTags: true,
+			removeHtmlSelectors: true,
 		}))
-		.pipe(gulp.dest('app/views/other/templates/published'));
+		.pipe(gulp.dest('app/app/storage/templates'));
 	
 	return console.log(file.log_name + ' updated');
 }

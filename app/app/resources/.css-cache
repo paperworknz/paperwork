@@ -1,7 +1,8 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?lzWUpp",
-		"Public": "Public.css?TDiuvg"
+		"Paperwork": "Paperwork.css?hm9nOO",
+		"Public": "Public.css?QQayC6",
+		"Form": "Form.css?oLL7Pq"
 	},
 	"views": {
 		"login": "login.css?JiGeeo"
@@ -15,7 +16,7 @@
 		"admin": "admin.css?kOdBIC",
 		"job": "job.css?zND4bb",
 		"jobs": "jobs.css?I3ktku",
-		"client": "client.css?Y9NNnh",
+		"client": "client.css?tsOsGM",
 		"welcome-guest": "welcome-guest.css?MhUIDW"
 	}
 }

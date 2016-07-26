@@ -20,12 +20,12 @@ $app->post('/post/email', 'uac', function() use ($app){
 	
 	
 	// Directory and file
-	$easy = $app->user['easy'];
+	$id = $app->user['id'];
 	
 	if($_ENV['MODE'] == 'dev'){
-		$dir = "../app/app/storage/clients/{$easy}/pdf/{$job_number}";
+		$dir = "../app/app/storage/clients/{$id}/pdf/{$job_number}";
 	}else{
-		$dir = "/var/www/Dropbox/Paperwork/{$easy}/pdf/{$job_number}";
+		$dir = "/var/www/Dropbox/Paperwork/{$id}/pdf/{$job_number}";
 	}
 	
 	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for job_number if it doesn't exist

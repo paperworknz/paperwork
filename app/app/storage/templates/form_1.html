@@ -1,135 +1,84 @@
-<style>
-	.pw-form {
-		width: 650px;
-	}
-	body, html {
-		background-color: white;
-	}
-	part {
-		width: 50%;
-		float: left;
-	}
-	
-	row {
-		display: block;
-	}
-	
-	row:before {
-		display: table;
-		content: " ";
-	}
 
-	row:after {
-		display: table;
-		content: " ";
-		clear: both;
-	}
-	
-	column {
-		float: left;
-		padding: 6px 10px;
-	}
-	
-	row column:nth-child(odd) {
-		font-weight: 600;
-		width: 33%;
-	}
-	
-	row column:nth-child(even) {
-		width: 67%;
-	}
-	
-	.table row:last-child {
-		border-bottom: 1px solid #ccc;
-	}
-	
-	.table row {
-		border-top: 1px solid #ccc;
-	}
-	
-	.inv-head {
-		text-align: center;
-		float: right;
-		min-width: 71px;
-		height: 20px;
-		line-height: 20px;
-	}
-</style>
-<section class="pw-form">
-	<header class="wrap">
-		<div class="h2 left" contenteditable form-type>
-			INVOICE
+<section style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block;">
+	<header style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block;">
+		<div contenteditable="" form-type="" style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; color: inherit; float: left; font-family: inherit; font-size: 30px; font-weight: 500; line-height: 1.1; padding-bottom: 20px;">
+			INVOICE YO
 		</div>
 	</header>
-	<section style="padding-top: 50px;">
-		<part>
-			<div class="table">
-				<row>
-					<column>
+	<section style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block; padding-top: 50px;">
+		<part style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block;">
+			<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+				<row style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
 						To
 					</column>
-					<column form-clientblob>
-						Cade Murphy
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+						@clientname
 					</column>
 				</row>
-				<row>
-					<column>
+				<row style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
 						Number
 					</column>
-					<column form-jobid>
-						105
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+						@id
 					</column>
 				</row>
-				<row>
-					<column>
+				<row style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
 						Date
 					</column>
-					<column form-date>
-						10/10/16
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+						@date
 					</column>
 				</row>
-				<row>
-					<column>
+				<row style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
 						GST
 					</column>
-					<column>
-						88-8888-888
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+						
 					</column>
 				</row>
 			</div>
 		</part>
-		<part>
-			<div class="table" style="padding-left: 75px;">
-				<row>
-					<column>
+		<part style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block;">
+			<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 75px;">
+				<row style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
 						From
 					</column>
-					<column>
-						Cade Murphy
-						105 Swamp Road,<br>RD 1, Otaki
+					<column style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+						@name<br style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
+						@address
 					</column>
 				</row>
 			</div>
 		</part>
-		<part>
+		<part style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block;">
 		</part>
 	</section>
-	<section style="padding-top: 25px;">
-		<div style="font-weight: 600;padding: 6px 10px;">
+	<section style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block; padding-top: 25px;">
+		<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; font-weight: 600; padding: 6px 10px;" contenteditable="">
 			Description
 		</div>
-		<div style="padding: 6px 10px;border: 1px solid #ccc;">
-			<br>
+		<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 6px 10px;" contenteditable="">
+			<br style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">
 		</div>
 	</section>
-	<section style="padding-top: 25px">
-		<div style="font-size: 11px;font-weight: 600;">
-			<div class="inv-head">TOTAL</div>
-			<div class="inv-head">UNIT PRICE</div>
-			<div class="inv-head">QTY UNIT</div>
-			<div class="inv-head" style="text-align: left;padding-left: 10px;float: none;width: auto;overflow: hidden;">CONTRACTORS & MATERIALS</div>
+	<section style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block; padding-top: 25px;">
+		<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; font-size: 11px; font-weight: 600;">
+			<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">TOTAL</div>
+			<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">UNIT PRICE</div>
+			<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;">QTY UNIT</div>
+			<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; float: none; overflow: hidden; padding-left: 10px; text-align: left; width: auto;">CONTRACTORS & MATERIALS</div>
 		</div>
-		<div style="position: relative;margin-top: -1px;" form-inventory></div>
-		<div form-content></div>
+		<div style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; margin-top: -1px; position: relative;" form-inventory=""></div>
+		<div form-content="" style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;"></div>
+	</section>
+	<section style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; display: block; padding-top: 25px;">
+		<div contenteditable="" style="-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 15px 6px 15px 6px;">
+			Thanks for your business!
+		</div>
 	</section>
 </section>

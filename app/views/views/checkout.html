@@ -1,16 +1,1 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-    	{% include head %}
-	</head>
-    <body>
-        {% include menu %}
-        <div id="content">
-			<flash data-module="flash" class="box-std">{% include path.html.flash %}</flash>
-			<module data-module="checkout">
-				{% include 'other/modules/checkout.html' %}
-			</module>
-        </div>
-		{% include js %}
-    </body>
-</html>
+{% include '/other/html/default.html' %}

@@ -1,0 +1,16 @@
+// Core
+@import 'core/normalise';
+
+paperwork-form {
+	position: relative;
+	display: block;
+	
+	* {
+		display: block;
+	}
+	
+	form-section {
+		display: table;
+		width: 100%;
+	}
+}
