@@ -1,0 +1,54 @@
+<part class="wrap form">
+	<box class="container" style="background-color: white;padding: 0;">
+		<div data-type="document" data-id="{{document.id}}" style="pointer-events: none;opacity: 0.25">
+			{{document.user_template.template.body | raw}}
+		</div>
+	</box>
+	<part class="form-settings">
+		<part class="wrap">
+			<!--<box class="left">
+				<part class="container centered" style="width: 100px;">
+					<button class="button" data-type="save-button">SAVE</button>
+				</part>
+			</box>
+			<box class="left">
+				<part class="container centered" style="width:100px;">
+					<form method="post" action="{{environment.root}}/post/pdf" data-type="pdf-form">
+						<input type="hidden" name="job_number" value="{{modules.job.data.job.job_number}}">
+						<input type="hidden" name="name">
+						<input type="hidden" name="html">
+					</form>
+					<button class="button blue" type="submit" data-type="pdf-button">PDF</button>
+				</part>
+			</box>
+			<box class="left">
+				<part class="container centered" style="width:125px;">
+					<button class="button blue" data-button-state="off" data-type="margin-button">MARGIN</button>
+				</part>
+			</box>
+			<box class="left">
+				<part class="container centered" style="width:140px;">
+					<button class="button blue" data-button-state="off" data-type="copy-button">MAKE COPY</button>
+				</part>
+			</box>
+			{% if modules.job.data.email %}
+			<box class="left">
+				<part class="container centered" style="width:105px;">
+					<form method="post" action="{{environment.root}}/post/pdf" data-type="email-form">
+						<input type="hidden" name="data">
+						<input type="hidden" name="id" value="{{modules.job.data.job.id}}">
+						<input type="hidden" name="name">
+						<input type="hidden" name="email" value="true">
+					</form>
+					<button class="button blue" data-button-state="off" data-type="email-button">EMAIL</button>
+				</part>
+			</box>
+			{% endif %}-->
+			<box style="right: 0;position: absolute;">
+				<part class="container centered">
+					<button class="button delete" data-type="document-delete-button">DELETE</button>
+				</part>
+			</box>
+		</part>
+	</part>
+</part>

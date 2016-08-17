@@ -1,0 +1,1 @@
+"use strict";Core.addService("parse",function(){function r(r,e){var t=e.decimal,n=void 0===t?!1:t,a=e.natural,i=void 0===a?!1:a;return r=r.toString(),r=r.replace(/[^\d.-]/g,""),Number(r)?(r=Number(r),n&&(r=r.toFixed(n)),i&&(r=r.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")),r):r}function e(e){return e=r(e,{decimal:2,natural:!0}),e="$"+e}return{toNumber:r,toDollar:e}});

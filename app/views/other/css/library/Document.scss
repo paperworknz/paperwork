@@ -1,0 +1,126 @@
+// Mixins
+@import 'mixins/mixins';
+
+// Core
+@import 'core/normalise';
+
+doc-body {
+	width: 210mm;
+	max-width: 210mm;
+	min-width: 210mm;
+	color: #333;
+	background-color: white;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	line-height: 1.42857143;
+	font-size: 11pt;
+	display: flex;
+	flex-direction: column;
+	
+	* {
+		display: block;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	
+	doc-section {
+		display: flex;
+		cursor: default;
+		
+		& > * {
+			flex: 1;
+		}
+	}
+	
+	[data-type="inventory-input"], [data-type="inventory-content"] {
+		display: block;
+	}
+	
+	[contenteditable] {
+		cursor: text;
+		
+		&:hover {
+			outline: none;
+			background-color: #D6EDFF;
+		}
+	}
+	
+	.inventory-item {
+		display: flex;
+		border-left: 1px solid black;
+		border-right: 1px solid black;
+		
+		&:last-child {
+			border-bottom: 1px solid black;
+		}
+		
+		@media print {
+			page-break-inside: avoid;
+		}
+		
+		&:hover {
+			.inventory-item_name .remove-btn {
+				opacity: 0.25;
+			}
+		}
+		
+		.inventory-item_name {
+			position: relative;
+			
+			.remove-btn {
+				opacity: 0;
+				position: absolute;
+				top: 0;
+				right: 0;
+				
+				&:hover {
+					opacity: 1;
+				}
+			}
+		}
+	}
+	
+	.twitter-typeahead {
+		display: inline-block;
+		border-right: 1px solid black;
+		border-bottom: 1px dashed #999;
+		border-left: 1px solid black;
+		
+		.typeahead {
+			padding: 4px;
+			width: 100%;
+			outline: 0;
+			border: 1px solid white;
+		}
+		
+		.tt-input, .tt-highlight {
+			display: inline-block;
+			
+			&:hover {
+				background-color: #D6EDFF!important;
+			}
+			
+			&:focus,
+			&:active {
+				background-color: transparent!important;
+			}
+			
+		}
+		
+		.ta {
+			z-index: 1;
+			width: 100%;
+			border-top: 1px solid #333;
+			border-left: 1px solid #333;
+			border-right: 1px solid #333;
+		}
+		
+		.tt-menu{
+			z-index: 1!important;
+			background-color: #fff;
+			border: 1px solid #eee;
+			box-shadow: rgba(0,0,0,.329412) 0 0 5px;
+			cursor: default;
+		}
+	}
+}

@@ -10,6 +10,7 @@ var clean	= require('gulp-clean-css');
 var jeditor	= require('gulp-json-editor');
 var connect = require('gulp-connect');
 var open	= require('gulp-open');
+var prefix	= require('gulp-autoprefixer');
 var exec	= require('child_process').exec;
 
 // Constants
@@ -34,7 +35,7 @@ gulp.task('watch', function(){
 		css(file);
 	});
 	
-	// Library, classes, services js
+	// Library, classes js
 	gulp.watch(['app/views/other/js/library/*.js', 'app/views/other/js/classes/*/*.js']).on('change', function(file){
 		libraryJS(file);
 	});
@@ -52,6 +53,16 @@ gulp.task('watch', function(){
 	// Templates
 	gulp.watch(['app/views/other/templates/*.html']).on('change', function(file){
 		template(file);
+	});
+	
+	// Template inline css
+	gulp.watch(['app/views/other/templates/inline/sass/*.scss']).on('change', function(file){
+		templateInlineSASS(file);
+	});
+	
+	// Template public css
+	gulp.watch(['app/views/other/templates/public/*.scss']).on('change', function(file){
+		templatePublicSASS(file);
 	});
 });
 
@@ -153,6 +164,7 @@ function css(file){
 	// Run gulp task with full dir name
 	gulp.src(file.fqn)
 		.pipe(sass())
+		.pipe(prefix())
 		.pipe(clean())
 		.pipe(gulp.dest('public/css/' + file.delimiter + '/' + file.path));
 	
@@ -220,7 +232,6 @@ function template(file){
 	
 	gulp.src(path.template_cache)
 		.pipe(jeditor(function(json){
-			
 			json[file.name.split('.html')[0]] = file.name;
 			return json;
 		}))
@@ -228,14 +239,46 @@ function template(file){
 	
 	gulp.src(file.fqn)
 		.pipe(inline({
-			url: 'http://',
-			applyStyleTags: false,
-			removeStyleTags: false,
+			// url: 'http://',
+			applyStyleTags: true,
+			removeStyleTags: true,
 			applyLinkTags: true,
 			removeLinkTags: true,
 			removeHtmlSelectors: true,
 		}))
 		.pipe(gulp.dest('app/app/storage/templates'));
+	
+	return console.log(file.log_name + ' updated');
+}
+
+function templateInlineSASS(file){
+	
+	var file = deconstruct(file, {
+		delimiter: 'sass',
+	});
+	
+	// Run gulp task with full dir name
+	gulp.src(file.fqn)
+		.pipe(sass())
+		.pipe(prefix())
+		.pipe(clean())
+		.pipe(gulp.dest('app/views/other/templates/inline/css/'));
+	
+	return console.log(file.log_name + ' updated');
+}
+
+function templatePublicSASS(file){
+	
+	var file = deconstruct(file, {
+		delimiter: 'sass',
+	});
+	
+	// Run gulp task with full dir name
+	gulp.src(file.fqn)
+		.pipe(sass())
+		.pipe(prefix())
+		.pipe(clean())
+		.pipe(gulp.dest('public/css/templates/'));
 	
 	return console.log(file.log_name + ' updated');
 }

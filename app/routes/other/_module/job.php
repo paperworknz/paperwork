@@ -1,64 +1,32 @@
 <?php
 
-use Paperwork\Extended\Form;
-
 $app->module->add('job', function($request) use ($app){
 	
 	if(!$request) die($app->build->error('Job number not provided'));
 	
-	$form = new Form;
-	$cache_id = $form->cache(); // Update job_cache if necessary
 	$job_number = $request[0];
 	
-	if(!$job = $app->sql->get('job')->where('job_number', '=', $job_number)->one()){
-		$app->flash('error', 'Oops. That job number doesn\'t exist.');
+	$documents; // Documents from SQL table: document
+	$template = [];
+	$templates = [];
+	$template_id = [];
+	$user_templates = $app->sql->get('user_template')->retain(['template_id'])->all();
+	
+	$job = $app->sql->get('job')->where('job_number', '=', $job_number)->one();
+	$email = $app->sql->get('user_email_settings')->one();
+	$status	= $app->sql->get('job_status')->select(['name'])->also('ORDER BY job_status_number')->all();
+	
+	// ERROR HANDLING //
+	
+	if(!$job){
+		$app->flash('error', "Oops. Job {$job_number} doesn't exist.");
 		$app->redirect($app->root.'/jobs');
 	}
 	
-	if(!isset($job['job_cache'])){
-		$app->sql->put('job')->with([
-			'job_cache_id' => $cache_id
-		])->where('id', '=', $job['id'])->run();
-		
-		$app->flash('info', 'This job had to be repaired automatically.<br> If you experience any problems please <b>do not make any changes</b> and contact support. Thank you.');
-		$app->redirect("$app->root/job/$job_number");
-	}
-			
-	$app->sql->touch('job')->where('id', '=', $job['id'])->run();
-	
+	// CLIENT //
 	$client	= $job['client'];
-	$status	= $app->sql->get('job_status')->select(['name'])->also('ORDER BY job_status_number')->all();
-	unset($job['client']);
 	
-	// TABS PART ONE //
-	$forms = [];
-	/* $tabs = [
-		[formID] => [
-			'blob' => '<html>....</html>',
-			'name' => 'Quote',
-		],
-		[formID] => [...]
-	]; */
-	
-	// TABS => FORMS //
-	if($form = $app->sql->get('job_form')->where('job_id', '=', $job['id'])->all()){
-		foreach($form as $item){
-			$forms[$item['id']] = [
-				'name'	=> $item['name'],
-				'html'	=> $item['html'],
-			];
-		}
-	}
-	
-	// TEMPLATES //
-	$templates = $app->parse->jsonToArray($job['job_cache']['content']);
-	$job['painter'] = $job['job_cache']['painter'];
-	unset($job['cache']);
-	
-	// $resources = 'form.js?aBcdEf
-	$resources = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.resources'));
-	
-	// Time Since
+	// PRETTY DATES
 	foreach($job as $key => $value){
 		if(in_array($key, ['date_created', 'date_touched', 'date_invoiced', 'date_completed'])){
 			
@@ -99,22 +67,57 @@ $app->module->add('job', function($request) use ($app){
 		}
 	}
 	
-	// EMAIL
-	if(!$email = $app->sql->get('user_email_settings')->one()) $email = false;
+	// TEMPLATES //
+	// We are replicating a SQL join. The resulting data is an array of 
+	// user_template with the template property as the appropriate template data
+	
+	foreach($user_templates as $data) array_push($template_id, $data['template_id']);
+	$templates = $app->sql->get('template')->where('id', 'IN', $template_id)->root()->all();
+	
+	foreach($user_templates as $data){
+		foreach($templates as $value){
+			if($value['id'] != $data['template_id']) continue;
+			
+			array_push($template, [
+				'id' => $data['id'],
+				'name' => $data['name'],
+				'template' => $value,
+			]);
+			
+			break;
+		}
+	}
+	
+	// DOCUMENTS //
+	$documents = $app->sql->get('document')->where('job_id', '=', $job['id'])->select([
+		'id', 'name', 'user_template_id', 
+	])->all();
+	
+	// Insert template into each document's user_template property
+	foreach($documents as $key => $value){
+		foreach($template as $data){
+			if($value['user_template']['id'] == $data['id']){
+				$documents[$key]['user_template'] = $data;
+			}
+		}
+	}
+	
+	unset($job['client']);
+	unset($templates);
+	unset($template_id);
 	
 	return [
 		'third' => ['typeahead', 'interact', 'contextmenu', 'selection', 'sortable'],
-		'classes' => ['Typeahead', $job['painter'], 'Form'],
-		'behaviors' => ['tab'],
+		'classes' => ['Typeahead'],
+		'behaviors' => ['tab', 'document'],
 		'data' => [
 			'id'		=> $job_number,
 			'job'		=> $job,
 			'client'	=> $client,
-			'templates'	=> $templates,
-			'status'	=> $status,
-			'forms'		=> $forms,
-			'resources'	=> $resources,
 			'email'		=> $email,
+			'status'	=> $status,
+			'templates'	=> $template,
+			'documents'	=> $documents,
 		],
 	];
 });

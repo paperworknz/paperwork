@@ -4,11 +4,11 @@ $app->get('/template/:a', 'admin', function($request) use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$template = $app->module->require('$template', [$request]);
+	$template = $app->module->require('admin-template-editor', [$request]);
 	
 	$app->build->page('views/template/$template.html', [
 		'modules' => [
-			'$template' => $template,
+			'admin-template-editor' => $template,
 		],
 	]);
 });

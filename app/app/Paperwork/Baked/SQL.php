@@ -40,6 +40,7 @@ class SQL {
 			'root'		=> false,
 			'method'	=> false,
 			'select'	=> [],
+			'retain'	=> [],
 			'distinct'	=> false,
 			'table'		=> false,
 			'values'	=> false,
@@ -94,7 +95,7 @@ class SQL {
 		return $this;
 	}
 	
-	// SELECT //
+	// SELECT, RETAIN //
 	
 	public function select($values){
 		if(is_array($values)){
@@ -103,6 +104,22 @@ class SQL {
 			$this->query['select'] = [];
 			$this->query['select'][0] = $values;
 		}
+		return $this;
+	}
+	
+	public function retain($values){
+		
+		if($values === '*'){
+			$this->query['retain'] = '*';
+			return $this;
+		}
+		
+		if(!is_array($values)){
+			$this->query['retain'] = [];
+			return $this;
+		}
+		
+		$this->query['retain'] = $values;
 		return $this;
 	}
 	
@@ -283,6 +300,7 @@ class SQL {
 			'root'		=> false,
 			'method'	=> false,
 			'select'	=> [],
+			'retain'	=> [],
 			'distinct'	=> false,
 			'table'		=> false,
 			'values'	=> false,
@@ -534,20 +552,23 @@ class SQL {
 		/** Phase 2: Iterate through the array and audit foreign keys **/
 		$foreign = [];
 		
-		foreach($data as $key => $pair){ // Iterate through all arrays of data found
-			$index = $key; // cache root key
-			
-			foreach($pair as $a => $b){ // Iterate through each array of data
-				if(strpos($a, 'id') // column name contains 'id'
-					&& $a != 'id' // Ignore 'id' (primary key)
+		if($this->query['retain'] != '*'){
+			foreach($data as $key => $pair){ // Iterate through all arrays of data found
+				$index = $key; // cache root key
+				
+				foreach($pair as $a => $b){ // Iterate through each array of data
+					if(strpos($a, 'id') // column name contains 'id'
+						&& $a != 'id' // Ignore 'id' (primary key)
 						&& $a != 'user_id' // Ignore 'user_id'
-							&& $a != $this->query['table'].'_id'){ // ignore ::self_id
-					
-					$column = $a;
-					$value = $b;
-					
-					if(!isset($foreign[$column])) $foreign[$column] = [];
-					array_push($foreign[$column], $value);
+						&& $a != $this->query['table'].'_id' // ignore ::self_id
+						&& !in_array($a, $this->query['retain'])){ // ignore retained columns
+						
+						$column = $a;
+						$value = $b;
+						
+						if(!isset($foreign[$column])) $foreign[$column] = [];
+						array_push($foreign[$column], $value);
+					}
 				}
 			}
 		}
@@ -587,7 +608,7 @@ class SQL {
 			
 			// Make an array of the ID to be translated
 			if(!$join){
-				dd('Foreign join failed: '.$join); // If fail, die and dump the SQL statement
+				dd('Foreign join failed: '.$sql); // If fail, die and dump the SQL statement
 			}else{
 				$return = $join->fetchAll(PDO::FETCH_ASSOC); // Execute statement
 				//$this->cache[$sql] = $return; // Cache the SQL statement + the data

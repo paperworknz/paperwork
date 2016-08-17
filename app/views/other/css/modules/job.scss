@@ -74,8 +74,6 @@
 		cursor: pointer;
 	}
 	
-	.blob_item:hover .twig-remove { color: red; }
-	
 	.client-details td { height:28px; }
 	.client-details { width:75% }
 	
@@ -90,11 +88,12 @@
 	
 	.form {
 		position: relative;
-		min-width: 710px;
-		max-width: 710px;
 		min-height: 10px;
 	}
-	.p0 { padding: 0; }
+	
+	.p0 {
+		padding: 0;
+	}
 	
 	.client-details td:nth-child(2n+1) {
 		text-align: right;
@@ -104,16 +103,11 @@
 		padding: 0px 10px;
 		width: 50px;
 	}
-	
-	.twitter-typeahead {
-		border: 1px solid black;
-		border-bottom: 1px dashed #999;
-	}
 }
 
 .lowlight { color: #999; }
 
-.new-template {
+.new-document {
 	text-transform: uppercase;
 	text-align:center;
 	height:100px;
@@ -126,11 +120,11 @@
 	@include transition((background 0.3s ease, border-color 0.3s ease));
 }
 
-.new-template:last-child {
+.new-document:last-child {
 	margin-bottom: 0;
 }
 
-.new-template:hover {
+.new-document:hover {
 	border: 1px solid #2ecc71;
 	background: rgba(46,204,113, 0.25);
 }

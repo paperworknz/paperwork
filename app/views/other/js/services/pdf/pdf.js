@@ -1,0 +1,3 @@
+Core.addService('pdf', function(){
+	
+});

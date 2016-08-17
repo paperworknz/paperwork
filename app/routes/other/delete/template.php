@@ -9,6 +9,5 @@ $app->post('/delete/template', 'uac', function() use ($app){
 		die($app->build->error('Template id not provided'));
 	}
 	
-	$app->sql->delete('job_form_template')->where('id', '=', $id)->run();
-	
+	$app->sql->delete('user_template')->where('id', '=', $id)->run();
 });

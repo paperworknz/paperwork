@@ -1,1 +1,0 @@
-"use strict";Core.addModule("$template",function(e){});

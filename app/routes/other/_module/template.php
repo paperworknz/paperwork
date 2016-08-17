@@ -2,14 +2,48 @@
 
 $app->module->add('template', function($request) use ($app){
 	
-	$templates = $app->sql->get('job_form_template')->select(['id', 'name', 'content'])->all();
-	$themes = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.template-cache'));
+	$prop = [];
+	$template = [];
+	$templates = [];
+	$template_id = [];
+	
+	// TEMPLATES //
+	$user_templates = $app->sql->get('user_template')->retain(['template_id'])->all();
+	
+	foreach($user_templates as $data) array_push($template_id, $data['template_id']);
+	
+	$templates = $app->sql->get('template')->where('id', 'IN', $template_id)->root()->all();
+	
+	foreach($user_templates as $data){
+		foreach($templates as $value){
+			if($value['id'] != $data['template_id']) continue;
+			
+			array_push($template, [
+				'id' => $data['id'],
+				'name' => $data['name'],
+				'body' => $value['body'],
+			]);
+			
+			break;
+		}
+	}
+	
+	// Properties
+	$properties = $app->sql->get('user_template_properties')->one();
+	
+	unset(
+		$properties['id'],
+		$properties['user_id'],
+		$properties['date_created'],
+		$properties['date_touched'],
+		$properties['date_deleted']
+	);
 	
 	return [
 		'behaviors' => ['tab'],
 		'data' => [
-			'templates' => $templates,
-			'themes' => $themes,
+			'templates' => $template,
+			'properties' => $properties,
 		],
 	];
 });

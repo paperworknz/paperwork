@@ -1,41 +1,29 @@
 Core.addModule('job', function(context){
 	
 	var $body = context.element;
-	context.use('tab');
-	
-	var form;
 	
 	var request = {
-		job: {
-			putDetails: `${environment.root}/put/job-details`,
-		},
-		form: {
-			getPDFList: `${environment.root}/get/pdf-json/${job.job_number}`,
-			post: `${environment.root}/post/form`,
-			put: `${environment.root}/put/form`,
-			delete: `${environment.root}/delete/form`,
-		},
+		post: `${environment.root}/post/document`,
+		put: `${environment.root}/put/job-details`,
+		deleteDocument: `${environment.root}/delete/document`,
+		getPDFList: `${environment.root}/get/pdf-json/${job.job_number}`,
 	};
 	
-	construct();
-	
-	function construct(){
-		form = new Form;
-		getPDFList();
-		bind();
-	}
-	
-	function bind(){
-		jobName();
-		jobDelete();
-		changeStatus();
-		notes();
-		formBind();
-	}
+	context.use('tab');
+	context.use('document');
+	getPDFList();
+	bindNotes();
+	changeStatus();
+	jobName();
+	jobDelete();
+	documentDelete();
+	bindNewDocument();
 	
 	function getPDFList(){
+		
 		Paperwork.wait($body.find('.pdf-load'));
-		$.get(request.form.getPDFList)
+		
+		$.get(request.getPDFList)
 		.done(function(response){
 			
 			if(response == '0'){
@@ -60,40 +48,64 @@ Core.addModule('job', function(context){
 		});
 	}
 	
+	function bindNotes(){
+		
+		// Focus notes
+		$body.on('click', '.note-wrap', function(){
+			$body.find('.notepad').focus();
+		});
+		
+		// Notes change
+		$body.on('blur', '.notepad', function(){
+			
+			$.post(request.put, {
+				notes: $(this).html(),
+				id: job.job_id,
+			}).done(function(response){
+				
+				Paperwork.send('notification');
+			});
+		});
+	}
+	
 	function changeStatus(){
+		
 		$body.on('change', '.status', function(){
 			if($(this).val() == undefined) return;
 			
-			$.post(request.job.putDetails, {
+			$.post(request.put, {
 				id: job.job_id,
 				status: $(this).val()
 			}).done(function(response){
-				if(response == '0') return Paperwork.send('notification', 'Failed to save');
+				if(response == '0') return Paperwork.send('notification', 'Failed to change');
 				
 				Paperwork.send('notification', 'Saved');
-				if(response == 'Completed') Paperwork.goto(`${environment.root}/${environment.page}`);
 			});
 		});
 	}
 	
 	function jobName(){
 		
-		// Change job name
-		$body.find('.job-name').change(function(){
+		$body.on('change', '.job-name', function(){
 			if($('.job-name').val() == '') return;
 			
-			$.post(request.job.putDetails, {
-				name: $('.job-name').val(),
+			$.post(request.put, {
+				name: $('.job-name').val().trim(),
 				id: job.job_id,
-			}).done(function(){
+			}).done(function(response){
 				Paperwork.send('notification', 'Saved');
 			});
 		});
 	}
 	
 	function jobDelete(){
-		$body.on('click', '.button.delete', function(){
-			var $this = $(this);
+		
+		$body.on('click', '[data-type="job-delete-button"]', function(){
+			
+			var button = {
+				name: $(this).text().trim(),
+				element: $(this),
+			};
 			
 			swal({
 				title: 'Are you sure you want to delete this job?',
@@ -101,180 +113,91 @@ Core.addModule('job', function(context){
 				showCancelButton: true,
 				closeOnConfirm: true,
 			}, function(response){
-				if(!response) return Paperwork.ready($this, 'Delete Job');
+				if(!response) return Paperwork.ready(button.element, button.name);
 				
 				$body.find('[job-del-form]').submit();
 			});
 		});
 	}
 	
-	function notes(){
+	function documentDelete(){
 		
-		var notes = $body.find('.notepad').html();
-		
-		// Focus notes
-		$body.find('.note-wrap').on('click', function(){
-			$body.find('.notepad').focus();
-		});
-		
-		// Notes change
-		$body.find('.notepad').on('blur', function(){
-			if($(this).html() == notes) return;
+		$body.on('click', '[data-type="document-delete-button"]', function(){
 			
-			$.post(request.job.putDetails, {
-				notes: $(this).html(),
-				id: job.job_id,
-			}).done(function(){
-				notes = $body.find('.notepad').html();
-				Paperwork.send('notification', 'Notes saved');
-			});
-		});
-	}
-	
-	function formBind(){
-		
-		var timer;
-		
-		// FORM.POST()
-		$body.on('click', '[new-template]', function(){
-			var button = $(this),
-				name = $(this).html();
+			var document_id = $body.find('.tabopen [data-type="document"]').data('id');
+			var button = {
+				name: $(this).text().trim(),
+				element: $(this),
+			};
 			
-			Paperwork.wait(button);
-			form.post({
-				url: request.form.post,
-				template_name: name,
-				template_id: button.attr('data-templateid'),
-				client_id: job.client_id,
-				job_id: job.job_id,
-				job_number: job.job_number,
-			}, function(bool){
-				if(!bool) return;
-				
-				Paperwork.ready(button, name);
-				$body.find(form.s).find('[form-blob]').removeClass('form-loading');
-				$body.find(form.s).find('.tt-input').focus();
-			});
-		});
-		
-		// FORM.PUT()
-		$body.on('click', '[form-save-btn]', function(){
-			var button = $(this);
-			
-			form.put({
-				url: request.form.put,
-				id: $body.find(form.s).find('[form-blob]').attr('data-formid'),
-			}, function(bool){
-				if(!bool){
-					Paperwork.ready(button, 'SAVE');
-					Paperwork.saved('Failed to save');
-					return;
-				}
-				
-				Paperwork.ready(button, 'SAVE');
-				Paperwork.send('notification', 'Saved');
-			});
-		});
-		
-		// FORM.DELETE()
-		$body.on('click', '[form-del-btn]', function(){
-			var button = $(this);
-			
-			$body.find(`${form.s} ${form.form}`).addClass('form-loading');
 			swal({
-				title: 'Are you sure you want to delete this?',
-				text: 'Deleting this will remove it forever',
+				title: 'Are you sure you want to delete this document?',
+				text: 'You can undo this later',
 				showCancelButton: true,
 				closeOnConfirm: true,
 			}, function(response){
+				if(!response) return Paperwork.ready(button.element, button.name);
 				
-				if(!response) return Paperwork.ready(button, 'DELETE');
-				
-				form.delete({
-					url: request.form.delete,
-					form_id: $body.find(form.s).find('[form-blob]').attr('data-formid'),
-				}, function(){
-					var noteposition = $body.find('.notes').position(),
-						noteparent = $body.find('.notes').clone(),
-						tab_id = $body.find('[data-type="tab-container"] .active').data('id');
+				$.post(request.deleteDocument, {
+					id: document_id,
+				}).done(function(response){
+					var tab_id = $body.find('[data-type="tab-container"] .active').data('id');
 					
-					$body.find('.notes').css({
-						position: 'absolute',
-						top: noteposition.top,
-						left: noteposition.left,
-					});
-					$body.find(form.s).slideUp('fast', function(){
-						$body.find(form.s).remove();
-						$body.find(`[data-type="tab-container"] [data-id="${tab_id}"]`).fadeOut('fast', function(){
-							Paperwork.send('tab.job.activate', $body.find(`[data-type="tab-container"] [data-id="${tab_id}"]`).prev().data('id'));
-							
-							$body.find('.notes').replaceWith(noteparent);
-							$body.find('.note-wrap').on('click', function(){
-								$body.find('.notepad').focus();
-							});
-							$(this).remove();
-						});
-					});
-				});
-				
-			});
-		});
-		
-		// FORM.PDF()
-		$body.on('click', '[form-pdf-btn]', function(){
-			var button = $(this),
-				html = button.html();
-			
-			form.put({
-				url: request.form.put,
-				id: $body.find(form.s).find('[form-blob]').attr('data-formid'),
-			}, function(response){
-				
-				if(!response){
-					Paperwork.ready(button, html);
-					return Paperwork.send('notification', 'Error making PDF');
-				}
-				
-				form.pdf($body.find(form.s).find('[form-blob]'), function(name, data){
-					
-					$body.find(form.s).find('[form-pdf-name]').val(name);
-					$body.find(form.s).find('[form-pdf-html]').val(data);
-					$body.find(form.s).find('[form-pdf-form]').submit();
-					
-					window.onfocus = function(){
-						Paperwork.ready($body.find('[form-pdf-btn]'), 'PDF');
-					};
-					
+					Paperwork.send(`tab.${context.name}.remove`, tab_id);
 				});
 			});
-		});
-		
-		// FORM.COPY()
-		$body.on('click', '[form-copy-btn]', function(){
-			form.copy($body.find(`${form.s} [form-blob]`), templates);
-		});
-		
-		// MARGIN
-		$body.on('click', '[form-margin-btn]', function(){
-			form.margin($body.find(`${form.s} [form-blob]`));
-		});
-		
-		// EMAIL
-		$body.on('click', '[form-email-btn]', function(){
-			form.email($body.find(`${form.s} [form-blob]`));
-			// Paperwork.validate($body.find('.email-parent'), $('body [email-send]'), 'email');
-		});
-		
-		// FORM PUT after 2 seconds after last keyup
-		$body.on('keyup', '[form-blob] [contenteditable]', function(){
-			clearTimeout(timer);
-			timer = setTimeout(function(){
-				form.put({
-					url: request.form.put,
-					id: $body.find(form.s).find('[form-blob]').attr('data-formid'),
-				});
-			}, 2000);
 		});
 	}
 	
+	function bindNewDocument(){
+		
+		$body.on('click', '[data-type="new-document"]', function(){
+			
+			var template_id = $(this).data('template-id'),
+				client_id = job.client_id,
+				job_id = job.job_id;
+			
+			var button = {
+				name: $(this).text().trim(),
+				element: $(this),
+			};
+			
+			$.post(request.post, {
+				job_id: job_id,
+				client_id: client_id,
+				template_id: template_id,
+			}).done(function(response){
+				response = JSON.parse(response);
+				
+				renderDocument(response);
+			});
+		});
+	}
+	
+	function renderDocument(request){
+		
+		var id,
+			$tabs = $body.find('[data-type="tab-container"] ul'),
+			$obj = $body.find('[data-type="obj-container"]');
+		
+		// ID
+		id = $tabs.children().last().prev().data('id') + 1;
+		
+		$tabs.children().last().before(`
+			<li data-type="tab" data-id="${id}" class="tab" style="opacity: 0.5;">${request.name}</li>
+		`);
+		
+		$body.find('[data-type="tab"]').filter(`[data-id="${id}"]`).animate({
+			opacity: 1,
+		}, 300, 'swing');
+		
+		$obj.children().last().before(`
+			<part data-type="obj" data-id="${id}" class="tabobj">
+				${request.body}
+			</part>
+		`);
+		
+		Paperwork.send(`docment.${context.name}.run`, id);
+		Paperwork.send(`tab.${context.name}.activate`, id);
+	}
 });

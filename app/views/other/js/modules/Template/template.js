@@ -2,132 +2,76 @@ Core.addModule('template', function(context){
 	
 	var $body = context.element;
 	
-	var templates = {};
-	var themes = {};
-	
-	var tab; // Behavior: tab
+	var properties = {};
 	var top = 0;
 	
 	var request = {
+		get: `${environment.root}/get/template-properties`,
+		update: `${environment.root}/post/update-template`,
 		post: `${environment.root}/post/template`,
-		put: `${environment.root}/put/template`,
 		delete: `${environment.root}/delete/template`,
+		putProp: `${environment.root}/put/properties`,
+		putTemplate: `${environment.root}/put/template`,
 	};
 	
 	// Bind
+	context.use('tab');
 	bind();
+	getProperties();
 	
 	function bind(){
 		
 		var button = {
-			create: $body.find('.template-create'),
 			select: $body.find('.template-icon'),
-			publish: $body.find('.template-publish'),
 			delete: $body.find('.template-delete'),
+			create: $body.find('[data-type="template-create"]'),
+			update: $body.find('[data-type="properties-update"]'),
 		};
 		
 		for(let i in button) button[i].off();
 		
-		tab = context.use('tab');
-		
-		// Template rename
-		$body.find('input.template-name').on('keyup', function(){
+		// Template/tab sync
+		$body.find('[data-type="template-name"]').on('keyup', function(){
 			var id = $(this).closest('[data-type="obj"]').data('id');
 			
+			render();
 			if(id != '+') $body.find(`[data-type="tab-container"] [data-id="${id}"]`).html($(this).val());
 		});
 		
-		// Template publish
-		button.publish.on('click', function(){
+		// Template rename and save
+		$body.find('[data-type="template-name"]').on('blur', function(){
 			var id = $(this).closest('[data-template-id]').data('template-id'),
-				name = $(this).closest('[data-template-id]').find('input.template-name').val(),
-				html = $(this).closest('[data-template-id]').find('.template-form').html(),
-				$this = $(this),
-				text = $(this).html();
+				name = $(this).val().trim();
 			
-			$.post(request.put, {
+			$.post(request.putTemplate, {
 				id: id,
 				name: name,
-				content: html,
 			}).done(function(response){
-				response = JSON.parse(response);
 				
-				Paperwork.ready($this, text);
+				render();
 				Paperwork.send('notification');
 			});
 		});
 		
-		// Template delete
-		button.delete.on('click', function(){
-			var id = $(this).closest('[data-template-id]').data('template-id'),
-				_id = $body.find(`[data-template-id=${id}]`).data('id'),
-				text = button.delete.html();
-			
-			swal({
-				title: 'Are you sure you want to delete this template?',
-				text: 'You can restore this from the trash tab in settings',
-				showCancelButton: true,
-				closeOnConfirm: true,
-			}, function(result){
-				if(!result){
-					Paperwork.ready(button.delete, text);
-					return;
-				}
-				
-				$.post(request.delete, {
-					id: id,
-				}).done(function(response){
-					
-					remove(_id);
-					delete templates[id];
-					
-					Paperwork.send(`tab.${context.name}.activate`, 'last');
-					Paperwork.send('notification');
-				});
-			});
-			
-		});
-		
-		// Template select
-		button.select.on('click', function(){
-			var $img = $(this).find('img');
-			
-			if($img.hasClass('img-active')){
-				$img.removeClass('img-active');
-				$body.find('.template-shell').val('');
-			}else{
-				$img.addClass('img-active');
-				$body.find('.template-shell').val('1');
-			}
-			
-			$body.find('.template-shell').blur();
-		});
-		
 		// Template create
 		button.create.on('click', function(){
-			var p = $body.find('[data-type="obj"]').filter('[data-id="+"]');
-			var name = p.find('.template-name').val(),
-				template = p.find('.img-active').data('name');
+			var name = $body.find('.new-template [data-type="new-template-name"]').val().trim();
 			
 			$.post(request.post, {
-				theme: template,
 				name: name,
-			}).done(function(data){
-				data = JSON.parse(data);
+			}).done(function(response){
+				var data = JSON.parse(response);
 				
-				
-				p.find('.template-name').val('');
-				p.find('.img-active').removeClass('img-active');
-				$body.find('.template-shell').val('');
+				$body.find('.new-template [data-type="new-template-name"]').val('');
 				
 				append({
 					id: data.id,
 					name: data.name,
-					content: data.content,
+					body: data.body,
 				});
 				
-				Paperwork.ready($body.find('.template-create'), 'CREATE');
-				Paperwork.send(`tab.${context.name}.activate`, 'last');
+				Paperwork.ready($body.find('[data-type="template-create"]'), 'CREATE');
+				// Paperwork.send(`tab.${context.name}.activate`, 'last');
 			});
 		});
 		
@@ -135,54 +79,149 @@ Core.addModule('template', function(context){
 		Paperwork.validate($body.find('.new-template'), button.create, Paperwork.random(6), {
 			allowDuplicates: true,
 		});
+		
+		// Get template
+		$body.on('click', '[data-type="previous"]', function(){
+			getTemplate('previous');
+		});
+		
+		$body.on('click', '[data-type="next"]', function(){
+			getTemplate('next');
+		});
+		
+		// Hover properties -> data
+		$body.on('mouseover', '[data-type="row"]', function(){
+			var prop = $(this).find('[data-type="key"]').text().trim();
+			
+			$body.find(`[data-property="${prop}"]`).css('background-color', '#D6EDFF');
+		});
+		
+		$body.on('mouseout', '[data-type="row"]', function(){
+			var prop = $(this).find('[data-type="key"]').text().trim();
+			
+			$body.find(`[data-property="${prop}"]`).css('background-color', '');
+		});
+		
+		// Save properties
+		propertiesUpdate();
 	}
 	
 	function append(request){
 		
-		var $tabs = $body.find('[data-type="tab-container"] ul'),
+		var id,
+			$tabs = $body.find('[data-type="tab-container"] ul'),
 			$obj = $body.find('[data-type="obj-container"]');
-		var id;
 		
 		// ID
 		id = $tabs.children().last().prev().data('id') + 1;
 		
 		$tabs.children().last().before(`
-			<li data-type="tab" data-id="${id}" class="tab">${request.name}</li>
+			<li data-type="tab" data-id="${id}" class="tab" style="opacity: 0.5;">${request.name}</li>
 		`);
+		
+		$body.find('[data-type="tab"]').filter(`[data-id="${id}"]`).animate({
+			opacity: 1,
+		}, 300, 'swing');
 		
 		$obj.children().last().before(`
 			<box data-type="obj" data-id="${id}" data-template-id="${request.id}" class="tabobj">
-				<div class="container wrap">
-					<div class="left" style="width: 33%;">
-						<input type="text" class="template-name" placeholder="${request.name}" value="${request.name}">
+				<div class="template-container">
+					<div class="container">
+						<input type="text" class="template-name" data-type="template-name" placeholder="Template name" value="${request.name}" required>
 					</div>
-				</div>
-				<hr>
-				<div class="container template-form">
-					${request.content}
-				</div>
-				<hr>
-				<div class="container wrap">
-					<ul class="list-inline left">
-						<li>
-							<button class="button template-publish">PUBLISH</button>
-						</li>
-					</ul>
-					<ul class="list-inline right">
-						<li>
-							<button class="button delete template-delete">DELETE</button>
-						</li>
-					</ul>
+					<hr>
+					<div data-type="template-document" class="template-document">
+						${request.body}
+					</div>
 				</div>
 			</box>
 		`);
 		
+		render();
 		Paperwork.send(`tab.${context.name}.activate`, id);
-		
 	}
 	
 	function remove(id){
 		$body.find(`[data-id="${id}"]`).remove();
+	}
+	
+	function getTemplate(req){
+		var template_id = $body.find('.tabopen').data('template-id'),
+			direction;
+		
+		req == 'previous' ? direction = '-10' : direction = '10';
+		
+		$body.find('.tabopen [data-type="template-document"]').animate({
+			opacity: 0,
+			marginLeft: `${(direction * -1)}px`
+		}, 100, 'swing', change);
+		
+		function change(){
+			$.post(request.update, {
+				id: template_id,
+				direction: req,
+			}).done(function(response){
+				response = JSON.parse(response);
+				
+				$body.find('.tabopen [data-type="template-document"]').html(response.body).css({
+					opacity: 0,
+					marginLeft: `${direction}px`,
+				}).animate({
+					opacity: 1,
+					marginLeft: 0,
+				}, 100, 'swing');
+				
+				render();
+			});
+		}
+	}
+	
+	function getProperties(){
+		
+		$.get(request.get)
+		.done(function(response){
+			response = JSON.parse(response);
+			properties = response;
+			
+			render();
+		});
+	}
+	
+	function propertiesUpdate(){
+		$body.on('keyup', '[data-type="properties"] input', function(){
+			properties[$(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim()] = $(this).val();
+			
+			render();
+		});
+		
+		$body.on('blur', '[data-type="properties"] input', function(){
+			
+			$.post(request.putProp, {
+				properties: properties,
+			}).done(function(response){
+				Paperwork.send('notification');
+			});
+		});
+	}
+	
+	function render(){
+		
+		// Update each template's name property
+		$body.find('[data-type="template-document"]').each(function(){
+			$(this).find('[data-property="name"]').html($(this).closest('[data-template-id]').find('[data-type="template-name"]').val());
+		});
+		
+		// Update all properties from properties object
+		for(let i in properties){
+			const value = properties[i];
+			const $prop = $body.find(`[data-type="template-document"] [data-property="${i}"]`);
+			
+			// Set prop value in templates
+			$prop.html(value);
+			
+			// Render side panel
+			$body.find(`[data-type="properties"] [data-type="${i}"]`).val(value);
+		}
 	}
 	
 });

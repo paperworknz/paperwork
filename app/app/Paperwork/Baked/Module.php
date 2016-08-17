@@ -18,7 +18,7 @@ class Module {
 	public function require($name, $data = []){
 		$app = \Slim\Slim::getInstance();
 		
-		$file = "$this->module_dir/$name.php";
+		$file = "{$this->module_dir}/{$name}.php";
 		
 		// Require module
 		if(!file_exists($file)) return [];

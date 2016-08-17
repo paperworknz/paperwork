@@ -4,12 +4,7 @@ $app->get('/get/inventory', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$data = [];
-	if($inventory = $app->sql->get('inventory')->select(['name', 'price'])->all()){
-		foreach($inventory as $item){
-			$data[$item['name']] = $item['price'];
-		}
-	}
+	$inventory = $app->sql->get('inventory')->select(['name', 'price'])->all();
 	
-	echo $app->parse->arrayToJson($data);
+	echo $app->parse->arrayToJson($inventory);
 });
