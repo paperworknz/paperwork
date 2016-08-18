@@ -1,6 +1,6 @@
 Core.addService('parse', function(){
 	
-	function toNumber(i, {decimal = false, natural = false}){
+	function toNumber(i, {decimal = 0, natural = false} = {}){
 		
 		// Cast all to string
 		i = i.toString();

@@ -57,7 +57,7 @@
 	</doc-section>
 	<doc-section>
 		<doc-part>
-			<doc-part class="heading" style="width: 50%;">
+			<doc-part class="heading" style="width: 50%;" data-property="background_colour">
 				<doc-text>
 					CUSTOMER
 				</doc-text>
@@ -70,7 +70,7 @@
 	</doc-section>
 	<doc-section>
 		<doc-part>
-			<doc-part class="heading">
+			<doc-part class="heading" data-property="background_colour">
 				<doc-text>
 					JOB DESCRIPTION
 				</doc-text>
@@ -83,7 +83,7 @@
 	</doc-section>
 	<doc-section data-type="inventory" class="inventory" style="min-height: 28px;">
 		<doc-section>
-			<doc-section class="inv-head">
+			<doc-section class="inv-head" data-property="background_colour">
 				<doc-part>
 					<doc-text>
 						ITEM
@@ -117,13 +117,13 @@
 				<doc-text data-property="notes" class="bank">@notes</doc-text>
 			</doc-part>
 			<doc-part style="font-size: 11px;">
-				<doc-part class="heading">
+				<doc-part class="heading" data-property="background_colour">
 					<doc-text>
 						TERMS & CONDITIONS
 					</doc-text>
 				</doc-part>
-				<doc-part class="description std-pad">
-					<doc-text data-property="terms">@terms</doc-text>
+				<doc-part class="description">
+					<doc-text class="std-pad" data-property="terms">@terms</doc-text>
 				</doc-part>
 			</doc-part>
 		</doc-section>
@@ -141,13 +141,13 @@
 								GST
 							</doc-text>
 						</doc-row>
-						<doc-row>
+						<doc-row data-property="background_colour">
 							<doc-text>
 								TOTAL TO PAY
 							</doc-text>
 						</doc-row>
 					</doc-col>
-					<doc-col>
+					<doc-col style="flex: 1 0;min-width: 84px;">
 						<doc-row>
 							<doc-text data-aspect="sub-total">
 								@subtotal

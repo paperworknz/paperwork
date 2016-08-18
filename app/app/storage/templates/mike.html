@@ -1,9 +1,11 @@
 <doc-body data-template="mike" style="box-sizing: border-box; font-size: 13px; padding: 10mm;">
 	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
 		<doc-part style="box-sizing: border-box;">
-			<doc-text data-property="user-company" style="box-sizing: border-box; color: #01A8BA; font-size: 23px; font-weight: 600; padding-bottom: 15px;">
-				@company
-			</doc-text>
+			<doc-part data-property="text_colour" style="box-sizing: border-box;">
+				<doc-text data-property="user-company" style="box-sizing: border-box; font-size: 23px; font-weight: 600; padding-bottom: 15px;">
+					@company
+				</doc-text>
+			</doc-part>
 			<doc-part style="box-sizing: border-box; font-weight: 600;">
 				<doc-text data-property="user-address" style="box-sizing: border-box;">@address</doc-text>
 				<doc-part style="box-sizing: border-box;">
@@ -36,7 +38,7 @@
 			</doc-part>
 		</doc-part>
 		<doc-part style="box-sizing: border-box;">
-			<doc-text data-aspect="name" style="box-sizing: border-box; color: #01A8BA; font-size: 24px; font-weight: 600; text-align: right;">@name</doc-text>
+			<doc-text data-aspect="name" data-property="text_colour" style="box-sizing: border-box; font-size: 24px; font-weight: 600; text-align: right;">@name</doc-text>
 			<doc-part style="-ms-flex-pack: end; -webkit-box-pack: end; box-sizing: border-box; display: flex; justify-content: flex-end;">
 				<doc-part style="box-sizing: border-box; display: flex; justify-content: flex-end;">
 					<doc-col style="box-sizing: border-box;">
@@ -71,23 +73,23 @@
 	</doc-section>
 	<doc-section data-type="inventory" style="-ms-flex-direction: column; -webkit-box-direction: normal; -webkit-box-orient: vertical; box-sizing: border-box; display: flex; flex-direction: column; min-height: 28px; padding-bottom: 15px;">
 		<doc-section style="box-sizing: border-box;">
-			<doc-section style="background-color: #01A8BA; border: 1px solid #000; box-sizing: border-box; display: flex; font-size: 12px; font-weight: 600; line-height: 20px;">
-				<doc-part style="-ms-flex: 1; -ms-flex-preferred-size: 70px; -webkit-box-flex: 1; border-left: none; box-sizing: border-box; flex: 1; flex-basis: 70px; padding: 0 6px; text-align: left;">
+			<doc-section data-property="background_colour" style="border: 1px solid #000; box-sizing: border-box; display: flex; font-size: 12px; font-weight: 600; line-height: 20px;">
+				<doc-part style="-ms-flex: 1; -ms-flex-preferred-size: 84px; -webkit-box-flex: 1; border-left: none; box-sizing: border-box; flex: 1; flex-basis: 84px; padding: 0 6px; text-align: left;">
 					<doc-text style="box-sizing: border-box;">
 						ITEM
 					</doc-text>
 				</doc-part>
-				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 70px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 70px; padding: 0 6px; text-align: center;">
+				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 84px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 84px; padding: 0 6px; text-align: center;">
 					<doc-text style="box-sizing: border-box;">
 						QTY
 					</doc-text>
 				</doc-part>
-				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 70px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 70px; padding: 0 6px; text-align: center;">
+				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 84px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 84px; padding: 0 6px; text-align: center;">
 					<doc-text style="box-sizing: border-box;">
 						PRICE
 					</doc-text>
 				</doc-part>
-				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 70px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 70px; padding: 0 6px; text-align: center;">
+				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 84px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 84px; padding: 0 6px; text-align: center;">
 					<doc-text style="box-sizing: border-box;">
 						TOTAL
 					</doc-text>
@@ -102,7 +104,7 @@
 	<doc-section style="box-sizing: border-box; justify-content: flex-end; padding-bottom: 15px;">
 		<doc-part style="-ms-flex-pack: end; -webkit-box-pack: end; box-sizing: border-box; display: flex; justify-content: flex-end;">
 			<doc-part style="box-sizing: border-box; display: flex;">
-				<doc-col style="box-sizing: border-box; text-align: right;">
+				<doc-col style="box-sizing: border-box; flex: 1 0; padding-left: 30px; text-align: right;">
 					<doc-row style="box-sizing: border-box; min-width: 115px;">
 						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
 							Sub Total
@@ -113,13 +115,13 @@
 							GST
 						</doc-text>
 					</doc-row>
-					<doc-row style="background-color: #01A8BA; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid transparent; border-top: 1px solid #000; box-sizing: border-box; font-weight: 600; min-width: 115px;">
+					<doc-row data-property="background_colour" style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid transparent; border-top: 1px solid #000; box-sizing: border-box; font-weight: 600; min-width: 115px;">
 						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
 							TOTAL TO PAY
 						</doc-text>
 					</doc-row>
 				</doc-col>
-				<doc-col style="box-sizing: border-box; text-align: right;">
+				<doc-col style="box-sizing: border-box; flex: 1 0; min-width: 84px; text-align: right;">
 					<doc-row style="box-sizing: border-box;">
 						<doc-text data-aspect="sub-total" style="box-sizing: border-box; padding: 2px 10px;">
 							@subtotal

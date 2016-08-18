@@ -38,9 +38,9 @@ doc-body {
 	
 	[contenteditable] {
 		cursor: text;
+		outline: none;
 		
 		&:hover {
-			outline: none;
 			background-color: #D6EDFF;
 		}
 	}

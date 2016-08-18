@@ -1,6 +1,6 @@
 <part class="wrap form">
 	<box class="container" style="background-color: white;padding: 0;">
-		<div data-type="document" data-id="{{document.id}}" style="pointer-events: none;opacity: 0.25">
+		<div data-type="document" data-id="{{document.id}}" style="pointer-events: none;opacity: 0;">
 			{{document.user_template.template.body | raw}}
 		</div>
 	</box>
@@ -44,6 +44,9 @@
 				</part>
 			</box>
 			{% endif %}-->
+			<box class="document-drawer">
+				
+			</box>
 			<box style="right: 0;position: absolute;">
 				<part class="container centered">
 					<button class="button delete" data-type="document-delete-button">DELETE</button>

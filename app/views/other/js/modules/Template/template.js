@@ -4,6 +4,7 @@ Core.addModule('template', function(context){
 	
 	var properties = {};
 	var top = 0;
+	var background_colour;
 	
 	var request = {
 		get: `${environment.root}/get/template-properties`,
@@ -16,8 +17,10 @@ Core.addModule('template', function(context){
 	
 	// Bind
 	context.use('tab');
+	context.use('document');
 	bind();
 	getProperties();
+	
 	
 	function bind(){
 		
@@ -93,12 +96,14 @@ Core.addModule('template', function(context){
 		$body.on('mouseover', '[data-type="row"]', function(){
 			var prop = $(this).find('[data-type="key"]').text().trim();
 			
+			if(prop.indexOf('colour') != -1) return;
 			$body.find(`[data-property="${prop}"]`).css('background-color', '#D6EDFF');
 		});
 		
 		$body.on('mouseout', '[data-type="row"]', function(){
 			var prop = $(this).find('[data-type="key"]').text().trim();
 			
+			if(prop.indexOf('colour') != -1) return;
 			$body.find(`[data-property="${prop}"]`).css('background-color', '');
 		});
 		
@@ -130,8 +135,22 @@ Core.addModule('template', function(context){
 						<input type="text" class="template-name" data-type="template-name" placeholder="Template name" value="${request.name}" required>
 					</div>
 					<hr>
-					<div data-type="template-document" class="template-document">
-						${request.body}
+					<div style="position: relative;overflow: hidden;">
+						<div data-type="document" data-id="{{i}}" class="template-document" style="opacity: 0.25;">
+							${request.body}
+						</div>
+						<div data-type="template-hud" class="template-hud">
+							<div class="play-container" style="padding-right: 50mm;">
+								<div data-type="previous" class="play-padding">
+									<div class="play-left"></div>
+								</div>
+							</div>
+							<div class="play-container" style="padding-left: 50mm;">
+								<div data-type="next" class="play-padding">
+									<div class="play-right"></div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</box>
@@ -151,7 +170,7 @@ Core.addModule('template', function(context){
 		
 		req == 'previous' ? direction = '-10' : direction = '10';
 		
-		$body.find('.tabopen [data-type="template-document"]').animate({
+		$body.find('.tabopen [data-type="document"]').animate({
 			opacity: 0,
 			marginLeft: `${(direction * -1)}px`
 		}, 100, 'swing', change);
@@ -163,7 +182,7 @@ Core.addModule('template', function(context){
 			}).done(function(response){
 				response = JSON.parse(response);
 				
-				$body.find('.tabopen [data-type="template-document"]').html(response.body).css({
+				$body.find('.tabopen [data-type="document"]').html(response.body).css({
 					opacity: 0,
 					marginLeft: `${direction}px`,
 				}).animate({
@@ -204,24 +223,7 @@ Core.addModule('template', function(context){
 		});
 	}
 	
-	function render(){
-		
-		// Update each template's name property
-		$body.find('[data-type="template-document"]').each(function(){
-			$(this).find('[data-property="name"]').html($(this).closest('[data-template-id]').find('[data-type="template-name"]').val());
-		});
-		
-		// Update all properties from properties object
-		for(let i in properties){
-			const value = properties[i];
-			const $prop = $body.find(`[data-type="template-document"] [data-property="${i}"]`);
-			
-			// Set prop value in templates
-			$prop.html(value);
-			
-			// Render side panel
-			$body.find(`[data-type="properties"] [data-type="${i}"]`).val(value);
-		}
+	function render(id){
+		Paperwork.send(`document.template.reload`, properties);
 	}
-	
 });

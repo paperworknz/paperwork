@@ -27,6 +27,12 @@ $app->post('/post/document', 'uac', function() use ($app){
 		'user_template_id' => $template_id,
 	])->run();
 	
+	// Get new Document
+	$documents = $app->sql->get('document')->where('id', '=', $id)->all();
+	
+	// Format document data
+	$document = $app->document->get($documents);
+	
 	// Twig render document.html
 	$html = $app->build->page('other/html/document.html', [
 		'document' => [
@@ -38,10 +44,9 @@ $app->post('/post/document', 'uac', function() use ($app){
 	], false);
 	
 	$response = [
-		'id' => $id,
 		'name' => $user_template['name'],
 		'body' => $html,
-		'date' => date("d/m/Y"),
+		'document' => $document,
 	];
 	
 	echo $app->parse->arrayToJson($response);

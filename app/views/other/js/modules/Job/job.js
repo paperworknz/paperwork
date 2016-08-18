@@ -176,28 +176,29 @@ Core.addModule('job', function(context){
 	
 	function renderDocument(request){
 		
-		var id,
+		var tab_id,
 			$tabs = $body.find('[data-type="tab-container"] ul'),
-			$obj = $body.find('[data-type="obj-container"]');
+			$obj = $body.find('[data-type="obj-container"]'),
+			name,
+			body;
 		
-		// ID
-		id = $tabs.children().last().prev().data('id') + 1;
+		tab_id = $tabs.children().last().prev().data('id') + 1;
 		
 		$tabs.children().last().before(`
-			<li data-type="tab" data-id="${id}" class="tab" style="opacity: 0.5;">${request.name}</li>
+			<li data-type="tab" data-id="${tab_id}" class="tab" style="opacity: 0.5;">${request.name}</li>
 		`);
 		
-		$body.find('[data-type="tab"]').filter(`[data-id="${id}"]`).animate({
+		$body.find('[data-type="tab"]').filter(`[data-id="${tab_id}"]`).animate({
 			opacity: 1,
 		}, 300, 'swing');
 		
 		$obj.children().last().before(`
-			<part data-type="obj" data-id="${id}" class="tabobj">
+			<part data-type="obj" data-id="${tab_id}" class="tabobj">
 				${request.body}
 			</part>
 		`);
 		
-		Paperwork.send(`docment.${context.name}.run`, id);
-		Paperwork.send(`tab.${context.name}.activate`, id);
+		Paperwork.send(`tab.${context.name}.activate`, tab_id);
+		Paperwork.send(`document.${context.name}.build`, request.document);
 	}
 });

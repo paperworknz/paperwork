@@ -1,0 +1,21 @@
+<box class="box-std">
+	<div class="copy-parent wrap">
+		<div class="container-top">
+			<div class="h4 title centered">
+				Use template:
+			</div>
+		</div>
+		<div class="container-mid">
+			{% for document in modules['document-copy'].data.templates %}
+			<div class="new-document" data-type="new-document" data-template-id="{{document.id}}">
+				{{document.name}}
+			</div>
+			{% endfor %}
+		</div>
+		<div class="container wrap">
+			<button class="button blue right" data-type="cancel-button" data-button-state="off">
+				CANCEL
+			</button>
+		</div>
+	</div>
+</box>

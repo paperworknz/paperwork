@@ -82,6 +82,8 @@ function goto(location, fade) {
 		}, 'fast');
 	}
 	
+	if(location == 'reload') return window.location.reload();
+	
 	window.location = location;
 }
 

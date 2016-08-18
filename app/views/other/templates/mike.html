@@ -1,9 +1,11 @@
 <doc-body data-template="mike">
 	<doc-section>
 		<doc-part>
-			<doc-text data-property="user-company" class="top_title">
-				@company
-			</doc-text>
+			<doc-part data-property="text_colour">
+				<doc-text data-property="user-company" class="top_title">
+					@company
+				</doc-text>
+			</doc-part>
 			<doc-part style="font-weight: 600;">
 				<doc-text data-property="user-address">@address</doc-text>
 				<doc-part>
@@ -36,7 +38,7 @@
 			</doc-part>
 		</doc-part>
 		<doc-part>
-			<doc-text data-aspect="name" class="name">@name</doc-text>
+			<doc-text data-aspect="name" class="name" data-property="text_colour">@name</doc-text>
 			<doc-part class="table detail">
 				<doc-part style="display: flex;justify-content: flex-end;">
 					<doc-col>
@@ -71,7 +73,7 @@
 	</doc-section>
 	<doc-section data-type="inventory" class="inventory" style="min-height: 28px;">
 		<doc-section>
-			<doc-section class="inv-head">
+			<doc-section class="inv-head" data-property="background_colour">
 				<doc-part>
 					<doc-text>
 						ITEM
@@ -102,7 +104,7 @@
 	<doc-section style="justify-content: flex-end;">
 		<doc-part class="table totals">
 			<doc-part style="display: flex;">
-				<doc-col>
+				<doc-col style="flex: 1 0;padding-left: 30px;">
 					<doc-row>
 						<doc-text>
 							Sub Total
@@ -113,13 +115,13 @@
 							GST
 						</doc-text>
 					</doc-row>
-					<doc-row>
+					<doc-row data-property="background_colour">
 						<doc-text>
 							TOTAL TO PAY
 						</doc-text>
 					</doc-row>
 				</doc-col>
-				<doc-col>
+				<doc-col style="flex: 1 0;min-width: 84px;">
 					<doc-row>
 						<doc-text data-aspect="sub-total">
 							@subtotal

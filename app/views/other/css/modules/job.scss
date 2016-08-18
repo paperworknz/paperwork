@@ -64,16 +64,6 @@
 		}
 	}
 	
-	.twig-remove {
-		position: absolute;
-		top: 0;
-		right: 0;
-		color: white;
-		width: 22px;
-		text-align: center;
-		cursor: pointer;
-	}
-	
 	.client-details td { height:28px; }
 	.client-details { width:75% }
 	
@@ -103,31 +93,31 @@
 		padding: 0px 10px;
 		width: 50px;
 	}
+	
+	.new-document {
+		text-transform: uppercase;
+		text-align:center;
+		height:100px;
+		line-height:100px;
+		font-size:30px;
+		color: #27ae60;
+		border: 1px solid transparent;
+		margin-bottom: 5px;
+		cursor:pointer;
+		@include transition((background 0.3s ease, border-color 0.3s ease));
+	}
+
+	.new-document:last-child {
+		margin-bottom: 0;
+	}
+
+	.new-document:hover {
+		border: 1px solid #2ecc71;
+		background: rgba(46,204,113, 0.25);
+	}
 }
 
 .lowlight { color: #999; }
-
-.new-document {
-	text-transform: uppercase;
-	text-align:center;
-	height:100px;
-	line-height:100px;
-	font-size:30px;
-	color: #27ae60;
-	border: 1px solid transparent;
-	margin-bottom: 5px;
-	cursor:pointer;
-	@include transition((background 0.3s ease, border-color 0.3s ease));
-}
-
-.new-document:last-child {
-	margin-bottom: 0;
-}
-
-.new-document:hover {
-	border: 1px solid #2ecc71;
-	background: rgba(46,204,113, 0.25);
-}
 
 .margin-content {
 	.percent {

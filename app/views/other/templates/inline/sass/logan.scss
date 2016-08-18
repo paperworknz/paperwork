@@ -48,7 +48,6 @@
 	}
 
 	.heading {
-		background-color: #39B0EB;
 		text-align: center;
 		font-weight: 600;
 		border: 1px solid black;
@@ -90,7 +89,6 @@
 		border-right: 1px solid transparent;
 		border-bottom: 1px solid black;
 		border-left: 1px solid black;
-		background-color: #39B0EB;
 		font-weight: 600;
 	}
 
@@ -108,7 +106,6 @@
 	}
 
 	.inventory .inv-head {
-		background-color: #39B0EB;
 		font-weight: 600;
 		border: 1px solid black;
 		display: flex;
@@ -119,7 +116,7 @@
 
 	.inventory .inv-head > doc-part {
 		flex: 0 0;
-		flex-basis: 70px;
+		flex-basis: 84px;
 		text-align: center;
 		padding: 0px 6px;
 		border-left: 1px solid black;

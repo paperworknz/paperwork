@@ -2,7 +2,7 @@
 	"library": {
 		"Paperwork": "Paperwork.css?rb327w",
 		"Public": "Public.css?TcMy8r",
-		"Document": "Document.css?WFtp6r"
+		"Document": "Document.css?h9Me3y"
 	},
 	"views": {
 		"login": "login.css?JiGeeo"
@@ -12,11 +12,12 @@
 		"client": "client.css?tsOsGM",
 		"clients": "clients.css?KdGSt3",
 		"inventory": "inventory.css?VbWBFW",
-		"job": "job.css?QZsnZ0",
+		"job": "job.css?q5jlHF",
 		"jobs": "jobs.css?I3ktku",
 		"settings": "settings.css?Lmiy6s",
 		"template": "template.css?V5wXLN",
 		"user": "user.css?E1ktyM",
-		"welcome-guest": "welcome-guest.css?MhUIDW"
+		"welcome-guest": "welcome-guest.css?MhUIDW",
+		"document-copy": "document-copy.css?apxGmF"
 	}
 }

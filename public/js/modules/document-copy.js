@@ -1,0 +1,1 @@
+"use strict";Core.addModule("document-copy",function(e){var t=e.element;t.on("click",'[data-type="new-document"]',function(){Paperwork.send("document.job.copy",$(this).data("template-id"))})});

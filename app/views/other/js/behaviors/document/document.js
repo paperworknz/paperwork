@@ -7,6 +7,7 @@ Core.addBehavior('document', function(context, opt){
 		postInventory: `${environment.root}/post/inventory`,
 	};
 	
+	var job_id;
 	var timer;
 	var properties = [];
 	var documents = [];
@@ -17,11 +18,63 @@ Core.addBehavior('document', function(context, opt){
 	
 	var parse = context.require('parse');
 	
-	require();
+	listen();
+	onload();
 	
-	function require(){
+	function listen(){
+		
+		// Listen to document.build
+		Paperwork.on(`document.${context.name}.build`, function(request){
+			
+			if(typeof request !== 'object' || request === null){
+				return console.warn('New document request not an object');
+			}
+			
+			// Loop all documents in the request
+			for(let i in request){
+				
+				// Remove existing documents from request by ID
+				if(documents[i]){
+					delete request[i];
+					console.warn(`Document ID ${i} already exists, removed from request`);
+					continue;
+				}
+				
+				// Merge this document with documents object and build
+				documents[i] = request[i];
+				build(i);
+			}
+		});
+		
+		Paperwork.on(`document.${context.name}.reload`, function(request){
+			
+			if(typeof request === 'object' && request !== null){
+				properties = request;
+			}
+			
+			// Loop through each document
+			$body.find('[data-type="document"]').each(function(){
+				
+				var document_id = $(this).data('id');
+				
+				build(document_id);
+			});
+		});
+		
+		// Listen to document.save
+		Paperwork.on(`document.${context.name}.save`, function(request){
+			if(!parse.toNumber(request)) return console.warn('Document ID not supplied');
+			
+			save(request);
+		});
+	}
+	
+	function onload(){
+		
+		job_id = typeof job == 'undefined' ? 0 : job.job_id;
+		
 		$.get(`${environment.root}/get/inventory`, function(inventory_response){
-			$.get(`${environment.root}/get/document/${job.job_id}`, function(document_response){
+			$.get(`${environment.root}/get/document/${job_id}`, function(document_response){
 				$.get(`${environment.root}/get/template-properties`, function(property_response){
 					
 					documents = JSON.parse(document_response);
@@ -29,59 +82,50 @@ Core.addBehavior('document', function(context, opt){
 					inventory.origin = JSON.parse(inventory_response);
 					for(let i in inventory.origin) inventory.flat.push(inventory.origin[i].name);
 					
-					if($body.find('[data-type="document"]').length > 0) loop();
+					// Loop through each document once on load
+					$body.find('[data-type="document"]').each(function(){
+						
+						var document_id = $(this).data('id');
+						
+						build(document_id);
+					});
 				});
 			});
 		});
 	}
 	
-	function save(document_id){
+	function build(document_id){
 		
-		// Stop timer
-		clearTimeout(timer);
+		var $doc = $body.find(`[data-type="document"][data-id="${document_id}"]`),
+			template_name = $doc.find('[data-template]').data('template');
 		
-		// Start timer, save() after 2 seconds
-		timer = setTimeout(function(){
-			$.post(request.put, {
-				id: document_id,
-				document: documents[document_id],
-			});
+		// Load template CSS
+		if($(`[data-css="${template_name}"]`).length < 1){
+			$(`<link data-css="${template_name}" type="text/css" rel="stylesheet">`)
+			.appendTo('head')
+			.attr('href', `${environment.root}/css/templates/${template_name}.css`);
+		}
+		
+		// Set empty item array if null
+		if(job_id && documents[document_id].items == null) documents[document_id].items = [];
+		
+		renderProperties(document_id);
+		if(job_id) bindTypeahead(document_id);
+		if(job_id) bindAspects(document_id);
+		if(job_id) bindInventoryContent(document_id);
+		render(document_id);
+		
+		$doc.css('pointer-events', 'auto').animate({
+			opacity: 1
 		}, 500);
 	}
 	
-	function loop(){
+	function bindTypeahead(document_id){
 		
-		bindTypeahead();
-		renderProperties();
-		bindAspects();
-		bindInventoryContent();
-		render();
-		
-		// Loop through each document once on load
-		$body.find('[data-type="document"]').each(function(){
-			
-			var template_name = $(this).find('[data-template]').data('template'),
-				document_id = $(this).data('id');
-			
-			if($(`[data-css="${template_name}"]`).length < 1){
-				$(`<link data-css="${template_name}" type="text/css" rel="stylesheet">`)
-				.appendTo('head')
-				.attr('href', `${environment.root}/css/templates/${template_name}.css`);
-			}
-			
-			// Set empty item array if null
-			if(documents[document_id].items == null) documents[document_id].items = [];
-			
-			$(this).css('pointer-events', 'auto').animate({
-				opacity: 1
-			}, 500);
-		});
-	}
-	
-	function bindTypeahead(){
+		var $doc = `[data-type="document"][data-id="${document_id}"]`;
 		
 		// Instantiate typeahead
-		$body.find('[data-type="document"] [data-type="inventory-input"]').html(`
+		$body.find(`${$doc} [data-type="inventory-input"]`).html(`
 			<input type="text" class="typeahead" placeholder="Item">
 		`).find('.typeahead').typeahead({
 			hint: true,
@@ -92,9 +136,8 @@ Core.addBehavior('document', function(context, opt){
 		});
 		
 		// Add listeners
-		$body.off('typeahead:select', '[data-type="document"] .tt-input');
-		$body.on('typeahead:select', '[data-type="document"] .tt-input', function(){
-			var document_id = $(this).closest('[data-type="document"]').data('id');
+		$body.off('typeahead:select', `${$doc} .tt-input`);
+		$body.on('typeahead:select', `${$doc} .tt-input`, function(){
 			
 			// Ignore enter key
 			if(event.which == 13) return;
@@ -103,15 +146,15 @@ Core.addBehavior('document', function(context, opt){
 				document_id: document_id,
 				name: $(this).val(),
 			});
-			render();
+			
+			render(document_id);
 			
 			// Clear typeahead
 			$(this).typeahead('val', '');
 		});
 		
-		$body.off('keydown', `[data-type="document"] .tt-input`);
-		$body.on('keydown', `[data-type="document"] .tt-input`, function(){
-			var document_id = $(this).closest('[data-type="document"]').data('id');
+		$body.off('keydown', `${$doc} .tt-input`);
+		$body.on('keydown', `${$doc} .tt-input`, function(){
 			
 			// Cancel if not enter key
 			if(event.which != 13) return;
@@ -120,7 +163,8 @@ Core.addBehavior('document', function(context, opt){
 				document_id: document_id,
 				name: $(this).val(),
 			});
-			render();
+			
+			render(document_id);
 			
 			// Clear typeahead
 			$(this).typeahead('val', '');
@@ -130,21 +174,30 @@ Core.addBehavior('document', function(context, opt){
 		});
 	}
 	
-	function renderProperties(){
+	function renderProperties(document_id){
+		
+		var $doc = `[data-type="document"][data-id="${document_id}"]`;
 		
 		// Render user template properties
 		for(let i in properties){
-			$body.find(`[data-type="document"] [data-property="${i}"]`).html(properties[i]);
+			var value = properties[i];
+			var $prop = $body.find(`${$doc} [data-property="${i}"]`);
+			
+			// Set prop value in templates
+			if(i == 'background_colour') $prop.css('background-color', (value || 'white'));
+			if(i == 'text_colour') $prop.css('color', (value || 'white'));
+			if(i.indexOf('colour') == -1) $prop.html(value);
 		}
 	}
 	
-	function bindAspects(){
+	function bindAspects(document_id){
+		
+		var $doc = `[data-type="document"][data-id="${document_id}"]`;
 		
 		// Bind any and all aspects
-		$body.off('keyup', '[data-type="document"] [data-aspect]');
-		$body.on('keyup', '[data-type="document"] [data-aspect]', function(){
-			var document_id = $(this).closest('[data-type="document"]').data('id'),
-				aspect = $(this).data('aspect'),
+		$body.off('keyup', `${$doc} [data-aspect]`);
+		$body.on('keyup', `${$doc} [data-aspect]`, function(){
+			var aspect = $(this).data('aspect'),
 				value = $(this).html().trim();
 			
 			// Update document object and save
@@ -153,11 +206,12 @@ Core.addBehavior('document', function(context, opt){
 		});
 	}
 	
-	function bindInventoryContent(){
+	function bindInventoryContent(document_id){
 		
-		let parent = '[data-type="document"] [data-type="inventory-content"]';
+		var $doc = `[data-type="document"][data-id="${document_id}"]`;
+		let parent = `${$doc} [data-type="inventory-content"]`;
 		
-		// Bind enter/return to blur
+		// Bind enter/return to blur for name, qty, price
 		$body.on('keydown', `${parent} [data-type="name"], ${parent} [data-type="quantity"], ${parent} [data-type="price"]`, function(){
 			if(event.which != 13) return;
 			
@@ -170,8 +224,7 @@ Core.addBehavior('document', function(context, opt){
 		// Bind update on blur
 		$body.off('blur', `${parent} [data-type="name"], ${parent} [data-type="quantity"], ${parent} [data-type="price"]`);
 		$body.on('blur', `${parent} [data-type="name"], ${parent} [data-type="quantity"], ${parent} [data-type="price"]`, function(){
-			var document_id = $(this).closest('[data-type="document"]').data('id'),
-				type = $(this).data('type'),
+			var type = $(this).data('type'),
 				index = $(this).closest('.inventory-item').index(),
 				value = $(this).text().trim();
 			
@@ -181,20 +234,19 @@ Core.addBehavior('document', function(context, opt){
 			if(existing != value){
 				documents[document_id].items[index][type] = value;
 				save(document_id);
-				render();
+				render(document_id);
 			}
 		});
 		
 		// Bind inventory remove button
 		$body.off('click', `${parent} [data-type="remove"]`);
 		$body.on('click', `${parent} [data-type="remove"]`, function(){
-			var document_id = $(this).closest('[data-type="document"]').data('id'),
-				index = $(this).closest('.inventory-item').index();
+			var index = $(this).closest('.inventory-item').index();
 			
 			// Remove item from items array, save, and render
 			documents[document_id].items.splice(index, 1);
 			save(document_id);
-			render();
+			render(document_id);
 		});
 	}
 	
@@ -259,12 +311,12 @@ Core.addBehavior('document', function(context, opt){
 			});
 		}
 		
-		render();
+		render(document_id);
 	}
 	
 	function calculate(document_id){
 		
-		var document = $body.find('[data-type="document"]').filter(`[data-id="${document_id}"]`);
+		var $doc = $body.find(`[data-type="document"][data-id="${document_id}"]`);
 		var subTotal = 0;
 		
 		for(let i in documents[document_id].items){
@@ -292,62 +344,74 @@ Core.addBehavior('document', function(context, opt){
 		documents[document_id].total = parse.toDollar(subTotal + ((subTotal / 100) * 15));
 	}
 	
-	function render(){
+	function render(document_id){
 		
-		// Loop each document
-		for(let i in documents){
-			const value = documents[i];
-			var document = $body.find(`[data-type="document"]`).filter(`[data-id="${i}"]`);
+		const value = documents[document_id];
+		var $doc = $body.find(`[data-type="document"]`).filter(`[data-id="${document_id}"]`);
+		
+		// Calculate document
+		if(job_id) calculate(document_id);
+		
+		// Render aspects
+		for(let aspect in value){
+			$doc.find(`[data-aspect="${aspect}"]`).html(value[aspect]);
+		}
+		
+		if(!job_id) return;
+		
+		// Render items
+		$doc.find('[data-type="inventory-content"]').html('');
+		for(let i in value.items){
+			const item = value.items[i];
 			
-			// Calculate document
-			calculate(i);
-			
-			// Render aspects
-			for(let aspect in value){
-				document.find(`[data-aspect="${aspect}"]`).html(value[aspect]);
-			}
-			
-			// Render items
-			document.find('[data-type="inventory-content"]').html('');
-			for(let i in value.items){
-				const item = value.items[i];
-				
-				document.find('[data-type="inventory-content"]').append(`
-					<doc-section class="inventory-item">
-						<doc-part class="inventory-item_name">
-							<doc-text data-type="name">
-								${item.name}
-							</doc-text>
-							<doc-part data-type="remove" class="remove-btn"></doc-part>
-						</doc-part>
-						<doc-part class="inventory-item_qty">
-							<doc-text data-type="quantity">
-								${item.quantity}
-							</doc-text>
-						</doc-part>
-						<doc-part class="inventory-item_price">
-							<doc-text data-type="price">
-								${item.price}
-							</doc-text>
-						</doc-part>
-						<doc-part class="inventory-item_total">
-							<doc-text data-type="item-total">
-								${item.total}
-							</doc-text
-						</doc-part>
-					</doc-section>
-				`);
-			}
+			$doc.find('[data-type="inventory-content"]').append(`
+				<doc-section class="inventory-item">
+					<doc-part class="inventory-item_name">
+						<doc-text data-type="name">
+							${item.name}
+						</doc-text>
+						<doc-part data-type="remove" class="remove-btn"></doc-part>
+					</doc-part>
+					<doc-part class="inventory-item_qty">
+						<doc-text data-type="quantity">
+							${item.quantity}
+						</doc-text>
+					</doc-part>
+					<doc-part class="inventory-item_price">
+						<doc-text data-type="price">
+							${item.price}
+						</doc-text>
+					</doc-part>
+					<doc-part class="inventory-item_total">
+						<doc-text data-type="item-total">
+							${item.total}
+						</doc-text
+					</doc-part>
+				</doc-section>
+			`);
 		}
 		
 		// Set contenteditable on all aspects globally
-		$body.find('[data-type="document"]')
-			.find('[data-aspect="name"], [data-aspect="date"], [data-aspect="description"]')
+		$doc.find('[data-aspect="name"], [data-aspect="date"], [data-aspect="description"]')
 			.attr('contenteditable', 'true');
 		
 		// Set contenteditable on all inventory items globally
-		$body.find('[data-type="document"] [data-type="inventory-content"] .inventory-item')
+		$doc.find('[data-type="inventory-content"] .inventory-item')
 			.find('[data-type="name"], [data-type="quantity"], [data-type="price"]')
 			.attr('contenteditable', 'true');
+	}
+	
+	function save(document_id){
+		
+		// Stop timer
+		clearTimeout(timer);
+		
+		// Start timer, save() after 2 seconds
+		timer = setTimeout(function(){
+			$.post(request.put, {
+				id: document_id,
+				document: documents[document_id],
+			});
+		}, 500);
 	}
 });
