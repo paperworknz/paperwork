@@ -42,7 +42,7 @@ Core.addModule('template', function(context){
 		});
 		
 		// Template rename and save
-		$body.find('[data-type="template-name"]').on('blur', function(){
+		$body.find('[data-type="template-name"]').on('change', function(){
 			var id = $(this).closest('[data-template-id]').data('template-id'),
 				name = $(this).val().trim();
 			
@@ -213,7 +213,7 @@ Core.addModule('template', function(context){
 			render();
 		});
 		
-		$body.on('blur', '[data-type="properties"] input', function(){
+		$body.on('change', '[data-type="properties"] input', function(){
 			
 			$.post(request.putProp, {
 				properties: properties,
