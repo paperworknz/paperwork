@@ -32,6 +32,7 @@ $app->get('/get/module/:a+', function($a) use ($app){
 		'js' => $js,
 		'third' => (isset($data['third']) ? $data['third'] : []),
 		'classes' => (isset($data['classes']) ? $data['classes'] : []),
+		'behaviors' => (isset($data['behaviors']) ? $data['behaviors'] : []),
 		'module' => $app->build->page("other/modules/{$module}.html", [
 			'modules' => [
 				$module => $data,

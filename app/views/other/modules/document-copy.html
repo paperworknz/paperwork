@@ -1,9 +1,10 @@
 <box class="box-std">
 	<div class="copy-parent wrap">
 		<div class="container-top">
-			<div class="h4 title centered">
-				Use template:
+			<div class="h4 title">
+				Copy this document to Job: <input type="text" data-type="job_number" style="width: 125px;" required>
 			</div>
+			<input type="hidden" data-type="validate-job_number" required>
 		</div>
 		<div class="container-mid">
 			{% for document in modules['document-copy'].data.templates %}

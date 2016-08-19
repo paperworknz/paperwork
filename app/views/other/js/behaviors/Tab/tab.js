@@ -15,6 +15,7 @@ Core.addBehavior('tab', function(context, opt){
 	
 	function construct(){
 		
+		if(context.url.activate) return activate(context.url.activate);
 		if(opt.active !== undefined) return activate(opt.active);
 		if(getStoredTab()) return activate(getStoredTab());
 		
@@ -26,12 +27,12 @@ Core.addBehavior('tab', function(context, opt){
 		Paperwork.on(`tab.${context.name}.remove`, remove);
 		
 		$body.on('click', `${tabContainer} ${tab}`, function(){
-			Paperwork.send(`tab.${context.name}.activate`, $(this).data('id'));
+			activate($(this).data('id'));
 		});
 	}
 	
 	function getStoredTab(){
-		return sessionStorage[context.name]
+		return sessionStorage[context.name];
 	}
 	
 	function setStoredTab(){
@@ -92,7 +93,8 @@ Core.addBehavior('tab', function(context, opt){
 	
 	function remove(id){
 		
-		Paperwork.send(`tab.${context.name}.activate`, 'previous');
+		activate('previous');
+		
 		$body.find(`[data-type="obj"]`).filter(`[data-id="${id}"]`).remove();
 		$body.find(`[data-type="tab"]`).filter(`[data-id="${id}"]`).css({
 			width: $body.find(`[data-type="tab"]`).filter(`[data-id="${id}"]`).outerWidth(),

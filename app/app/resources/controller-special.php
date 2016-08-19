@@ -10,3 +10,4 @@ include '../app/routes/other/get/pdf.php';
 include '../app/routes/other/get/pdf-json.php';
 include '../app/routes/other/get/document.php';
 include '../app/routes/other/get/module.php';
+include '../app/routes/other/get/job.php';

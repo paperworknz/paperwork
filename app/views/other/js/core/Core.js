@@ -51,7 +51,7 @@ var Core = (function($, undefined){
 			
 			dark = require('dark')
 			if(!dark) return console.warn(`Service 'dark' undefined`);
-			dark.run();
+			dark.run(name);
 			
 			$module = $(`
 				<part class="dark_content" style="opacity: 0;">
@@ -70,37 +70,57 @@ var Core = (function($, undefined){
 			loadThird();
 			
 			function loadThird(){
-				if(response.third){
-					for(let i in response.third){
-						const value = response.third[i];
-						
-						map[value] = false;
-						$.getScript(`${environment.root}/js/3rd/${value}.js`, function(){
-							map[value] = true;
-						});
-					}
+				
+				if(!response.third) return loadClasses();
+				
+				for(let i in response.third){
+					const value = response.third[i];
 					
-					depend = setInterval(function(){
-						wait(loadClasses);
-					}, 25);
+					map[value] = false;
+					$.getScript(`${environment.root}/js/3rd/${value}.js`, function(){
+						map[value] = true;
+					});
 				}
+				
+				depend = setInterval(function(){
+					wait(loadClasses);
+				}, 25);
 			}
 			
 			function loadClasses(){
-				if(response.classes){
-					for(let i in response.classes){
-						const value = response.classes[i];
-						
-						map[value] = false;
-						$.getScript(`${environment.root}/js/classes/${value}`, function(){
-							map[value] = true;
-						});
-					}
+				
+				if(!response.classes) return loadBehaviors();
+				
+				for(let i in response.classes){
+					const value = response.classes[i];
 					
-					depend = setInterval(function(){
-						wait(loadSelf);
-					}, 25);
+					map[value] = false;
+					$.getScript(`${environment.root}/js/classes/${value}`, function(){
+						map[value] = true;
+					});
 				}
+				
+				depend = setInterval(function(){
+					wait(loadBehaviors);
+				}, 25);
+			}
+			
+			function loadBehaviors(){
+				
+				if(!response.behaviors) return loadSelf();
+				
+				for(let i in response.behaviors){
+					const value = response.behaviors[i];
+					
+					map[value] = false;
+					loadBehavior(value, function(){
+						map[value] = true;
+					});
+				}
+				
+				depend = setInterval(function(){
+					wait(loadSelf);
+				}, 25);
 			}
 			
 			function loadSelf(){
@@ -124,7 +144,11 @@ var Core = (function($, undefined){
 					opacity: 1,
 				}, 100);
 				
-				return start(name);
+				// Add dark handle to module
+				modules[name].dark = dark;
+				
+				// Start module with supplied data (optional)
+				return start(name, data);
 			}
 		});
 	}
@@ -132,18 +156,15 @@ var Core = (function($, undefined){
 	function loadBehavior(name, callback){
 		if(behaviors[name]) return callback ? callback() : true;
 		
-		$.getScript(`${environment.root}/js/behaviors/${name}.js`)
+		$.getScript(`${environment.root}/js/behaviors/${name}.js`) // <--- this does NOT use cache
 		.done(callback);
 	}
 	
-	function start(name){
+	function start(name, data){
 		if(!modules[name]) return undefined;
 		if(modules[name].status) return true;
 		
-		var instance = modules[name].run(getContext(name)) || {};
-		
-		if(instance.onload) instance.onload();
-		if(instance.start) instance.start();
+		modules[name].run(getContext(name, data));
 		
 		return modules[name].status = true;
 	}
@@ -151,28 +172,40 @@ var Core = (function($, undefined){
 	function stop(name){
 		if(!modules[name]) return undefined;
 		
+		if(modules[name].dark) modules[name].dark.remove();
 		modules[name].status = false;
 		modules[name].stop();
 		return true;
 	}
 	
-	function getContext(name){
+	function getContext(name, data){
 		var $element = Paperwork.body.find(`[data-module="${name}"]`);
 		
-		var context = {
+		var url = (function(){
+			var search = location.search.substring(1);
+			
+			if(!search) return {};
+			
+			return JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
+			function(key, value) {
+				return key === "" ? value : decodeURIComponent(value);
+			});
+		})();
+		
+		return {
 			name: name,
+			data: data,
+			url: url,
 			element: $element,
 			require: require,
+			load: loadModule,
+			use: function(behavior, options){
+				return use(name, behavior, options);
+			},
 			stop: function(){
 				return stop(name);
-			}
+			},
 		};
-		
-		context.use = function(behavior, options){
-			use(name, behavior, options);
-		}
-		
-		return context;
 	}
 	
 	function use(origin, name, options){
@@ -180,11 +213,12 @@ var Core = (function($, undefined){
 		
 		if(!options) options = {};
 		delete context.use;
+		delete context.load;
 		
 		if(behaviors[name]) return behaviors[name](context, options);
 		
 		loadBehavior(name, function(){
-			return new behaviors[name](context, options);
+			return behaviors[name](context, options);
 		});
 	}
 	

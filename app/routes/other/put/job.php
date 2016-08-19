@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/put/job-details', 'uac', function() use ($app){
+$app->post('/put/job', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */

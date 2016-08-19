@@ -1,6 +1,6 @@
 {
 	"core": {
-		"Core": "Core.js?0SmKWI"
+		"Core": "Core.js?RvmsTT"
 	},
 	"library": {
 		"Paperwork": "Paperwork.js?YFekM6"
@@ -8,13 +8,13 @@
 	"modules": {
 		"admin": "admin.js?yLCAxQ",
 		"admin-template-editor": "admin-template-editor.js?FuZlKb",
-		"app": "app.js?hNqapH",
+		"app": "app.js?XP0k8k",
 		"checkout": "checkout.js?PqxI1l",
 		"client": "client.js?hNfVKk",
 		"clients": "clients.js?u6a3fw",
 		"flash": "flash.js?2PcK1G",
 		"inventory": "inventory.js?JmOEEz",
-		"job": "job.js?I2DPku",
+		"job": "job.js?GS8YCi",
 		"jobs": "jobs.js?9ujEnX",
 		"notification": "notification.js?hChk2H",
 		"settings": "settings.js?MNPbDb",
@@ -22,16 +22,16 @@
 		"template": "template.js?KLQyBW",
 		"user": "user.js?Xsu4GW",
 		"welcome-guest": "welcome-guest.js?2KXUi5",
-		"document-copy": "document-copy.js?kMUTB3"
+		"document-copy": "document-copy.js?0utRpn"
 	},
 	"behaviors": {
-		"tab": "tab.js?YFGgwz",
+		"tab": "tab.js?37botB",
 		"table": "table.js?D9Co6H",
-		"document": "document.js?EQuMAl"
+		"document": "document.js?t9o21l"
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",
-		"dark": "dark.js?qg4dVG",
+		"dark": "dark.js?YHkPXI",
 		"parse": "parse.js?kalEM7"
 	},
 	"classes": {

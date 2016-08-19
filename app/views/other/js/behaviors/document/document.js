@@ -23,7 +23,8 @@ Core.addBehavior('document', function(context, opt){
 	
 	function listen(){
 		
-		// Listen to document.build
+		// Update existing, or new, documents
+		// - accepts an array/object of standard document objects
 		Paperwork.on(`document.${context.name}.build`, function(request){
 			
 			if(typeof request !== 'object' || request === null){
@@ -33,19 +34,14 @@ Core.addBehavior('document', function(context, opt){
 			// Loop all documents in the request
 			for(let i in request){
 				
-				// Remove existing documents from request by ID
-				if(documents[i]){
-					delete request[i];
-					console.warn(`Document ID ${i} already exists, removed from request`);
-					continue;
-				}
-				
 				// Merge this document with documents object and build
 				documents[i] = request[i];
 				build(i);
 			}
 		});
 		
+		// Update properties and reload all existing documents
+		// - accepts a properties object (optional)
 		Paperwork.on(`document.${context.name}.reload`, function(request){
 			
 			if(typeof request === 'object' && request !== null){
@@ -61,11 +57,13 @@ Core.addBehavior('document', function(context, opt){
 			});
 		});
 		
-		// Listen to document.save
+		// Save a document by id
+		// - accepts a document_id
 		Paperwork.on(`document.${context.name}.save`, function(request){
 			if(!parse.toNumber(request)) return console.warn('Document ID not supplied');
 			
 			save(request);
+			Paperwork.send('notification');
 		});
 	}
 	
@@ -413,5 +411,23 @@ Core.addBehavior('document', function(context, opt){
 				document: documents[document_id],
 			});
 		}, 500);
+	}
+	
+	function returnDocuments(request){
+		if(!request) return documents;
+		
+		if(!parse.toNumber(request)){
+			console.warn(`NaN provided while getting documents under context: ${context.name}`);
+			return;
+		}
+		
+		return documents[request];
+	}
+	
+	return {
+		documents: returnDocuments,
+		properties: function(){
+			return properties;
+		},
 	}
 });
