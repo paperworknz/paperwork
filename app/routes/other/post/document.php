@@ -22,8 +22,8 @@ $app->post('/post/document', 'uac', function() use ($app){
 		'client_id' => $client['id'],
 		'user_template_id' => $template_id,
 		'name' => $user_template['name'], // Inherit from user_template
-		'date' => $document['date'] ?: date("d/m/Y"),
-		'description' => $document['description'] ?: '',
+		'date' => isset($document['date']) ? $document['date'] : date("d/m/Y"),
+		'description' => isset($document['description']) ? $document['description'] : '',
 		'items' => $app->parse->arrayToJson($document['items']) ?: '[]',
 	];
 	

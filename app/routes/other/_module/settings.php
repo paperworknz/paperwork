@@ -2,7 +2,7 @@
 
 use Paperwork\Extended\Number;
 
-$app->module->add('settings', function($request) use ($app){
+$app->module->add('settings', 'user', function($request) use ($app){
 	
 	$number = new Number;
 	$job_number	= $number->next('job');

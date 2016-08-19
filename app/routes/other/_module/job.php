@@ -1,6 +1,6 @@
 <?php
 
-$app->module->add('job', function($request) use ($app){
+$app->module->add('job', 'user', function($request) use ($app){
 	
 	if(!$request) die($app->build->error('Job number not provided'));
 	

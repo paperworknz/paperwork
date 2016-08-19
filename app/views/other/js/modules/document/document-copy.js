@@ -7,54 +7,83 @@ Core.addModule('document-copy', function(context){
 		get: `${environment.root}/get/job`,
 	};
 	
-	$body.find('[data-type="job_number"]').val(context.data.job_number).attr('placeholder', context.data.job_number);
+	bind();
+	
+	// Setup job_number, job_id input fields
+	$body.find('[data-type="job_number"]').val(context.data.job_number).attr('placeholder', context.data.job_number).blur();
 	Paperwork.validate($body.find('.copy-parent'), $body.find('[data-type="new-document"]'), 'document-copy');
 	
-	$body.on('change', '[data-type="job_number"]', function(){
-		var job_number = $(this).val().trim();
+	function bind(){
 		
-		// Invalidate job_number
-		$(this).removeClass('ok');
-		$body.find('[data-type="validate-job_number"]').val('');
+		// Invalidate interface on input change (need to validate job_id first)
+		$body.on('keyup', '[data-type="job_number"]', clearJobID);
+		$body.on('keydown', '[data-type="job_number"]', clearJobID);
 		
-		if(!job_number) return;
-		
-		$.get(`${api.get}/${job_number}`).done(function(response){
-			response = JSON.parse(response);
+		// Check if job_id is a real job
+		$body.on('blur', '[data-type="job_number"]', function(){
+			var job_number = $(this).val().trim();
 			
-			if(response.type == 'error'){
-				$body.find('[data-type="job_number"]').val('').addClass('error').blur();
-				
-				setTimeout(function(){
-					$body.find('[data-type="job_number"]').removeClass('error');
-				}, 500)
+			clearJobID();
+			if(!job_number){
+				$(this).removeClass('ok')
+				return;
 			}
 			
-			if(response.type == 'success'){
+			$.get(`${api.get}/${job_number}`).done(function(response){
+				response = JSON.parse(response);
 				
-				// Allow validation
-				$body.find('[data-type="job_number"]').addClass('ok');
-				$body.find('[data-type="validate-job_number"]').val(response.job_id);
-			}
+				if(response.type == 'error'){
+					$body.find('[data-type="job_number"]').val('').removeClass('ok').addClass('error').blur();
+					
+					setTimeout(function(){
+						$body.find('[data-type="job_number"]').removeClass('error');
+					}, 500)
+				}
+				
+				if(response.type == 'success'){
+					$body.find('[data-type="job_number"]').addClass('ok');
+					$body.find('[data-type="job_id"]').val(response.job_id).blur();
+				}
+			});
 		});
-	});
+		
+		// Send new-document event then close interface
+		$body.on('click', '[data-type="new-document"]', function(){
+			var job_number = parse.toNumber($body.find('[data-type="job_number"]').val()),
+				job_id = parse.toNumber($body.find('[data-type="job_id"]').val()) || context.data.job_id,
+				template_id = $(this).data('template-id');
+			
+			newDocument({
+				job_id: job_id,
+				job_number: job_number,
+				template_id: template_id,
+			});
+		});
+		
+		// Close interface on cancel button
+		$body.on('click', '[data-type="cancel-button"]', close);
+	}
 	
-	$body.on('click', '[data-type="new-document"]', function(){
-		var job_number = parse.toNumber($body.find('[data-type="job_number"]').val()),
-			job_id = parse.toNumber($body.find('[data-type="validate-job_number"]').val()) || context.data.job_id,
-			template_id = $(this).data('template-id');
+	function clearJobID(){
+		$body.find('[data-type="job_id"]').val('');
+	}
+	
+	function close(){
+		context.stop();
+	}
+	
+	function newDocument(request){
+		
+		// Drop the document's date (let the backend use today's date)
+		delete context.data.document_data.date;
 		
 		Paperwork.send('new-document', {
-			job_id: job_id,
-			job_number: job_number,
-			template_id: template_id,
+			job_id: request.job_id,
+			job_number: request.job_number,
+			template_id: request.template_id,
 			document: context.data.document_data,
 		});
 		
-		context.stop();
-	});
-	
-	$body.on('click', '[data-type="cancel-button"]', function(){
-		context.stop();
-	})
+		close();
+	}
 });

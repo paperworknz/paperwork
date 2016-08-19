@@ -1,6 +1,6 @@
 <?php
 
-$app->module->add('template', function($request) use ($app){
+$app->module->add('template', 'user', function($request) use ($app){
 	
 	$prop = [];
 	$template = [];

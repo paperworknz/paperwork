@@ -6,13 +6,35 @@ class Module {
 	
 	public $modules = [];
 	public $module_dir = '../app/routes/other/_module/';
+	private $privilege = [
+		'admin' => 0,
+		'user' => 1,
+		'guest' => 1,
+		'baby' => 1,
+	];
 	
-	public function add($name, $fn){
-		$this->modules[$name] = $fn;
+	public function add($name, $privilege, $fn){
+		
+		if(!isset($this->privilege[$privilege])){
+			throw new \Exception("Invalid privilege level: {$privilege}");
+		}
+		
+		$this->modules[$name] = [
+			'privilege' => $this->privilege[$privilege],
+			'run' => $fn,
+		];
 	}
 	
 	public function evaluate($name, $data){
-		return $this->modules[$name]($data);
+		$app = \Slim\Slim::getInstance();
+		
+		$self = $this->privilege[$app->user['privilege']];
+		
+		if($self > $this->modules[$name]['privilege']){
+			return false;
+		}
+		
+		return $this->modules[$name]['run']($data);
 	}
 	
 	public function require($name, $data = []){

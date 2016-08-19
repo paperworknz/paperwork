@@ -1,6 +1,6 @@
 <?php
 
-$app->module->add('admin-template-editor', function($request) use ($app){
+$app->module->add('admin-template-editor', 'admin', function($request) use ($app){
 	
 	$templates = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.template-cache'));
 	

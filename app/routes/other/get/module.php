@@ -17,6 +17,8 @@ $app->get('/get/module/:a+', function($a) use ($app){
 	$request = array_splice($a, 1);
 	$data = $app->module->require($module, $request);
 	
+	if(!$data) die($app->build->error('Check your privilege'));
+	
 	if(isset($data['classes'])){
 		foreach($data['classes'] as $key => $value){
 			if(isset($js_cache['classes'][$value])){

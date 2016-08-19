@@ -155,11 +155,14 @@ Core.addModule('inventory', function(context){
 	}
 	
 	function remove(){
-		var $item = $(this).closest('[data-id]');
+		var $item = $(this).closest('[data-id]'),
+			id = $item[0].attributes['data-id'].value;
 		
 		$.post(request.delete, {
 			id: $item[0].attributes['data-id'].value
 		}).done(function(data){
+			
+			delete inventory[id];
 			$item.remove();
 			Paperwork.send('notification', 'Saved');
 		});
