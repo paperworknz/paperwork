@@ -8,12 +8,16 @@ Core.addService('parse', function(){
 		// Replace all characters apart from a number and one dot
 		i = i.replace(/[^\d.-]/g, '');
 		
-		if(!Number(i)) return i;
+		if(i === '') return i;
+		if(isNaN(Number(i))) return i;
 		
 		i = Number(i);
 		
-		if(decimal) i = i.toFixed(decimal);
-		if(natural) i = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		if(decimal) i = Number(i.toFixed(decimal));
+		if(natural) {
+			i = i.toFixed(decimal);
+			i = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
 		
 		return i;
 	}
@@ -25,7 +29,7 @@ Core.addService('parse', function(){
 			natural: true,
 		});
 		
-		i = '$' + i;
+		if(i) i = '$' + i;
 		
 		return i;
 	}

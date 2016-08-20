@@ -1,6 +1,6 @@
 {
 	"core": {
-		"Core": "Core.js?RvmsTT"
+		"Core": "Core.js?uV5M24"
 	},
 	"library": {
 		"Paperwork": "Paperwork.js?jxRoLJ"
@@ -14,7 +14,7 @@
 		"clients": "clients.js?u6a3fw",
 		"flash": "flash.js?2PcK1G",
 		"inventory": "inventory.js?EVS9cq",
-		"job": "job.js?GS8YCi",
+		"job": "job.js?QaQdNP",
 		"jobs": "jobs.js?9ujEnX",
 		"notification": "notification.js?hChk2H",
 		"settings": "settings.js?MNPbDb",
@@ -22,17 +22,18 @@
 		"template": "template.js?KLQyBW",
 		"user": "user.js?Xsu4GW",
 		"welcome-guest": "welcome-guest.js?2KXUi5",
-		"document-copy": "document-copy.js?Jb6H46"
+		"document-copy": "document-copy.js?E7ggTc",
+		"document-margin": "document-margin.js?o9FWOW"
 	},
 	"behaviors": {
 		"tab": "tab.js?37botB",
 		"table": "table.js?D9Co6H",
-		"document": "document.js?t9o21l"
+		"document": "document.js?t96P7P"
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",
 		"dark": "dark.js?YHkPXI",
-		"parse": "parse.js?kalEM7"
+		"parse": "parse.js?cvteUr"
 	},
 	"classes": {
 		"Table": "Table.js?ywQ6Y2",

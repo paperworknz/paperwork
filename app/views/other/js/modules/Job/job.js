@@ -28,7 +28,7 @@ Core.addModule('job', function(context){
 		// Create a new document
 		// - accepts an object with job_id, client_id, template_id
 		// - accepts document (optional - used for copy interface)
-		Paperwork.on('new-document', function(request){
+		Paperwork.on('document.new', function(request){
 			
 			if(typeof request !== 'object' || request === null){
 				return console.warn('New document request not an object');
@@ -148,9 +148,18 @@ Core.addModule('job', function(context){
 			context.load('document-copy', {
 				job_id: job.job_id,
 				job_number: job.job_number,
-				client_id: job.client_id,
 				document_id: document_id,
-				document_data: document_data,
+				documents: document_data,
+			});
+		});
+		
+		$body.on('click', '[data-type="margin-button"]', function(){
+			var document_id = $body.find('.tabopen [data-type="document"]').data('id'),
+				document_data = doc.documents(document_id);
+			
+			context.load('document-margin', {
+				document_id: document_id,
+				documents: document_data,
 			});
 		});
 	}
@@ -254,6 +263,6 @@ Core.addModule('job', function(context){
 		`);
 		
 		Paperwork.send(`tab.${context.name}.activate`, tab_id);
-		Paperwork.send(`document.${context.name}.build`, request.document);
+		Paperwork.send('document.build', request.document);
 	}
 });

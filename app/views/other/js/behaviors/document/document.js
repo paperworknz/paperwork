@@ -25,7 +25,7 @@ Core.addBehavior('document', function(context, opt){
 		
 		// Update existing, or new, documents
 		// - accepts an array/object of standard document objects
-		Paperwork.on(`document.${context.name}.build`, function(request){
+		Paperwork.on('document.build', function(request){
 			
 			if(typeof request !== 'object' || request === null){
 				return console.warn('New document request not an object');
@@ -37,6 +37,7 @@ Core.addBehavior('document', function(context, opt){
 				// Merge this document with documents object and build
 				documents[i] = request[i];
 				build(i);
+				save(i);
 			}
 		});
 		
@@ -54,6 +55,7 @@ Core.addBehavior('document', function(context, opt){
 				var document_id = $(this).data('id');
 				
 				build(document_id);
+				save(i);
 			});
 		});
 		
@@ -229,7 +231,7 @@ Core.addBehavior('document', function(context, opt){
 			// Update document object and save
 			let existing = documents[document_id].items[index][type];
 			
-			if(existing != value){
+			if(existing !== value){
 				documents[document_id].items[index][type] = value;
 				save(document_id);
 				render(document_id);
@@ -248,7 +250,7 @@ Core.addBehavior('document', function(context, opt){
 		});
 	}
 	
-	function append({document_id, name = '', quantity = '', price = ''}){
+	function append({document_id, name = '', quantity = '', price = '', margin = 1}){
 		
 		var itemInInventory = false;
 		
@@ -271,6 +273,7 @@ Core.addBehavior('document', function(context, opt){
 			name: name,
 			quantity: quantity,
 			price: price,
+			margin: margin,
 		});
 		
 		// Save document
@@ -315,10 +318,12 @@ Core.addBehavior('document', function(context, opt){
 	function calculate(document_id){
 		
 		var $doc = $body.find(`[data-type="document"][data-id="${document_id}"]`);
-		var subTotal = 0;
+		var subtotal = 0;
 		
 		for(let i in documents[document_id].items){
 			const value = documents[document_id].items[i];
+			
+			if(!value.hasOwnProperty('margin')) value.margin = 1;
 			
 			let quantity = parse.toNumber(value.quantity, {
 				decimal: 2,
@@ -328,18 +333,41 @@ Core.addBehavior('document', function(context, opt){
 				decimal: 2,
 			});
 			
-			let total = quantity * price;
+			let margin = parse.toNumber(value.margin, {
+				decimal: 2,
+			});
 			
-			subTotal += total;
+			let total;
 			
+			// Calculating
+			total = quantity * (price * margin);
+			total = parse.toNumber(total, {
+				decimal: 2,
+			});
+			
+			if(total) subtotal += Number(total);
+			
+			// Update document object
 			value.quantity = quantity;
-			value.price = parse.toDollar(price);
-			value.total = parse.toDollar(total);
+			value.price = price;
+			value.total = total;
+			value.margin = margin;
 		}
 		
-		documents[document_id]['sub-total'] = parse.toDollar(subTotal);
-		documents[document_id].tax = parse.toDollar((subTotal / 100) * 15);
-		documents[document_id].total = parse.toDollar(subTotal + ((subTotal / 100) * 15));
+		documents[document_id].subtotal = parse.toNumber(subtotal, {
+			decimal: 2,
+		});
+		
+		documents[document_id].tax = parse.toNumber(((documents[document_id].subtotal / 100) * 15), {
+			decimal: 2,
+		});
+		
+		documents[document_id].total = parse.toNumber(
+			(documents[document_id].subtotal + documents[document_id].tax), 
+			{
+				decimal: 2,
+			}
+		);
 	}
 	
 	function render(document_id){
@@ -352,15 +380,46 @@ Core.addBehavior('document', function(context, opt){
 		
 		// Render aspects
 		for(let aspect in value){
-			$doc.find(`[data-aspect="${aspect}"]`).html(value[aspect]);
+			
+			let dollar = ['subtotal', 'tax', 'total'];
+			let prop = value[aspect];
+			
+			if(dollar.indexOf(aspect) != -1) {
+				prop = parse.toDollar(prop);
+			}
+			
+			$doc.find(`[data-aspect="${aspect}"]`).html(prop);
 		}
 		
 		if(!job_id) return;
 		
 		// Render items
 		$doc.find('[data-type="inventory-content"]').html('');
+		
 		for(let i in value.items){
 			const item = value.items[i];
+			
+			// Format item properties
+			let margin = item.margin;
+			let quantity = item.quantity;
+			let price = item.price;
+			let total = item.total;
+			
+			// Calculate margin (for display)
+			if(price) price = price * margin;
+			
+			// Format numbers
+			quantity = parse.toNumber(quantity, {
+				decimal: 2,
+				natural: true,
+			});
+			price = parse.toDollar(price);
+			total = parse.toDollar(total);
+			if(quantity === 0) quantity = '0.00';
+			if(price === '$0') price = '$0.00';
+			if(total === '$0') total = '$0.00';
+			
+			if(!quantity || !price) total = '';
 			
 			$doc.find('[data-type="inventory-content"]').append(`
 				<doc-section class="inventory-item">
@@ -372,17 +431,17 @@ Core.addBehavior('document', function(context, opt){
 					</doc-part>
 					<doc-part class="inventory-item_qty">
 						<doc-text data-type="quantity">
-							${item.quantity}
+							${quantity}
 						</doc-text>
 					</doc-part>
 					<doc-part class="inventory-item_price">
 						<doc-text data-type="price">
-							${item.price}
+							${price}
 						</doc-text>
 					</doc-part>
 					<doc-part class="inventory-item_total">
 						<doc-text data-type="item-total">
-							${item.total}
+							${total}
 						</doc-text
 					</doc-part>
 				</doc-section>

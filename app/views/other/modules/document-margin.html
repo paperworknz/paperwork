@@ -1,0 +1,44 @@
+<box>
+	<div class="wrap">
+		<div class="container">
+			<div data-type="margin-content">
+			</div>
+		</div>
+		<div class="display container">
+			<div class="centered">
+				<input type="text" class="margin-input" data-type="margin-input" value="0">
+				<input type="range" class="slider central" data-type="slider" value="0">
+			</div>
+			<div>
+				<part class="table">
+					<part>
+						<column>
+							<row>Sub Total</row>
+							<row>GST</row>
+							<row>TOTAL</row>
+						</column>
+						<column>
+							<row data-type="subtotal">@subtotal</row>
+							<row data-type="tax">@tax</row>
+							<row data-type="total">@total</row>
+						</column>
+					</part>
+				</part>
+			</div>
+		</div>
+		<div class="container wrap">
+			<ul class="list-inline right">
+				<li>
+					<button class="button blue" data-type="cancel-button" data-button-state="off">
+						CANCEL
+					</button>
+				</li>
+				<li>
+					<button class="button" data-type="apply-button" data-button-state="off">
+						APPLY
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+</box>

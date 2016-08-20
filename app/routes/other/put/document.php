@@ -13,9 +13,12 @@ $app->post('/put/document', 'uac', function() use ($app){
 		'items' => [],
 	];
 	
-	$format = ['name', 'date', 'description', 'items'];
+	$format = ['name', 'date', 'description', 'items', 'subtotal', 'tax', 'total'];
 	
 	foreach($document as $key => $value){
+		
+		$key = str_replace('-', '_', $key);
+		
 		if(in_array($key, $format)){
 			$request[$key] = $value;
 		}

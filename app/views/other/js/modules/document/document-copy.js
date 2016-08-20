@@ -75,13 +75,13 @@ Core.addModule('document-copy', function(context){
 	function newDocument(request){
 		
 		// Drop the document's date (let the backend use today's date)
-		delete context.data.document_data.date;
+		delete context.data.documents.date;
 		
-		Paperwork.send('new-document', {
+		Paperwork.send('document.new', {
 			job_id: request.job_id,
 			job_number: request.job_number,
 			template_id: request.template_id,
-			document: context.data.document_data,
+			document: context.data.documents,
 		});
 		
 		close();

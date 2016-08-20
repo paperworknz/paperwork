@@ -192,6 +192,8 @@ var Core = (function($, undefined){
 			});
 		})();
 		
+		if(!data) data = {};
+		
 		return {
 			name: name,
 			data: data,
