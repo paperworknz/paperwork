@@ -46,10 +46,15 @@
 			</table>
 		</part>
 		<part class="container">
-			<form name="delete" method="post" action="{{environment.root}}/delete/client">
-				<input type="hidden" name="id" value="{{modules.client.data.client.id}}" />
-			</form>
-			<button type="submit" class="button delete">Delete Client</button>
+			<div class="left">
+				<a style="padding-left: 4px" data-type="email-button">Email {{modules.client.data.client.name}}</a>
+			</div>
+			<div class="right">
+				<form name="delete" method="post" action="{{environment.root}}/delete/client">
+					<input type="hidden" name="id" value="{{modules.client.data.client.id}}" />
+				</form>
+				<button type="submit" class="button delete">Delete Client</button>
+			</div>
 		</part>
 		<hr>
 		<part class="container" id="bottom">

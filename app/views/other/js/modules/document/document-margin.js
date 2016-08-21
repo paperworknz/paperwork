@@ -48,10 +48,7 @@ Core.addModule('document-margin', function(context){
 		});
 		
 		// Cancel button
-		$body.on('click', '[data-type="cancel-button"]', function(){
-			
-			context.stop();
-		});
+		$body.on('click', '[data-type="cancel-button"]', context.stop);
 	}
 	
 	function render(){

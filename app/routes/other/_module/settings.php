@@ -7,7 +7,7 @@ $app->module->add('settings', 'user', function($request) use ($app){
 	$number = new Number;
 	$job_number	= $number->next('job');
 	$status	= $app->sql->get('job_status')->also('ORDER BY job_status_number')->all();
-	$email = $app->sql->get('user_email_settings')->one();
+	$email = $app->sql->get('user_email')->one();
 	
 	// Trash
 	$job	= $app->sql->get('job')->select(['id', 'job_number', 'name', 'client_id'])->softOnly()->all();

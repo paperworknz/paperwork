@@ -1,107 +1,63 @@
 <?php
 
-include '../app/app/bin/phpToPDF.php';
-
-use Symfony\Component\Process\Process,
-	Symfony\Component\HttpFoundation\Response;
-
 $app->post('/post/email', 'uac', function() use ($app){
+	
 	/* Methods */
+	$mail = new PHPMailer;
+	$address = isset($_POST['address']) ? $_POST['address'] : false;
+	$subject = isset($_POST['subject']) ? $_POST['subject'] : false;
+	$password = isset($_POST['password']) ? $_POST['password'] : false;
+	$body = isset($_POST['body']) ? $_POST['body'] : false;
 	
 	/* Construction */
-	$job_number		= $_POST['job_number'];
-	$name			= $_POST['name'];
-	$html			= $_POST['html'];
-	$client_name	= $_POST['client_name'];
-	$address		= $_POST['address'];
-	$subject		= $_POST['subject'];
-	$body			= $_POST['body'];
-	$password		= $_POST['password'];
 	
+	$email = $app->sql->get('user_email')->one();
+	$client = $app->sql->get('client')->select('name')->where('email', '=', $address)->one();
 	
-	// Directory and file
-	$id = $app->user['id'];
+	if($subject == 'true') $subject = '';
+	if($body == 'true') $body = "<div><br></div>";
 	
-	if($_ENV['MODE'] == 'dev'){
-		$dir = "../app/app/storage/clients/{$id}/pdf/{$job_number}";
-	}else{
-		$dir = "/var/www/Dropbox/Paperwork/{$id}/pdf/{$job_number}";
+	if(!$email) die($app->build->error('You have not entered your email settings in the Settings page'));
+	
+	$request = [
+		'protocol' => $email['protocol'],
+		'smtp' => $email['smtp'],
+		'port' => $email['port'],
+		'from.name' => $app->user['first'].' '.$app->user['last'],
+		'from.email' => $email['address'],
+		'from.pw' => $password,
+		'to.email' => $address,
+		'to.name' => $client ?: $address,
+	];
+	
+	$mail->isSMTP();
+	$mail->SMTPAuth = true;
+	$mail->Host = $request['smtp'];
+	$mail->Port = $request['port'];
+	
+	if(isset($request['protocol'])) $mail->SMTPSecure = $request['protocol'];
+	
+	$mail->Username = $request['from.email'];
+	$mail->Password = $request['from.pw'];
+	
+	$mail->setFrom($request['from.email'], $request['from.name']);
+	$mail->addAddress($request['to.email'], $request['to.name']);
+	$mail->addReplyTo($request['from.email'], $request['from.name']);
+	// $mail->addAttachment($request['attachment'], $request['attachment.name']);
+	// $mail->addBCC($request['from.email']);
+	
+	$mail->isHTML(true);
+	$mail->Subject = $subject;
+	$mail->Body    = $body;
+	$mail->AltBody = $body;
+	
+	$response = $mail->send();
+	
+	if(!$response) {
+		die($app->build->error("Your email settings failed to deliver the email. Please make sure they are correct."));
 	}
 	
-	if(!file_exists($dir)) mkdir($dir, 0777); // Make directory for job_number if it doesn't exist
-	
-	$file = "{$name}.pdf"; // File name
-	
-	// Create PDF
-	phptopdf([
-		'page_orientation'	=> 'portrait',
-		'page_size'			=> 'A4',
-		'margin'			=> ['right'=>'20','left'=>'20','top'=>'10','bottom'=>'10'],
-		'source_type'		=> 'html',
-		'source'			=> $html,
-		'action'			=> 'save',
-		'save_directory'	=> $dir,
-		'file_name'			=> $file,
-		'ssl'				=> 'yes'
+	echo $app->build->success([
+		'message' => 'Email Sent Successfully',
 	]);
-	
-	$app->event->log('created PDF '.$file);
-	
-	
-	// EMAIL //
-	// Send Mail
-	$mail = new PHPMailer;
-	
-	// User email settings
-	if($email = $app->sql->get('user_email_settings')->one()){
-		// Password verify
-		if(password_verify($password, $email['password'])){
-			$meta = [
-				'protocol' => $email['protocol'],
-				'smtp' => $email['smtp'],
-				'port' => $email['port'],
-				'from.name' => $app->user['first'].' '.$app->user['last'],
-				'from.email' => $email['address'],
-				'from.pw' => $password,
-				'to.name' => $client_name,
-				'to.email' => $address,
-				'attachment' => $dir.'/'.$file,
-				'attachment.name' => $file,
-			];
-			
-			$mail->isSMTP();
-			$mail->Host = $meta['smtp'];
-			$mail->SMTPAuth = true;
-			$mail->Username = $meta['from.email'];
-			$mail->Password = $meta['from.pw'];
-			
-			if(isset($meta['protocol'])){
-				$mail->SMTPSecure = $meta['protocol'];
-			}
-			$mail->Port = $meta['port'];
-			
-			$mail->setFrom($meta['from.email'], $meta['from.name']);
-			$mail->addAddress($meta['to.email'], $meta['to.name']);
-			$mail->addReplyTo($meta['from.email'], $meta['from.name']);
-			$mail->addAttachment($meta['attachment'], $meta['attachment.name']);
-			//$mail->addBCC($meta['from.email']);
-			
-			$mail->isHTML(true);
-			$mail->Subject = $subject;
-			$mail->Body    = $body;
-			$mail->AltBody = $body;
-			
-			if($mail->send()){
-				$app->event->log('sent an email to '.$meta['to.email'].', with subject: '.$subject);
-				echo 'OK';
-				die();
-			}
-		}else{
-			echo 'Password';
-			die();
-		}
-	}
-	
-	echo 'Fail';
-	
 });

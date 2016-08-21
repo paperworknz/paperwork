@@ -1,6 +1,6 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?rb327w",
+		"Paperwork": "Paperwork.css?AlukwQ",
 		"Public": "Public.css?TcMy8r",
 		"Document": "Document.css?h9Me3y"
 	},
@@ -19,6 +19,8 @@
 		"user": "user.css?E1ktyM",
 		"welcome-guest": "welcome-guest.css?MhUIDW",
 		"document-copy": "document-copy.css?77hnKV",
-		"document-margin": "document-margin.css?fxUhk8"
+		"document-margin": "document-margin.css?fxUhk8",
+		"document-email": "document-email.css?mDNWsX",
+		"email": "email.css?YPTHFT"
 	}
 }

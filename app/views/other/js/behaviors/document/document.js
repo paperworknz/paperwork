@@ -55,7 +55,6 @@ Core.addBehavior('document', function(context, opt){
 				var document_id = $(this).data('id');
 				
 				build(document_id);
-				save(i);
 			});
 		});
 		
@@ -117,7 +116,7 @@ Core.addBehavior('document', function(context, opt){
 		
 		$doc.css('pointer-events', 'auto').animate({
 			opacity: 1
-		}, 500);
+		}, 250);
 	}
 	
 	function bindTypeahead(document_id){

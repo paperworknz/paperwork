@@ -15,7 +15,7 @@ $app->post('/post/document', 'uac', function() use ($app){
 	$client = $app->sql->get('client')->where('id', '=', $job['client']['id'])->one();
 	$user_template = $app->sql->get('user_template')->retain(['template_id'])->where('id', '=', $template_id)->one();
 	$template = $app->sql->get('template')->where('id', '=', $user_template['template_id'])->root()->one();
-	$email = $app->sql->get('user_email_settings')->one();
+	$email = $app->sql->get('user_email')->one();
 	
 	$data = [
 		'job_id' => $job_id,

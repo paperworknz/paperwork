@@ -12,6 +12,7 @@ Core.addModule('client', function(context){
 	clientDetails();
 	clientDelete();
 	bindNotes();
+	email();
 	
 	function clientDetails(){
 		
@@ -62,6 +63,18 @@ Core.addModule('client', function(context){
 			}).done(function(response){
 				
 				Paperwork.send('notification', 'Saved');
+			});
+		});
+	}
+	
+	function email(){
+		
+		$body.on('click', '[data-type="email-button"]', function(){
+			
+			var email = $body.find('[client-email]').val();
+			
+			context.load('email', {
+				address: email,
 			});
 		});
 	}

@@ -1,0 +1,61 @@
+@import '../library/mixins/mixins';
+
+[data-module="email"] {
+	
+	width: 100%;
+	max-width: 710px;
+	
+	.parent {
+		
+		> section {
+			padding-bottom: 10px;
+			
+			&:last-child {
+				padding-bottom: 0;
+			}
+		}
+	}
+	
+	.address {
+		width: 50%;
+	}
+	
+	.subject {
+		width: 100%;
+	}
+	
+	.password {
+		width: 180px;
+		height: 37px;
+		line-height: 37px;
+		font-size: 14px;
+	}
+	
+	.body {
+		height: 300px;
+		padding: 4px;
+		border: 1px solid #ccc;
+		overflow-y: auto; 
+	}
+	
+	.control {
+		@include size(420px) {
+			float: none;
+			text-align: center;
+			
+			li {
+				display: block;
+				padding-right: 0;
+				padding-bottom: 5px;
+				
+				* {
+					width: 100%;
+				}
+			}
+			
+			li:last-child {
+				padding-bottom: 0;
+			}
+		}
+	}
+}

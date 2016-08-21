@@ -63,6 +63,7 @@ return [
 '/_module/client' => '../app/routes/other/_module/client.php',
 '/_module/clients' => '../app/routes/other/_module/clients.php',
 '/_module/document-copy' => '../app/routes/other/_module/document-copy.php',
+'/_module/document-email' => '../app/routes/other/_module/document-email.php',
 '/_module/document-margin' => '../app/routes/other/_module/document-margin.php',
 '/_module/inventory' => '../app/routes/other/_module/inventory.php',
 '/_module/job' => '../app/routes/other/_module/job.php',

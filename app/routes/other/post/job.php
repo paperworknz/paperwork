@@ -41,16 +41,12 @@ $app->post('/post/job', 'uac', function() use ($app){
 	
 	$client_id = isset($client_id) ? $client_id : $client['id'];
 	
-	// Build new job_cache array which contains the array and json
-	$cache_id = $document->cache();
-	
 	$app->sql->post('job')->with([
 		'job_number'	=> $job_number,
 		'client_id'		=> $client_id,
 		'job_status_id'	=> $job_status_id,
-		'job_cache_id'	=> $cache_id,
-		'name'			=> $name
+		'name'			=> $name,
 	])->run();
 	
-	$app->redirect($app->root.'/job/'.$job_number); // Redirect to the new job
+	$app->redirect("{$app->root}/job/{$job_number}"); // Redirect to the new job
 });

@@ -20,22 +20,14 @@
 					</form>
 					<button class="button blue" type="submit" data-type="pdf-button">PDF</button>
 				</part>
-			</box>
-			{% if modules.job.data.email %}
+			</box>-->
 			<box class="left">
-				<part class="container centered" style="width:105px;">
-					<form method="post" action="{{environment.root}}/post/pdf" data-type="email-form">
-						<input type="hidden" name="data">
-						<input type="hidden" name="id" value="{{modules.job.data.job.id}}">
-						<input type="hidden" name="name">
-						<input type="hidden" name="email" value="true">
-					</form>
+				<part class="container centered" style="width: 105px;">
 					<button class="button blue" data-button-state="off" data-type="email-button">EMAIL</button>
 				</part>
 			</box>
-			{% endif %}-->
 			<box class="left">
-				<part class="container centered" style="width:125px;">
+				<part class="container centered" style="width: 125px;">
 					<button class="button blue" data-button-state="off" data-type="margin-button">MARGIN</button>
 				</part>
 			</box>

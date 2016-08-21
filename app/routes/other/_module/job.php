@@ -13,7 +13,7 @@ $app->module->add('job', 'user', function($request) use ($app){
 	$user_templates = $app->sql->get('user_template')->retain(['template_id'])->all();
 	
 	$job = $app->sql->get('job')->where('job_number', '=', $job_number)->one();
-	$email = $app->sql->get('user_email_settings')->one();
+	$email = $app->sql->get('user_email')->one();
 	$status	= $app->sql->get('job_status')->select(['name'])->also('ORDER BY job_status_number')->all();
 	
 	// ERROR HANDLING //

@@ -10,11 +10,11 @@
 		"admin-template-editor": "admin-template-editor.js?FuZlKb",
 		"app": "app.js?XP0k8k",
 		"checkout": "checkout.js?PqxI1l",
-		"client": "client.js?hNfVKk",
+		"client": "client.js?uiwzmV",
 		"clients": "clients.js?u6a3fw",
 		"flash": "flash.js?2PcK1G",
 		"inventory": "inventory.js?EVS9cq",
-		"job": "job.js?QaQdNP",
+		"job": "job.js?N7zTSS",
 		"jobs": "jobs.js?9ujEnX",
 		"notification": "notification.js?hChk2H",
 		"settings": "settings.js?MNPbDb",
@@ -23,12 +23,14 @@
 		"user": "user.js?Xsu4GW",
 		"welcome-guest": "welcome-guest.js?2KXUi5",
 		"document-copy": "document-copy.js?E7ggTc",
-		"document-margin": "document-margin.js?o9FWOW"
+		"document-margin": "document-margin.js?LUxwJW",
+		"document-email": "document-email.js?uzN46L",
+		"email": "email.js?ZD7THw"
 	},
 	"behaviors": {
 		"tab": "tab.js?37botB",
 		"table": "table.js?D9Co6H",
-		"document": "document.js?t96P7P"
+		"document": "document.js?dvRZE1"
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",

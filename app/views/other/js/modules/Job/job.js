@@ -162,6 +162,15 @@ Core.addModule('job', function(context){
 				documents: document_data,
 			});
 		});
+		
+		$body.on('click', '[data-type="email-button"]', function(){
+			var document_id = $body.find('.tabopen [data-type="document"]').data('id'),
+				job_id = job.job_id;
+			
+			context.load('email', {
+				address: job.client_email,
+			});
+		});
 	}
 	
 	function documentDelete(){
