@@ -259,8 +259,8 @@ function templateInlineSASS(file){
 	
 	// Run gulp task with full dir name
 	gulp.src(file.fqn)
-		.pipe(sass())
 		.pipe(prefix())
+		.pipe(sass())
 		.pipe(clean())
 		.pipe(gulp.dest('app/views/other/templates/inline/css/'));
 	

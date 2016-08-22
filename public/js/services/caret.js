@@ -1,0 +1,1 @@
+"use strict";Core.addService("caret",function(){function e(e){var t=document.getSelection(),n=document.createRange(),r=document.querySelector(e);return r?(3==r.lastChild.nodeType?n.setStart(r.lastChild,r.lastChild.length):n.setStart(r,r.childNodes.length),t.removeAllRanges(),t.addRange(n),!0):!1}return{end:e}});

@@ -12,7 +12,7 @@ doc-body {
 	background-color: white;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	line-height: 1.42857143;
-	font-size: 11pt;
+	font-size: 13px!important;
 	display: flex;
 	flex-direction: column;
 	
@@ -36,7 +36,7 @@ doc-body {
 		display: block;
 	}
 	
-	[contenteditable] {
+	[contenteditable], .inventory-item_qty, .inventory-item_price {
 		cursor: text;
 		outline: none;
 		
@@ -45,13 +45,19 @@ doc-body {
 		}
 	}
 	
-	.inventory-item {
-		display: flex;
-		border-left: 1px solid black;
+	[data-type="inventory-content"] {
+		display: table;
 		border-right: 1px solid black;
+		border-bottom: 1px solid black;
+		border-left: 1px solid black;
+	}
+	
+	.inventory-item {
+		display: table-row;
 		
-		&:last-child {
-			border-bottom: 1px solid black;
+		> doc-part {
+			display: table-cell;
+			vertical-align: top;
 		}
 		
 		@media print {
@@ -66,6 +72,7 @@ doc-body {
 		
 		.inventory-item_name {
 			position: relative;
+			width: 100%;
 			
 			.remove-btn {
 				opacity: 0;
@@ -85,6 +92,7 @@ doc-body {
 		border-right: 1px solid black;
 		border-bottom: 1px dashed #999;
 		border-left: 1px solid black;
+		width: 100%;
 		
 		.typeahead {
 			padding: 4px;

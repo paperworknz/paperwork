@@ -117,22 +117,15 @@ Core.addModule('document-margin', function(context){
 						<part data-type="name">
 							${value.name}
 						</part>
-						
 					</part>
-					<part class="inventory-item_qty">
-						<part data-type="quantity">
-							${quantity}
-						</part>
+					<part data-type="quantity" class="inventory-item_qty">
+						${quantity}
 					</part>
-					<part class="inventory-item_price">
-						<part data-type="price">
-							${price}
-						</part>
+					<part data-type="price" class="inventory-item_price">
+						${price}
 					</part>
-					<part class="inventory-item_total">
-						<part data-type="item-total">
-							${total}
-						</part
+					<part data-type="item-total" class="inventory-item_total">
+						${total}
 					</part>
 				</section>
 			`);

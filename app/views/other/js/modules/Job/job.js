@@ -9,8 +9,10 @@ Core.addModule('job', function(context){
 		getPDFList: `${environment.root}/get/pdf-json/${job.job_number}`,
 	};
 	
+	var pdf = context.require('pdf');
+	
 	var doc = context.use('document');
-	context.use('tab');
+	var tab = context.use('tab');
 	
 	getPDFList();
 	bindNotes();
@@ -18,6 +20,7 @@ Core.addModule('job', function(context){
 	jobName();
 	jobDelete();
 	bindDocumentInterfaces();
+	saveDocument();
 	documentDelete();
 	bindNewDocument();
 	
@@ -35,6 +38,15 @@ Core.addModule('job', function(context){
 			}
 			
 			newDocument(request);
+		});
+	}
+	
+	function saveDocument(){
+		
+		$body.on('click', '[data-type="save-button"]', function(){
+			var document_id = $body.find('.tabopen [data-type="document"]').data('id');
+			
+			Paperwork.send('document.job.save', document_id);
 		});
 	}
 	
@@ -169,6 +181,57 @@ Core.addModule('job', function(context){
 			
 			context.load('email', {
 				address: job.client_email,
+			});
+		});
+		
+		$body.on('click', '[data-type="pdf-button"]', function(){
+			
+			var document_html = $body.find('.tabopen [data-type="document"]').html(),
+				template_name = $body.find('.tabopen [data-type="document"] [data-template]').data('template'),
+				tab_id = $body.find('[data-type="tab"].active').data('id'), // Used in template_name
+				tab_name = $body.find('[data-type="tab"].active').html().toLowerCase(), // Used in template_name
+				document_name = `${job.job_number}_${tab_id}-${tab_name}`;
+			
+			// HTML
+			document_html = `
+			<!DOCTYPE html>
+			<html lang='en'>
+				<head>
+					<meta charset="utf-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+					<meta name="format-detection" content="telephone=no">
+					<link rel="stylesheet" type="text/css" href="${environment.root}/css/library/Document.css">
+					<link rel="stylesheet" type="text/css" href="${environment.root}/css/templates/${template_name}.css">
+					<style>
+						[data-type="inventory-content"] {
+							display: none!important;
+						}
+					</style>
+				</head>
+				<body>
+					${document_html}
+				</body>
+			</html>
+			`;
+			
+			pdf.post({
+				directory: job.job_number,
+				document_html: document_html,
+				document_name: document_name,
+			}, function(response){
+				
+				if(!response) return swal({
+					title: 'Sorry, something went wrong',
+					text: 'Please try again!',
+					type: 'error',
+					closeOnConfirm: false,
+				}, function(){
+					
+					Paperwork.goto('reload');
+				});
+				
+				Paperwork.ready($body.find('[data-type="pdf-button"]'), 'PDF');
+				Paperwork.goto(response.location, false);
 			});
 		});
 	}

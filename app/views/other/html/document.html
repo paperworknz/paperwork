@@ -4,43 +4,33 @@
 			{{document.user_template.template.body | raw}}
 		</div>
 	</box>
-	<part class="form-settings">
-		<part class="wrap">
-			<!--<box class="left">
-				<part class="container centered" style="width: 100px;">
-					<button class="button" data-type="save-button">SAVE</button>
-				</part>
-			</box>
-			<box class="left">
-				<part class="container centered" style="width:100px;">
-					<form method="post" action="{{environment.root}}/post/pdf" data-type="pdf-form">
-						<input type="hidden" name="job_number" value="{{modules.job.data.job.job_number}}">
-						<input type="hidden" name="name">
-						<input type="hidden" name="html">
-					</form>
-					<button class="button blue" type="submit" data-type="pdf-button">PDF</button>
-				</part>
-			</box>-->
-			<box class="left">
-				<part class="container centered" style="width: 105px;">
-					<button class="button blue" data-button-state="off" data-type="email-button">EMAIL</button>
-				</part>
-			</box>
-			<box class="left">
-				<part class="container centered" style="width: 125px;">
-					<button class="button blue" data-button-state="off" data-type="margin-button">MARGIN</button>
-				</part>
-			</box>
-			<box class="left">
-				<part class="container centered" style="width: 140px;">
-					<button class="button blue" data-button-state="off" data-type="copy-button">MAKE COPY</button>
-				</part>
-			</box>
-			<box style="right: 0;position: absolute;">
-				<part class="container centered">
-					<button class="button delete" data-type="document-delete-button">DELETE</button>
-				</part>
-			</box>
-		</part>
+	<part class="form-settings wrap">
+		<box class="left">
+			<part class="container centered">
+				<button class="button" data-type="save-button" data-button-state="off">SAVE</button>
+			</part>
+		</box>
+		<box class="left">
+			<part class="container centered">
+				<button class="button blue" data-type="pdf-button">PDF</button>
+			</part>
+		</box>
+		<box class="left container">
+			<part class="app-button margin" data-type="margin-button">
+			</part>
+		</box>
+		<box class="left container">
+			<part class="app-button copy" data-type="copy-button">
+			</part>
+		</box>
+		<box class="left container" style="padding: 12px;">
+			<part class="app-button email" data-type="email-button">
+			</part>
+		</box>
+		<box style="right: 0;position: absolute;">
+			<part class="container centered">
+				<button class="button delete" data-type="document-delete-button">DELETE</button>
+			</part>
+		</box>
 	</part>
 </part>

@@ -1,0 +1,1 @@
+"use strict";Core.addService("pdf",function(){function r(r,e){var o=r.directory;delete r.directory,$.post(t.post,{directory:o,properties:r}).done(function(r){try{r=JSON.parse(r)}catch(t){return e(!1)}return e("error"==r.type?!1:r)})}var t={post:environment.root+"/post/pdf"};return{post:r}});

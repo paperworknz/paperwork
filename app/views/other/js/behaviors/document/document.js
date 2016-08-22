@@ -17,6 +17,7 @@ Core.addBehavior('document', function(context, opt){
 	};
 	
 	var parse = context.require('parse');
+	var caret = context.require('caret');
 	
 	listen();
 	onload();
@@ -63,8 +64,9 @@ Core.addBehavior('document', function(context, opt){
 		Paperwork.on(`document.${context.name}.save`, function(request){
 			if(!parse.toNumber(request)) return console.warn('Document ID not supplied');
 			
-			save(request);
-			Paperwork.send('notification');
+			save(request, function(){
+				Paperwork.send('notification');
+			});
 		});
 	}
 	
@@ -211,7 +213,7 @@ Core.addBehavior('document', function(context, opt){
 		let parent = `${$doc} [data-type="inventory-content"]`;
 		
 		// Bind enter/return to blur for name, qty, price
-		$body.on('keydown', `${parent} [data-type="name"], ${parent} [data-type="quantity"], ${parent} [data-type="price"]`, function(){
+		$body.on('keydown', `${parent} [data-type="quantity"], ${parent} [data-type="price"]`, function(){
 			if(event.which != 13) return;
 			
 			event.preventDefault();
@@ -225,16 +227,26 @@ Core.addBehavior('document', function(context, opt){
 		$body.on('blur', `${parent} [data-type="name"], ${parent} [data-type="quantity"], ${parent} [data-type="price"]`, function(){
 			var type = $(this).data('type'),
 				index = $(this).closest('.inventory-item').index(),
-				value = $(this).text().trim();
+				value,
+				existing;
+			
+			// Get HTML if name, TEXT if quantity/price
+			value = type == 'name' ? $(this).html().trim() : $(this).text().trim();
+			existing = documents[document_id].items[index][type];
+			
+			// Do not re-render/save if value hasn't changed
+			if(existing == value) return;
 			
 			// Update document object and save
-			let existing = documents[document_id].items[index][type];
+			documents[document_id].items[index][type] = value;
+			save(document_id);
+			render(document_id);
 			
-			if(existing !== value){
-				documents[document_id].items[index][type] = value;
-				save(document_id);
-				render(document_id);
-			}
+			// Anticipate next clicked contenteditable and focus at end
+			// Without this, the click would not register due to re-rendering the DOM
+			setTimeout(function(){
+				caret.end('[contenteditable]:hover');
+			}, 0);
 		});
 		
 		// Bind inventory remove button
@@ -421,27 +433,21 @@ Core.addBehavior('document', function(context, opt){
 			if(!quantity || !price) total = '';
 			
 			$doc.find('[data-type="inventory-content"]').append(`
-				<doc-section class="inventory-item">
+				<doc-section class="inventory-item wrap">
 					<doc-part class="inventory-item_name">
 						<doc-text data-type="name">
 							${item.name}
 						</doc-text>
 						<doc-part data-type="remove" class="remove-btn"></doc-part>
 					</doc-part>
-					<doc-part class="inventory-item_qty">
-						<doc-text data-type="quantity">
-							${quantity}
-						</doc-text>
+					<doc-part data-type="quantity" class="inventory-item_qty">
+						${quantity}
 					</doc-part>
-					<doc-part class="inventory-item_price">
-						<doc-text data-type="price">
-							${price}
-						</doc-text>
+					<doc-part data-type="price" class="inventory-item_price">
+						${price}
 					</doc-part>
-					<doc-part class="inventory-item_total">
-						<doc-text data-type="item-total">
-							${total}
-						</doc-text
+					<doc-part data-type="item-total" class="inventory-item_total">
+						${total}
 					</doc-part>
 				</doc-section>
 			`);
@@ -457,7 +463,7 @@ Core.addBehavior('document', function(context, opt){
 			.attr('contenteditable', 'true');
 	}
 	
-	function save(document_id){
+	function save(document_id, callback){
 		
 		// Stop timer
 		clearTimeout(timer);
@@ -467,6 +473,9 @@ Core.addBehavior('document', function(context, opt){
 			$.post(request.put, {
 				id: document_id,
 				document: documents[document_id],
+			}).done(function(response){
+				
+				if(callback instanceof Function) callback();
 			});
 		}, 500);
 	}
