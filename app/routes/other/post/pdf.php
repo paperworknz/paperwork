@@ -14,7 +14,26 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 		'base_uri' => 'http://api.pdflayer.com/api/convert',
 	]);
 	
-	$test = $_ENV['MODE'] == 'dev' ? 1 : 0;
+	$test = 0;
+	
+	// If development, hardcode document.css and logan.css into the document_html
+	if($_ENV['MODE'] == 'dev'){
+		
+		$test = 1;
+		
+		if(!file_exists('../public/css/library/Document.css')){
+			die($app->build->error('../public/css/library/Document.css does not exist'));
+		}
+		
+		if(!file_exists('../public/css/templates/logan.css')){
+			die($app->build->error('../public/css/library/logan.css does not exist'));
+		}
+		
+		$document_css = file_get_contents('../public/css/library/Document.css');
+		$template_css = file_get_contents('../public/css/templates/logan.css');
+		
+		$properties['document_html'] = "<style>{$document_css}{$template_css}</style>".$properties['document_html'];
+	}
 	
 	$params = [
 		'access_key' => '9dba89013f131f6ae8bf2280b5ab0cd2',
