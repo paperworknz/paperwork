@@ -1,7 +1,7 @@
 [data-template="logan"] {
 	
 	font-size: 13px;
-	padding: 10mm;
+	padding: 0 10mm;
 	
 	& > doc-section {
 		padding-bottom: 15px;
@@ -124,6 +124,7 @@
 				font-weight: 600;
 				font-style: italic;
 				padding-bottom: 5px;
+				page-break-inside: avoid!important;
 			}
 		}
 		
@@ -137,6 +138,7 @@
 	
 	.document-total {
 		float: right;
+		page-break-inside: avoid!important;
 		
 		doc-row {
 			

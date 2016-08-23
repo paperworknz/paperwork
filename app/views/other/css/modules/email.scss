@@ -18,10 +18,63 @@
 	
 	.address {
 		width: 50%;
+		
+		@include size(600px) {
+			width: 100%;
+		}
+	}
+	
+	.cc, .bcc {
+		width: 166px;
+		
+		@include size(740px) {
+			width: 50%;
+			margin-top: 10px;
+		}
+		
+		@include size(600px) {
+			width: 100%;
+		}
 	}
 	
 	.subject {
 		width: 100%;
+	}
+	
+	.attachments {
+		border: 1px solid #ccc;
+		padding: 4px;
+		min-height: 30px;
+		
+		.attachment {
+			float: left;
+			position: relative;
+			background-color: #D6EDFF;
+			padding: 4px 26px 4px 4px;
+			margin-right: 4px;
+			
+			&:last-child {
+				margin-right: 0;
+			}
+			
+			&:hover {
+				.attachment-remove {
+					opacity: 0.25;
+				}
+			}
+			
+			.attachment-remove {
+				position: absolute;
+				top: 0;
+				right: 0;
+				opacity: 0;
+				padding-top: 7px;
+				
+				&:hover {
+					opacity: 1;
+				}
+			}
+		}
 	}
 	
 	.password {

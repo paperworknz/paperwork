@@ -10,6 +10,7 @@ Core.addModule('email', function(context){
 		address: context.data.address,
 		subject: context.data.subject,
 		password: localStorage.ep,
+		attachments: context.data.attachments,
 	});
 	
 	bind();
@@ -21,18 +22,32 @@ Core.addModule('email', function(context){
 			allowDuplicates: true,
 		});
 		
+		// Remove attachment
+		$body.on('click', '.attachment-remove', function(){
+			var attachment_name = $(this).closest('[data-type="attachment"]').data('name');
+			
+			delete context.data.attachments[attachment_name];
+			$(this).closest('[data-type="attachment"]').hide();
+		});
+		
 		// Send button
 		$body.on('click', '[data-type="send-button"]', function(){
 			var address = $body.find('[data-type="address"]').val().trim(),
+				cc = $body.find('[data-type="cc"]').val().trim(),
+				bcc = $body.find('[data-type="bcc"]').val().trim(),
 				subject = $body.find('[data-type="subject"]').val().trim(),
 				password = $body.find('[data-type="password"]').val(),
-				body = $body.find('[data-type="body"]').html();
+				body = $body.find('[data-type="body"]').html(),
+				attachments = context.data.attachments;
 			
 			send({
 				address: address,
+				cc: cc,
+				bcc: bcc,
 				subject: subject,
 				password: password,
 				body: body,
+				attachments: attachments,
 			});
 		});
 		
@@ -40,11 +55,24 @@ Core.addModule('email', function(context){
 		$body.on('click', '[data-type="cancel-button"]', close);
 	}
 	
-	function render({address = '', subject = '', password = ''}){
+	function render({address = '', subject = '', password = '', attachments = {}}){
 		
 		$body.find('[data-type="address"]').val(address);
 		$body.find('[data-type="subject"]').val(subject);
 		$body.find('[data-type="password"]').val(password);
+		
+		// Attachments
+		for(let i in attachments){
+			
+			$body.find('[data-type="attachments"]').append(`
+				<part class="attachment wrap" data-type="attachment" data-name="${i}">
+					<part>
+						${i}.pdf
+					</part>
+					<part class="attachment-remove remove-btn"></part>
+				</part>
+			`);
+		}
 	}
 	
 	function send(request){
@@ -63,13 +91,14 @@ Core.addModule('email', function(context){
 		// Wait button
 		Paperwork.wait($body.find('[data-type="send-button"]'));
 		
-		//-> get PDF
-		
 		$.post(api.email, {
 			address: request.address,
+			cc: request.cc,
+			bcc: request.bcc,
 			subject: request.subject,
 			password: request.password,
 			body: request.body,
+			attachments: request.attachments,
 		}).done(function(response){
 			response = JSON.parse(response);
 			

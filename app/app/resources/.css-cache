@@ -1,8 +1,8 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?AlukwQ",
+		"Paperwork": "Paperwork.css?EvpiG0",
 		"Public": "Public.css?TcMy8r",
-		"Document": "Document.css?vPyo3T"
+		"Document": "Document.css?jYLQa6"
 	},
 	"views": {
 		"login": "login.css?JiGeeo"
@@ -12,15 +12,15 @@
 		"client": "client.css?tsOsGM",
 		"clients": "clients.css?PuzstE",
 		"inventory": "inventory.css?VbWBFW",
-		"job": "job.css?F9vfif",
+		"job": "job.css?Pu9LSz",
 		"jobs": "jobs.css?I3ktku",
 		"settings": "settings.css?Lmiy6s",
-		"template": "template.css?V5wXLN",
+		"template": "template.css?qbU0Mz",
 		"user": "user.css?E1ktyM",
 		"welcome-guest": "welcome-guest.css?MhUIDW",
-		"document-copy": "document-copy.css?77hnKV",
-		"document-margin": "document-margin.css?BOnIJN",
+		"document-copy": "document-copy.css?9RB5xn",
+		"document-margin": "document-margin.css?BMam9w",
 		"document-email": "document-email.css?mDNWsX",
-		"email": "email.css?YPTHFT"
+		"email": "email.css?Ehl8qG"
 	}
 }

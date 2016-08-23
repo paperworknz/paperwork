@@ -18,7 +18,7 @@ Core.addModule('document-margin', function(context){
 			var index = $(this).index();
 			
 			// Toggle selection
-			selection[index] ? selection[index] = false : selection[index] = true;
+			selection[index] === true ? selection[index] = false : selection[index] = true;
 			$(this).toggleClass('selected');
 		});
 		
@@ -110,12 +110,16 @@ Core.addModule('document-margin', function(context){
 			
 			// Active class
 			var selected = selection[i] ? 'selected' : '';
+			var marginDOM = margin > 0 ? `Margin: ${margin}%` : '';
 			
 			$body.find('[data-type="margin-content"]').append(`
 				<section class="inventory-item ${selected}">
 					<part class="inventory-item_name">
 						<part data-type="name">
 							${value.name}
+						</part>
+						<part class="inventory-item_margin">
+							${marginDOM}
 						</part>
 					</part>
 					<part data-type="quantity" class="inventory-item_qty">
@@ -129,14 +133,6 @@ Core.addModule('document-margin', function(context){
 					</part>
 				</section>
 			`);
-			
-			if(margin > 0){
-				$body.find('[data-type="margin-content"] [data-type="name"]').after(`
-					<part class="inventory-item_margin">
-						Margin: ${margin}%
-					</part>
-				`);
-			}
 		}
 		
 		// Calculate subtotal, tax, total
@@ -158,7 +154,7 @@ Core.addModule('document-margin', function(context){
 		for(let i in items) {
 			const value = items[i];
 			
-			if(selection[i]) {
+			if(selection[i] === true) {
 				value.margin = margin;
 			}
 		}

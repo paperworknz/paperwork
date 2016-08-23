@@ -2,27 +2,23 @@
 	
 	.inventory-item {
 		.inventory-item_name {
-			flex: 1 1 100%;
+			border-left: 1px solid black;
 			
 			doc-text {
-				height: 24px;
-				line-height: 24px;
-				padding: 0 6px;
+				padding: 3px 6px;
 			}
 		}
 		
 		.inventory-item_qty, .inventory-item_price, .inventory-item_total {
-			flex: 1 0 84px;
 			border-left: 1px solid black;
-			
-			doc-text {
-				padding: 0 6px;
-				height: 24px;
-				line-height: 24px;
-				
-				text-align: center;
-				padding: 0 6px;
-			}
+			min-width: 95px;
+			text-align: center;
+			padding: 3px 6px;
+			height: 100%;
+		}
+		
+		.inventory-item_total {
+			border-right: 1px solid black;
 		}
 	}
 }

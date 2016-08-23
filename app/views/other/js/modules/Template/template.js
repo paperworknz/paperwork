@@ -207,13 +207,13 @@ Core.addModule('template', function(context){
 	}
 	
 	function propertiesUpdate(){
-		$body.on('keyup', '[data-type="properties"] input', function(){
-			properties[$(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim()] = $(this).val();
+		$body.on('keyup', '[data-type="properties"] .prop', function(){
+			properties[$(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim()] = $(this).html();
 			
 			render();
 		});
 		
-		$body.on('change', '[data-type="properties"] input', function(){
+		$body.on('blur', '[data-type="properties"] .prop', function(){
 			
 			$.post(request.putProp, {
 				properties: properties,

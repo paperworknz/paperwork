@@ -1,6 +1,6 @@
 <part class="wrap form">
 	<box class="container" style="background-color: white;padding: 0;">
-		<div data-type="document" data-id="{{document.id}}" style="pointer-events: none;opacity: 0;">
+		<div data-type="document" data-id="{{document.id}}" style="pointer-events: none;opacity: 0;padding: 10mm 0;">
 			{{document.user_template.template.body | raw}}
 		</div>
 	</box>
@@ -27,7 +27,7 @@
 			<part class="app-button email" data-type="email-button">
 			</part>
 		</box>
-		<box style="right: 0;position: absolute;">
+		<box class="right">
 			<part class="container centered">
 				<button class="button delete" data-type="document-delete-button">DELETE</button>
 			</part>

@@ -1,4 +1,4 @@
-<doc-body data-template="mike" style="box-sizing: border-box; font-size: 13px; padding: 10mm;">
+<doc-body data-template="mike" style="box-sizing: border-box; font-size: 13px; padding: 0 10mm;">
 	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
 		<doc-part style="box-sizing: border-box;">
 			<doc-part data-property="text_colour" style="box-sizing: border-box;">
@@ -27,7 +27,7 @@
 " style="border: 0; box-sizing: border-box; vertical-align: middle;">
 		</doc-part>
 	</doc-section>
-	<doc-section style="align-items: flex-end; box-sizing: border-box; padding-bottom: 15px;">
+	<doc-section style="-ms-flex-align: baseline; -ms-grid-row-align: baseline; -webkit-box-align: baseline; align-items: baseline; box-sizing: border-box; padding-bottom: 15px; page-break-inside: avoid !important;">
 		<doc-part style="box-sizing: border-box;">
 			<doc-text style="box-sizing: border-box; font-weight: 600;">
 				TO:
@@ -39,112 +39,126 @@
 		</doc-part>
 		<doc-part style="box-sizing: border-box;">
 			<doc-text data-aspect="name" data-property="text_colour" style="box-sizing: border-box; font-size: 24px; font-weight: 600; text-align: right;">@name</doc-text>
-			<doc-part style="-ms-flex-pack: end; -webkit-box-pack: end; box-sizing: border-box; display: flex; justify-content: flex-end;">
-				<doc-part style="box-sizing: border-box; display: flex; justify-content: flex-end;">
-					<doc-col style="box-sizing: border-box;">
-						<doc-row style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-top: 1px solid transparent; box-sizing: border-box; text-align: right;">
-							<doc-text style="box-sizing: border-box; padding: 2px 10px;">
-								Quote Number
-							</doc-text>
-						</doc-row>
-						<doc-row style="border: 1px solid transparent; border-left: 1px solid transparent; border-right: 1px solid transparent; border-top: 1px solid transparent; box-sizing: border-box; text-align: right;">
-							<doc-text style="box-sizing: border-box; padding: 2px 10px;">
-								Date of Quote
-							</doc-text>
-						</doc-row>
+			<doc-table style="box-sizing: border-box; float: right;">
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="border-left: 1px solid transparent; border-right: 1px solid transparent; border-top: 1px solid transparent; box-sizing: border-box; display: table-cell; text-align: right;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							Quote Number
+						</doc-text>
 					</doc-col>
-					<doc-col style="box-sizing: border-box;">
-						<doc-row style="border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; text-align: center;">
-							<doc-text data-aspect="id" style="box-sizing: border-box; padding: 2px 10px;">@id</doc-text>
-						</doc-row>
-						<doc-row style="border: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; text-align: center;">
-							<doc-text data-aspect="date" style="box-sizing: border-box; padding: 2px 10px;">@date</doc-text>
-						</doc-row>
+					<doc-col style="border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; display: table-cell; text-align: center;">
+						<doc-text data-aspect="id" style="box-sizing: border-box; padding: 2px 10px;">
+							@id
+						</doc-text>
 					</doc-col>
-				</doc-part>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="border-bottom: 1px solid transparent; border-left: 1px solid transparent; border-right: 1px solid transparent; border-top: 1px solid transparent; box-sizing: border-box; display: table-cell; text-align: right;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							Date of Quote
+						</doc-text>
+					</doc-col>
+					<doc-col style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; display: table-cell; text-align: center;">
+						<doc-text data-aspect="date" style="box-sizing: border-box; padding: 2px 10px;">
+							@date
+						</doc-text>
+					</doc-col>
+				</doc-row>
+			</doc-table>
+		</doc-part>
+	</doc-section>
+	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-part style="box-sizing: border-box;">
+				<doc-text style="box-sizing: border-box; font-weight: 600;">
+					COMMENTS OR SPECIAL INSTRUCTIONS:
+				</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box;">
+				<doc-text data-aspect="description" style="box-sizing: border-box; min-height: 24px; padding: 5px;"></doc-text>
 			</doc-part>
 		</doc-part>
 	</doc-section>
-	<doc-section style="box-sizing: border-box; flex-direction: column; padding-bottom: 15px;">
-		<doc-text style="box-sizing: border-box; font-weight: 600;">
-			COMMENTS OR SPECIAL INSTRUCTIONS:
-		</doc-text>
-		<doc-text data-aspect="description" style="box-sizing: border-box; min-height: 24px; padding: 5px;"></doc-text>
-	</doc-section>
-	<doc-section data-type="inventory" style="-ms-flex-direction: column; -webkit-box-direction: normal; -webkit-box-orient: vertical; box-sizing: border-box; display: flex; flex-direction: column; min-height: 28px; padding-bottom: 15px;">
-		<doc-section style="box-sizing: border-box;">
-			<doc-section data-property="background_colour" style="border: 1px solid #000; box-sizing: border-box; display: flex; font-size: 12px; font-weight: 600; line-height: 20px;">
-				<doc-part style="-ms-flex: 1; -ms-flex-preferred-size: 84px; -webkit-box-flex: 1; border-left: none; box-sizing: border-box; flex: 1; flex-basis: 84px; padding: 0 6px; text-align: left;">
-					<doc-text style="box-sizing: border-box;">
-						ITEM
-					</doc-text>
-				</doc-part>
-				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 84px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 84px; padding: 0 6px; text-align: center;">
-					<doc-text style="box-sizing: border-box;">
-						QTY
-					</doc-text>
-				</doc-part>
-				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 84px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 84px; padding: 0 6px; text-align: center;">
-					<doc-text style="box-sizing: border-box;">
-						PRICE
-					</doc-text>
-				</doc-part>
-				<doc-part style="-ms-flex: 0 0; -ms-flex-preferred-size: 84px; -webkit-box-flex: 0; border-left: 1px solid #000; box-sizing: border-box; flex: 0 0; flex-basis: 84px; padding: 0 6px; text-align: center;">
-					<doc-text style="box-sizing: border-box;">
-						TOTAL
-					</doc-text>
-				</doc-part>
-			</doc-section>
+	<doc-section data-type="inventory" style="box-sizing: border-box; display: block; padding-bottom: 15px;">
+		<doc-section data-property="background_colour" style="border: 1px solid #000; box-sizing: border-box; display: block; font-size: 12px; font-weight: 600; line-height: 20px;">
+			<doc-part style="border-left: none; box-sizing: border-box; display: table-cell; min-width: 95px; padding: 0 6px; text-align: left; width: 100%;">
+				<doc-text style="box-sizing: border-box;">
+					ITEM
+				</doc-text>
+			</doc-part>
+			<doc-part style="border-left: 1px solid #000; box-sizing: border-box; display: table-cell; min-width: 95px; padding: 0 6px; text-align: center;">
+				<doc-text style="box-sizing: border-box;">
+					QTY
+				</doc-text>
+			</doc-part>
+			<doc-part style="border-left: 1px solid #000; box-sizing: border-box; display: table-cell; min-width: 95px; padding: 0 6px; text-align: center;">
+				<doc-text style="box-sizing: border-box;">
+					PRICE
+				</doc-text>
+			</doc-part>
+			<doc-part style="border-left: 1px solid #000; box-sizing: border-box; display: table-cell; min-width: 95px; padding: 0 6px; text-align: center;">
+				<doc-text style="box-sizing: border-box;">
+					TOTAL
+				</doc-text>
+			</doc-part>
 		</doc-section>
 		<doc-section data-type="inventory-input" style="box-sizing: border-box;">
 		</doc-section>
 		<doc-section data-type="inventory-content" style="box-sizing: border-box;">
 		</doc-section>
 	</doc-section>
-	<doc-section style="box-sizing: border-box; justify-content: flex-end; padding-bottom: 15px;">
-		<doc-part style="-ms-flex-pack: end; -webkit-box-pack: end; box-sizing: border-box; display: flex; justify-content: flex-end;">
-			<doc-part style="box-sizing: border-box; display: flex;">
-				<doc-col style="box-sizing: border-box; flex: 0 0; padding-left: 30px; text-align: right;">
-					<doc-row style="box-sizing: border-box; min-width: 115px;">
+	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-table style="box-sizing: border-box; float: right; page-break-inside: avoid !important;">
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 115px; text-align: right;">
 						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
 							Sub Total
 						</doc-text>
-					</doc-row>
-					<doc-row style="box-sizing: border-box; min-width: 115px;">
-						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
-							GST
-						</doc-text>
-					</doc-row>
-					<doc-row data-property="background_colour" style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid transparent; border-top: 1px solid #000; box-sizing: border-box; font-weight: 600; min-width: 115px;">
-						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
-							TOTAL TO PAY
-						</doc-text>
-					</doc-row>
-				</doc-col>
-				<doc-col style="box-sizing: border-box; flex: 1 0; min-width: 84px; text-align: right;">
-					<doc-row style="box-sizing: border-box;">
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right;">
 						<doc-text data-aspect="subtotal" style="box-sizing: border-box; padding: 2px 10px;">
 							@subtotal
 						</doc-text>
-					</doc-row>
-					<doc-row style="box-sizing: border-box;">
+					</doc-col>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 115px; text-align: right;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							GST
+						</doc-text>
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right;">
 						<doc-text data-aspect="tax" style="box-sizing: border-box; padding: 2px 10px;">
 							@tax
 						</doc-text>
-					</doc-row>
-					<doc-row style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; font-weight: 600;">
+					</doc-col>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col data-property="background_colour" style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; display: table-cell; font-weight: 600; min-width: 115px; text-align: right;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							TOTAL TO PAY
+						</doc-text>
+					</doc-col>
+					<doc-col style="border: 1px solid #000; box-sizing: border-box; display: table-cell; font-weight: 600; min-width: 100px; text-align: right;">
 						<doc-text data-aspect="total" style="box-sizing: border-box; padding: 2px 10px;">
 							@total
 						</doc-text>
-					</doc-row>
-				</doc-col>
-			</doc-part>
+					</doc-col>
+				</doc-row>
+			</doc-table>
 		</doc-part>
 	</doc-section>
-	<doc-section style="box-sizing: border-box; flex-direction: column; padding-bottom: 0;">
-		<doc-text data-property="notes" style="box-sizing: border-box;">@notes</doc-text>
-		<doc-text style="box-sizing: border-box; font-weight: 600; padding-top: 15px;">
-			THANK YOU FOR YOUR BUSINESS
-		</doc-text>
+	<doc-section style="box-sizing: border-box; padding-bottom: 0;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-part style="box-sizing: border-box;">
+				<doc-text data-property="notes" style="box-sizing: border-box;">@notes</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box;">
+				<doc-text style="box-sizing: border-box; font-weight: 600; padding-top: 15px;">
+					THANK YOU FOR YOUR BUSINESS
+				</doc-text>
+			</doc-part>
+		</doc-part>
 	</doc-section>
 </doc-body>

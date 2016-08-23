@@ -47,21 +47,16 @@ doc-body {
 	
 	[data-type="inventory-content"] {
 		display: table;
-		border-right: 1px solid black;
 		border-bottom: 1px solid black;
-		border-left: 1px solid black;
 	}
 	
 	.inventory-item {
 		display: table-row;
+		page-break-inside: avoid!important;
 		
 		> doc-part {
 			display: table-cell;
 			vertical-align: top;
-		}
-		
-		@media print {
-			page-break-inside: avoid;
 		}
 		
 		&:hover {

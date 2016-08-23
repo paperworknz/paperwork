@@ -23,6 +23,9 @@ Core.addService('pdf', function(){
 			if(response.type == 'error') return callback(false);
 			
 			return callback(response);
+		}).fail(function(){
+			
+			callback(false);
 		});
 	}
 	

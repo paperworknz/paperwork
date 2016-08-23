@@ -152,6 +152,7 @@ Core.addBehavior('document', function(context, opt){
 			
 			// Clear typeahead
 			$(this).typeahead('val', '');
+			$(this).focus();
 		});
 		
 		$body.off('keydown', `${$doc} .tt-input`);
@@ -172,6 +173,10 @@ Core.addBehavior('document', function(context, opt){
 			
 			// Prevent enter from doing bad things
 			if(event.which == 13) event.preventDefault();
+			
+			setTimeout(function(){
+				$body.find(`${$doc} .typeahead`).focus();
+			}, 0)
 		});
 	}
 	
@@ -183,6 +188,13 @@ Core.addBehavior('document', function(context, opt){
 		for(let i in properties){
 			var value = properties[i];
 			var $prop = $body.find(`${$doc} [data-property="${i}"]`);
+			
+			for(let aspect in documents[document_id]){
+				
+				if(value.indexOf(`@${aspect}`) !== -1){
+					value = value.replace(`@${aspect}`, `<div data-aspect="${aspect}" style="display: inline;"></div>`);
+				}
+			}
 			
 			// Set prop value in templates
 			if(i == 'background_colour') $prop.css('background-color', (value || 'white'));

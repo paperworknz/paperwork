@@ -1,7 +1,13 @@
 @import '../library/mixins/mixins';
 
 [data-module="document-copy"] {
-
+	
+	.title {
+		@include size(420px) {
+			text-align: center;
+		}
+	}
+	
 	.new-document {
 		text-transform: uppercase;
 		text-align:center;

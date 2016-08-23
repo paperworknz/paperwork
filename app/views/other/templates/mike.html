@@ -27,124 +27,138 @@
 ">
 		</doc-part>
 	</doc-section>
-	<doc-section style="align-items: flex-end;">
+	<doc-section class="middle-region">
 		<doc-part>
 			<doc-text style="font-weight: 600;">
 				TO:
 			</doc-text>
-			<doc-part class="std-pad">
+			<doc-part class="pad">
 				<doc-text data-aspect="client-name">@clientname</doc-text>
 				<doc-text data-aspect="client-address">@clientaddress</doc-text>
 			</doc-part>
 		</doc-part>
 		<doc-part>
 			<doc-text data-aspect="name" class="name" data-property="text_colour">@name</doc-text>
-			<doc-part class="table detail">
-				<doc-part style="display: flex;justify-content: flex-end;">
+			<doc-table class="detail">
+				<doc-row>
 					<doc-col>
-						<doc-row>
-							<doc-text>
-								Quote Number
-							</doc-text>
-						</doc-row>
-						<doc-row>
-							<doc-text>
-								Date of Quote
-							</doc-text>
-						</doc-row>
+						<doc-text>
+							Quote Number
+						</doc-text>
 					</doc-col>
 					<doc-col>
-						<doc-row>
-							<doc-text data-aspect="id">@id</doc-text>
-						</doc-row>
-						<doc-row>
-							<doc-text data-aspect="date">@date</doc-text>
-						</doc-row>
+						<doc-text data-aspect="id">
+							@id
+						</doc-text>
 					</doc-col>
-				</doc-part>
+				</doc-row>
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							Date of Quote
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-aspect="date">
+							@date
+						</doc-text>
+					</doc-col>
+				</doc-row>
+			</doc-table>
+		</doc-part>
+	</doc-section>
+	<doc-section>
+		<doc-part>
+			<doc-part>
+				<doc-text style="font-weight: 600;">
+					COMMENTS OR SPECIAL INSTRUCTIONS:
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text data-aspect="description" class="pad" style="min-height: 24px;"></doc-text>
 			</doc-part>
 		</doc-part>
 	</doc-section>
-	<doc-section style="flex-direction: column;">
-		<doc-text style="font-weight: 600;">
-			COMMENTS OR SPECIAL INSTRUCTIONS:
-		</doc-text>
-		<doc-text data-aspect="description" class="std-pad" style="min-height: 24px;"></doc-text>
-	</doc-section>
-	<doc-section data-type="inventory" class="inventory" style="min-height: 28px;">
-		<doc-section>
-			<doc-section class="inv-head" data-property="background_colour">
-				<doc-part>
-					<doc-text>
-						ITEM
-					</doc-text>
-				</doc-part>
-				<doc-part>
-					<doc-text>
-						QTY
-					</doc-text>
-				</doc-part>
-				<doc-part>
-					<doc-text>
-						PRICE
-					</doc-text>
-				</doc-part>
-				<doc-part>
-					<doc-text>
-						TOTAL
-					</doc-text>
-				</doc-part>
-			</doc-section>
+	<doc-section class="inventory" data-type="inventory">
+		<doc-section class="inventory-head" data-property="background_colour">
+			<doc-part>
+				<doc-text>
+					ITEM
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					QTY
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					PRICE
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					TOTAL
+				</doc-text>
+			</doc-part>
 		</doc-section>
 		<doc-section data-type="inventory-input">
 		</doc-section>
 		<doc-section data-type="inventory-content">
 		</doc-section>
 	</doc-section>
-	<doc-section style="justify-content: flex-end;">
-		<doc-part class="table totals">
-			<doc-part style="display: flex;">
-				<doc-col style="flex: 0 0;padding-left: 30px;">
-					<doc-row>
+	<doc-section>
+		<doc-part>
+			<doc-table class="document-total">
+				<doc-row>
+					<doc-col>
 						<doc-text>
 							Sub Total
 						</doc-text>
-					</doc-row>
-					<doc-row>
-						<doc-text>
-							GST
-						</doc-text>
-					</doc-row>
-					<doc-row data-property="background_colour">
-						<doc-text>
-							TOTAL TO PAY
-						</doc-text>
-					</doc-row>
-				</doc-col>
-				<doc-col style="flex: 1 0;min-width: 84px;">
-					<doc-row>
+					</doc-col>
+					<doc-col>
 						<doc-text data-aspect="subtotal">
 							@subtotal
 						</doc-text>
-					</doc-row>
-					<doc-row>
+					</doc-col>
+				</doc-row>
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							GST
+						</doc-text>
+					</doc-col>
+					<doc-col>
 						<doc-text data-aspect="tax">
 							@tax
 						</doc-text>
-					</doc-row>
-					<doc-row>
+					</doc-col>
+				</doc-row>
+				<doc-row>
+					<doc-col data-property="background_colour">
+						<doc-text>
+							TOTAL TO PAY
+						</doc-text>
+					</doc-col>
+					<doc-col>
 						<doc-text data-aspect="total">
 							@total
 						</doc-text>
-					</doc-row>
-				</doc-col>
-			</doc-part>
+					</doc-col>
+				</doc-row>
+			</doc-table>
 		</doc-part>
 	</doc-section>
-	<doc-section style="flex-direction: column;">
-		<doc-text data-property="notes">@notes</doc-text>
-		<doc-text style="font-weight: 600;padding-top: 15px;">
-			THANK YOU FOR YOUR BUSINESS
-		</doc-text>
+	<doc-section>
+		<doc-part>
+			<doc-part>
+				<doc-text data-property="notes">@notes</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text style="font-weight: 600;padding-top: 15px;">
+					THANK YOU FOR YOUR BUSINESS
+				</doc-text>
+			</doc-part>
+		</doc-part>
 	</doc-section>
 </doc-body><link rel="stylesheet" type="text/css" href="/../../../../public/css/library/Paperwork.css"><link rel="stylesheet" type="text/css" href="inline/css/mike.css">

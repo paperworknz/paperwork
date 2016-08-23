@@ -14,17 +14,21 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 		'base_uri' => 'http://api.pdflayer.com/api/convert',
 	]);
 	
+	$test = $_ENV['MODE'] == 'dev' ? 1 : 0;
+	
 	$params = [
 		'access_key' => '9dba89013f131f6ae8bf2280b5ab0cd2',
-		'test' => 1,
-		'margin_top' => 0,
-		'margin_right' => 0,
-		'margin_bottom' => 0,
-		'margin_left' => 0,
+		'test' => $test,
+		'force' => 0,
+		'margin_top' => '37.795', // 10mm
+		'margin_right' => '18.897638', // + 5mm
+		'margin_bottom' => '37.795', // 10mm
+		'margin_left' => '18.897638', // + 5mm
 		'creator' => 'www.paperwork.nz',
 		'author' => 'www.paperwork.nz',
 		'page_size' => 'A4',
 		'orientation' => 'portrait',
+		'custom_unit' => 'mm',
 		'zoom' => 1,
 		'no_hyperlinks' => 1,
 		'no_javascript' => 1,
@@ -64,6 +68,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	$post = [
 		'document_html' => '',
 		'document_name' => 'Paperwork',
+		'custom_unit' => 'mm',
 	];
 	
 	// Merge PDF parameters
