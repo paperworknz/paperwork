@@ -1,6 +1,11 @@
-[data-template="logan"], [data-template="lightweight"] {
+[data-template="lightweight"] {
+	
+	.inventory-input {
+		border-top: 1px solid black;
+	}
 	
 	.inventory-item {
+		
 		.inventory-item_name {
 			border-left: 1px solid black;
 			

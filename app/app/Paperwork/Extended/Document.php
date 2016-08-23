@@ -27,15 +27,10 @@ class Document {
 				$value['date_deleted']
 			);
 			
-			$value['items'] = $app->parse->jsonToArray($value['items']);
-			
-			if(isset($value['items']['items'])){
-				$value['items'] = $value['items']['items'];
-			}
-			
 			$value['id'] = $job_number;
 			$value['client-name'] = $client_name;
 			$value['client-address'] = $client_address;
+			$value['items'] = $app->parse->jsonToArray($value['items']);
 			
 			$document[$document_id] = $value;
 		}

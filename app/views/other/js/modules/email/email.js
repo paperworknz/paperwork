@@ -105,7 +105,7 @@ Core.addModule('email', function(context){
 			if(response.type == 'error'){
 				return error({
 					title: 'Mail Not Sent',
-					text: `Response: ${response.message}`,
+					text: response.message,
 				});
 			}
 			

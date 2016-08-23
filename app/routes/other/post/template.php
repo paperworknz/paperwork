@@ -9,12 +9,15 @@ $app->post('/post/template', 'uac', function() use ($app){
 		die($app->build->error('Template name not provided'));
 	}
 	
+	// Default template_id
+	$default = 3;
+	
 	$id = $app->sql->post('user_template')->with([
 		'name' => $name,
-		'template_id' => 1,
+		'template_id' => $default,
 	])->run();
 	
-	$template = $app->sql->get('template')->where('id', '=', 1)->root()->one();
+	$template = $app->sql->get('template')->where('id', '=', $default)->root()->one();
 	
 	echo $app->parse->arrayToJson([
 		'id' => $id,

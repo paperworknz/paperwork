@@ -21,7 +21,6 @@ Core.addModule('template', function(context){
 	bind();
 	getProperties();
 	
-	
 	function bind(){
 		
 		var button = {
@@ -120,6 +119,8 @@ Core.addModule('template', function(context){
 		// ID
 		id = $tabs.children().last().prev().data('id') + 1;
 		
+		if(isNaN(id)) id = 0;
+		
 		$tabs.children().last().before(`
 			<li data-type="tab" data-id="${id}" class="tab" style="opacity: 0.5;">${request.name}</li>
 		`);
@@ -136,7 +137,7 @@ Core.addModule('template', function(context){
 					</div>
 					<hr>
 					<div style="position: relative;overflow: hidden;">
-						<div data-type="document" data-id="{{i}}" class="template-document" style="opacity: 0.25;">
+						<div data-type="document" data-id="{{i}}" class="template-document" style="opacity: 0.25;padding: 10mm 0;">
 							${request.body}
 						</div>
 						<div data-type="template-hud" class="template-hud">

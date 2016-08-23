@@ -108,12 +108,12 @@ Core.addBehavior('document', function(context, opt){
 		}
 		
 		// Set empty item array if null
-		if(job_id && documents[document_id].items == null) documents[document_id].items = [];
+		if(documents[document_id]) if(documents[document_id].items == null) documents[document_id].items = [];
 		
 		renderProperties(document_id);
-		if(job_id) bindTypeahead(document_id);
-		if(job_id) bindAspects(document_id);
-		if(job_id) bindInventoryContent(document_id);
+		if(documents[document_id]) bindTypeahead(document_id);
+		if(documents[document_id]) bindAspects(document_id);
+		if(documents[document_id]) bindInventoryContent(document_id);
 		render(document_id);
 		
 		$doc.css('pointer-events', 'auto').animate({
@@ -399,7 +399,7 @@ Core.addBehavior('document', function(context, opt){
 		var $doc = $body.find(`[data-type="document"]`).filter(`[data-id="${document_id}"]`);
 		
 		// Calculate document
-		if(job_id) calculate(document_id);
+		if(documents[document_id]) calculate(document_id);
 		
 		// Render aspects
 		for(let aspect in value){
@@ -414,7 +414,7 @@ Core.addBehavior('document', function(context, opt){
 			$doc.find(`[data-aspect="${aspect}"]`).html(prop);
 		}
 		
-		if(!job_id) return;
+		if(!documents[document_id]) return;
 		
 		// Render items
 		$doc.find('[data-type="inventory-content"]').html('');

@@ -67,8 +67,8 @@ Core.addBehavior('tab', function(context, opt){
 		var object = $body.find(obj).filter(`[data-id="${id}"]`);
 		
 		if(element.length === 0){
-			id = 0;
-			element = $body.find(tab).filter(`[data-id="${id}"]`);
+			element = $body.find(tab).first();
+			id = element.data('id');
 			object = $body.find(obj).filter(`[data-id="${id}"]`);
 		}
 		

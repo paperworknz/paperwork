@@ -1,6 +1,7 @@
 <?php
 return [
 'filearray' => [
+'/admin/delete/old-users' => '../app/routes/other/admin/delete/old-users.php',
 '/admin/get/activity' => '../app/routes/other/admin/get/activity.php',
 '/admin/get/password' => '../app/routes/other/admin/get/password.php',
 '/admin/post/backup' => '../app/routes/other/admin/post/backup.php',
@@ -63,8 +64,8 @@ return [
 '/_module/client' => '../app/routes/other/_module/client.php',
 '/_module/clients' => '../app/routes/other/_module/clients.php',
 '/_module/document-copy' => '../app/routes/other/_module/document-copy.php',
-'/_module/document-email' => '../app/routes/other/_module/document-email.php',
 '/_module/document-margin' => '../app/routes/other/_module/document-margin.php',
+'/_module/email' => '../app/routes/other/_module/email.php',
 '/_module/inventory' => '../app/routes/other/_module/inventory.php',
 '/_module/job' => '../app/routes/other/_module/job.php',
 '/_module/jobs' => '../app/routes/other/_module/jobs.php',

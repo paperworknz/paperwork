@@ -1,0 +1,181 @@
+<doc-body data-template="lightweight">
+	<doc-section>
+		<doc-part class="document-type">
+			<doc-text data-property="user-company" class="h3" style="padding: 5px 0;padding-bottom: 5px;">
+				@company
+			</doc-text>
+		</doc-part>
+		<doc-part class="top-right">
+			<doc-text data-property="user-email">@email</doc-text>
+			<doc-text data-property="user-address">@address</doc-text>
+			<doc-text data-property="user-phone">@phone</doc-text>
+		</doc-part>
+	</doc-section>
+	<doc-section class="middle-region">
+		<doc-part>
+			<doc-table class="middle-left">
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							To:
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-aspect="client-name">
+							@clientname
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							Issued:
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-aspect="date">
+							@date
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							Invoice Number:
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-aspect="id">
+							@id
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							Tax Number:
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-property="tax_number">
+							@taxnumber
+						</doc-text>
+					</doc-col>
+				</doc-row>
+			</doc-table>
+		</doc-part>
+		<doc-part>
+			<doc-part class="middle-right right">
+				<doc-text data-aspect="name" data-property="text_colour" class="h2" style="padding: 5px 0;padding-bottom: 5px;">
+					@name
+				</doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+	<doc-section>
+		<doc-part>
+			<doc-part>
+				<doc-text style="font-weight: 600;font-size: 12px;padding-left: 6px;">
+					DESCRIPTION:
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text data-aspect="description" class="pad" style="min-height: 24px;"></doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+	<doc-section class="inventory" data-type="inventory">
+		<doc-section class="inventory-head">
+			<doc-part>
+				<doc-text>
+					ITEM
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					QTY
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					PRICE
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					TOTAL
+				</doc-text>
+			</doc-part>
+		</doc-section>
+		<doc-section data-type="inventory-input">
+		</doc-section>
+		<doc-section data-type="inventory-content">
+		</doc-section>
+	</doc-section>
+	<doc-section>
+		<doc-part>
+			<doc-table class="document-total">
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							Sub Total
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-aspect="subtotal">
+							@subtotal
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							GST
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-aspect="tax">
+							@tax
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row>
+					<doc-col>
+						<doc-text>
+							TOTAL TO PAY
+						</doc-text>
+					</doc-col>
+					<doc-col>
+						<doc-text data-aspect="total">
+							@total
+						</doc-text>
+					</doc-col>
+				</doc-row>
+			</doc-table>
+		</doc-part>
+	</doc-section>
+	<doc-section>
+		<doc-part>
+			<doc-part>
+				<doc-text style="font-weight: 600;font-size: 12px;padding-left: 6px;">
+					NOTES:
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text data-property="notes" class="pad" style="min-height: 24px;">@notes</doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+	<doc-section>
+		<doc-part>
+			<doc-part>
+				<doc-text style="font-weight: 600;font-size: 12px;padding-left: 6px;">
+					TERMS AND CONDITIONS:
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text data-property="terms" class="pad" style="min-height: 24px;">@terms</doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+</doc-body><link rel="stylesheet" type="text/css" href="/../../../../public/css/library/Paperwork.css"><link rel="stylesheet" type="text/css" href="inline/css/lightweight.css">

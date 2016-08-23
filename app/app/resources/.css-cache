@@ -2,7 +2,7 @@
 	"library": {
 		"Paperwork": "Paperwork.css?EvpiG0",
 		"Public": "Public.css?TcMy8r",
-		"Document": "Document.css?jYLQa6"
+		"Document": "Document.css?T132Pt"
 	},
 	"views": {
 		"login": "login.css?JiGeeo"
@@ -15,7 +15,7 @@
 		"job": "job.css?Pu9LSz",
 		"jobs": "jobs.css?I3ktku",
 		"settings": "settings.css?Lmiy6s",
-		"template": "template.css?qbU0Mz",
+		"template": "template.css?epNrPg",
 		"user": "user.css?E1ktyM",
 		"welcome-guest": "welcome-guest.css?MhUIDW",
 		"document-copy": "document-copy.css?9RB5xn",

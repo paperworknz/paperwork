@@ -90,11 +90,116 @@ $app->module->add('job', 'user', function($request) use ($app){
 	
 	// DOCUMENTS //
 	$documents = $app->sql->get('document')->where('job_id', '=', $job['id'])->select([
-		'id', 'name', 'user_template_id', 
+		'id', 'name', 'date', 'description', 'html', 'items', 'user_template_id',
 	])->all();
 	
 	// Insert template into each document's user_template property
 	foreach($documents as $key => $value){
+		
+		// <---------------------------------- MIGRATION
+		// MIGRATE FROM FORM
+		// Old forms have an html value
+		// New forms do not
+		// Old forms will unset html once they have been migrated, so it only runs once
+		if($value['html']){
+			
+			$html = $value['html'];
+			
+			$html = str_replace('<section', '<div', $html);
+			$html = str_replace('<header', '<div', $html);
+			$html = str_replace('<footer', '<div', $html);
+			$html = str_replace('section>', 'div>', $html);
+			$html = str_replace('header>', 'div>', $html);
+			$html = str_replace('footer>', 'div>', $html);
+			
+			$value['html'] = $html;
+			
+			$attr = [];
+			$dom = new \DOMDocument;
+			$dom->loadHTML($value['html']);
+			
+			// Date td
+			$date = $dom->getElementsByTagName('td');
+			foreach($date as $item){
+				if($item->hasAttribute('form-date')){
+					$attr['date'] = trim($item->nodeValue);
+					break;
+				}
+			}
+			
+			// Date li
+			if(!isset($attr['date'])){
+				$date = $dom->getElementsByTagName('li');
+				foreach($date as $item){
+					if($item->hasAttribute('form-date')){
+						$attr['date'] = trim($item->nodeValue);
+						break;
+					}
+				}
+			}
+			
+			// Description, Name
+			$div = $dom->getElementsByTagName('div');
+			foreach($div as $item){
+				
+				// Description
+				if($item->hasAttribute('form-jobd')){
+					$child = $item->childNodes;
+					$html = '';
+					foreach($child as $c) $html .= $item->ownerDocument->saveHTML($c);
+					$attr['description'] = trim($html);
+				}
+				
+				// Name
+				if($item->hasAttribute('form-type')){
+					$child = $item->childNodes;
+					$html = '';
+					foreach($child as $c) $html .= $item->ownerDocument->saveHTML($c);
+					$attr['name'] = trim($html);
+				}
+			}
+			
+			// Update items JSON
+			$items = $app->parse->jsonToArray($value['items']);
+			
+			if(isset($items['items'])){
+				foreach($items['items'] as $a => $b){
+					
+					if(isset($b['item'])){
+						$items['items'][$a]['name'] = trim($b['item']);
+						unset($items['items'][$a]['itemID'], $items['items'][$a]['item']);
+					}
+				}
+			}
+			
+			// Flatten
+			if(isset($items['items'])) $items = $items['items'];
+			
+			// Rebase to 0
+			if($items) $items = array_values($items);
+			
+			// Save items back to json
+			$items = $app->parse->arrayToJson($items);
+			
+			if(!isset($attr['date'])) die('Date not set. Description: '.$attr['description']);
+			if(!isset($attr['name'])) die('Name not set. Description: '.$attr['description']);
+			
+			// Update document
+			$app->sql->put('document')->with([
+				'name' => $attr['name'],
+				'date' => $attr['date'],
+				'description' => $attr['description'],
+				'items' => $items,
+				'html' => '', // UNSET HTML <-------- important
+			])->where('id', '=', $value['id'])->run();
+			
+			$documents[$key]['name'] = $attr['name'];
+			$documents[$key]['date'] = $attr['date'];
+			$documents[$key]['description'] = $attr['description'];
+			$documents[$key]['items'] = $items;
+			unset($documents[$key]['html']);
+		}
+		
 		foreach($template as $data){
 			if($value['user_template']['id'] == $data['id']){
 				$documents[$key]['user_template'] = $data;

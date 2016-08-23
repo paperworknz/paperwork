@@ -1,0 +1,181 @@
+<doc-body data-template="lightweight" style="box-sizing: border-box; font-size: 13px; padding: 0 10mm;">
+	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-text data-property="user-company" style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 24px; font-weight: 500; line-height: 1.1; padding: 5px 0; padding-bottom: 5px;">
+				@company
+			</doc-text>
+		</doc-part>
+		<doc-part style="-ms-flex: 0 0; -webkit-box-flex: 0; box-sizing: border-box; color: #999; flex: 0 0; text-align: right;">
+			<doc-text data-property="user-email" style="box-sizing: border-box;">@email</doc-text>
+			<doc-text data-property="user-address" style="box-sizing: border-box;">@address</doc-text>
+			<doc-text data-property="user-phone" style="box-sizing: border-box;">@phone</doc-text>
+		</doc-part>
+	</doc-section>
+	<doc-section style="box-sizing: border-box; padding-bottom: 30px; padding-top: 30px;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-table style="box-sizing: border-box; font-size: 16px;">
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; color: #999; display: table-cell; text-align: left;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							To:
+						</doc-text>
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell;">
+						<doc-text data-aspect="client-name" style="box-sizing: border-box; padding: 2px 10px;">
+							@clientname
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; color: #999; display: table-cell; text-align: left;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							Issued:
+						</doc-text>
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell;">
+						<doc-text data-aspect="date" style="box-sizing: border-box; padding: 2px 10px;">
+							@date
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; color: #999; display: table-cell; text-align: left;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							Invoice Number:
+						</doc-text>
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell;">
+						<doc-text data-aspect="id" style="box-sizing: border-box; padding: 2px 10px;">
+							@id
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; color: #999; display: table-cell; text-align: left;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							Tax Number:
+						</doc-text>
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell;">
+						<doc-text data-property="tax_number" style="box-sizing: border-box; padding: 2px 10px;">
+							@taxnumber
+						</doc-text>
+					</doc-col>
+				</doc-row>
+			</doc-table>
+		</doc-part>
+		<doc-part style="box-sizing: border-box;">
+			<doc-part style="box-sizing: border-box; float: right;">
+				<doc-text data-aspect="name" data-property="text_colour" style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 30px; font-weight: 500; line-height: 1.1; padding: 5px 0; padding-bottom: 5px;">
+					@name
+				</doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-part style="box-sizing: border-box;">
+				<doc-text style="box-sizing: border-box; font-size: 12px; font-weight: 600; padding-left: 6px;">
+					DESCRIPTION:
+				</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box;">
+				<doc-text data-aspect="description" style="box-sizing: border-box; min-height: 24px; padding: 5px;"></doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+	<doc-section data-type="inventory" style="box-sizing: border-box; display: block; padding-bottom: 15px;">
+		<doc-section style="border-bottom: 1px solid #000; box-sizing: border-box; display: block; font-weight: 600; line-height: 20px;">
+			<doc-part style="border-left: none; box-sizing: border-box; display: table-cell; font-size: 12px; min-width: 95px; padding: 0 6px; text-align: left; width: 100%;">
+				<doc-text style="box-sizing: border-box;">
+					ITEM
+				</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box; display: table-cell; font-size: 12px; min-width: 95px; padding: 0 6px; text-align: center;">
+				<doc-text style="box-sizing: border-box;">
+					QTY
+				</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box; display: table-cell; font-size: 12px; min-width: 95px; padding: 0 6px; text-align: center;">
+				<doc-text style="box-sizing: border-box;">
+					PRICE
+				</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box; display: table-cell; font-size: 12px; min-width: 95px; padding: 0 6px; text-align: center;">
+				<doc-text style="box-sizing: border-box;">
+					TOTAL
+				</doc-text>
+			</doc-part>
+		</doc-section>
+		<doc-section data-type="inventory-input" style="box-sizing: border-box;">
+		</doc-section>
+		<doc-section data-type="inventory-content" style="box-sizing: border-box;">
+		</doc-section>
+	</doc-section>
+	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-table style="box-sizing: border-box; float: right; page-break-inside: avoid !important;">
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 115px; text-align: right;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							Sub Total
+						</doc-text>
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right;">
+						<doc-text data-aspect="subtotal" style="box-sizing: border-box; padding: 2px 10px;">
+							@subtotal
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 115px; text-align: right;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							GST
+						</doc-text>
+					</doc-col>
+					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right;">
+						<doc-text data-aspect="tax" style="box-sizing: border-box; padding: 2px 10px;">
+							@tax
+						</doc-text>
+					</doc-col>
+				</doc-row>
+				<doc-row style="box-sizing: border-box; display: table-row;">
+					<doc-col style="border-top: 1px solid #000; box-sizing: border-box; display: table-cell; font-weight: 600; min-width: 115px; text-align: right;">
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							TOTAL TO PAY
+						</doc-text>
+					</doc-col>
+					<doc-col style="border-top: 1px solid #000; box-sizing: border-box; display: table-cell; font-weight: 600; min-width: 100px; text-align: right;">
+						<doc-text data-aspect="total" style="box-sizing: border-box; padding: 2px 10px;">
+							@total
+						</doc-text>
+					</doc-col>
+				</doc-row>
+			</doc-table>
+		</doc-part>
+	</doc-section>
+	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-part style="box-sizing: border-box;">
+				<doc-text style="box-sizing: border-box; font-size: 12px; font-weight: 600; padding-left: 6px;">
+					NOTES:
+				</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box;">
+				<doc-text data-property="notes" style="box-sizing: border-box; min-height: 24px; padding: 5px;">@notes</doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+	<doc-section style="box-sizing: border-box; padding-bottom: 0;">
+		<doc-part style="box-sizing: border-box;">
+			<doc-part style="box-sizing: border-box;">
+				<doc-text style="box-sizing: border-box; font-size: 12px; font-weight: 600; padding-left: 6px;">
+					TERMS AND CONDITIONS:
+				</doc-text>
+			</doc-part>
+			<doc-part style="box-sizing: border-box;">
+				<doc-text data-property="terms" style="box-sizing: border-box; min-height: 24px; padding: 5px;">@terms</doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+</doc-body>
