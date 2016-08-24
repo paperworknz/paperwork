@@ -71,7 +71,7 @@ $app->post('/post/pay', function() use ($app){
 	}
 	
 	// Flash and redirect
-	$app->flash('success', 'Payment successful. Welcome to Paperwork!'.PHP_EOL.'Please see our introductionary email before doing anything.');
+	$app->flash('success', 'Payment successful. Welcome to Paperwork!'.PHP_EOL.'Please see our introductionary email for further information.');
 	$app->redirect($app->root.'/app');
 	
 });

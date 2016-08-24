@@ -75,7 +75,6 @@ return [
 '/_module/welcome-guest' => '../app/routes/other/_module/welcome-guest.php',
 '/admin' => '../app/routes/routes/admin.php',
 '/app' => '../app/routes/routes/app.php',
-'/checkout' => '../app/routes/routes/checkout.php',
 '/clients' => '../app/routes/routes/clients.php',
 '/home' => '../app/routes/routes/home.php',
 '/inventory' => '../app/routes/routes/inventory.php',
