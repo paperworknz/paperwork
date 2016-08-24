@@ -47,7 +47,6 @@ class SQLBackup {
 					' '.$this->database.
 					' > '.
 					$this->path.$name,
-					
 					$result
 				);
 			}else{
