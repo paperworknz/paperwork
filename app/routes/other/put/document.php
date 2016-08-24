@@ -13,7 +13,7 @@ $app->post('/put/document', 'uac', function() use ($app){
 		'items' => [],
 	];
 	
-	$format = ['name', 'date', 'description', 'items', 'subtotal', 'tax', 'total'];
+	$format = ['name', 'date', 'reference', 'description', 'items', 'subtotal', 'tax', 'total'];
 	
 	foreach($document as $key => $value){
 		

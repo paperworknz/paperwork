@@ -118,22 +118,30 @@ $app->module->add('job', 'user', function($request) use ($app){
 			$dom = new \DOMDocument;
 			$dom->loadHTML($value['html']);
 			
-			// Date td
+			// Date, job_id td
 			$date = $dom->getElementsByTagName('td');
 			foreach($date as $item){
+				
 				if($item->hasAttribute('form-date')){
 					$attr['date'] = trim($item->nodeValue);
-					break;
+				}
+				
+				if($item->hasAttribute('form-jobid')){
+					$attr['job_id'] = trim($item->nodeValue);
 				}
 			}
 			
-			// Date li
-			if(!isset($attr['date'])){
+			// Date, job_id li
+			if(!isset($attr['date']) || !isset($attr['job_id'])){
 				$date = $dom->getElementsByTagName('li');
 				foreach($date as $item){
+					
 					if($item->hasAttribute('form-date')){
 						$attr['date'] = trim($item->nodeValue);
-						break;
+					}
+					
+					if($item->hasAttribute('form-jobid')){
+						$attr['job_id'] = trim($item->nodeValue);
 					}
 				}
 			}
@@ -181,13 +189,16 @@ $app->module->add('job', 'user', function($request) use ($app){
 			// Save items back to json
 			$items = $app->parse->arrayToJson($items);
 			
-			if(!isset($attr['date'])) die('Date not set. Description: '.$attr['description']);
-			if(!isset($attr['name'])) die('Name not set. Description: '.$attr['description']);
+			if(!isset($attr['date'])) $attr['date'] = '';
+			if(!isset($attr['name'])) $attr['name'] = '';
+			if(!isset($attr['job_id'])) $attr['job_id'] = '';
+			if(!isset($attr['description'])) $attr['description'] = '';
 			
 			// Update document
 			$app->sql->put('document')->with([
 				'name' => $attr['name'],
 				'date' => $attr['date'],
+				'reference' => $attr['job_id'],
 				'description' => $attr['description'],
 				'items' => $items,
 				'html' => '', // UNSET HTML <-------- important
@@ -195,6 +206,7 @@ $app->module->add('job', 'user', function($request) use ($app){
 			
 			$documents[$key]['name'] = $attr['name'];
 			$documents[$key]['date'] = $attr['date'];
+			$documents[$key]['reference'] = $attr['job_id'];
 			$documents[$key]['description'] = $attr['description'];
 			$documents[$key]['items'] = $items;
 			unset($documents[$key]['html']);

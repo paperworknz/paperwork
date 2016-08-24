@@ -120,13 +120,14 @@ class Authentication {
 		// Set cookie with expiry of 1 year
 		setcookie('@', $user['cookie'], time() + 31536000, '/');
 		
-		// Log
-		if($admin){
+		if($admin && !$force){
 			$app->event->log([
 				'user_id' => $user['id'],
 				'text' => 'logged in via admin. IP: '.$app->ip,
 			]);
-		}else{
+		}
+		
+		if(!$admin && $force){
 			$app->event->log([
 				'user_id' => $user['id'],
 				'text' => 'logged in. IP: '.$app->ip,
@@ -261,6 +262,19 @@ class Authentication {
 			'user_id' => $user['id'],
 			'name' => 'Completed',
 			'job_status_number' => 4,
+		])->root()->run();
+		
+		// Default templates
+		$app->sql->post('user_template')->with([
+			'user_id' => $user['id'],
+			'name' => 'QUOTE',
+			'template_id' => 3,
+		])->root()->run();
+		
+		$app->sql->post('user_template')->with([
+			'user_id' => $user['id'],
+			'name' => 'INVOICE',
+			'template_id' => 3,
 		])->root()->run();
 		
 		// template_properties

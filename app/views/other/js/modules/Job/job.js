@@ -146,7 +146,7 @@ Core.addModule('job', function(context){
 			}, function(response){
 				if(!response) return Paperwork.ready(button.element, button.name);
 				
-				$body.find('[job-del-form]').submit();
+				$body.find('[data-type="delete-job"]').submit();
 			});
 		});
 	}

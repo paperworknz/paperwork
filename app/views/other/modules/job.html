@@ -84,7 +84,7 @@
 			</table>
 		</part>
 		<part class="container-bottom wrap">
-			<form method="post" action="{{environment.root}}/delete/job" data-type="delete-form">
+			<form method="post" action="{{environment.root}}/delete/job" data-type="delete-job">
 				<input type="hidden" name="id" value="{{modules.job.data.job.id}}">
 			</form>
 			<button class="button delete right" data-type="job-delete-button">Delete Job</button>
@@ -122,7 +122,6 @@
 		</div>
 	</part>
 </box>
-<div class="email-signature-raw" hidden>{{modules.job.data.email.signature|raw}}</div>
 <script>
 var job = {
 	job_id: {{modules.job.data.job.id}},

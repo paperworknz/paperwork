@@ -466,7 +466,7 @@ Core.addBehavior('document', function(context, opt){
 		}
 		
 		// Set contenteditable on all aspects globally
-		$doc.find('[data-aspect="name"], [data-aspect="date"], [data-aspect="description"]')
+		$doc.find('[data-aspect="name"], [data-aspect="date"], [data-aspect="reference"], [data-aspect="description"]')
 			.attr('contenteditable', 'true');
 		
 		// Set contenteditable on all inventory items globally

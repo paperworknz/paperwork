@@ -9,7 +9,7 @@ $app->post('/delete/job', 'uac', function() use ($app){
 		die($app->build->error('Job ID not provided'));
 	}
 	
-	$app->sql->delete('job_form')->where('job_id', '=', $id)->run();
+	$app->sql->delete('document')->where('job_id', '=', $id)->run();
 	$app->sql->delete('job')->where('id', '=', $id)->run();
 	
 	$app->redirect($app->root.'/jobs');

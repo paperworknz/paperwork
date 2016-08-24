@@ -23,8 +23,9 @@ $app->post('/post/document', 'uac', function() use ($app){
 		'user_template_id' => $template_id,
 		'name' => $user_template['name'], // Inherit from user_template
 		'date' => isset($document['date']) ? $document['date'] : date("d/m/Y"),
+		'reference' => $job['job_number'], // Inherit from job
 		'description' => isset($document['description']) ? $document['description'] : '',
-		'items' => $app->parse->arrayToJson($document['items']) ?: '[]',
+		'items' => isset($document['items']) ? $app->parse->arrayToJson($document['items']) : '[]',
 	];
 	
 	// Post new Document

@@ -6,7 +6,7 @@ $app->post('/delete/client', 'uac', function() use ($app){
 	
 	/* Construction */
 	if($id){
-		$app->sql->delete('job_form')->where('client_id', '=', $id)->run();
+		$app->sql->delete('document')->where('client_id', '=', $id)->run();
 		$app->sql->delete('job')->where('client_id', '=', $id)->run();
 		$app->sql->delete('client')->where('id', '=', $id)->run();
 	}

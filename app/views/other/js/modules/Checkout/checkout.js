@@ -21,5 +21,4 @@ Core.addModule('checkout', function(context){
 			container: 'braintree'
 		});
 	});
-	
 });
