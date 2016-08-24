@@ -1,10 +1,11 @@
+<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/library/{{path.css.library.Document}}">
 <part data-type="tab-container" class="tabs-job">
 	<ul class="wrap box-std">
 		<li data-type="tab" data-id="0" class="tab">Job</li>
 		{% set i = 0 %}
-		{% for form in modules.job.data.forms %}
+		{% for document in modules.job.data.documents %}
 			{% set i = i + 1 %}
-			<li data-type="tab" data-id="{{i}}" class="tab">{{form.name}}</li>
+			<li data-type="tab" data-id="{{i}}" class="tab">{{document.name}}</li>
 		{% endfor %}
 		{% set i = i + 1 %}
 		<li data-type="tab" data-id="+" class="tab">+</li>
@@ -13,13 +14,13 @@
 <part data-type="obj-container" class="obj-job">
 	<box data-type="obj" data-id="0" class="tabobj box-std">
 		<part class="container wrap" style="padding-top: 20px;">
-			<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name" />
-			<select title="Status" class="status right" job-status-select>
-				{% for item in modules.job.data.status %}
-					{% if modules.job.data.job.job_status.name == item.name %}
-					<option value="{{item.name}}" selected="selected">{{item.name}}</option>
+			<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name">
+			<select class="status right" data-type="status" title="Status">
+				{% for status in modules.job.data.status %}
+					{% if modules.job.data.job.job_status.name == status.name %}
+					<option value="{{status.name}}" selected="selected">{{status.name}}</option>
 					{% else %}
-					<option value="{{item.name}}">{{item.name}}</option>
+					<option value="{{status.name}}">{{status.name}}</option>
 					{% endif %}
 				{% endfor %}
 			</select>
@@ -73,7 +74,7 @@
 					</tr>
 					{% endif %}
 					<tr>
-						<td class="token pdf-title" style="padding-top:6px;vertical-align:top;"></td>
+						<td class="token pdf-title" style="padding-top: 6px;vertical-align: top;"></td>
 						<td>
 							<div class="pdf-load"></div>
 							<div class="pdf-list"></div>
@@ -83,28 +84,27 @@
 			</table>
 		</part>
 		<part class="container-bottom wrap">
-			<form method="post" action="{{environment.root}}/delete/job" job-del-form>
-				<input type="hidden" name="id" value="{{modules.job.data.job.id}}"/>
+			<form method="post" action="{{environment.root}}/delete/job" data-type="delete-job">
+				<input type="hidden" name="id" value="{{modules.job.data.job.id}}">
 			</form>
-			<button class="button delete right" job-del-btn>Delete Job</button>
+			<button class="button delete right" data-type="job-delete-button">Delete Job</button>
 		</part>
 	</box>
 	{% set i = 0 %}
-	{% for a,b in modules.job.data.forms %}
+	{% for document in modules.job.data.documents %}
 		{% set i = i + 1 %}
 		<part data-type="obj" data-id="{{i}}" class="tabobj">
-			{% include path.html.form with {
-				id: a,
-				html: b.html
+			{% include path.html.document with {
+				document: document,
 			} %}
 		</part>
 	{% endfor %}
 	{% set i = i + 1 %}
 	<box data-type="obj" data-id="+" class="tabobj box-std">
 		<part class="container">
-			{% for a,b in modules.job.data.templates %}
-			<div class="new-template" new-template data-templateid="{{a}}">
-				{{b.name}}
+			{% for template in modules.job.data.templates %}
+			<div class="new-document" data-type="new-document" data-template-id="{{template.id}}">
+				{{template.name}}
 			</div>
 			{% endfor %}
 		</part>
@@ -122,17 +122,16 @@
 		</div>
 	</part>
 </box>
-<div class="email-signature-raw" hidden>{{modules.job.data.email.signature|raw}}</div>
 <script>
 var job = {
-	job_id: '{{modules.job.data.job.id}}',
-	job_number: '{{modules.job.data.job.job_number}}',
-	client_id: '{{modules.job.data.client.id}}',
-	client_number: '{{modules.job.data.client.client_number}}',
+	job_id: {{modules.job.data.job.id}},
+	job_number: {{modules.job.data.job.job_number}},
+	client_id: {{modules.job.data.client.id}},
+	client_number: {{modules.job.data.client.client_number}},
 	client_name: '{{modules.job.data.client.name}}',
 	client_email: '{{modules.job.data.client.email}}',
 };
 var templates = {
-	{% for a, b in modules.job.data.templates %}{{a}}: '{{b.name}}',{% endfor %}
+	{% for a, b in modules.job.data.templates %}'{{a}}': {{b.id}},{% endfor %}
 };
 </script>

@@ -1,6 +1,6 @@
 <?php
 
-$app->module->add('client', function($request) use ($app){
+$app->module->add('client', 'user', function($request) use ($app){
 	
 	if(!$request) die($app->build->error('Client number not provided'));
 	

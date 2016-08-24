@@ -31,7 +31,7 @@ $app->post('/post/register', 'app', function() use ($app){
 			'privilege' => 'baby',
 		]);
 		
-		switch($action){
+		switch($action['message']){
 			case 'Email Exists':
 				echo $app->build->error('<b>'.$email.'</b> is already registered.<br>Please contact support if you can\'t access your account.');
 				break;

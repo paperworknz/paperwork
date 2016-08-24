@@ -1,0 +1,24 @@
+[data-template="mike"] {
+	
+	.inventory-item {
+		.inventory-item_name {
+			border-left: 1px solid black;
+			
+			doc-text {
+				padding: 3px 6px;
+			}
+		}
+		
+		.inventory-item_qty, .inventory-item_price, .inventory-item_total {
+			border-left: 1px solid black;
+			min-width: 95px;
+			text-align: center;
+			padding: 3px 6px;
+			height: 100%;
+		}
+		
+		.inventory-item_total {
+			border-right: 1px solid black;
+		}
+	}
+}

@@ -57,43 +57,44 @@
 		}
 		
 		.item {
-			white-space: nowrap;
-			overflow: hidden;
+			display: flex;
 			position: relative;
 			
 			input {
+				display: block;
 				border: none;
 				outline: none;
-			}
-			
-			.firm-right {
-				position: absolute;
-				right: 0px;
-				padding-left: 10px;
-				width: 70px;
-				text-align: right;
-			}
-			
-			&.item_hover {
-				input {
-					background-color: #eee;
+				background-color: transparent;
+				
+				&[name="name"] {
+					flex: 1;
+					padding-left: 19px;
+				}
+				
+				&[name="price"] {
+					text-align: right;
+					flex: 0 0;
+					min-width: 100px;
 				}
 			}
-		}
-		
-		.invremove {
-			position: absolute;
-			color: red;
-			opacity: 0;
-			top: 0;
-			right: -10px;
-			height: 28px;
-			line-height: 28px;
-			text-indent: 1px;
-			text-align: center;
 			
 			&:hover {
-				cursor: pointer;
+				background-color: #eee;
+				
+				.remove-btn {
+					opacity: 0.25;
+				}
+			}
+			
+			.remove-btn {
+				flex: 0 0 24px;
+				height: 24px;
+				opacity: 0;
+				margin: 2px 2px 2px 0;
+				
+				&:hover {
+					opacity: 1;
+				}
 			}
 		}
 	}

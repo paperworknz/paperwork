@@ -273,9 +273,9 @@ class File {
 				
 				// File exists
 				if($string = realpath($string)){
-					if(unlink($string)){
-						return true;
-					}
+					chown($string, 666);
+					chmod($string, 0777);
+					if(unlink($string)) return true;
 				}
 				
 				$this->log['query'] .= $string; // Log path
@@ -285,6 +285,4 @@ class File {
 		return false;
 		
 	}
-	
-	
 }

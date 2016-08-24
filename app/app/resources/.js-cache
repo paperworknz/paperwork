@@ -1,35 +1,43 @@
 {
 	"core": {
-		"Core": "Core.js?0SmKWI"
+		"Core": "Core.js?uV5M24"
 	},
 	"library": {
-		"Paperwork": "Paperwork.js?rDgBl7"
+		"Paperwork": "Paperwork.js?jxRoLJ"
 	},
 	"modules": {
-		"inventory": "inventory.js?z6kg9B",
-		"notification": "notification.js?hChk2H",
-		"template": "template.js?d7Av7H",
-		"tab": "tab.js?LVBgld",
-		"client": "client.js?7A2d5u",
-		"settings": "settings.js?MNPbDb",
-		"admin": "admin.js?pAaB5w",
-		"job": "job.js?AEMAI6",
-		"user": "user.js?Xsu4GW",
-		"app": "app.js?mpFgQx",
+		"admin": "admin.js?yLCAxQ",
+		"admin-template-editor": "admin-template-editor.js?FuZlKb",
+		"app": "app.js?XP0k8k",
+		"checkout": "checkout.js?g1Pgfz",
+		"client": "client.js?uiwzmV",
 		"clients": "clients.js?u6a3fw",
-		"jobs": "jobs.js?9ujEnX",
 		"flash": "flash.js?2PcK1G",
-		"welcome-guest": "welcome-guest.js?2KXUi5",
-		"checkout": "checkout.js?PqxI1l",
-		"$template": "$template.js?7ldeS8"
+		"inventory": "inventory.js?EVS9cq",
+		"job": "job.js?VGi8uM",
+		"jobs": "jobs.js?9ujEnX",
+		"notification": "notification.js?hChk2H",
+		"settings": "settings.js?MNPbDb",
+		"tab": "tab.js?LVBgld",
+		"template": "template.js?CatmeC",
+		"user": "user.js?Xsu4GW",
+		"welcome-guest": "welcome-guest.js?CzhXCD",
+		"document-copy": "document-copy.js?KbBFsB",
+		"document-margin": "document-margin.js?jRTCWC",
+		"document-email": "document-email.js?uzN46L",
+		"email": "email.js?SIRaST"
 	},
 	"behaviors": {
-		"tab": "tab.js?e796sY",
-		"table": "table.js?D9Co6H"
+		"tab": "tab.js?bgKtly",
+		"table": "table.js?D9Co6H",
+		"document": "document.js?9zoMk2"
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",
-		"dark": "dark.js?qg4dVG"
+		"dark": "dark.js?YHkPXI",
+		"parse": "parse.js?cvteUr",
+		"pdf": "pdf.js?zk5Em1",
+		"caret": "caret.js?2FmZin"
 	},
 	"classes": {
 		"Table": "Table.js?ywQ6Y2",

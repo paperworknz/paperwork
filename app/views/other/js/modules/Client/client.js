@@ -5,16 +5,36 @@ Core.addModule('client', function(context){
 	var client_id = $body.data('id');
 	
 	var request = {
-		putNotes: `${environment.root}/put/client-details`,
-		putClient: `${environment.root}/put/client-details`,
+		put: `${environment.root}/put/client-details`,
 	};
 	
-	bind();
 	context.use('tab');
+	clientDetails();
+	clientDelete();
+	bindNotes();
+	email();
 	
-	function bind(){
+	function clientDetails(){
 		
-		// Delete client button
+		$body.on('change', '.client-details input, .client-name', function(){
+			
+			if(!$body.find('.client-name').val().trim()) return;
+			
+			$.post(request.put, {
+				id: client_id,
+				name: $body.find('[client-name]').val().trim(),
+				address: $body.find('[client-address]').val().trim(),
+				email: $body.find('[client-email]').val().trim(),
+				phone: $body.find('[client-phone]').val().trim(),
+			}).done(function(response){
+				
+				Paperwork.send('notification');
+			});
+		});
+	}
+	
+	function clientDelete(){
+		
 		$body.on('click', 'button.delete', function(){
 			var $this = $(this),
 				text = $(this).html();
@@ -24,43 +44,38 @@ Core.addModule('client', function(context){
 				text: 'Deleting this client will delete ALL jobs, quotes and invoices!',
 				showCancelButton: true,
 				closeOnConfirm: true,
-			}, function(result){
-				if(result){
-					$('form[name="delete"]').submit();
-				}else{
-					Paperwork.ready($this, text);
-				}
+			}, function(response){
+				if(!response) return Paperwork.ready($this, text);
+				
+				$body.find('form[name="delete"]').submit();
 			});
 		});
-		
-		// Client details
-		$body.on('change', '.client-details input, .client-name', function(){
-			
-			if($body.find('.client-name').val() == '') return;
-			
-			$.post(request.putClient, {
-				id: client_id,
-				name: $body.find('[client-name]').val(),
-				address: $body.find('[client-address]').val(),
-				email: $body.find('[client-email]').val(),
-				phone: $body.find('[client-phone]').val(),
-			}).done(function(response){
-				Paperwork.send('notification', 'Saved');
-			});
-		});
-		
-		// Notes
-		$body.on('change', '#notes', function(){
-			var note = $(this).val() || '';
-			
-			$.post(request.putNotes, {
-				id: client_id,
-				notes: note,
-			}).done(function(){
-				Paperwork.send('notification', 'Saved');
-			});
-		});
-		
 	}
 	
+	function bindNotes(){
+		
+		$body.on('change', '#notes', function(){
+			var notes = $(this).val().trim();
+			
+			$.post(request.put, {
+				id: client_id,
+				notes: notes,
+			}).done(function(response){
+				
+				Paperwork.send('notification', 'Saved');
+			});
+		});
+	}
+	
+	function email(){
+		
+		$body.on('click', '[data-type="email-button"]', function(){
+			
+			var email = $body.find('[client-email]').val();
+			
+			context.load('email', {
+				address: email,
+			});
+		});
+	}
 });

@@ -1,6 +1,6 @@
 <?php
 
-$app->module->add('user', function($request) use ($app){
+$app->module->add('user', 'user', function($request) use ($app){
 	
 	if(!$user = $app->sql->get('user')->where('id', '=', $request[0])->root()->one()){
 		$user = [

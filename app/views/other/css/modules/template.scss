@@ -1,17 +1,79 @@
 @import '../library/mixins/mixins';
 
 [data-module="template"] {
-	width: 843px;
 	min-height: 50px;
+	
+	.template-parent {
+		display: flex;
+		align-items: flex-start;
+		
+		> part:last-child {
+			margin: 27px 0 0 5px;
+			width: 100%;
+			max-width: 140mm;
+			
+			@include size(1300px) {
+				margin: 5px 0 0;
+				width: 210mm;
+				max-width: 210mm;
+			}
+		}
+		
+		@include size(1300px) {
+			flex-direction: column;
+		}
+	}
+	
+	.template-container {
+		display: flex;
+		flex-direction: column;
+		flex: 0;
+		width: 210mm;
+		padding: 0;
+	}
 	
 	.template-name {
 		font-size: 24px;
 		line-height: 26px;
 		border: 1px solid white;
-		width: 100%;
 		
 		&:hover {
 			border: 1px solid #ccc;
+		}
+	}
+	
+	.template-properties {
+		display: flex;
+		flex-direction: column;
+		
+		row {
+			display: flex;
+			margin-bottom: 5px;
+			
+			column:nth-child(odd) {
+				flex: 0 0 116px;
+				text-align: right;
+				font-size: 9pt;
+				line-height: 30px;
+				color: #ccc;
+				padding: 0 10px 0 0;
+			}
+			
+			column:nth-child(even) {
+				flex: 1 1 140px;
+				
+				.prop {
+					border: 1px solid #ccc;
+					padding: 4px;
+					width: 100%;
+					max-height: 200px;
+					overflow-y: auto;
+				}
+			}
+			
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 	
@@ -40,19 +102,56 @@
 	}
 	
 	.new-template {
-		width: 710px;
+		width: 210mm;
+		
+		.new-template-name {
+			margin: 25px 0;
+			outline: none;
+			border: none;
+			border-bottom: 1px dashed #ccc;
+			font-size: 24px;
+			line-height: 26px;
+			text-align: center;
+		}
 	}
 	
-	.template-form {
-		padding: 30px;
-	}
-	
-	.legend {
-		margin-top: 27px;
-		margin-left: 5px;
-	}
-	
-	.tabobj {
-		width: 710px;
+	.template-hud {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: space-between;
+		
+		.play-container {
+			display: flex;
+			align-items: center;
+			opacity: 0;
+			@include transition(opacity 100ms linear);
+			
+			&:hover {
+				opacity: 1;
+			}
+			
+			.play-padding {
+				background-color: #000;
+				opacity: .25;
+				padding: 20px;
+				cursor: pointer;
+				
+				.play-right {
+					border-top: 16px solid transparent;
+					border-left: 24px solid #fff;
+					border-bottom: 16px solid transparent;
+				}
+				
+				.play-left {
+					border-top: 16px solid transparent;
+					border-right: 24px solid #fff;
+					border-bottom: 16px solid transparent;
+				}
+			}
+		}
 	}
 }

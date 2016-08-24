@@ -29,6 +29,7 @@ class Build {
 			'page' => ltrim($app->request->getResourceUri(), '/'),
 			'menu' => $menu_state,
 			'date' => date('d/m/Y'),
+			'trial_expired' => isset($_SESSION['trial_expired']) ? $_SESSION['trial_expired'] : false,
 		];
 		
 		// Merge with SQL config flags

@@ -1,0 +1,130 @@
+@import '../library/mixins/mixins';
+
+[data-module="document-margin"] {
+	
+	box {
+		width: 710px;
+	}
+	
+	.margin-content {
+		display: table;
+		width: 100%;
+		border: 1px solid black;
+	}
+	
+	.inventory-item {
+		display: table-row;
+		cursor: pointer;
+		
+		> part {
+			display: table-cell;
+			vertical-align: top;
+		}
+		
+		&:hover, &.selected {
+			background-color: #D6EDFF;
+			
+			.inventory-item_margin {
+				background-color: #D6EDFF;
+			}
+		}
+		
+		.inventory-item_name {
+			position: relative;
+			width: 100%;
+			
+			part {
+				min-height: 24px;
+				padding: 3px 6px;
+			}
+		}
+		
+		.inventory-item_margin {
+			position: absolute;
+			background-color: white;
+			top: 0;
+			right: 0;
+			font-weight: bold;
+			padding-left: 30px!important;
+		}
+		
+		.inventory-item_qty, .inventory-item_price, .inventory-item_total {
+			border-left: 1px solid black;
+			min-width: 95px;
+			text-align: center;
+			padding: 3px 6px;
+			height: 100%;
+		}
+	}
+	
+	.display {
+		display: flex;
+		
+		div:first-child {
+			flex: 0 1 100%;
+		}
+		
+		div:last-child {
+			flex: 1 0 0;
+		}
+	}
+	
+	.margin-input {
+		width: 60px;
+		text-align: center;
+	}
+	
+	.slider {
+		width: 200px;
+	}
+	
+	.table {
+		display: flex;
+		justify-content: flex-end;
+		cursor: default;
+		
+		> part {
+			display: flex;
+			
+			column {
+				display: block;
+				text-align: right;
+				
+				row {
+					display: block;
+					padding: 2px 10px;
+				}
+			}
+			
+			column:first-child {
+				flex: 0 0;
+				padding-left: 30px;
+				
+				row {
+					min-width: 115px;
+				}
+				
+				row:last-child {
+					border-top: 1px solid black;
+					border-right: 1px solid transparent;
+					border-bottom: 1px solid black;
+					border-left: 1px solid black;
+					font-weight: 600;
+				}
+			}
+			
+			column:last-child {
+				flex: 1 0;
+				min-width: 84px;
+				
+				row:last-child {
+					border-top: 1px solid black;
+					border-right: 1px solid black;
+					border-bottom: 1px solid black;
+					border-left: 1px solid black;
+					font-weight: 600;
+				}
+			}
+		}
+	}
+}

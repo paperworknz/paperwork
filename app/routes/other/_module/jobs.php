@@ -1,6 +1,6 @@
 <?php
 
-$app->module->add('jobs', function($request) use ($app){
+$app->module->add('jobs', 'user', function($request) use ($app){
 	
 	$completed = 0;
 	$status = $app->sql->get('job_status')->select(['id', 'name'])->also('ORDER BY job_status_number')->all();

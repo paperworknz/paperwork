@@ -82,6 +82,8 @@ function goto(location, fade) {
 		}, 'fast');
 	}
 	
+	if(location == 'reload') return window.location.reload();
+	
 	window.location = location;
 }
 
@@ -166,7 +168,7 @@ function validateDOM(){
 }
 
 function validate($obj, $button, name, flags){
-	var elements = 'input[type=text], input[type=email], input[type=password]',
+	var elements = 'input[type=text], input[type=email], input[type=password], input[type=hidden]',
 		pref = {};
 	
 	if(flags != undefined) pref = $.extend(pref, flags);

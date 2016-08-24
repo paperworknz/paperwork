@@ -8,7 +8,7 @@ Core.addModule('checkout', function(context){
 	
 	// Bind logout button
 	$body.on('click', '[data-type="cancel"]', function(){
-		Paperwork.goto(`${environment.root}/app`);
+		Paperwork.goto(`${environment.root}/get/logout`);
 	});
 	
 	// Braintree
@@ -21,5 +21,4 @@ Core.addModule('checkout', function(context){
 			container: 'braintree'
 		});
 	});
-	
 });

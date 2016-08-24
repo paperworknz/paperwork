@@ -69,6 +69,10 @@ input:hover {
 	@include select(none);
 }
 
+.noclick {
+	pointer-events: none;
+}
+
 #sidebar {
 	position: fixed;
 	left: 0;
@@ -245,5 +249,21 @@ module {
 		background-color: black;
 		opacity: 0;
 		overflow: hidden;
+	}
+}
+
+.remove-btn {
+	filter: grayscale(100%);
+	width: 24px;
+	height: 100%;
+	padding: 5px;
+	background-image: url('../media/remove.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-origin: content-box;
+	cursor: pointer;
+	
+	&:hover {
+		filter: grayscale(0);
 	}
 }

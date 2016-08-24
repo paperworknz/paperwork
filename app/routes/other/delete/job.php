@@ -5,12 +5,12 @@ $app->post('/delete/job', 'uac', function() use ($app){
 	$id = isset($_POST['id']) ? $_POST['id'] : false;
 	
 	/* Construction */
-	if($id){
-		$app->sql->delete('job_form')->where('job_id', '=', $id)->run();
-		$app->sql->delete('job')->where('id', '=', $id)->run();
+	if(!$id){
+		die($app->build->error('Job ID not provided'));
 	}
 	
-	$app->event->log('deleted job: '.$id);
+	$app->sql->delete('document')->where('job_id', '=', $id)->run();
+	$app->sql->delete('job')->where('id', '=', $id)->run();
 	
 	$app->redirect($app->root.'/jobs');
 });

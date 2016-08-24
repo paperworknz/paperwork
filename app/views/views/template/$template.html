@@ -2,14 +2,14 @@
 <html lang="en">
 	<head>
 		{% include head %}
-		<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/library/{{path.css.library.Form}}">
+		<link rel="stylesheet" type="text/css" href="{{environment.root}}/css/library/{{path.css.library.Document}}">
 	</head>
     <body>
         {% include menu %}
         <div id="content">
 			<flash data-module="flash" class="box-std">{% include path.html.flash %}</flash>
-			<module data-module="$template">
-				{% include 'other/modules/$template.html' %}
+			<module data-module="admin-template-editor">
+				{% include 'other/modules/admin-template-editor.html' %}
 			</module>
         </div>
 		{% include js %}

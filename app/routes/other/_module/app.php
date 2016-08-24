@@ -1,6 +1,6 @@
 <?php
 
-$app->module->add('app', function($request) use ($app){
+$app->module->add('app', 'user', function($request) use ($app){
 	
 	return;
 });

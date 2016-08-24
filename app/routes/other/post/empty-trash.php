@@ -9,7 +9,7 @@ $app->post('/post/empty-trash', 'uac', function() use ($app){
 		->hard()
 		->run();
 	
-	$app->sql->delete('job_form')
+	$app->sql->delete('document')
 		->where('date_deleted', '<>', '0000-00-00 00:00:00')
 		->hard()
 		->run();
@@ -24,7 +24,7 @@ $app->post('/post/empty-trash', 'uac', function() use ($app){
 		->hard()
 		->run();
 	
-	$app->sql->delete('job_form_template')
+	$app->sql->delete('user_template')
 		->where('date_deleted', '<>', '0000-00-00 00:00:00')
 		->hard()
 		->run();

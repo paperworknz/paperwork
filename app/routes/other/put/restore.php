@@ -10,17 +10,17 @@ $app->post('/put/restore', 'uac', function() use ($app){
 	
 	switch($_POST['type']){
 		case 'job': $table = 'job'; break;
-		case 'form': $table = 'job_form'; break;
+		case 'document': $table = 'document'; break;
 		case 'client': $table = 'client'; break;
 		case 'inventory': $table = 'inventory'; break;
-		case 'template': $table = 'job_form_template'; break;
+		case 'template': $table = 'user_template'; break;
 	}
 	
 	
 	// Get table:ID
 	if($item = $app->sql->get($table)->where('id', '=', $_POST['id'])->softOnly()->one()){
-		// If request is a job or job_form
-		if($table == 'job' || $table == 'job_form'){
+		// If request is a job or document
+		if($table == 'job' || $table == 'document'){
 			// Check if the client has been deleted
 			if($client = $app->sql->get('client')->where('id', '=', $item['client']['id'])->softOnly()->one()){
 				// If it has, restore client as well
@@ -28,7 +28,7 @@ $app->post('/put/restore', 'uac', function() use ($app){
 					'date_deleted' => '0000-00-00 00:00:00'
 				])->soft()->run();
 			}
-			if($table == 'job_form'){
+			if($table == 'document'){
 				// Check if the job has been deleted
 				if($job = $app->sql->get('job')->where('id', '=', $item['job']['id'])->softOnly()->one()){
 					// If it has, restore job as well

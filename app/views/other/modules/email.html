@@ -1,0 +1,37 @@
+<box>
+	<section class="parent container">
+		<section>
+			<input type="text" class="address" data-type="address" placeholder="To Address" required>
+			<input type="text" class="cc" data-type="cc" placeholder="Cc (optional)">
+			<input type="text" class="bcc" data-type="bcc" placeholder="Bcc (optional)">
+		</section>
+		<section>
+			<input type="text" class="subject" data-type="subject" placeholder="Subject Line">
+		</section>
+		<section>
+			<part class="attachments wrap" data-type="attachments">
+			</part>
+		</section>
+		<section>
+			<part class="body" data-type="body" contenteditable>
+				<div>
+					<br>
+				</div>
+				{{modules.email.data.email.signature}}
+			</part>
+		</section>
+		<section>
+			<ul class="control list-inline right">
+				<li>
+					<input type="password" class="password" data-type="password" placeholder="Password" required>
+				</li>
+				<li>
+					<button class="button blue" data-type="cancel-button" data-button-state="off">CANCEL</button>
+				</li>
+				<li>
+					<button class="button" data-type="send-button" data-button-state="on">SEND</button>
+				</li>
+			</ul>
+		</section>
+	</section>
+</box>

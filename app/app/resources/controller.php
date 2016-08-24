@@ -27,18 +27,17 @@ function uac(){ // User controlled pages (in the app)
 		$app->redirect($app->root);
 	}
 	
-	// If the user is a baby, redirect to /checkout
-	if($app->user['privilege'] == 'baby'){
-		$app->redirect($app->root.'/checkout');
-	}
-}
-
-function baby(){ // User.privilege = baby
-	$app = \Slim\Slim::getInstance();
+	$_SESSION['trial_expired'] = false;
 	
-	// If the user is not a baby and not an admin, redirect to home
-	if($app->user['privilege'] != 'baby' && $app->user['privilege'] != 'admin'){
-		$app->redirect($app->root.'/app');
+	// If a baby user's trial has expired
+	if($app->user['privilege'] == 'baby') {
+		$today = new DateTime();
+		$created = new DateTime($app->user['date_created']);
+		$difference = $today->diff($created);
+		
+		if($difference->d >= 14){
+			$_SESSION['trial_expired'] = true;
+		}
 	}
 }
 

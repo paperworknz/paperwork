@@ -7,8 +7,9 @@ $app->build		= new \Paperwork\Baked\Build;			// $app->build->page: Wraps render 
 $app->event		= new \Paperwork\Baked\Event;			// $app->event: Log to master.events $app->event->log();
 $app->parse		= new \Paperwork\Baked\Parse;			// $app->parse: Convert php array <-> json
 $app->auth		= new \Paperwork\Baked\Authentication;	// $app->auth: Login, Session, Destroy
-$app->SQLBackup = new \Paperwork\Extended\SQLBackup;	// Used in SQL
 $app->module	= new \Paperwork\Baked\Module;
+$app->SQLBackup = new \Paperwork\Extended\SQLBackup;	// Used in SQL
+$app->document	= new \Paperwork\Extended\Document;
 
 $app->schema	= require '.schema';	// Schema is an Astral array of indexes
 $app->env		= require 'config.php';	// $app->env is an array of all run-time

@@ -1,6 +1,6 @@
 <?php
 
-use Paperwork\Extended\Form,
+use Paperwork\Extended\Document,
 	Symfony\Component\Process\Process,
 	Symfony\Component\HttpFoundation\Response;
 
@@ -17,28 +17,17 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 		$path = "/var/www/Dropbox/Paperwork/{$id}/pdf/{$a}/{$b}";
 	}
 	
-	if(file_exists($path)){
-		// Log event
-		$app->event->log([
-			'text' => "looked at PDF: {$b}",
-			'icon' => 'pdf.png',
-		]);
-		
-		// DOWNLOAD //
-		$response = new Response(file_get_contents($path), 200, [
-			'Content-Description'	=> 'File Transfer',
-			'Content-Disposition'	=> "inline; filename='{$b}'",
-			'Content-Transfer-Encoding' => 'binary',
-			'Content-Type'	=> 'application/pdf'
-		]);
-		$response->send(); // Return to client
-	}else{
-		$app->event->log([
-			'icon' => 'pdf.png',
-			'title' => "opened a missing PDF. URI: {$app->request->getResourceUri()}",
-		]);
+	if(!file_exists($path)){
 		$app->flash('error', 'Sorry, we couldn\'t find that PDF.');
 		$app->redirect("{$app->root}/job/{$a}");
 	}
 	
+	$response = new Response(file_get_contents($path), 200, [
+		'Content-Description'	=> 'File Transfer',
+		'Content-Disposition'	=> "attachment; filename='{$b}'",
+		'Content-Transfer-Encoding' => 'binary',
+		'Content-Type'	=> 'application/pdf'
+	]);
+	
+	$response->send(); // Return to client
 });

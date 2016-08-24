@@ -5,7 +5,7 @@ $app->get('/get/module/:a+', function($a) use ($app){
 	$module = $a[0];
 	
 	/* Construction */
-	if(!file_exists("../app/views/other/modules/$module.html")) die($app->build->error("Module $module does not exist"));
+	if(!file_exists("../app/views/other/modules/{$module}.html")) die($app->build->error("Module {$module} does not exist"));
 	
 	$css_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.css-cache'));
 	$js_cache = $app->parse->jsonToArray(file_get_contents('../app/app/resources/.js-cache'));
@@ -16,6 +16,8 @@ $app->get('/get/module/:a+', function($a) use ($app){
 	// Module data from model
 	$request = array_splice($a, 1);
 	$data = $app->module->require($module, $request);
+	
+	if($data === false) die($app->build->error('Check your privilege'));
 	
 	if(isset($data['classes'])){
 		foreach($data['classes'] as $key => $value){
@@ -32,7 +34,8 @@ $app->get('/get/module/:a+', function($a) use ($app){
 		'js' => $js,
 		'third' => (isset($data['third']) ? $data['third'] : []),
 		'classes' => (isset($data['classes']) ? $data['classes'] : []),
-		'module' => $app->build->page("other/modules/$module.html", [
+		'behaviors' => (isset($data['behaviors']) ? $data['behaviors'] : []),
+		'module' => $app->build->page("other/modules/{$module}.html", [
 			'modules' => [
 				$module => $data,
 			],

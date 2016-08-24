@@ -45,4 +45,8 @@
 
 	.tt-hint {display:none!important}
 	.tt-menu {box-shadow:none}
+	
+	.tt-input, .tt-suggestion {
+		padding: 5px 15px;
+	}
 }

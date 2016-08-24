@@ -1,22 +1,26 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?hm9nOO",
-		"Public": "Public.css?QQayC6",
-		"Form": "Form.css?oLL7Pq"
+		"Paperwork": "Paperwork.css?EvpiG0",
+		"Public": "Public.css?TcMy8r",
+		"Document": "Document.css?T132Pt"
 	},
 	"views": {
 		"login": "login.css?JiGeeo"
 	},
 	"modules": {
-		"template": "template.css?2qIl3a",
-		"inventory": "inventory.css?te4Kp9",
-		"clients": "clients.css?KdGSt3",
-		"settings": "settings.css?Lmiy6s",
-		"user": "user.css?E1ktyM",
 		"admin": "admin.css?kOdBIC",
-		"job": "job.css?zND4bb",
-		"jobs": "jobs.css?I3ktku",
 		"client": "client.css?tsOsGM",
-		"welcome-guest": "welcome-guest.css?MhUIDW"
+		"clients": "clients.css?PuzstE",
+		"inventory": "inventory.css?VbWBFW",
+		"job": "job.css?Pu9LSz",
+		"jobs": "jobs.css?I3ktku",
+		"settings": "settings.css?Lmiy6s",
+		"template": "template.css?epNrPg",
+		"user": "user.css?E1ktyM",
+		"welcome-guest": "welcome-guest.css?MhUIDW",
+		"document-copy": "document-copy.css?9RB5xn",
+		"document-margin": "document-margin.css?BMam9w",
+		"document-email": "document-email.css?mDNWsX",
+		"email": "email.css?Ehl8qG"
 	}
 }

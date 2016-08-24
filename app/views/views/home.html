@@ -149,9 +149,10 @@
 								</div>
 							</price>
 						</div>
-						<div>
+						<p>
+							All new users get a <b>14 day free trial</b><br>
 							Create your own account today - it takes less than a minute.
-						</div>
+						</p>
 						<div>
 							<span style="font-size: 11px;">Note: Prices exclude GST.</span>
 						</div>
@@ -205,18 +206,20 @@
 						scrollTop: $('[2]').offset().top,
 					}, 'slow');
 				});
+				
 				$('[guest-login]').on('click', function(){
 					$.post('{{environment.root}}/post/temporary-user')
 					.done(function(data){
 						data = JSON.parse(data);
-						if(data.type == 'success'){
-							{% if state == 'prod' %}
-							fbq('track', 'Lead');
-							{% endif %}
-							window.location = data.location;
-						}else{
-							alert(data.message);
-						}
+						
+						if(data.type == 'error') return Paperwork.goto('reload');
+						
+						{% if state == 'prod' %}fbq('track', 'Lead');{% endif %}
+					
+						Paperwork.goto(data.location);
+					}).fail(function(){
+						
+						Paperwork.goto('reload');
 					});
 				});
 				

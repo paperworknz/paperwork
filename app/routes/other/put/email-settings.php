@@ -13,8 +13,8 @@ $app->post('/put/email-settings', 'uac', function() use ($app){
 	// Hash password
 	$password = password_hash($password, PASSWORD_DEFAULT);
 	
-	if($app->sql->get('user_email_settings')->select('user_id')->run()){
-		$app->sql->put('user_email_settings')->with([
+	if($app->sql->get('user_email')->select('user_id')->run()){
+		$app->sql->put('user_email')->with([
 			'address'	=> $address,
 			'password'	=> $password,
 			'smtp'		=> $smtp,
@@ -22,7 +22,7 @@ $app->post('/put/email-settings', 'uac', function() use ($app){
 			'port'		=> $port,
 		])->where('user_id', '=', $app->user['id'])->run();
 	}else{
-		$app->sql->post('user_email_settings')->with([
+		$app->sql->post('user_email')->with([
 			'address'	=> $address,
 			'password'	=> $password,
 			'smtp'		=> $smtp,

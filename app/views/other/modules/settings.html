@@ -227,7 +227,7 @@
 	<box data-type="obj" data-id="4" class="tabobj box-std">
 		<part data-type="trash-container">
 			{% if (modules.settings.data.jobs is not empty) or 
-				(modules.settings.data.forms is not empty) or 
+				(modules.settings.data.documents is not empty) or 
 				(modules.settings.data.clients is not empty) or 
 				(modules.settings.data.inventory is not empty) or 
 				(modules.settings.data.templates is not empty) 
@@ -258,14 +258,14 @@
 				</div>
 			</part>
 			<part class="container-bottom">
-			{% for form in modules.settings.data.forms %}
+			{% for document in modules.settings.data.documents %}
 				<part>
-					Job {{form.job.job_number}} - {{form.name}}
+					Job {{document.job.job_number}} - {{document.name}}
 					<span style="color:#999">
-						{{form.client.name}}
+						{{document.client.name}}
 					</span>
 					&nbsp&nbsp
-					<a data-type="trash" data-item="form" data-id="{{form.id}}">
+					<a data-type="trash" data-item="form" data-id="{{document.id}}">
 						Undo
 					</a>
 				</part>

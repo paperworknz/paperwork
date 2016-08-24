@@ -4,9 +4,9 @@ Core.addModule('inventory', function(context){
 		$list = $body.find('.inventory-list');
 	
 	var request = {
-		put: `${environment.root}/put/inv`,
-		post: `${environment.root}/post/inv`,
-		delete: `${environment.root}/delete/inv`,
+		put: `${environment.root}/put/inventory`,
+		post: `${environment.root}/post/inventory`,
+		delete: `${environment.root}/delete/inventory`,
 	};
 	
 	var inventory = {};
@@ -14,7 +14,6 @@ Core.addModule('inventory', function(context){
 	// Bind
 	loadInventoryFromDOM();
 	inlineUpdate();
-	hover();
 	render();
 	$body.on('click', '.inventory-add .button', addFromButton);
 	$body.on('click', '[data-type="remove"]', remove);
@@ -113,25 +112,13 @@ Core.addModule('inventory', function(context){
 			$list.prepend(`
 				<li data-id="${i}">
 					<div class="item">
-						<input type="text" name="name" style="width: 100%;" value="${value.name}" placeholder="${value.name}">
-						<input type="text" name="price" class="firm-right" value="${value.price}" placeholder="${value.price}">
+						<input type="text" name="name" value="${value.name}" placeholder="${value.name}">
+						<input type="text" name="price" value="${value.price}" placeholder="${value.price}">
+						<div data-type="remove" class="remove-btn"></div>
 					</div>
-					<div data-type="remove" class="invremove">x</div>
 				</li>
 			`);
 		}
-	}
-	
-	function hover(){
-		$list.on('mouseover', 'li', function(){
-			$(this).find('.item').addClass('item_hover');
-			$(this).find('.invremove').css('opacity', '1');
-		});
-		
-		$list.on('mouseout', 'li', function(){
-			$(this).find('.item').removeClass('item_hover');
-			$(this).find('.invremove').css('opacity', '0');
-		});
 	}
 	
 	function inlineUpdate(){
@@ -168,11 +155,14 @@ Core.addModule('inventory', function(context){
 	}
 	
 	function remove(){
-		var $item = $(this).closest('[data-id]');
+		var $item = $(this).closest('[data-id]'),
+			id = $item[0].attributes['data-id'].value;
 		
 		$.post(request.delete, {
 			id: $item[0].attributes['data-id'].value
 		}).done(function(data){
+			
+			delete inventory[id];
 			$item.remove();
 			Paperwork.send('notification', 'Saved');
 		});

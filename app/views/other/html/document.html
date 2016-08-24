@@ -1,0 +1,36 @@
+<part class="wrap form">
+	<box class="container" style="background-color: white;padding: 0;">
+		<div data-type="document" data-id="{{document.id}}" style="pointer-events: none;opacity: 0;padding: 10mm 0;">
+			{{document.user_template.template.body | raw}}
+		</div>
+	</box>
+	<part class="form-settings wrap">
+		<box class="left">
+			<part class="container centered">
+				<button class="button" data-type="save-button" data-button-state="off">SAVE</button>
+			</part>
+		</box>
+		<box class="left">
+			<part class="container centered">
+				<button class="button blue" data-type="pdf-button">PDF</button>
+			</part>
+		</box>
+		<box class="left container">
+			<part class="app-button margin" data-type="margin-button">
+			</part>
+		</box>
+		<box class="left container">
+			<part class="app-button copy" data-type="copy-button">
+			</part>
+		</box>
+		<box class="left container" style="padding: 12px;">
+			<part class="app-button email" data-type="email-button">
+			</part>
+		</box>
+		<box class="right">
+			<part class="container centered">
+				<button class="button delete" data-type="document-delete-button">DELETE</button>
+			</part>
+		</box>
+	</part>
+</part>
