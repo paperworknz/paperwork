@@ -17,6 +17,7 @@
 			display: table-row;
 			
 			doc-col {
+				white-space: nowrap;
 				display: table-cell;
 				vertical-align: top;
 				
@@ -32,22 +33,30 @@
 	}
 	
 	.top-region {
+		display: table-row;
 		
 		.top-left {
-			flex: 0;
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
 		}
 		
 		.document-type {
+			display: table-cell;
+			vertical-align: top;
 			text-align: right;
 		}
 	}
 	
 	.middle-region {
+		display: table-row;
 		page-break-inside: avoid!important;
 		
 		.middle-left {
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
 			font-weight: 600;
-			flex: 1 1 100%;
 			
 			doc-text {
 				word-break: break-word;
@@ -55,8 +64,8 @@
 		}
 		
 		.middle-right {
-			flex: 1 0 200px;
-			min-width: 200px;
+			display: table-cell;
+			vertical-align: top;
 		}
 	}
 	
@@ -157,8 +166,10 @@
 		.bottom-right {
 			display: table-cell;
 			vertical-align: top;
-			min-width: 252px;
-			padding-left: 27px;
+			
+			doc-table {
+				padding-left: 30px;
+			}
 		}
 	}
 	
