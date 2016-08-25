@@ -5,6 +5,7 @@
 @import 'core/normalise';
 
 doc-body {
+	display: block;
 	width: 210mm;
 	max-width: 210mm;
 	min-width: 210mm;
@@ -13,23 +14,17 @@ doc-body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	line-height: 1.42857143;
 	font-size: 13px!important;
-	display: flex;
-	flex-direction: column;
 	
 	* {
-		display: block;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 	
-	doc-section {
-		display: flex;
-		cursor: default;
-		
-		& > * {
-			flex: 1;
-		}
+	doc-section,
+	doc-part,
+	doc-text {
+		display: block;
 	}
 	
 	doc-span {
