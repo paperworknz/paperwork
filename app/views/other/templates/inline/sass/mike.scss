@@ -66,6 +66,9 @@
 	}
 	
 	.detail {
+		display: table;
+		float: right;
+		
 		doc-row {
 			doc-col:first-child {
 				border-top: 1px solid transparent;
