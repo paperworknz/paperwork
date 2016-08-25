@@ -1,5 +1,34 @@
 Core.addService('parse', function(){
 	
+	function toText(element){
+		
+		var clone = element.clone();
+		
+		// Wrap all shallow text nodes in <div></div>
+		clone.contents()
+		.filter(function(){ return this.nodeType === 3; })
+		.wrap('<div>');
+		
+		// Remove empty elements
+		clone.contents()
+		.filter(function(){ return $.trim(this.innerHTML).length === 0 })
+		.remove();
+		
+		clone.find('*').each(function(){
+			
+			let contents = $(this).contents();
+			
+			if($(this).is('br')) return true;
+			if(!$(this).is('div')) $(this).replaceWith(contents);
+		});
+		
+		// Flatten if only one div
+		if(clone.children().length === 1) return clone.children();
+		
+		// Return element
+		return clone;
+	}
+	
 	function toNumber(i, {decimal = 0, natural = false} = {}){
 		
 		// Cast all to string
@@ -35,6 +64,7 @@ Core.addService('parse', function(){
 	}
 	
 	return {
+		toText: toText,
 		toNumber: toNumber,
 		toDollar: toDollar,
 	}

@@ -3,22 +3,22 @@
 		<doc-part>
 			<doc-part data-property="text_colour">
 				<doc-text data-property="user-company" class="top_title">
-					@company
+					Your Company Name
 				</doc-text>
 			</doc-part>
 			<doc-part style="font-weight: 600;">
-				<doc-text data-property="user-address">@address</doc-text>
+				<doc-text data-property="user-address">Your Address</doc-text>
 				<doc-part>
 					<doc-text style="display: inline;">GST # </doc-text>
-					<doc-text data-property="tax_number" style="display: inline;">@tax_number</doc-text>
+					<doc-text data-property="tax_number" style="display: inline;">000-000-000</doc-text>
 				</doc-part>
 				<doc-part>
 					<doc-text style="display: inline;">Mob: </doc-text>
-					<doc-text data-property="user-phone" style="display: inline;">@phone</doc-text>
+					<doc-text data-property="user-phone" style="display: inline;">Phone Number</doc-text>
 				</doc-part>
 				<doc-part>
 					<doc-text style="display: inline;">E: </doc-text>
-					<doc-text data-property="user-email" style="display: inline;">@email</doc-text>
+					<doc-text data-property="user-email" style="display: inline;">your@email.com</doc-text>
 				</doc-part>
 			</doc-part>
 		</doc-part>
@@ -28,43 +28,49 @@
 		</doc-part>
 	</doc-section>
 	<doc-section class="middle-region">
-		<doc-part>
+		<doc-part class="middle-left">
 			<doc-text style="font-weight: 600;">
 				TO:
 			</doc-text>
 			<doc-part class="pad">
-				<doc-text data-aspect="client-name">@clientname</doc-text>
-				<doc-text data-aspect="client-address">@clientaddress</doc-text>
+				<doc-text data-aspect="client-name">Client Name</doc-text>
+				<doc-text data-aspect="client-address">Client Address</doc-text>
 			</doc-part>
 		</doc-part>
-		<doc-part>
-			<doc-text data-aspect="name" class="name" data-property="text_colour">@name</doc-text>
-			<doc-table class="detail">
-				<doc-row>
-					<doc-col>
-						<doc-text>
-							Quote Number
-						</doc-text>
-					</doc-col>
-					<doc-col>
-						<doc-text data-aspect="reference">
-							@reference
-						</doc-text>
-					</doc-col>
-				</doc-row>
-				<doc-row>
-					<doc-col>
-						<doc-text>
-							Date of Quote
-						</doc-text>
-					</doc-col>
-					<doc-col>
-						<doc-text data-aspect="date">
-							@date
-						</doc-text>
-					</doc-col>
-				</doc-row>
-			</doc-table>
+		<doc-part class="middle-right">
+			<doc-part>
+				<doc-part>
+					<doc-text data-aspect="name" class="name" data-property="text_colour">DOCUMENT</doc-text>
+				</doc-part>
+				<doc-part>
+					<doc-table class="detail">
+						<doc-row>
+							<doc-col>
+								<doc-text>
+									Quote Number
+								</doc-text>
+							</doc-col>
+							<doc-col>
+								<doc-text data-aspect="reference">
+									0000
+								</doc-text>
+							</doc-col>
+						</doc-row>
+						<doc-row>
+							<doc-col>
+								<doc-text>
+									Date of Quote
+								</doc-text>
+							</doc-col>
+							<doc-col>
+								<doc-text data-aspect="date">
+									00/00/0000
+								</doc-text>
+							</doc-col>
+						</doc-row>
+					</doc-table>
+				</doc-part>
+			</doc-part>
 		</doc-part>
 	</doc-section>
 	<doc-section>
@@ -118,7 +124,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="subtotal">
-							@subtotal
+							[sub-total]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -130,7 +136,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="tax">
-							@tax
+							[tax]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -142,7 +148,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="total">
-							@total
+							[total]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -152,7 +158,7 @@
 	<doc-section>
 		<doc-part>
 			<doc-part>
-				<doc-text data-property="notes">@notes</doc-text>
+				<doc-text data-property="notes">Notes</doc-text>
 			</doc-part>
 			<doc-part>
 				<doc-text style="font-weight: 600;padding-top: 15px;">

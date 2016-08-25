@@ -32,6 +32,14 @@ doc-body {
 		}
 	}
 	
+	doc-text {
+		word-break: break-word;
+	}
+	
+	doc-span {
+		display: inline;
+	}
+	
 	[data-type="inventory-input"], [data-type="inventory-content"] {
 		display: block;
 	}

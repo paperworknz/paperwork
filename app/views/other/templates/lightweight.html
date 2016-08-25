@@ -2,13 +2,15 @@
 	<doc-section>
 		<doc-part class="document-type">
 			<doc-text data-property="user-company" class="h3" style="padding: 5px 0;padding-bottom: 5px;">
-				@company
+				Your Company Name
 			</doc-text>
 		</doc-part>
 		<doc-part class="top-right">
-			<doc-text data-property="user-email">@email</doc-text>
-			<doc-text data-property="user-address">@address</doc-text>
-			<doc-text data-property="user-phone">@phone</doc-text>
+			<doc-part>
+				<doc-text data-property="user-email">your@email.com</doc-text>
+				<doc-text data-property="user-address">Your Address</doc-text>
+				<doc-text data-property="user-phone">Phone Number</doc-text>
+			</doc-part>
 		</doc-part>
 	</doc-section>
 	<doc-section class="middle-region">
@@ -21,8 +23,13 @@
 						</doc-text>
 					</doc-col>
 					<doc-col>
-						<doc-text data-aspect="client-name">
-							@clientname
+						<doc-text>
+							<doc-part data-aspect="client-name">
+								Client Name
+							</doc-part>
+							<doc-part data-aspect="client-address">
+								Client Address
+							</doc-part>
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -34,7 +41,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="date">
-							@date
+							00/00/0000
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -46,7 +53,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="reference">
-							@reference
+							0000
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -58,16 +65,16 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-property="tax_number">
-							@taxnumber
+							000-000-000
 						</doc-text>
 					</doc-col>
 				</doc-row>
 			</doc-table>
 		</doc-part>
-		<doc-part>
-			<doc-part class="middle-right right">
+		<doc-part class="middle-right">
+			<doc-part>
 				<doc-text data-aspect="name" data-property="text_colour" class="h2" style="padding: 5px 0;padding-bottom: 5px;">
-					@name
+					DOCUMENT
 				</doc-text>
 			</doc-part>
 		</doc-part>
@@ -123,7 +130,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="subtotal">
-							@subtotal
+							[sub-total]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -135,7 +142,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="tax">
-							@tax
+							[tax]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -147,7 +154,7 @@
 					</doc-col>
 					<doc-col>
 						<doc-text data-aspect="total">
-							@total
+							[total]
 						</doc-text>
 					</doc-col>
 				</doc-row>

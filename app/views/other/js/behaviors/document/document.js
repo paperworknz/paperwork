@@ -211,10 +211,18 @@ Core.addBehavior('document', function(context, opt){
 		$body.off('keyup', `${$doc} [data-aspect]`);
 		$body.on('keyup', `${$doc} [data-aspect]`, function(){
 			var aspect = $(this).data('aspect'),
-				value = $(this).html().trim();
+				value;
+			
+			// Normalise attributes
+			$(this).find('*').each(function(){
+				$(this).attr('style', 'display: inline;')
+					.attr('id', '')
+					.attr('class', '');
+			});
 			
 			// Update document object and save
-			documents[document_id][aspect] = value;
+			value = parse.toText($(this));
+			documents[document_id][aspect] = value.html().trim();
 			save(document_id);
 		});
 	}
@@ -243,14 +251,14 @@ Core.addBehavior('document', function(context, opt){
 				existing;
 			
 			// Get HTML if name, TEXT if quantity/price
-			value = type == 'name' ? $(this).html().trim() : $(this).text().trim();
+			value = parse.toText($(this));
 			existing = documents[document_id].items[index][type];
 			
 			// Do not re-render/save if value hasn't changed
 			if(existing == value) return;
 			
 			// Update document object and save
-			documents[document_id].items[index][type] = value;
+			documents[document_id].items[index][type] = value.html().trim();
 			save(document_id);
 			render(document_id);
 			
@@ -480,7 +488,7 @@ Core.addBehavior('document', function(context, opt){
 		// Stop timer
 		clearTimeout(timer);
 		
-		// Start timer, save() after 2 seconds
+		// Start timer, save() after 0.5 seconds
 		timer = setTimeout(function(){
 			$.post(request.put, {
 				id: document_id,

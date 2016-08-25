@@ -2,13 +2,15 @@
 	<doc-section style="box-sizing: border-box; padding-bottom: 15px;">
 		<doc-part style="box-sizing: border-box;">
 			<doc-text data-property="user-company" style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 24px; font-weight: 500; line-height: 1.1; padding: 5px 0; padding-bottom: 5px;">
-				@company
+				Your Company Name
 			</doc-text>
 		</doc-part>
 		<doc-part style="-ms-flex: 0 0; -webkit-box-flex: 0; box-sizing: border-box; color: #999; flex: 0 0; text-align: right;">
-			<doc-text data-property="user-email" style="box-sizing: border-box;">@email</doc-text>
-			<doc-text data-property="user-address" style="box-sizing: border-box;">@address</doc-text>
-			<doc-text data-property="user-phone" style="box-sizing: border-box;">@phone</doc-text>
+			<doc-part style="box-sizing: border-box;">
+				<doc-text data-property="user-email" style="box-sizing: border-box;">your@email.com</doc-text>
+				<doc-text data-property="user-address" style="box-sizing: border-box;">Your Address</doc-text>
+				<doc-text data-property="user-phone" style="box-sizing: border-box;">Phone Number</doc-text>
+			</doc-part>
 		</doc-part>
 	</doc-section>
 	<doc-section style="box-sizing: border-box; padding-bottom: 30px; padding-top: 30px;">
@@ -21,8 +23,13 @@
 						</doc-text>
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; vertical-align: top;">
-						<doc-text data-aspect="client-name" style="box-sizing: border-box; padding: 2px 10px;">
-							@clientname
+						<doc-text style="box-sizing: border-box; padding: 2px 10px;">
+							<doc-part data-aspect="client-name" style="box-sizing: border-box;">
+								Client Name
+							</doc-part>
+							<doc-part data-aspect="client-address" style="box-sizing: border-box;">
+								Client Address
+							</doc-part>
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -34,7 +41,7 @@
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; vertical-align: top;">
 						<doc-text data-aspect="date" style="box-sizing: border-box; padding: 2px 10px;">
-							@date
+							00/00/0000
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -46,7 +53,7 @@
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; vertical-align: top;">
 						<doc-text data-aspect="reference" style="box-sizing: border-box; padding: 2px 10px;">
-							@reference
+							0000
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -58,16 +65,16 @@
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; vertical-align: top;">
 						<doc-text data-property="tax_number" style="box-sizing: border-box; padding: 2px 10px;">
-							@taxnumber
+							000-000-000
 						</doc-text>
 					</doc-col>
 				</doc-row>
 			</doc-table>
 		</doc-part>
-		<doc-part style="box-sizing: border-box;">
-			<doc-part style="box-sizing: border-box; float: right;">
+		<doc-part style="-ms-flex: 0 0; -webkit-box-flex: 0; box-sizing: border-box; flex: 0 0;">
+			<doc-part style="box-sizing: border-box;">
 				<doc-text data-aspect="name" data-property="text_colour" style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 30px; font-weight: 500; line-height: 1.1; padding: 5px 0; padding-bottom: 5px;">
-					@name
+					DOCUMENT
 				</doc-text>
 			</doc-part>
 		</doc-part>
@@ -123,7 +130,7 @@
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right; vertical-align: top;">
 						<doc-text data-aspect="subtotal" style="box-sizing: border-box; padding: 2px 10px;">
-							@subtotal
+							[sub-total]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -135,7 +142,7 @@
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right; vertical-align: top;">
 						<doc-text data-aspect="tax" style="box-sizing: border-box; padding: 2px 10px;">
-							@tax
+							[tax]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -147,7 +154,7 @@
 					</doc-col>
 					<doc-col style="border-top: 1px solid #000; box-sizing: border-box; display: table-cell; font-weight: 600; min-width: 100px; text-align: right; vertical-align: top;">
 						<doc-text data-aspect="total" style="box-sizing: border-box; padding: 2px 10px;">
-							@total
+							[total]
 						</doc-text>
 					</doc-col>
 				</doc-row>

@@ -31,6 +31,31 @@
 		}
 	}
 	
+	.top-region {
+		
+		.top-left {
+			flex: 0;
+		}
+		
+		.document-type {
+			text-align: right;
+		}
+	}
+	
+	.middle-region {
+		page-break-inside: avoid!important;
+		
+		.middle-left {
+			font-weight: 600;
+			flex: 1 1 100%;
+		}
+		
+		.middle-right {
+			flex: 1 0 200px;
+			min-width: 200px;
+		}
+	}
+	
 	.detail {
 		float: right;
 		
@@ -68,10 +93,6 @@
 	.logo {
 		width: 175px;
 		height: 75px;
-	}
-	
-	.document-type {
-		flex: 0 0;
 	}
 	
 	.heading {

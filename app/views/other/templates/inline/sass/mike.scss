@@ -80,6 +80,14 @@
 	.middle-region {
 		align-items: baseline;
 		page-break-inside: avoid!important;
+		
+		.middle-left {
+			flex: 2;
+		}
+		
+		.middle-right {
+			flex: 1;
+		}
 	}
 	
 	.inventory {
