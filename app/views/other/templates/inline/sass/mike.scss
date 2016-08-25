@@ -17,6 +17,7 @@
 			display: table-row;
 			
 			doc-col {
+				white-space: nowrap;
 				display: table-cell;
 				vertical-align: top;
 				
@@ -31,9 +32,40 @@
 		}
 	}
 	
-	.detail {
-		float: right;
+	.top-region {
+		display: table-row;
 		
+		.top-left {
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
+			padding-right: 15px;
+		}
+		
+		.top-right {
+			display: table-cell;
+			vertical-align: top;
+		}
+	}
+	
+	.middle-region {
+		display: table-row;
+		page-break-inside: avoid!important;
+		
+		.middle-left {
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
+			padding-right: 15px;
+		}
+		
+		.middle-right {
+			display: table-cell;
+			vertical-align: top;
+		}
+	}
+	
+	.detail {
 		doc-row {
 			doc-col:first-child {
 				border-top: 1px solid transparent;
@@ -77,19 +109,6 @@
 		font-weight: 600;
 	}
 	
-	.middle-region {
-		align-items: baseline;
-		page-break-inside: avoid!important;
-		
-		.middle-left {
-			flex: 2;
-		}
-		
-		.middle-right {
-			flex: 1;
-		}
-	}
-	
 	.inventory {
 		display: block;
 		
@@ -116,9 +135,24 @@
 		}
 	}
 	
+	.bottom {
+		display: table-row;
+		
+		.bottom-left {
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
+		}
+		
+		.bottom-right {
+			display: table-cell;
+			vertical-align: top;
+		}
+	}
+	
 	.document-total {
-		float: right;
 		page-break-inside: avoid!important;
+		display: block;
 		
 		doc-row {
 			
