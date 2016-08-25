@@ -48,6 +48,10 @@
 		.middle-left {
 			font-weight: 600;
 			flex: 1 1 100%;
+			
+			doc-text {
+				word-break: break-word;
+			}
 		}
 		
 		.middle-right {
