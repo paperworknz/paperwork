@@ -5,16 +5,16 @@
 		</doc-part>
 		<doc-part style="-ms-flex: 0 0; -webkit-box-flex: 0; box-sizing: border-box; flex: 0 0;">
 			<doc-text data-aspect="name" style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 30px; font-weight: 500; line-height: 1.1; padding-bottom: 0;">
-				@name
+				DOCUMENT
 			</doc-text>
 		</doc-part>
 	</doc-section>
 	<doc-section style="box-sizing: border-box; padding-bottom: 15px; page-break-inside: avoid !important;">
 		<doc-part style="box-sizing: border-box; font-weight: 600;">
-			<doc-text data-property="user-name" style="box-sizing: border-box;">@name</doc-text>
-			<doc-text data-property="user-phone" style="box-sizing: border-box;">@phone</doc-text>
-			<doc-text data-property="user-address" style="box-sizing: border-box;">@address</doc-text>
-			<doc-text data-property="user-email" style="box-sizing: border-box;">@email</doc-text>
+			<doc-text data-property="user-name" style="box-sizing: border-box;">Your Name</doc-text>
+			<doc-text data-property="user-phone" style="box-sizing: border-box;">Phone Number</doc-text>
+			<doc-text data-property="user-address" style="box-sizing: border-box;">Your Address</doc-text>
+			<doc-text data-property="user-email" style="box-sizing: border-box;">your@email.com</doc-text>
 		</doc-part>
 		<doc-part style="box-sizing: border-box;">
 			<doc-table style="box-sizing: border-box; float: right;">
@@ -26,7 +26,7 @@
 					</doc-col>
 					<doc-col style="border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; display: table-cell; text-align: center; vertical-align: top;">
 						<doc-text data-aspect="date" style="box-sizing: border-box; padding: 2px 10px;">
-							@date
+							00/00/0000
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -38,7 +38,7 @@
 					</doc-col>
 					<doc-col style="border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; display: table-cell; text-align: center; vertical-align: top;">
 						<doc-text data-aspect="reference" style="box-sizing: border-box; padding: 2px 10px;">
-							@reference
+							0000
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -50,7 +50,7 @@
 					</doc-col>
 					<doc-col style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; border-top: 1px solid #000; box-sizing: border-box; display: table-cell; text-align: center; vertical-align: top;">
 						<doc-text data-property="tax_number" style="box-sizing: border-box; padding: 2px 10px;">
-							@tax_number
+							000-000-000
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -65,8 +65,8 @@
 				</doc-text>
 			</doc-part>
 			<doc-part style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; box-sizing: border-box; min-height: 28px; padding: 5px; text-align: center; width: 50%;">
-				<doc-text data-aspect="client-name" style="box-sizing: border-box;">@clientname</doc-text>
-				<doc-text data-aspect="client-address" style="box-sizing: border-box;">@clientaddress</doc-text>
+				<doc-text data-aspect="client-name" style="box-sizing: border-box;">Client Name</doc-text>
+				<doc-text data-aspect="client-address" style="box-sizing: border-box;">Client Address</doc-text>
 			</doc-part>
 		</doc-part>
 	</doc-section>
@@ -114,7 +114,7 @@
 	<doc-section style="box-sizing: border-box; display: table-row; padding-bottom: 0;">
 		<doc-section style="box-sizing: border-box; display: table-cell; vertical-align: top; width: 100%;">
 			<doc-part style="box-sizing: border-box;">
-				<doc-text data-property="notes" style="box-sizing: border-box; font-size: 11px; font-style: italic; font-weight: 600; padding-bottom: 5px; page-break-inside: avoid !important;">@notes</doc-text>
+				<doc-text data-property="notes" style="box-sizing: border-box; font-size: 11px; font-style: italic; font-weight: 600; padding-bottom: 5px; page-break-inside: avoid !important;">Notes</doc-text>
 			</doc-part>
 			<doc-part style="box-sizing: border-box; font-size: 11px; page-break-inside: avoid !important;">
 				<doc-part data-property="background_colour" style="border: 1px solid #000; box-sizing: border-box; font-weight: 600; text-align: center;">
@@ -123,7 +123,7 @@
 					</doc-text>
 				</doc-part>
 				<doc-part style="border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; box-sizing: border-box;">
-					<doc-text data-property="terms" style="box-sizing: border-box; min-height: 28px; padding: 5px;">@terms</doc-text>
+					<doc-text data-property="terms" style="box-sizing: border-box; min-height: 28px; padding: 5px;">Terms and Conditions</doc-text>
 				</doc-part>
 			</doc-part>
 		</doc-section>
@@ -137,7 +137,7 @@
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right; vertical-align: top;">
 						<doc-text data-aspect="subtotal" style="box-sizing: border-box; padding: 2px 10px;">
-							@subtotal
+							[sub-total]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -149,7 +149,7 @@
 					</doc-col>
 					<doc-col style="box-sizing: border-box; display: table-cell; min-width: 100px; text-align: right; vertical-align: top;">
 						<doc-text data-aspect="tax" style="box-sizing: border-box; padding: 2px 10px;">
-							@tax
+							[tax]
 						</doc-text>
 					</doc-col>
 				</doc-row>
@@ -161,7 +161,7 @@
 					</doc-col>
 					<doc-col style="border: 1px solid #000; box-sizing: border-box; display: table-cell; font-weight: 600; min-width: 100px; text-align: right; vertical-align: top;">
 						<doc-text data-aspect="total" style="box-sizing: border-box; padding: 2px 10px;">
-							@total
+							[total]
 						</doc-text>
 					</doc-col>
 				</doc-row>

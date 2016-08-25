@@ -8,7 +8,7 @@
 	"modules": {
 		"admin": "admin.js?yLCAxQ",
 		"admin-template-editor": "admin-template-editor.js?FuZlKb",
-		"app": "app.js?XP0k8k",
+		"app": "app.js?SuC6AL",
 		"checkout": "checkout.js?g1Pgfz",
 		"client": "client.js?uiwzmV",
 		"clients": "clients.js?u6a3fw",
@@ -19,7 +19,7 @@
 		"notification": "notification.js?hChk2H",
 		"settings": "settings.js?MNPbDb",
 		"tab": "tab.js?LVBgld",
-		"template": "template.js?CatmeC",
+		"template": "template.js?mYM2mM",
 		"user": "user.js?Xsu4GW",
 		"welcome-guest": "welcome-guest.js?CzhXCD",
 		"document-copy": "document-copy.js?KbBFsB",
@@ -30,12 +30,12 @@
 	"behaviors": {
 		"tab": "tab.js?bgKtly",
 		"table": "table.js?D9Co6H",
-		"document": "document.js?9zoMk2"
+		"document": "document.js?7hB7qW"
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",
 		"dark": "dark.js?YHkPXI",
-		"parse": "parse.js?cvteUr",
+		"parse": "parse.js?YUIzXG",
 		"pdf": "pdf.js?zk5Em1",
 		"caret": "caret.js?2FmZin"
 	},

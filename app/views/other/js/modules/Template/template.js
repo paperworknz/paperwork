@@ -5,6 +5,7 @@ Core.addModule('template', function(context){
 	var properties = {};
 	var top = 0;
 	var background_colour;
+	var timer;
 	
 	var request = {
 		get: `${environment.root}/get/template-properties`,
@@ -15,9 +16,11 @@ Core.addModule('template', function(context){
 		putTemplate: `${environment.root}/put/template`,
 	};
 	
-	// Bind
+	var parse = context.require('parse');
 	context.use('tab');
 	context.use('document');
+	
+	// Bind
 	bind();
 	getProperties();
 	
@@ -208,23 +211,47 @@ Core.addModule('template', function(context){
 	}
 	
 	function propertiesUpdate(){
+		
 		$body.on('keyup', '[data-type="properties"] .prop', function(){
-			properties[$(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim()] = $(this).html();
+			var property = $(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim(),
+				value;
 			
-			render();
+			// Normalise attributes
+			$(this).find('*').each(function(){
+				$(this).attr('style', 'display: inline;')
+					.attr('id', '')
+					.attr('class', '');
+			});
+			
+			value = parse.toText($(this));
+			properties[property] = value.html().trim();
+			saveProperties();
 		});
 		
 		$body.on('blur', '[data-type="properties"] .prop', function(){
+			var property = $(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim();
 			
-			$.post(request.putProp, {
-				properties: properties,
-			}).done(function(response){
-				Paperwork.send('notification');
-			});
+			$(this).html(properties[property]);
+			render();
 		});
 	}
 	
-	function render(id){
+	function render(){
+		
 		Paperwork.send(`document.template.reload`, properties);
+	}
+	
+	function saveProperties(){
+		
+		// Stop timer
+		clearTimeout(timer);
+		
+		// Start timer, save() after 0.5 seconds
+		timer = setTimeout(function(){
+			
+			$.post(request.putProp, {
+				properties: properties,
+			});
+		}, 500);
 	}
 });
