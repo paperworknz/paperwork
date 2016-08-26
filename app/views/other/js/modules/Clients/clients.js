@@ -20,6 +20,7 @@ Core.addModule('clients', function(context){
 			
 			bind();
 			$body.find('#the-basics').fadeIn(250);
+			$body.find('.tt-input').focus();
 		});
 	}
 	
