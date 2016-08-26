@@ -216,13 +216,6 @@ Core.addModule('template', function(context){
 			var property = $(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim(),
 				value;
 			
-			// Normalise attributes
-			$(this).find('*').each(function(){
-				$(this).attr('style', 'display: inline;')
-					.attr('id', '')
-					.attr('class', '');
-			});
-			
 			value = parse.toText($(this));
 			properties[property] = value.html().trim();
 			saveProperties();

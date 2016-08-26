@@ -213,13 +213,6 @@ Core.addBehavior('document', function(context, opt){
 			var aspect = $(this).data('aspect'),
 				value;
 			
-			// Normalise attributes
-			$(this).find('*').each(function(){
-				$(this).attr('style', 'display: inline;')
-					.attr('id', '')
-					.attr('class', '');
-			});
-			
 			// Update document object and save
 			value = parse.toText($(this));
 			documents[document_id][aspect] = value.html().trim();
@@ -250,7 +243,7 @@ Core.addBehavior('document', function(context, opt){
 				value,
 				existing;
 			
-			// Get HTML if name, TEXT if quantity/price
+			// Get normalised html
 			value = parse.toText($(this));
 			existing = documents[document_id].items[index][type];
 			

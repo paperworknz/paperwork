@@ -4,9 +4,14 @@ Core.addModule('client', function(context){
 	
 	var client_id = $body.data('id');
 	
-	var request = {
+	var api = {
+		get: `${environment.root}/jobs`,
 		put: `${environment.root}/put/client-details`,
 	};
+	
+	var timer;
+	var notes;
+	var parse = context.require('parse');
 	
 	context.use('tab');
 	clientDetails();
@@ -16,16 +21,16 @@ Core.addModule('client', function(context){
 	
 	function clientDetails(){
 		
-		$body.on('change', '.client-details input, .client-name', function(){
+		$body.on('change', '.client-details input, [data-type="name"]', function(){
 			
-			if(!$body.find('.client-name').val().trim()) return;
+			if(!$body.find('[data-type="name"]').val().trim()) return;
 			
-			$.post(request.put, {
+			$.post(api.put, {
 				id: client_id,
-				name: $body.find('[client-name]').val().trim(),
-				address: $body.find('[client-address]').val().trim(),
-				email: $body.find('[client-email]').val().trim(),
-				phone: $body.find('[client-phone]').val().trim(),
+				name: $body.find('[data-type="name"]').val().trim(),
+				address: $body.find('[data-type="address"]').val().trim(),
+				email: $body.find('[data-type="email"]').val().trim(),
+				phone: $body.find('[data-type="phone"]').val().trim(),
 			}).done(function(response){
 				
 				Paperwork.send('notification');
@@ -54,17 +59,31 @@ Core.addModule('client', function(context){
 	
 	function bindNotes(){
 		
-		$body.on('change', '#notes', function(){
-			var notes = $(this).val().trim();
+		$body.on('keyup', '[data-type="notes"]', function(){
+			var value;
 			
-			$.post(request.put, {
+			value = parse.toText($(this));
+			console.log(value.html().trim());
+			saveNotes(value.html().trim());
+		});
+	}
+	
+	function saveNotes(request){
+		
+		// Stop timer
+		clearTimeout(timer);
+		
+		// Start timer, save() after 0.5 seconds
+		timer = setTimeout(function(){
+			
+			$.post(api.put, {
 				id: client_id,
-				notes: notes,
+				notes: request,
 			}).done(function(response){
 				
 				Paperwork.send('notification', 'Saved');
 			});
-		});
+		}, 500);
 	}
 	
 	function email(){

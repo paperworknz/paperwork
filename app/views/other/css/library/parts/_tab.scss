@@ -56,16 +56,3 @@
 }
 
 .obj { position: relative; }
-
-.obj-job {
-	display: inline-block;
-	
-	.box-std {
-		width: 610px;
-	}
-	
-	@include mobile {
-		display: block;
-		margin-bottom: 5px;
-	}
-}
