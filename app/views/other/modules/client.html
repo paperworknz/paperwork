@@ -25,12 +25,6 @@
 			<table class="client-details">
 				<tbody>
 					<tr>
-						<td>Address</td>
-						<td>
-							<input type="text" data-type="address" value="{{modules.client.data.client.address}}" placeholder="...">
-						</td>
-					</tr>
-					<tr>
 						<td>Email</td>
 						<td>
 							<input type="text" data-type="email" value="{{modules.client.data.client.email}}" placeholder="...">
@@ -40,6 +34,14 @@
 						<td>Phone</td>
 						<td>
 							<input type="text" data-type="phone" value="{{modules.client.data.client.phone}}" placeholder="...">
+						</td>
+					</tr>
+					<tr>
+						<td>Address</td>
+						<td>
+							<div contenteditable="true" data-type="address">
+								{{modules.client.data.client.address | raw}}
+							</div>
 						</td>
 					</tr>
 				</tbody>

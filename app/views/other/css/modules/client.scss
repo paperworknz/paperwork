@@ -20,6 +20,7 @@
 				font-size: 24px;
 				line-height: 26px;
 				border: 1px solid white;
+				outline: none;
 				
 				&:hover {
 					border: 1px solid #ccc;
@@ -52,10 +53,9 @@
 		width: 100%;
 		
 		input {
-			margin: 2px 0px;
-			line-height: 15px;
 			border: 1px solid white;
 			width: 100%;
+			outline: none;
 			
 			&:hover {
 				border: 1px solid #ccc;
@@ -64,6 +64,17 @@
 		
 		td {
 			height: 28px;
+			
+			[contenteditable] {
+				padding: 4px;
+				border: 1px solid white;
+				width: 100%;
+				outline: none;
+				
+				&:hover {
+					border: 1px solid #ccc;
+				}
+			}
 		}
 		
 		td:nth-child(odd) {

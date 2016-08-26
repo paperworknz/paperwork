@@ -21,20 +21,24 @@ Core.addModule('client', function(context){
 	
 	function clientDetails(){
 		
-		$body.on('change', '.client-details input, [data-type="name"]', function(){
+		$body.on('change', '.client-details input, [data-type="name"], [data-type="address"]', saveClientDetails);
+		$body.on('blur', '[data-type="address"]', saveClientDetails);
+	}
+	
+	function saveClientDetails(){ 
+		if(!$body.find('[data-type="name"]').val().trim()) return;
+		
+		var address = parse.toText($body.find('[data-type="address"]'));
+		
+		$.post(api.put, {
+			id: client_id,
+			name: $body.find('[data-type="name"]').val().trim(),
+			address: address.html().trim(),
+			email: $body.find('[data-type="email"]').val().trim(),
+			phone: $body.find('[data-type="phone"]').val().trim(),
+		}).done(function(response){
 			
-			if(!$body.find('[data-type="name"]').val().trim()) return;
-			
-			$.post(api.put, {
-				id: client_id,
-				name: $body.find('[data-type="name"]').val().trim(),
-				address: $body.find('[data-type="address"]').val().trim(),
-				email: $body.find('[data-type="email"]').val().trim(),
-				phone: $body.find('[data-type="phone"]').val().trim(),
-			}).done(function(response){
-				
-				Paperwork.send('notification');
-			});
+			Paperwork.send('notification');
 		});
 	}
 	
