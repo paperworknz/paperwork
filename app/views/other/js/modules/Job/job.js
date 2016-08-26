@@ -10,6 +10,7 @@ Core.addModule('job', function(context){
 	};
 	
 	var pdf = context.require('pdf');
+	var parse = context.require('parse');
 	
 	var doc = context.use('document');
 	var tab = context.use('tab');
@@ -89,8 +90,12 @@ Core.addModule('job', function(context){
 		// Notes change
 		$body.on('blur', '.notepad', function(){
 			
+			var notes;
+			
+			notes = parse.toText($(this));
+			
 			$.post(api.put, {
-				notes: $(this).html(),
+				notes: notes.html().trim(),
 				id: job.job_id,
 			}).done(function(response){
 				
