@@ -223,7 +223,6 @@ module {
 		align-items: center;
 		justify-content: center;
 		position: fixed;
-		overflow-y: auto;
 		top: 15px;
 		right: 15px;
 		bottom: 15px;
@@ -232,6 +231,7 @@ module {
 		> module {
 			z-index: 9999;
 			max-height: 100%;
+			overflow: auto;
 			
 			box, .tabs ul {
 				margin-left: auto;

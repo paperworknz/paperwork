@@ -15,17 +15,23 @@
 		</part>
 		<part data-type="obj-container" class="obj-job">
 			<box data-type="obj" data-id="0" class="tabobj box-document">
-				<part class="container wrap" style="padding-top: 20px;">
-					<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name">
-					<select class="status right" data-type="status" title="Status">
-						{% for status in modules.job.data.status %}
-							{% if modules.job.data.job.job_status.name == status.name %}
-							<option value="{{status.name}}" selected="selected">{{status.name}}</option>
-							{% else %}
-							<option value="{{status.name}}">{{status.name}}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
+				<part class="container">
+					<part class="header">
+						<part class="name-block">
+							<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name">
+						</part>
+						<part class="status-block">
+							<select class="status right" data-type="status" title="Status">
+								{% for status in modules.job.data.status %}
+									{% if modules.job.data.job.job_status.name == status.name %}
+									<option value="{{status.name}}" selected="selected">{{status.name}}</option>
+									{% else %}
+									<option value="{{status.name}}">{{status.name}}</option>
+									{% endif %}
+								{% endfor %}
+							</select>
+						</part>
+					</part>
 				</part>
 				<hr>
 				<part class="container-top">
