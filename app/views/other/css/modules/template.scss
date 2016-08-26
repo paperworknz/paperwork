@@ -135,15 +135,20 @@
 		height: 100%;
 		display: flex;
 		justify-content: space-between;
+		pointer-events: none;
 		
 		.play-container {
 			display: flex;
 			align-items: center;
 			opacity: 0;
+			pointer-events: auto;
+			margin-bottom: 10px;
 			@include transition(opacity 100ms linear);
 			
 			@include mobile {
 				opacity: 0.4;
+				padding-left: 0!important;
+				padding-right: 0!important;
 			}
 			
 			&:hover {
