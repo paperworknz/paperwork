@@ -142,6 +142,10 @@
 			opacity: 0;
 			@include transition(opacity 100ms linear);
 			
+			@include mobile {
+				opacity: 0.4;
+			}
+			
 			&:hover {
 				opacity: 1;
 			}
