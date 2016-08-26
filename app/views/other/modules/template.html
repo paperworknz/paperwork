@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{environment.root}}/css/library/{{path.css.library.Document}}">
-<part class="template-parent" class="left">
+<part class="template-parent">
 	<part>
 		<part data-type="tab-container" class="tabs">
 			<ul class="wrap">
@@ -20,7 +20,7 @@
 							<input type="text" class="template-name" data-type="template-name" placeholder="Template name" value="{{template.name}}" required>
 						</div>
 						<hr>
-						<div style="position: relative;overflow: hidden;">
+						<div style="position: relative;overflow: auto;">
 							<div data-type="document" data-id="{{i}}" class="template-document" style="opacity: 0.25;padding: 10mm 0;">
 								{{template.body | raw}}
 							</div>

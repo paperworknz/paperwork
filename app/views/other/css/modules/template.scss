@@ -7,6 +7,11 @@
 		display: flex;
 		align-items: flex-start;
 		
+		> part {
+			width: 100%;
+			max-width: 210mm;
+		}
+		
 		> part:last-child {
 			margin: 27px 0 0 5px;
 			width: 100%;
@@ -14,7 +19,7 @@
 			
 			@include size(1300px) {
 				margin: 5px 0 0;
-				width: 210mm;
+				width: 100%;
 				max-width: 210mm;
 			}
 		}
@@ -24,11 +29,16 @@
 		}
 	}
 	
+	.tabs, .tabobj {
+		max-width: 210mm;
+	}
+	
 	.template-container {
 		display: flex;
 		flex-direction: column;
 		flex: 0;
-		width: 210mm;
+		width: 100%;
+		max-width: 210mm;
 		padding: 0;
 	}
 	
@@ -36,6 +46,7 @@
 		font-size: 24px;
 		line-height: 26px;
 		border: 1px solid white;
+		width: 100%;
 		
 		&:hover {
 			border: 1px solid #ccc;
@@ -102,7 +113,8 @@
 	}
 	
 	.new-template {
-		width: 210mm;
+		width: 100%;
+		max-width: 210mm;
 		
 		.new-template-name {
 			margin: 25px 0;
