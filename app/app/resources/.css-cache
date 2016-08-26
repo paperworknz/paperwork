@@ -1,6 +1,6 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?ba2I2d",
+		"Paperwork": "Paperwork.css?B5Gaxe",
 		"Public": "Public.css?TcMy8r",
 		"Document": "Document.css?OLbPm9"
 	},
@@ -9,10 +9,10 @@
 	},
 	"modules": {
 		"admin": "admin.css?kOdBIC",
-		"client": "client.css?tsOsGM",
+		"client": "client.css?Tl9qwO",
 		"clients": "clients.css?PuzstE",
 		"inventory": "inventory.css?VbWBFW",
-		"job": "job.css?Pu9LSz",
+		"job": "job.css?ZKoyF8",
 		"jobs": "jobs.css?I3ktku",
 		"settings": "settings.css?Lmiy6s",
 		"template": "template.css?epNrPg",

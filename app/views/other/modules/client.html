@@ -8,60 +8,63 @@
 </part>
 <part data-type="obj-container" class="obj">
 	<box data-type="obj" data-id="0" class="tabobj box-std">
-		<part class="container wrap">
-			<input type="text" class="client-name" value="{{modules.client.data.client.name}}" placeholder="{{modules.client.data.client.name}}" client-name />
-			<div class="right">
-				<span class="firm-right">
-					<form method="get" action="{{environment.root}}/jobs">
-						<input type="hidden" name="id" value="{{modules.client.data.client.client_number}}" />
-						<button type="submit" class="button">
-							New Job
-						</button>
-					</form>
-				</span>
-			</div>
+		<part class="container header">
+			<part class="client-name">
+				<input type="text" data-type="name" value="{{modules.client.data.client.name}}" placeholder="{{modules.client.data.client.name}}" >
+			</part>
+			<part class="new-job">
+				<button class="button">
+					New Job
+				</button>
+			</part>
 		</part>
-		<part class="container-mid client-details">
-			<table>
+		<part class="container-mid">
+			<table class="client-details">
 				<tbody>
 					<tr>
 						<td>Address</td>
 						<td>
-							<input type="text" class="input" value="{{modules.client.data.client.address}}" placeholder="..." client-address />
+							<input type="text" data-type="address" value="{{modules.client.data.client.address}}" placeholder="...">
 						</td>
 					</tr>
 					<tr>
 						<td>Email</td>
 						<td>
-							<input type="text" class="input" value="{{modules.client.data.client.email}}" placeholder="..." client-email />
+							<input type="text" data-type="email" value="{{modules.client.data.client.email}}" placeholder="...">
 						</td>
 					</tr>
 					<tr>
 						<td>Phone</td>
 						<td>
-							<input type="text" class="input" value="{{modules.client.data.client.phone}}" placeholder="..." client-phone />
+							<input type="text" data-type="phone" value="{{modules.client.data.client.phone}}" placeholder="...">
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</part>
-		<part class="container">
-			<div class="left">
-				<a style="padding-left: 4px" data-type="email-button">Email {{modules.client.data.client.name}}</a>
-			</div>
-			<div class="right">
+		<part class="container footer">
+			<part class="email-link">
+				<a style="padding-left: 4px" data-type="email-button">
+					Email {{modules.client.data.client.name}}
+				</a>
+			</part>
+			<part class="delete-button">
 				<form name="delete" method="post" action="{{environment.root}}/delete/client">
 					<input type="hidden" name="id" value="{{modules.client.data.client.id}}" />
 				</form>
-				<button type="submit" class="button delete">Delete Client</button>
-			</div>
+				<button type="submit" class="button delete">
+					Delete Client
+				</button>
+			</part>
 		</part>
 		<hr>
-		<part class="container" id="bottom">
+		<part class="container">
 			<div style="color: #7f8c8d">
 				Notes
 			</div>
-			<textarea id="notes">{{modules.client.data.client.notes | raw}}</textarea>
+			<part data-type="notes" class="notes" contenteditable="true">
+				{{modules.client.data.client.notes | raw}}
+			</textarea>
 		</part>
 	</box>
 	{% if modules.client.data.jobs %}

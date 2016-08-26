@@ -9,7 +9,6 @@ $app->post('/put/client-details', 'uac', function() use($app){
 	/* Construction */
 	
 	if($id && isset($_POST['notes'])){
-		$notes = filter_var($_POST['notes'], FILTER_SANITIZE_STRING);
 		$app->sql->put('client')->with([
 			'notes' => $notes
 		])->where('id', '=', $id)->run();

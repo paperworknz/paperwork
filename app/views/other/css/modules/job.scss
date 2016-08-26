@@ -1,8 +1,67 @@
 @import '../library/mixins/mixins';
 
 [data-module="job"] {
-	.box-job {
-		width: 710px;
+	
+	.job-parent {
+		display: flex;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		
+		@include mobile {
+			flex-direction: column;
+			justify-content: flex-start;
+		}
+		
+		.job-content {
+			flex-grow: 0;
+			flex-shrink: 1;
+			flex-basis: 210mm;
+			margin: 0 5px 5px 0;
+			
+			@include mobile {
+				flex-basis: 0;
+				width: 100%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+		
+		.note-content {
+			flex-basis: 250px;
+			
+			@include mobile {
+				width: 100%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+			.notes {
+				.notes-label {
+					color: #7f8c8d;
+					height: 20px;
+					line-height: 20px;
+					font-size: 13px;
+				}
+				
+				.note-wrap {
+					min-height: 205px;
+					border: 1px solid #eee;
+					cursor: text;
+					min-width: 30px;
+				}
+				
+				.notepad {
+					padding: 4px;
+					min-width: 30px;
+					min-height: 30px;
+					outline: none;
+				}
+			}
+		}
+	}
+	
+	.tabs-job {
+		max-width: 210mm;
 	}
 	
 	.job-name {
@@ -11,61 +70,41 @@
 		line-height: 26px;
 		border: 1px solid white;
 		width: 75%;
+		
 		&:hover {
 			border: 1px solid #ccc;
+		}
+		
+		@include size(400px) {
+			
+			width: 100%;
 		}
 	}
 	
 	.status {
 		height: 36px;
 		line-height: 36px;
-	}
-	
-	.notes {
-		display: inline-block;
-		width: 250px;
-		vertical-align: top;
 		
-		.notes-label {
-			color: #7f8c8d;
-			height: 20px;
-			line-height: 20px;
-			font-size: 13px;
-		}
-		
-		.note-wrap {
-			width: 240px;
-			min-height: 205px;
-			border: 1px solid #eee;
-			cursor: text;
-			min-width: 30px;
-			
-			@include mobile { width: 100%; }
-		}
-		
-		.notepad {
-			padding: 4px;
-			min-width: 30px;
-			min-height: 30px;
-			outline: none;
-		}
-		
-		@include mobile {
-			display: block;
-			width: 610px;
+		@include size(400px) {
+			margin-top: 15px;
+			width: 100%;
 		}
 	}
 	
 	.form-settings {
-		margin: 5px 0;
 		
-		.left {
-			margin-right: 5px;
+		box {
+			margin: 5px;
+			
+			&:first-child {
+				margin-left: 0;
+			}
+			
+			&:last-child {
+				margin-right: 0;
+			}
 		}
 	}
-	
-	.client-details td { height:28px; }
-	.client-details { width:75% }
 	
 	.pdf-load {
 		width: 52px;
@@ -85,13 +124,38 @@
 		padding: 0;
 	}
 	
-	.client-details td:nth-child(2n+1) {
-		text-align: right;
-		font-size: 9pt;
-		line-height: 9pt;
-		color: #7f8c8d;
-		padding: 0px 10px;
-		width: 50px;
+	.delete-container {
+		
+		@include size(400px) {
+			padding-top: 15px;
+			
+			button {
+				width: 100%;
+			}
+		}
+	}
+	
+	.client-details {
+		width: 100%;
+		
+		td {
+			height: 28px;
+		}
+		
+		td:nth-child(odd) {
+			text-align: right;
+			font-size: 9pt;
+			line-height: 9pt;
+			color: #7f8c8d;
+			padding: 0px 10px;
+			width: 50px;
+		}
+		
+		td:nth-child(even) {
+			word-break: break-word;
+			min-width: 100px;
+			overflow: hidden;
+		}
 	}
 	
 	.new-document {
@@ -148,5 +212,13 @@
 			width: 43px;
 			height: 43px;
 		}
+	}
+	
+	.obj-job {
+		max-width: 210mm;
+	}
+	
+	.box-document {
+		max-width: 210mm;
 	}
 }
