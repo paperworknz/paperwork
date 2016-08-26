@@ -24,6 +24,31 @@
 				margin-left: auto;
 				margin-right: auto;
 			}
+			
+			.header {
+				display: table-row;
+				
+				.name-block {
+					display: table-cell;
+					vertical-align: top;
+					width: 100%;
+					
+					@include size(400px) {
+						display: block;
+						width: 100%;
+					}
+				}
+				
+				.status-block {
+					display: table-cell;
+					vertical-align: top;
+					
+					@include size(400px) {
+						display: block;
+						width: 100%;
+					}
+				}
+			}
 		}
 		
 		.note-content {
