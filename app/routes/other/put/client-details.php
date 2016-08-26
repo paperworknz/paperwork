@@ -16,7 +16,7 @@ $app->post('/put/client-details', 'uac', function() use($app){
 	
 	if($id && $name){
 		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-		$address = filter_var($_POST['address'], FILTER_SANITIZE_STRING);
+		$address = $_POST['address'];
 		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
 		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 		$app->sql->put('client')->with([

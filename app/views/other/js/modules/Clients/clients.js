@@ -19,6 +19,8 @@ Core.addModule('clients', function(context){
 			for(let i in clients) typeahead.push(clients[i].name);
 			
 			bind();
+			$body.find('#the-basics').fadeIn(250);
+			$body.find('.tt-input').focus();
 		});
 	}
 	
