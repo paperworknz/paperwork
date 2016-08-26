@@ -8,14 +8,17 @@
 </part>
 <part data-type="obj-container" class="obj">
 	<box data-type="obj" data-id="0" class="tabobj box-std">
-		<part class="container header">
-			<part class="client-name">
-				<input type="text" data-type="name" value="{{modules.client.data.client.name}}" placeholder="{{modules.client.data.client.name}}" >
-			</part>
-			<part class="new-job">
-				<button class="button">
-					New Job
-				</button>
+		<part class="container">
+			<part class="header">
+				
+				<part class="client-name">
+					<input type="text" data-type="name" value="{{modules.client.data.client.name}}" placeholder="{{modules.client.data.client.name}}" >
+				</part>
+				<part class="new-job">
+					<button class="button">
+						New Job
+					</button>
+				</part>
 			</part>
 		</part>
 		<part class="container-mid">
@@ -42,19 +45,21 @@
 				</tbody>
 			</table>
 		</part>
-		<part class="container footer">
-			<part class="email-link">
-				<a style="padding-left: 4px" data-type="email-button">
-					Email {{modules.client.data.client.name}}
-				</a>
-			</part>
-			<part class="delete-button">
-				<form name="delete" method="post" action="{{environment.root}}/delete/client">
-					<input type="hidden" name="id" value="{{modules.client.data.client.id}}" />
-				</form>
-				<button type="submit" class="button delete">
-					Delete Client
-				</button>
+		<part class="container">
+			<part class="footer">
+				<part class="email-link">
+					<a style="padding-left: 4px" data-type="email-button">
+						Email {{modules.client.data.client.name}}
+					</a>
+				</part>
+				<part class="delete-button">
+					<form name="delete" method="post" action="{{environment.root}}/delete/client">
+						<input type="hidden" name="id" value="{{modules.client.data.client.id}}" />
+					</form>
+					<button type="submit" class="button delete">
+						Delete Client
+					</button>
+				</part>
 			</part>
 		</part>
 		<hr>

@@ -3,16 +3,17 @@
 [data-module="client"] {
 	
 	.header {
-		display: flex;
+		display: table-row;
 		
 		@include size(400px) {
-			flex-direction: column;
+			display: block;
+			width: 100%;
 		}
 		
 		.client-name {
-			flex-grow: 0;
-			flex-shrink: 1;
-			flex-basis: 100%;
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
 			
 			input {
 				width: 100%;
@@ -26,16 +27,18 @@
 			}
 			
 			@include size(400px) {
+				display: block;
 				width: 100%;
 			}
 		}
 		
 		.new-job {
-			flex: 1;
+			display: table-cell;
+			vertical-align: top;
 			white-space: nowrap;
 			
 			@include size(400px) {
-				flex-basis: 100%;
+				display: block;
 				padding-top: 15px;
 				
 				button {
@@ -80,26 +83,32 @@
 	}
 	
 	.footer {
-		display: flex;
+		display: table-row;
 		
 		@include size(400px) {
-			flex-direction: column;
+			display: block;
+			width: 100%;
 		}
 		
 		.email-link {
-			flex: 1;
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
 			
 			@include size(400px) {
+				display: block;
 				width: 100%;
 			}
 		}
 		
 		.delete-button {
-			flex: 0;
+			display: table-cell;
+			vertical-align: top;
 			white-space: nowrap;
 			
 			@include size(400px) {
-				flex-basis: 100%;
+				display: block;
+				width: 100%;
 				padding-top: 15px;
 				
 				button {
