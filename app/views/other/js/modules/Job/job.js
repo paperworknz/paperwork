@@ -16,6 +16,7 @@ Core.addModule('job', function(context){
 	var tab = context.use('tab');
 	
 	getPDFList();
+	bindProperties();
 	bindNotes();
 	changeStatus();
 	jobName();
@@ -77,6 +78,23 @@ Core.addModule('job', function(context){
 					</div>
 				`);
 			}
+		});
+	}
+	
+	function bindProperties(){
+		
+		// Load client module
+		$body.on('click', '[data-type="client"]', function(){
+			
+			context.load('client', job.client_id);
+		});
+		
+		// Load email module
+		$body.on('click', '[data-type="email"]', function(){
+			
+			context.load('email', {
+				address: job.client_email,
+			});
 		});
 	}
 	

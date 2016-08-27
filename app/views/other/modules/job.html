@@ -43,12 +43,12 @@
 							</tr>
 							<tr>
 								<td>Client</td>
-								<td><a href="{{environment.root}}/client/{{modules.job.data.client.client_number}}" title="{{modules.job.data.client.name}}'s Page">{{modules.job.data.client.name}}</a></td>
+								<td><a data-type="client" title="{{modules.job.data.client.name}}'s Page">{{modules.job.data.client.name}}</a></td>
 							</tr>
 							{% if modules.job.data.client.email %}
 							<tr>
 								<td>Email</td>
-								<td><a href="mailto:{{modules.job.data.client.email}}" title="Send Email" target="_blank">{{modules.job.data.client.email}}</a></td>
+								<td><a data-type="email" title="Send Email" target="_blank">{{modules.job.data.client.email}}</a></td>
 							</tr>
 							{% endif %}
 							{% if client.address %}

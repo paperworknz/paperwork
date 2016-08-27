@@ -39,6 +39,17 @@ function uac(){ // User controlled pages (in the app)
 			$_SESSION['trial_expired'] = true;
 		}
 	}
+	
+	// If a guest user has been logged in for more than 24 hours
+	if($app->user['privilege'] == 'guest') {
+		$today = new DateTime();
+		$created = new DateTime($app->user['date_created']);
+		$difference = $today->diff($created);
+		
+		if($difference->d >= 1){
+			$app->auth->logout();
+		}
+	}
 }
 
 function admin(){ // User.privilege = admin

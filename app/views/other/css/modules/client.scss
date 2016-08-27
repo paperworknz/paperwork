@@ -37,10 +37,12 @@
 			display: table-cell;
 			vertical-align: top;
 			white-space: nowrap;
+			padding-left: 5px;
 			
 			@include size(400px) {
 				display: block;
 				padding-top: 15px;
+				padding-left: 0;
 				
 				button {
 					width: 100%;
@@ -50,7 +52,11 @@
 	}
 	
 	.client-details {
-		width: 100%;
+		width: 75%;
+		
+		@include size(400px) {
+			width: 100%;
+		}
 		
 		input {
 			border: 1px solid white;

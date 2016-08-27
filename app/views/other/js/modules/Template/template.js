@@ -174,10 +174,11 @@ Core.addModule('template', function(context){
 		
 		req == 'previous' ? direction = '-10' : direction = '10';
 		
+		$body.find('.tabopen .document-owner').css('width', $body.find('.tabopen .document-owner').outerWidth());
 		$body.find('.tabopen [data-type="document"]').animate({
 			opacity: 0,
 			marginLeft: `${(direction * -1)}px`
-		}, 100, 'swing', change);
+		}, 100, 'swing', change).css('overflow', 'hidden');
 		
 		function change(){
 			$.post(request.update, {
@@ -186,9 +187,11 @@ Core.addModule('template', function(context){
 			}).done(function(response){
 				response = JSON.parse(response);
 				
+				$body.find('.tabopen .document-owner').css('width', 'auto');
 				$body.find('.tabopen [data-type="document"]').html(response.body).css({
 					opacity: 0,
 					marginLeft: `${direction}px`,
+					overFlow: 'auto',
 				}).animate({
 					opacity: 1,
 					marginLeft: 0,
@@ -219,6 +222,7 @@ Core.addModule('template', function(context){
 			value = parse.toText($(this));
 			properties[property] = value.html().trim();
 			saveProperties();
+			render();
 		});
 		
 		$body.on('blur', '[data-type="properties"] .prop', function(){
