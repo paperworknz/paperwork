@@ -52,7 +52,11 @@
 	}
 	
 	.client-details {
-		width: 100%;
+		width: 75%;
+		
+		@include size(400px) {
+			width: 100%;
+		}
 		
 		input {
 			border: 1px solid white;

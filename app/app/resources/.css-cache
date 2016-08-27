@@ -1,6 +1,6 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?FDKFfs",
+		"Paperwork": "Paperwork.css?8V5TWo",
 		"Public": "Public.css?TcMy8r",
 		"Document": "Document.css?OLbPm9"
 	},
@@ -9,13 +9,13 @@
 	},
 	"modules": {
 		"admin": "admin.css?kOdBIC",
-		"client": "client.css?SmJdxg",
+		"client": "client.css?AXyEpW",
 		"clients": "clients.css?PuzstE",
 		"inventory": "inventory.css?VbWBFW",
 		"job": "job.css?jXsXZO",
 		"jobs": "jobs.css?I3ktku",
-		"settings": "settings.css?Lmiy6s",
-		"template": "template.css?iQ509v",
+		"settings": "settings.css?4jikSS",
+		"template": "template.css?Ju64Xi",
 		"user": "user.css?E1ktyM",
 		"welcome-guest": "welcome-guest.css?MhUIDW",
 		"document-copy": "document-copy.css?9RB5xn",
