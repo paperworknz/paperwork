@@ -1,10 +1,10 @@
-[data-template="mike"], [data-template="ocean"] {
+[data-template="modern"] {
 	
 	font-size: 13px;
 	padding: 0 10mm;
 	
 	& > doc-section {
-		padding-bottom: 15px;
+		padding-bottom: 30px;
 	}
 	
 	& > doc-section:last-child {
@@ -32,84 +32,73 @@
 		}
 	}
 	
-	.top-region {
-		display: table-row;
-		
-		.top-left {
-			display: table-cell;
-			vertical-align: top;
-			width: 100%;
-			padding-right: 15px;
-		}
-		
-		.top-right {
-			display: table-cell;
-			vertical-align: top;
-		}
-	}
-	
-	.middle-region {
-		display: table-row;
-		page-break-inside: avoid!important;
-		
-		.middle-left {
-			display: table-cell;
-			vertical-align: middle;
-			width: 100%;
-			padding-right: 15px;
-		}
-		
-		.middle-right {
-			display: table-cell;
-			vertical-align: top;
-		}
-	}
-	
-	.detail {
-		display: table;
-		float: right;
-		
-		doc-row {
-			doc-col:first-child {
-				border-top: 1px solid transparent;
-				border-right: 1px solid transparent;
-				border-left: 1px solid transparent;
-			}
-			
-			doc-col:last-child {
-				text-align: center;
-				border-top: 1px solid black;
-				border-right: 1px solid black;
-				border-left: 1px solid black;
-			}
-			
-			&:last-child {
-				doc-col:first-child {
-					border-bottom: 1px solid transparent;
-				}
-				
-				doc-col:last-child {
-					border-bottom: 1px solid black;
-				}
-			}
-		}
-	}
-	
 	.pad {
 		padding: 5px;
 		min-height: 28px;
 	}
 	
-	.top_title {
-		font-weight: 600;
-		font-size: 23px;
-		padding-bottom: 15px;
+	.h3, .h2, .h1 {
+		padding-bottom: 0;
 	}
 	
-	.name {
-		text-align: right;
-		font-size: 24px;
-		font-weight: 600;
+	.h1 {
+		font-size: 47px;
+	}
+	
+	.smaller {
+		font-size: 12px;
+	}
+	
+	.header {
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		
+		.table {
+			display: table-row;
+			
+			doc-part {
+				display: table-cell;
+				vertical-align: top;
+				padding: 4px 25px;
+				white-space: nowrap;
+				
+				&:first-child {
+					width: 100%;
+					padding: 4px 0;
+				}
+			}
+		}
+	}
+	
+	.middle-region {
+		display: table-row;
+		border-collapse: separate;
+		border-spacing: 5px 0;
+		
+		doc-section {
+			display: table-cell;
+			
+			&:first-child {
+				doc-text {
+					margin-left: -5px;
+				}
+			}
+			
+			doc-part {
+				display: table-row;
+				vertical-align: top;
+				
+				doc-text {
+					padding: 4px;
+				}
+				
+				&:first-child doc-text {
+					font-weight: 600;
+					border-bottom: 1px solid #ccc;
+					min-width: 150px;
+				}
+			}
+		}
 	}
 	
 	.inventory {
@@ -118,27 +107,27 @@
 		.inventory-head {
 			display: block;
 			font-weight: 600;
-			border: 1px solid black;
-			font-size: 12px;
 			line-height: 20px;
+			border-bottom: 1px solid black;
 			
 			> doc-part {
 				min-width: 95px;
 				display: table-cell;
 				text-align: center;
 				padding: 0px 6px;
-				border-left: 1px solid black;
+				font-size: 12px;
 				
 				&:first-child {
 					width: 100%;
 					border-left: none;
 					text-align: left;
+					padding-left: 0;
 				}
 			}
 		}
 	}
 	
-	.bottom {
+	.bottom-region {
 		display: table-row;
 		
 		.bottom-left {
@@ -154,8 +143,8 @@
 	}
 	
 	.document-total {
+		float: right;
 		page-break-inside: avoid!important;
-		display: block;
 		
 		doc-row {
 			
@@ -171,13 +160,11 @@
 			&:last-child {
 				doc-col:first-child {
 					border-top: 1px solid black;
-					border-bottom: 1px solid black;
-					border-left: 1px solid black;
 					font-weight: 600;
 				}
 				
 				doc-col:last-child {
-					border: 1px solid black;
+					border-top: 1px solid black;
 					font-weight: 600;
 				}
 			}

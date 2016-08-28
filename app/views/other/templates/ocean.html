@@ -1,0 +1,176 @@
+<doc-body data-template="ocean">
+	<doc-section>
+		<doc-section class="top-region">
+			<doc-part class="top-left">
+				<doc-part data-property="text_colour">
+					<doc-text data-property="user-company" class="top_title">
+						Your Company Name
+					</doc-text>
+				</doc-part>
+				<doc-part style="font-weight: 600;">
+					<doc-text data-property="user-address">Your Address</doc-text>
+					<doc-part>
+						<doc-text style="display: inline;">GST # </doc-text>
+						<doc-text data-property="tax_number" style="display: inline;min-height: 18px;">000-000-000</doc-text>
+					</doc-part>
+					<doc-part>
+						<doc-text style="display: inline;">Mob: </doc-text>
+						<doc-text data-property="user-phone" style="display: inline;min-height: 18px;">Phone Number</doc-text>
+					</doc-part>
+					<doc-part>
+						<doc-text style="display: inline;">E: </doc-text>
+						<doc-text data-property="user-email" style="display: inline;min-height: 18px;">your@email.com</doc-text>
+					</doc-part>
+				</doc-part>
+			</doc-part>
+			<doc-part class="top-right">
+			</doc-part>
+		</doc-section>
+	</doc-section>
+	<doc-section>
+		<doc-section class="middle-region">
+			<doc-part class="middle-left">
+				<doc-text style="font-weight: 600;">
+					TO:
+				</doc-text>
+				<doc-part class="pad">
+					<doc-text data-aspect="client-name">Client Name</doc-text>
+					<doc-text data-aspect="client-address">Client Address</doc-text>
+				</doc-part>
+			</doc-part>
+			<doc-part class="middle-right">
+				<doc-part>
+					<doc-part>
+						<doc-text data-aspect="name" class="name" data-property="text_colour">DOCUMENT</doc-text>
+					</doc-part>
+					<doc-part>
+						<doc-table class="detail">
+							<doc-row>
+								<doc-col>
+									<doc-text>
+										Quote Number
+									</doc-text>
+								</doc-col>
+								<doc-col>
+									<doc-text data-aspect="reference">
+										0000
+									</doc-text>
+								</doc-col>
+							</doc-row>
+							<doc-row>
+								<doc-col>
+									<doc-text>
+										Date of Quote
+									</doc-text>
+								</doc-col>
+								<doc-col>
+									<doc-text data-aspect="date">
+										00/00/0000
+									</doc-text>
+								</doc-col>
+							</doc-row>
+						</doc-table>
+					</doc-part>
+				</doc-part>
+			</doc-part>
+		</doc-section>
+	</doc-section>
+	<doc-section>
+		<doc-part>
+			<doc-part>
+				<doc-text style="font-weight: 600;">
+					COMMENTS OR SPECIAL INSTRUCTIONS:
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text data-aspect="description" class="pad" style="min-height: 24px;"></doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+	<doc-section class="inventory" data-type="inventory">
+		<doc-section class="inventory-head" data-property="background_colour">
+			<doc-part>
+				<doc-text>
+					ITEM
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					QTY
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					PRICE
+				</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text>
+					TOTAL
+				</doc-text>
+			</doc-part>
+		</doc-section>
+		<doc-section data-type="inventory-input">
+		</doc-section>
+		<doc-section data-type="inventory-content">
+		</doc-section>
+	</doc-section>
+	<doc-section>
+		<doc-section class="bottom">
+			<doc-part class="bottom-left">
+			</doc-part>
+			<doc-part class="bottom-right">
+				<doc-table class="document-total">
+					<doc-row>
+						<doc-col>
+							<doc-text>
+								Sub Total
+							</doc-text>
+						</doc-col>
+						<doc-col>
+							<doc-text data-aspect="subtotal">
+								[sub-total]
+							</doc-text>
+						</doc-col>
+					</doc-row>
+					<doc-row>
+						<doc-col>
+							<doc-text>
+								GST
+							</doc-text>
+						</doc-col>
+						<doc-col>
+							<doc-text data-aspect="tax">
+								[tax]
+							</doc-text>
+						</doc-col>
+					</doc-row>
+					<doc-row>
+						<doc-col data-property="background_colour">
+							<doc-text>
+								TOTAL TO PAY
+							</doc-text>
+						</doc-col>
+						<doc-col>
+							<doc-text data-aspect="total">
+								[total]
+							</doc-text>
+						</doc-col>
+					</doc-row>
+				</doc-table>
+			</doc-part>
+		</doc-section>
+	</doc-section>
+	<doc-section>
+		<doc-part>
+			<doc-part>
+				<doc-text data-property="notes" style="min-height: 18px;">Notes</doc-text>
+			</doc-part>
+			<doc-part>
+				<doc-text style="font-weight: 600;padding-top: 15px;">
+					THANK YOU FOR YOUR BUSINESS
+				</doc-text>
+			</doc-part>
+		</doc-part>
+	</doc-section>
+</doc-body><link rel="stylesheet" type="text/css" href="/../../../../public/css/library/Paperwork.css"><link rel="stylesheet" type="text/css" href="inline/css/mike.css">
