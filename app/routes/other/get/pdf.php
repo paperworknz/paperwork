@@ -11,6 +11,14 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 	/* Construction */
 	$id = $app->user['id'];
 	
+	$view = 'inline';
+	
+	if(isset($_GET['view'])){
+		if($_GET['view'] == 'attachment'){
+			$view = 'attachment';
+		}
+	}
+	
 	if($_ENV['MODE'] == 'dev'){
 		$path = "../app/app/storage/clients/{$id}/pdf/{$a}/{$b}";
 	}elseif($_ENV['MODE'] == 'prod'){
@@ -24,7 +32,7 @@ $app->get('/get/pdf/:a/:b', 'uac', function($a, $b) use ($app){
 	
 	$response = new Response(file_get_contents($path), 200, [
 		'Content-Description'	=> 'File Transfer',
-		'Content-Disposition'	=> "attachment; filename='{$b}'",
+		'Content-Disposition'	=> "$view; filename='{$b}'",
 		'Content-Transfer-Encoding' => 'binary',
 		'Content-Type'	=> 'application/pdf'
 	]);

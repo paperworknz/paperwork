@@ -9,6 +9,7 @@ $app->post('/put/settings', 'uac', function() use ($app){
 	$last = filter_var($_POST['last'], FILTER_SANITIZE_STRING);
 	$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
 	$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
+	$address = isset($_POST['address']) ? $_POST['address'] : $app->user['address'];
 	
 	if(!$app->sql->get('user')->where('email', '=', $email)->and('id', '<>', $app->user['id'])->root()->one()){
 		
@@ -18,6 +19,7 @@ $app->post('/put/settings', 'uac', function() use ($app){
 			'last'		=> $last,
 			'company'	=> $company,
 			'phone'		=> $phone,
+			'address'	=> $address,
 		])->where('id', '=', $app->user['id'])->root()->run();
 		
 		$app->event->log('updated their details');

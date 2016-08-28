@@ -40,6 +40,15 @@
 								<td><input type="text" name="phone" value="{{user.phone}}"></td>
 							</tr>
 							<tr>
+								<td style="vertical-align: top;padding-top: 9px;">Address</td>
+								<td>
+									<div class="input" contenteditable="true" data-type="address">
+										{{user.address | raw}}
+									</div>
+									<input type="hidden" name="address" value="{{user.address | raw}}">
+								</td>
+							</tr>
+							<tr>
 								<td></td>
 								<td style="height:40px">
 									<button class="button">UPDATE</button>

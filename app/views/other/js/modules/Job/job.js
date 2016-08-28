@@ -219,7 +219,7 @@ Core.addModule('job', function(context){
 				});
 				
 				Paperwork.ready($body.find('[data-type="pdf-button"]'), 'PDF');
-				Paperwork.goto(response.location, false);
+				Paperwork.goto(`${response.location}?view=attachment`, false);
 			});
 		});
 		
