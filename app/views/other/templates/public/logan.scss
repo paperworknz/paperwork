@@ -1,4 +1,4 @@
-[data-template="logan"], [data-template="lightweight"] {
+[data-template="logan"] {
 	
 	.inventory-item {
 		.inventory-item_name {
@@ -19,6 +19,7 @@
 		
 		.inventory-item_total {
 			border-right: 1px solid black;
+			min-width: 96px;
 		}
 	}
 }
