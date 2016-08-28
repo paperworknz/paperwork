@@ -37,9 +37,9 @@ $app->post('/post/recover-request', 'app', function() use ($app){
 	$mail->Username = $root['address'];
 	$mail->Password = $_ENV['EMAIL_PASSWORD'];
 	
-	$mail->setFrom($root['address'], 'Account Recovery');
+	$mail->setFrom($root['address'], 'Paperwork');
 	$mail->addAddress($email, $user['first'].' '.$user['last']);
-	$mail->addReplyTo($root['address'], 'Account Recovery');
+	$mail->addReplyTo($root['address'], 'Paperwork');
 	
 	$mail->isHTML(true);
 	$mail->Subject = 'Paperwork Account Recovery';
