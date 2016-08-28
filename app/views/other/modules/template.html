@@ -68,6 +68,10 @@
 						<div class="prop" contenteditable>
 							{{b | raw}}
 						</div>
+						{% if 'colour' in a %}
+						<div class="color-palette">
+						</div>
+						{% endif %}
 					</column>
 				</row>
 				{% endfor %}

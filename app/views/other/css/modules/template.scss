@@ -89,6 +89,19 @@
 			&:last-child {
 				margin-bottom: 0;
 			}
+			
+			.color-palette {
+				display: block;
+				border-top: none;
+				min-height: 30px;
+				font-size: 0;
+				
+				.color {
+					min-width: 25px;
+					min-height: 25px;
+					display: inline-block;
+				}
+			}
 		}
 	}
 	
