@@ -275,8 +275,8 @@ Core.addModule('job', function(context){
 				<meta charset="utf-8">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 				<meta name="format-detection" content="telephone=no">
-				<link rel="stylesheet" type="text/css" href="${environment.root}/css/library/Document.css?armadyl">
-				<link rel="stylesheet" type="text/css" href="${environment.root}/css/templates/${template_name}.css?armadyl">
+				<link rel="stylesheet" type="text/css" href="${environment.root}/css/library/Document.css">
+				<link rel="stylesheet" type="text/css" href="${environment.root}/css/templates/${template_name}.css">
 				<style>
 					doc-body {
 						letter-spacing: -1px;
