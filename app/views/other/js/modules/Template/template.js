@@ -36,6 +36,10 @@ Core.addModule('template', function(context){
 			
 			$body.find('.color-palette').append(`<div class="color" data-color="${value}" style="background-color: ${value}"></div>`);
 		}
+		
+		if(localStorage.vote != undefined){
+			$body.find('[data-type="vote"]').replaceWith('<div style="display: inline;">&#10003;</div>').addClass('no-click').css('opacity', '0.5');
+		}
 	}
 	
 	function bind(){
@@ -137,6 +141,17 @@ Core.addModule('template', function(context){
 		
 		// Save properties
 		propertiesUpdate();
+		
+		// Vote button
+		$body.on('click', '[data-type="vote"]', function(){
+			
+			$.post(`${environment.root}/post/vote`)
+			.done(function(response){
+				
+				localStorage.vote = true;
+				$body.find('[data-type="vote"]').replaceWith('<div style="display: inline;">&#10003;</div>').addClass('no-click').css('opacity', '0.5');
+			});
+		});
 	}
 	
 	function append(request){
