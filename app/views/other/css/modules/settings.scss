@@ -1,8 +1,10 @@
 [data-module="settings"] {
-	td input {
-		margin:2px 0px;
-		width:100%;
+	td input, .input {
+		margin: 2px 0px;
+		width: 100%;
 		max-width: 225px;
+		border: 1px solid #ccc;
+		padding: 4px;
 	}
 
 	.email-settings {

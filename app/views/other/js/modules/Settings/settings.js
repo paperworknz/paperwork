@@ -19,12 +19,25 @@ Core.addModule('settings', function(context){
 		}
 	}
 	
+	var parse = context.require('parse');
+	
 	// Bind
 	context.use('tab');
+	bindAddress();
 	bindStatus();
 	bindEmail();
 	bindTrash();
 	speechRender();
+	
+	function bindAddress(){
+		
+		$body.on('keyup', '[data-type="address"]', function(){
+			
+			var value = parse.toText($(this));
+			
+			$body.find('.user-details input[name="address"]').val(value.html().trim());
+		})
+	}
 	
 	function bindStatus(){
 		
