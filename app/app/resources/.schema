@@ -46,6 +46,7 @@ return [
 '/post/template' => '../app/routes/other/post/template.php',
 '/post/temporary-user' => '../app/routes/other/post/temporary-user.php',
 '/post/update-template' => '../app/routes/other/post/update-template.php',
+'/post/vote' => '../app/routes/other/post/vote.php',
 '/put/client-details' => '../app/routes/other/put/client-details.php',
 '/put/document-json' => '../app/routes/other/put/document-json.php',
 '/put/document' => '../app/routes/other/put/document.php',
