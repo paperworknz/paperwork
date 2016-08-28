@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include path.html.head_public %}
+		{% include path.html.pixel %}
+	</head>
+	<body>
+		<header>
+			<div class="wrap width">
+				<div class="nav">
+					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{environment.root}}'">Paperwork</div>
+					<ul class="nav_list_less wrap">
+						<li>
+							<span class="color_hint" home>Home</span>
+						</li>
+						<li>
+							<span login>Log In</span>
+						</li>
+						<li>
+							<span class="special" register>Sign Up</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<section>
+			<div class="width">
+				<div class="main top centered">
+					<div style="display:inline-block;width:30%;min-width:280px">
+						<form method="post" action="{{environment.root}}/post/recover-request">
+							<div class="login user-information">
+								<div class="container">
+									<input type="text" name="email" placeholder="Email">
+								</div>
+								<div class="container">
+									<button class="button next-step">RECOVER</button>
+								</div>
+							</div>
+							{% include path.html.flash %}
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div class="centered">
+				<a href="https://www.facebook.com/paperworkapp" target="_blank">
+					<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
+				</a>
+				<div style="padding:15px 0px;"><a href="{{environment.root}}/privacy-policy">Privacy Policy</a></div>
+			</div>
+		</footer>
+		<script>
+		var environment = {
+			root: '{{environment.root}}',
+			page: '{{path.page}}',
+		};
+		</script>
+		{% include path.html.js %}
+		<script>
+			$(function(){
+				// Nav
+				$('[home]').on('click', function(){
+					window.location = '{{environment.root}}';
+				});
+				$('[login]').on('click', function(){
+					window.location = '{{environment.root}}/login';
+				});
+				$('[register]').on('click', function(){
+					window.location = '{{environment.root}}/register';
+				});
+				
+				$('input[name="username"]').focus();
+			});
+		</script>
+	</body>
+</html>
