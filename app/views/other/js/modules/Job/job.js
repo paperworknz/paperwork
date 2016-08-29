@@ -265,7 +265,7 @@ Core.addModule('job', function(context){
 			template_name = $body.find('.tabopen [data-type="document"] [data-template]').data('template').trim(),
 			tab_id = $body.find('[data-type="tab"].active').data('id'), // Used in template_name
 			tab_name = $body.find('[data-type="tab"].active').html().trim().toLowerCase(), // Used in template_name
-			document_name = `${job.job_number}_${tab_id}-${tab_name}`;
+			document_name = `${job.job_number}_${tab_id}-${tab_name}.pdf`;
 		
 		// HTML
 		document_html = `

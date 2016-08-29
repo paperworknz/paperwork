@@ -77,7 +77,7 @@ Core.addModule('email', function(context){
 			$body.find('[data-type="attachments"]').append(`
 				<part class="attachment wrap" data-type="attachment" data-name="${i}">
 					<part>
-						${i}.pdf
+						${i}
 					</part>
 					<part class="attachment-remove remove-btn"></part>
 				</part>

@@ -14,7 +14,7 @@
 		"clients": "clients.js?1KDWan",
 		"flash": "flash.js?2PcK1G",
 		"inventory": "inventory.js?EVS9cq",
-		"job": "job.js?8oNNLq",
+		"job": "job.js?eajn7e",
 		"jobs": "jobs.js?9ujEnX",
 		"notification": "notification.js?hChk2H",
 		"settings": "settings.js?JUuz1a",
@@ -25,7 +25,7 @@
 		"document-copy": "document-copy.js?KbBFsB",
 		"document-margin": "document-margin.js?jRTCWC",
 		"document-email": "document-email.js?uzN46L",
-		"email": "email.js?ix2Wg0"
+		"email": "email.js?uraMbn"
 	},
 	"behaviors": {
 		"tab": "tab.js?bgKtly",
