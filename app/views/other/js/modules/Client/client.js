@@ -94,7 +94,7 @@ Core.addModule('client', function(context){
 		
 		$body.on('click', '[data-type="email-button"]', function(){
 			
-			var email = $body.find('[client-email]').val();
+			var email = $body.find('[data-type="email"]').val();
 			
 			context.load('email', {
 				address: email,
