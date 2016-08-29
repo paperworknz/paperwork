@@ -86,7 +86,7 @@ Core.addModule('job', function(context){
 		// Load client module
 		$body.on('click', '[data-type="client"]', function(){
 			
-			context.load('client', job.client_id);
+			context.load('client', job.client_number);
 		});
 		
 		// Load email module
@@ -261,10 +261,10 @@ Core.addModule('job', function(context){
 	
 	function getPDFHTML(){
 		
-		var document_html = $body.find('.tabopen [data-type="document"]').html(),
-			template_name = $body.find('.tabopen [data-type="document"] [data-template]').data('template'),
+		var document_html = $body.find('.tabopen [data-type="document"]').html().trim(),
+			template_name = $body.find('.tabopen [data-type="document"] [data-template]').data('template').trim(),
 			tab_id = $body.find('[data-type="tab"].active').data('id'), // Used in template_name
-			tab_name = $body.find('[data-type="tab"].active').html().toLowerCase(), // Used in template_name
+			tab_name = $body.find('[data-type="tab"].active').html().trim().toLowerCase(), // Used in template_name
 			document_name = `${job.job_number}_${tab_id}-${tab_name}`;
 		
 		// HTML
