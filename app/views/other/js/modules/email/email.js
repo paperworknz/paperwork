@@ -24,10 +24,20 @@ Core.addModule('email', function(context){
 		
 		// Remove attachment
 		$body.on('click', '.attachment-remove', function(){
-			var attachment_name = $(this).closest('[data-type="attachment"]').data('name');
+			var attachment_name = $(this).closest('[data-type="attachment"]').data('name'),
+				$this = $(this);
 			
-			delete context.data.attachments[attachment_name];
-			$(this).closest('[data-type="attachment"]').hide();
+			swal({
+				title: 'Are you sure you want to remove this attachment?',
+				text: `This email will be sent without ${attachment_name}`,
+				showCancelButton: true,
+				closeOnConfirm: true,
+			}, function(response){
+				if(!response) return;
+				
+				delete context.data.attachments[attachment_name];
+				$this.closest('[data-type="attachment"]').hide();
+			});
 		});
 		
 		// Send button
