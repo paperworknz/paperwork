@@ -86,7 +86,7 @@ Core.addModule('job', function(context){
 		// Load client module
 		$body.on('click', '[data-type="client"]', function(){
 			
-			context.load('client', job.client_id);
+			context.load('client', job.client_number);
 		});
 		
 		// Load email module
