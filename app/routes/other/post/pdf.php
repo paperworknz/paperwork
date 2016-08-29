@@ -19,7 +19,7 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	// If development, hardcode document.css and logan.css into the document_html
 	if($_ENV['MODE'] == 'dev'){
 		
-		$test = 1;
+		$test = 0;
 		
 		if(!file_exists('../public/css/library/Document.css')){
 			die($app->build->error('../public/css/library/Document.css does not exist'));
@@ -103,15 +103,15 @@ $app->post('/post/pdf', 'uac', function() use ($app){
 	
 	// Directory to save PDF in
 	$id = $app->user['id'];
-	$name = $properties['document_name'];
+	$name = $properties['document_name']; // .pdf extension appended here
 	$dir = $_ENV['STORAGE']."/{$id}/pdf/{$directory}";
 	file_exists($dir) ?: mkdir($dir, 0777);
 	
-	$f = fopen("{$dir}/{$name}.pdf", 'w');
+	$f = fopen("{$dir}/{$name}", 'w');
 	fwrite($f, $body);
 	fclose($f);
 	
 	echo $app->build->success([
-		'location' => "{$app->root}/get/pdf/{$directory}/{$name}.pdf",
+		'location' => "{$app->root}/get/pdf/{$directory}/{$name}",
 	]);
 });
