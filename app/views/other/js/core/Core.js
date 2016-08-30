@@ -41,7 +41,7 @@ var Core = (function($, undefined){
 			depend,
 			map = {};
 		
-		var request = data ? `${environment.root}/get/module/${name}/${data}` : `${environment.root}/get/module/${name}`
+		var request = data ? `${environment.root}/get/module/${name}/${data}` : `${environment.root}/get/module/${name}`;
 		
 		$.get(request)
 		.done(function(response){
