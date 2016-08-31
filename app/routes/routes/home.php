@@ -5,7 +5,7 @@ $app->get('/', 'app', function() use($app){
 	
 	/* Construction */
 	$now = new DateTime();
-	$future = new DateTime('2016-09-03 00:00:00');
+	$future = new DateTime('2016-09-10 00:00:00');
 	
 	$remaining = $future->getTimestamp() - $now->getTimestamp();
 	
