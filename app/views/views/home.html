@@ -10,52 +10,54 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 		{% include path.html.pixel %}
 	</head>
 	<body>
-		<header itemscope itemtype="http://schema.org/Product">
-			<div class="wrap width">
-				<div class="nav wrap">
-					<div class="major_title logo">
-						<a href="{{environment.root}}" title="Paperwork" itemprop="name">Paperwork</a>
-					</div>
-					<ul class="nav_list wrap">
-						<li class="negligible">
-							<span data-type="features" class="color_hint">Features</span>
-						</li>
-						<li class="negligible">
-							<span data-type="pricing" class="color_hint">Pricing</span>
-						</li>
-						<li>
-							<a href="{{environment.root}}/login" title="Log In">Log In</a>
-						</li>
-						<li class="special">
-							<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</header>
-		<section>
-			<div class="width">
-				{% include path.html.flash %}
-				<div class="centered main atf" style="padding-bottom: 0;">
-					<section>
-						<span class="minor_title" style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;" itemprop="description">
-							Paperwork is a web app to help you order, simplify and minimise your Quote and Invoicing.<br>
-							Our mission is to make your day-to-day paperwork as <span style="font-weight: 400">painless</span> as possible.
-						</span>
-					</section>
-					<div class="main">
-						<form accept-charset="UTF-8" action="{{environment.root}}/post/temporary-user" method="post">
-							<button data-type="try-now-button" class="facade button large central">TRY NOW</button>
-						</form>
+		<part itemscope itemtype="http://schema.org/Product">
+			<header>
+				<div class="wrap width">
+					<div class="nav wrap">
+						<div class="major_title logo">
+							<a href="{{environment.root}}" title="Paperwork" itemprop="name">Paperwork</a>
+						</div>
+						<ul class="nav_list wrap">
+							<li class="negligible">
+								<span data-type="features" class="color_hint">Features</span>
+							</li>
+							<li class="negligible">
+								<span data-type="pricing" class="color_hint">Pricing</span>
+							</li>
+							<li>
+								<a href="{{environment.root}}/login" title="Log In">Log In</a>
+							</li>
+							<li class="special">
+								<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
+							</li>
+						</ul>
 					</div>
 				</div>
-				<div class="centered top">
-					<div class="minor_title" style="padding-left: 15px;padding-right: 15px;">
-						We like to learn things hands-on. Try Paperwork right now, for free.
+			</header>
+			<section>
+				<div class="width">
+					{% include path.html.flash %}
+					<div class="centered main atf" style="padding-bottom: 0;">
+						<section>
+							<span class="minor_title" style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;" itemprop="description">
+								Paperwork is a web app to help you order, simplify and minimise your Quote and Invoicing.<br>
+								Our mission is to make your day-to-day paperwork as <span style="font-weight: 400">painless</span> as possible.
+							</span>
+						</section>
+						<div class="main">
+							<form accept-charset="UTF-8" action="{{environment.root}}/post/temporary-user" method="post">
+								<button data-type="try-now-button" class="facade button large central">TRY NOW</button>
+							</form>
+						</div>
+					</div>
+					<div class="centered top">
+						<div class="minor_title" style="padding-left: 15px;padding-right: 15px;">
+							We like to learn things hands-on. Try Paperwork right now, for free.
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		</part>
 		<section 1>
 			<div class="feature main">
 				<div class="width">
