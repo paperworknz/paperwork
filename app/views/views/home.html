@@ -10,11 +10,11 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 		{% include path.html.pixel %}
 	</head>
 	<body>
-		<header>
+		<header itemscope itemtype="http://schema.org/Product">
 			<div class="wrap width">
 				<div class="nav wrap">
 					<div class="major_title logo">
-						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
+						<a href="{{environment.root}}" title="Paperwork" itemprop="name">Paperwork</a>
 					</div>
 					<ul class="nav_list wrap">
 						<li class="negligible">
@@ -33,12 +33,12 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 				</div>
 			</div>
 		</header>
-		<section>
+		<section itemscope itemtype="http://schema.org/Product">
 			<div class="width">
 				{% include path.html.flash %}
 				<div class="centered main atf" style="padding-bottom: 0;">
 					<section>
-						<span class="minor_title" style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;">
+						<span class="minor_title" style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;" itemprop="description">
 							Paperwork is a web app to help you order, simplify and minimise your Quote and Invoicing.<br>
 							Our mission is to make your day-to-day paperwork as <span style="font-weight: 400">painless</span> as possible.
 						</span>
@@ -144,14 +144,14 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 				</div>
 			</div>
 		</section>
-		<section 2>
+		<section 2 itemscope itemtype="http://schema.org/Offer">
 			<div class="width">
 				<div class="main">
 					<div class="centered">
 						<div class="wrap" style="display: inline-block;">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
-								<div class="major_title" style="padding: 10px 0px 15px;">
+								<div class="major_title" style="padding: 10px 0px 15px;" itemprop="price">
 									$49<span style="font-size: 14px;">/MO</span>
 								</div>
 							</price>
@@ -172,6 +172,9 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 				</div>
 			</div>
 		</section>
+		<meta itemprop="url" content="https://paperwork.nz/">
+		<span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+		<meta itemprop="name" content="Paperwork"></span></span>
 		<footer>
 			<div class="centered">
 				<div>
