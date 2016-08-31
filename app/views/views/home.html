@@ -34,13 +34,6 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 					{% include path.html.flash %}
 					<div class="centered main atf" style="padding-bottom: 0;">
 						<section style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;">
-							{% if remaining > 0 %}
-							<div class="alert alert-success central" style="max-width: 500px;cursor: default;">
-								We've <b>slashed</b> our price by nearly <b>50%</b> for early birds. 
-								There's only <span style="font-weight: 600;white-space: nowrap;" data-type="remaining"></span> remaining until this deal is gone forever!<br>
-								<a href="{{environment.root}}/register">Sign Up</a>
-							</div>
-							{% endif %}
 							<span class="minor_title" itemprop="description">
 								Paperwork is a web app to help you order, simplify and minimise your Quote and Invoicing.<br>
 								Our mission is to make your day-to-day paperwork as <span style="font-weight: 400">painless</span> as possible.
@@ -152,6 +145,13 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 			<div class="width">
 				<div class="main">
 					<div class="centered">
+						{% if remaining > 0 %}
+						<div class="alert alert-success central" style="max-width: 500px;cursor: default;">
+							We've <b>slashed</b> our price by nearly <b>50%</b> for early birds. 
+							There's only <span style="font-weight: 600;white-space: nowrap;" data-type="remaining"></span> remaining until this deal is gone forever!<br>
+							<a href="{{environment.root}}/register">Sign Up</a>
+						</div>
+						{% endif %}
 						<div class="wrap" style="display: inline-block;">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
