@@ -18,7 +18,7 @@
 				<part class="container">
 					<part class="header">
 						<part class="name-block">
-							<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name">
+							<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name" autocomplete="off">
 						</part>
 						<part class="status-block">
 							<select class="status right" data-type="status" title="Status">
@@ -136,6 +136,7 @@
 </section>
 <script>
 var job = {
+	tax: {{user.tax}},
 	job_id: {{modules.job.data.job.id}},
 	job_number: {{modules.job.data.job.job_number}},
 	client_id: {{modules.job.data.client.id}},

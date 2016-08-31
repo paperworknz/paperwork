@@ -216,6 +216,8 @@ class Authentication {
 			'email'		=> $user['email'],
 			'privilege'	=> $user['privilege'],
 			'disabled'	=> 0,
+			'timezone'	=> 'Pacific/Auckland',
+			'tax'		=> 15,
 			'active'	=> 1,
 			'password'	=> $user['password'] ?: '',
 			'cookie'	=> $cookie,
@@ -268,20 +270,20 @@ class Authentication {
 		$app->sql->post('user_template')->with([
 			'user_id' => $user['id'],
 			'name' => 'QUOTE',
-			'template_id' => 3,
+			'template_id' => 5,
 		])->root()->run();
 		
 		$app->sql->post('user_template')->with([
 			'user_id' => $user['id'],
 			'name' => 'INVOICE',
-			'template_id' => 3,
+			'template_id' => 5,
 		])->root()->run();
 		
 		// template_properties
 		$app->sql->post('user_template_properties')->with([
 			'user_id' => $user['id'],
 			'text_colour' => 'black',
-			'background_colour' => '#D6EDFF',
+			'background_colour' => '#3498db',
 		])->root()->run();
 		
 		if($user['privilege'] != 'guest') $app->event->log('registered with username: '.$user['username']);

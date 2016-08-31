@@ -3,6 +3,9 @@
 // Cookie validation before every route
 $app->hook('slim.before.dispatch', function() use ($app){
 	$app->auth->validate();
+	
+	// Timezone
+	date_default_timezone_set($app->user['timezone'] ?: 'Pacific/Auckland');
 });
 
 // Middleware

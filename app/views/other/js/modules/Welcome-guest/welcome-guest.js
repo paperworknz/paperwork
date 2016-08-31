@@ -8,42 +8,44 @@ Core.addModule('welcome-guest', function(context){
 	var messages = {
 		0: {
 			title: 'Welcome to Paperwork',
-			body: `<p>We're going to run you through a quick introduction.</p>`,
+			body: `<p>You're logged in as a guest and your data is temporary. This is a care-free way of taking Paperwork for
+			a test drive. You can set up your settings if you want to, but we recommend you start by going to <b>Jobs</b> and 
+			opening up the default Job we've made for you.</p>`,
 		},
-		1: {
-			title: 'Guest Session',
-			body: `<p>You are logged in as a <b>guest</b>.</p>
-				<p>Everything you make in Paperwork will be deleted after 24 hours. This is a care-free chance to take Paperwork for 
-				a test drive in the quickest manner possible. No sign ups - no credit cards!</p>`,
-		},
-		2: {
-			title: 'Clients',
-			body: `<p>It all starts with <b>Clients</b>.</p>
-				<p>Clients are your customers, and each client has their own page in Paperwork. To make a client, you only need their full name - 
-				but it helps to fill in other details about them as that data can be loaded into quotes automatically.</p>
-				<p>Go to the <b>Clients</b> page and click <b>New Client</b> to start.</p>`,
-		},
-		3: {
-			title: 'Jobs',
-			body: `<p>One client can have many <b>Jobs</b>.</p>
-				<p>Jobs are where you make quotes and invoices. To make a job, you need a client name and a job name.</p>
-				<p>Go to the <b>Jobs</b> page and click <b>New Job</b> to start, or, go to a client and click <b>New Job</b>.</p>`,
-		},
-		4: {
-			title: 'Clients and Jobs',
-			body: `<p>Clients and Jobs are the only two pages you'll be making - it's that simple! You build up a client list, and make jobs under each client.</p>`,
-		},
-		5: {
-			title: 'Inventory',
-			body: `<p>When you enter a material into a Quote, you will be prompted to save the material to your inventory so you can re-use it.</p>
-				<p>Go to the <b>Inventory</b> page to get started.</p>`,
-		},
-		6: {
-			title: `Let's get into it`,
-			body: `<p>We recommend you start by going to your <b>Settings</b> and update your details. Then go and set up your <b>Templates</b>, 
-				then create a new <b>Client</b> and <b>Job</b>.</p>
-				<p class="negligible">By the way, Paperwork is best used on a larger screen with a keyboard.</p>`,
-		},
+		// 1: {
+		// 	title: 'Guest Session',
+		// 	body: `<p>You are logged in as a <b>guest</b>.</p>
+		// 		<p>Everything you make in Paperwork will be deleted after 24 hours. This is a care-free chance to take Paperwork for 
+		// 		a test drive in the quickest manner possible. No sign ups - no credit cards!</p>`,
+		// },
+		// 2: {
+		// 	title: 'Clients',
+		// 	body: `<p>It all starts with <b>Clients</b>.</p>
+		// 		<p>Clients are your customers, and each client has their own page in Paperwork. To make a client, you only need their full name - 
+		// 		but it helps to fill in other details about them as that data can be loaded into quotes automatically.</p>
+		// 		<p>Go to the <b>Clients</b> page and click <b>New Client</b> to start.</p>`,
+		// },
+		// 3: {
+		// 	title: 'Jobs',
+		// 	body: `<p>One client can have many <b>Jobs</b>.</p>
+		// 		<p>Jobs are where you make quotes and invoices. To make a job, you need a client name and a job name.</p>
+		// 		<p>Go to the <b>Jobs</b> page and click <b>New Job</b> to start, or, go to a client and click <b>New Job</b>.</p>`,
+		// },
+		// 4: {
+		// 	title: 'Clients and Jobs',
+		// 	body: `<p>Clients and Jobs are the only two pages you'll be making - it's that simple! You build up a client list, and make jobs under each client.</p>`,
+		// },
+		// 5: {
+		// 	title: 'Inventory',
+		// 	body: `<p>When you enter a material into a Quote, you will be prompted to save the material to your inventory so you can re-use it.</p>
+		// 		<p>Go to the <b>Inventory</b> page to get started.</p>`,
+		// },
+		// 6: {
+		// 	title: `Let's get into it`,
+		// 	body: `<p>We recommend you start by going to your <b>Settings</b> and update your details. Then go and set up your <b>Templates</b>, 
+		// 		then create a new <b>Client</b> and <b>Job</b>.</p>
+		// 		<p class="negligible">By the way, Paperwork is best used on a larger screen with a keyboard.</p>`,
+		// },
 	};
 	
 	render();
@@ -74,9 +76,8 @@ Core.addModule('welcome-guest', function(context){
 	
 	function render(){
 		if(!messages[i]){
-			$body.remove();
 			if(sessionStorage) sessionStorage.introduction = 'true';
-			return Paperwork.goto(`${environment.root}/settings`);
+			return context.stop();
 		}
 		
 		$body.css('height', '');
