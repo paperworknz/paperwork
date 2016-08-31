@@ -33,8 +33,16 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 				<div class="width">
 					{% include path.html.flash %}
 					<div class="centered main atf" style="padding-bottom: 0;">
-						<section>
-							<span class="minor_title" style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;" itemprop="description">
+						<section style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;">
+							{% if remaining > 0 %}
+							<div class="alert alert-success central" style="max-width: 500px;cursor: default;">
+								Lucky you! 
+								We've <b>slashed</b> our price by nearly <b>50%</b> for you early birds. 
+								There's only <span style="font-weight: 600" data-type="remaining"></span> remaining until we remove this opportunity forever!<br>
+								<a href="{{environment.root}}/register">Sign Up</a>
+							</div>
+							{% endif %}
+							<span class="minor_title" itemprop="description">
 								Paperwork is a web app to help you order, simplify and minimise your Quote and Invoicing.<br>
 								Our mission is to make your day-to-day paperwork as <span style="font-weight: 400">painless</span> as possible.
 							</span>
@@ -199,6 +207,30 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 				$('body').on('click', '[data-type="sign-up-button"]', function(){
 					window.location = '{{environment.root}}/register';
 				});
+				
+				{% if remaining > 0 %}
+				var seconds = {{remaining}};
+				var countdownTimer = setInterval(timer, 1000);
+				
+				function timer() {
+					var days        = Math.floor(seconds/24/60/60);
+					var hoursLeft   = Math.floor((seconds) - (days*86400));
+					var hours       = Math.floor(hoursLeft/3600);
+					var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
+					var minutes     = Math.floor(minutesLeft/60);
+					var remainingSeconds = seconds % 60;
+					if (remainingSeconds < 10) {
+						remainingSeconds = "0" + remainingSeconds; 
+					}
+					$('[data-type="remaining"]').html(days + " days " + hours + ":" + minutes + ":" + remainingSeconds);
+					if (seconds == 0) {
+						clearInterval(countdownTimer);
+						$('[data-type="remaining"]').html("Completed");
+					} else {
+						seconds--;
+					}
+				}
+				{% endif %}
 				
 				// Play/pause videos
 				$('body').on('click', '.video_overlay', function(){
