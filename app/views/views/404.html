@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Page Not Found - Paperwork</title>
+		{% include path.html.head_public %}
+		{% include path.html.pixel %}
+	</head>
+	<body>
+		<header>
+			<div class="wrap width">
+				<div class="nav wrap">
+					<div class="major_title logo">
+						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
+					</div>
+					<ul class="nav_list wrap">
+						<li>
+							<a href="{{environment.root}}" home>Home</a>
+						</li>
+						<li>
+							<a href="{{environment.root}}/login" title="Log In">Log In</a>
+						</li>
+						<li class="special">
+							<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<section>
+			<div class="width">
+				<div class="main top centered">
+					<div class="h1">
+						Sorry, this page isn't available
+					</div>
+					<div class="h4">
+						The link you followed may be broken, or the page may have been removed.
+					</div>
+					<div style="padding-top: 60px;">
+						<a href="#" onclick="history.back();">Go back to the previous page</a>
+						<span> · </span>
+						<a href="{{environment.root}}">Go to our home page</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div class="centered">
+				<div>
+					<a href="https://www.facebook.com/paperworkapp" target="_blank" title="Our Facebook Page">
+						<img class="fb" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png">
+					</a>
+				</div>
+				<div style="padding: 15px 0px;">
+					<a href="{{environment.root}}/privacy-policy">Privacy Policy</a>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
