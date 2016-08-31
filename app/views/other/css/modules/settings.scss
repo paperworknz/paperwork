@@ -1,20 +1,24 @@
 [data-module="settings"] {
-	td input, .input {
+	td input, .input, select {
 		margin: 2px 0px;
 		width: 100%;
 		max-width: 225px;
 		border: 1px solid #ccc;
 		padding: 4px;
 	}
+	
+	select {
+		height: 30px;
+	}
 
 	.email-settings {
-		width:100%;
+		width: 100%;
 	}
 	
 	table {
 		width: 100%;
 	}
-
+	
 	tr {
 		margin-bottom:5px;
 	}
@@ -99,7 +103,7 @@
 			padding-right: 14px;
 		}
 	}
-
+	
 	#job-status li:last-child {
 		border-bottom: 1px solid #ccc;
 	}
@@ -107,5 +111,13 @@
 	.container, .container-top, .container-mid, .container-bottom {
 		padding-left: 30px;
 		padding-right: 30px;
+	}
+	
+	.tax_number {
+		max-width: 200px;
+		
+		input {
+			max-width: 82px;
+		}
 	}
 }

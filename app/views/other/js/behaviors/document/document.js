@@ -382,7 +382,7 @@ Core.addBehavior('document', function(context, opt){
 			decimal: 2,
 		});
 		
-		documents[document_id].tax = parse.toNumber(((documents[document_id].subtotal / 100) * 15), {
+		documents[document_id].tax = parse.toNumber(((documents[document_id].subtotal / 100) * job.tax), {
 			decimal: 2,
 		});
 		

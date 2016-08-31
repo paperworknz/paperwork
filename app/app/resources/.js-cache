@@ -21,7 +21,7 @@
 		"tab": "tab.js?LVBgld",
 		"template": "template.js?VaQgtx",
 		"user": "user.js?Xsu4GW",
-		"welcome-guest": "welcome-guest.js?xbJYR2",
+		"welcome-guest": "welcome-guest.js?5AIXkX",
 		"document-copy": "document-copy.js?KbBFsB",
 		"document-margin": "document-margin.js?jRTCWC",
 		"document-email": "document-email.js?uzN46L",
@@ -30,7 +30,7 @@
 	"behaviors": {
 		"tab": "tab.js?bgKtly",
 		"table": "table.js?D9Co6H",
-		"document": "document.js?VY4gu2"
+		"document": "document.js?BUdC2Z"
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",

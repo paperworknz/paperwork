@@ -21,11 +21,11 @@
 						<tbody>
 							<tr>
 								<td>First name</td>
-								<td><input type="text" name="first" value="{{user.first}}" required></td>
+								<td><input type="text" name="first" value="{{user.first}}" autocomplete="off" required></td>
 							</tr>
 							<tr>
 								<td>Last name</td>
-								<td><input type="text" name="last" value="{{user.last}}"></td>
+								<td><input type="text" name="last" value="{{user.last}}" autocomplete="off"></td>
 							</tr>
 							<tr>
 								<td>Email</td>
@@ -33,11 +33,11 @@
 							</tr>
 							<tr>
 								<td>Company</td>
-								<td><input type="text" name="company" value="{{user.company}}" required></td>
+								<td><input type="text" name="company" value="{{user.company}}" autocomplete="off" required></td>
 							</tr>
 							<tr>
 								<td>Phone</td>
-								<td><input type="text" name="phone" value="{{user.phone}}"></td>
+								<td><input type="text" name="phone" value="{{user.phone}}" autocomplete="off"></td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;padding-top: 9px;">Address</td>
@@ -46,6 +46,20 @@
 										{{user.address | raw}}
 									</div>
 									<input type="hidden" name="address" value="{{user.address | raw}}">
+								</td>
+							</tr>
+							<tr>
+								<td>Timezone</td>
+								<td>
+									<select name="timezone">
+										{% for key, value in modules.settings.data.timezone %}
+										{% if value == user.timezone %}
+										<option value="{{value}}" selected="selected">{{key | raw}}</option>
+										{% else %}
+										<option value="{{value}}">{{key | raw}}</option>
+										{% endif %}
+										{% endfor %}
+									</select>
 								</td>
 							</tr>
 							<tr>
@@ -138,6 +152,23 @@
 			<hr>
 			<part class="container-top">
 				<div class="h4 title">
+					Tax percentage
+				</div>
+				<p>This percentage is applied to the sub-total of a document to reach the total.</p>
+			</part>
+			<part class="container-bottom">
+				<div class="tax_number">
+					<form accept-charset="UTF-8" method="post" action="{{environment.root}}/put/settings">
+						<part style="padding: 5px 0px;">
+							<input type="text" name="tax" value="{{user.tax}}" autocomplete="off" required> %
+						</part>
+						<button class="button">UPDATE</button>
+					</form>
+				</div>
+			</part>
+			<hr>
+			<part class="container-top">
+				<div class="h4 title">
 					Change the next Job number
 				</div>
 			</part>
@@ -145,7 +176,7 @@
 				<div class="job_number">
 					<form method="post" action="{{environment.root}}/post/job-number">
 						<part style="padding: 5px 0px;">
-							Next Job Number <input type="text" name="job_number" value="{{modules.settings.data.job_number}}" required>
+							Next Job Number <input type="text" name="job_number" value="{{modules.settings.data.job_number}}" autocomplete="off" required>
 						</part>
 						<button class="button">UPDATE</button>
 					</form>
@@ -180,7 +211,7 @@
 							</tr>
 							<tr>
 								<td>Password</td>
-								<td><input type="password" name="password" placeholder="Email Password" value="" required></td>
+								<td><input type="password" name="password" placeholder="Email Password" value="" autocomplete="off" required></td>
 							</tr>
 							<tr>
 								<td></td>
@@ -188,15 +219,15 @@
 							</tr>
 							<tr>
 								<td>SMTP</td>
-								<td><input type="text" name="smtp" value="{{modules.settings.data.email.smtp}}" placeholder="smtp.domain.com" required></td>
+								<td><input type="text" name="smtp" value="{{modules.settings.data.email.smtp}}" placeholder="smtp.domain.com" autocomplete="off" required></td>
 							</tr>
 							<tr>
 								<td>Protocol</td>
-								<td><input type="text" name="protocol" value="{{modules.settings.data.email.protocol}}" placeholder="Protocol"></td>
+								<td><input type="text" name="protocol" value="{{modules.settings.data.email.protocol}}" placeholder="Protocol" autocomplete="off"></td>
 							</tr>
 							<tr>
 								<td>Port</td>
-								<td><input type="text" name="port" value="{{modules.settings.data.email.port}}" placeholder="000" required></td>
+								<td><input type="text" name="port" value="{{modules.settings.data.email.port}}" placeholder="000" autocomplete="off" required></td>
 							</tr>
 							<tr>
 								<td></td>

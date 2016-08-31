@@ -4,12 +4,14 @@ $app->post('/put/settings', 'uac', function() use ($app){
 	/* Methods */
 	
 	/* Construction */
-	$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-	$first = filter_var($_POST['first'], FILTER_SANITIZE_STRING);
-	$last = filter_var($_POST['last'], FILTER_SANITIZE_STRING);
-	$company = filter_var($_POST['company'], FILTER_SANITIZE_STRING);
-	$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
+	$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) : $app->user['email'];
+	$first = isset($_POST['first']) ? filter_var($_POST['first'], FILTER_SANITIZE_STRING) : $app->user['first'];
+	$last = isset($_POST['last']) ? filter_var($_POST['last'], FILTER_SANITIZE_STRING) : $app->user['last'];
+	$company = isset($_POST['company']) ? filter_var($_POST['company'], FILTER_SANITIZE_STRING) : $app->user['company'];
+	$phone = isset($_POST['phone']) ? filter_var($_POST['phone'], FILTER_SANITIZE_STRING) : $app->user['phone'];
 	$address = isset($_POST['address']) ? $_POST['address'] : $app->user['address'];
+	$timezone = isset($_POST['timezone']) ? $_POST['timezone'] : $app->user['timezone'];
+	$tax = isset($_POST['tax']) ? $_POST['tax'] : $app->user['tax'];
 	
 	$user = $app->sql->get('user')->where('email', '=', $email)->and('id', '<>', $app->user['id'])->root()->one();
 	
@@ -27,6 +29,8 @@ $app->post('/put/settings', 'uac', function() use ($app){
 		'company'	=> $company,
 		'phone'		=> $phone,
 		'address'	=> $address,
+		'timezone'	=> $timezone,
+		'tax'		=> $tax,
 	])->where('id', '=', $app->user['id'])->root()->run();
 	
 	$app->event->log('updated their details');
