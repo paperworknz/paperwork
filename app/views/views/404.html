@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Account Recovery - Paperwork</title>
-		<link rel="canonical" href="{{environment.root}}/{{environment.page}}">
+		<title>Page Not Found - Paperwork</title>
 		{% include path.html.head_public %}
 		{% include path.html.pixel %}
 	</head>
@@ -30,18 +29,16 @@
 		<section>
 			<div class="width">
 				<div class="main top centered">
-					<div style="display:inline-block;width:30%;min-width:280px">
-						<form accept-charset="UTF-8" method="post" action="{{environment.root}}/post/recover-request">
-							<div class="login user-information">
-								<div class="container">
-									<input type="text" name="email" placeholder="Email">
-								</div>
-								<div class="container">
-									<button class="button next-step">RECOVER</button>
-								</div>
-							</div>
-							{% include path.html.flash %}
-						</form>
+					<div class="h1">
+						Sorry, this page isn't available
+					</div>
+					<div class="h4">
+						The link you followed may be broken, or the page may have been removed.
+					</div>
+					<div style="padding-top: 60px;">
+						<a href="#" onclick="history.back();">Go back to the previous page</a>
+						<span> · </span>
+						<a href="{{environment.root}}">Go to our home page</a>
 					</div>
 				</div>
 			</div>
@@ -58,7 +55,5 @@
 				</div>
 			</div>
 		</footer>
-		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
-		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 	</body>
 </html>

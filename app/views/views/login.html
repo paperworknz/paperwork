@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<title>Login - Paperwork</title>
+		<link rel="canonical" href="{{environment.root}}/login">
 		{% include path.html.head_public %}
 		{% include path.html.pixel %}
 	</head>
@@ -31,12 +32,18 @@
 				<div class="main top centered">
 					<div style="display: inline-block;width: 30%;min-width: 280px;">
 						<div class="login user-information">
+							{% include path.html.flash %}
 							<div class="container">
 								<input type="text" name="username" placeholder="Email / Username">
 							</div>
 							<div class="container">
 								<input type="password" name="password" placeholder="Password">
 							</div>
+							{% if privilege %}
+							<div class="alert alert-info" style="margin-bottom:10px;">
+								You must be logged in to view this page.
+							</div>
+							{% endif %}
 							{% if environment.maintenance %}
 							<div class="alert alert-info" style="margin-bottom:10px;">
 								We're currently offline for maintenance and will be back up as soon as we can. Sorry about this!

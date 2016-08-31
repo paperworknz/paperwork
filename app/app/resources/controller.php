@@ -24,7 +24,10 @@ function uac(){ // User controlled pages (in the app)
 	
 	// If the user does NOT have a valid session, redirect to home
 	if(!isset($_SESSION['user'])){
-		$app->redirect($app->root);
+		$app->build->page('views/login.html', [
+			'privilege' => true,
+		]);
+		die();
 	}
 	
 	$_SESSION['trial_expired'] = false;

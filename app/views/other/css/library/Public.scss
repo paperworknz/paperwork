@@ -149,10 +149,10 @@ video, feature img, .video_tint {
 
 .nav_list {
 	@include size(700px) {
-		width: 320px;
+		width: 150px;
 	}
 	
-	@include size(500px){
+	@include size(500px) {
 		width: 150px;
 	}
 }
