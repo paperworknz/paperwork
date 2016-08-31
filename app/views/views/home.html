@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Paperwork: Quote, Invoice & Job Management</title>
+		<meta name="description" 
+		content="Paperwork is an online Quote and Invoice builder for small businesses. 
+Paperwork is designed to stop you bleeding time and money, we do that by designing the most elegant tools available anywhere. 
+We think great tools are beautiful tools. Try it right now without signing up!">
 		{% include path.html.head_public %}
 		{% include path.html.pixel %}
-		<meta name="google-site-verification" content="pzOTmW_wqWmMT4N1WQLvUhUe1fZKLIC940KsIKHX9TY" />
 	</head>
 	<body>
 		<header>
 			<div class="wrap width">
 				<div class="nav wrap">
-					<div class="major_title logo" style="cursor:pointer" onclick="window.location='{{environment.root}}'">Paperwork</div>
+					<div class="major_title logo">
+						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
+					</div>
 					<ul class="nav_list wrap">
 						<li class="negligible">
-							<span class="color_hint" features>Features</span>
+							<span data-type="features" class="color_hint">Features</span>
 						</li>
 						<li class="negligible">
-							<span class="color_hint" pricing>Pricing</span>
+							<span data-type="pricing" class="color_hint">Pricing</span>
 						</li>
 						<li>
-							<span onclick="window.location='{{environment.root}}/login'">Log In</span>
+							<a href="{{environment.root}}/login" title="Log In">Log In</a>
 						</li>
-						<li>
-							<span class="special" onclick="window.location='{{environment.root}}/register'">Sign Up</span>
+						<li class="special">
+							<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
 						</li>
 					</ul>
 				</div>
@@ -38,7 +44,9 @@
 						</span>
 					</section>
 					<div class="main">
-						<button guest-login class="facade button large central">TRY NOW</button>
+						<form accept-charset="UTF-8" action="{{environment.root}}/post/temporary-user" method="post">
+							<button data-type="try-now-button" class="facade button large central">TRY NOW</button>
+						</form>
 					</div>
 				</div>
 				<div class="centered top">
@@ -62,7 +70,7 @@
 									</span>
 								</feature>
 								<feature>
-									<img src="{{environment.root}}/css/media/new-invoice.png" width="100%" />
+									<img src="{{environment.root}}/css/media/new-invoice.png" width="100%">
 								</feature>
 							</div>
 						</section>
@@ -72,12 +80,11 @@
 									<span class="minor_title">Inventory</span>
 									<span>
 										Quotes and Invoices are powered by <b>Inventory</b>.<br>
-										Your inventory is a simple list of names and prices. Inventory is used to add items to a Quote. <!--There are many ways you can add to this list, 
-										including <b>bulk upload</b> from supported suppliers.-->
+										Your inventory is a simple list of names and prices. Inventory is used to add items to a Quote.
 									</span>
 								</feature>
 								<feature>
-									<img src="css/media/inventory.png" width="100%" />
+									<img src="css/media/inventory.png" width="100%">
 								</feature>
 							</div>
 						</section>
@@ -101,7 +108,7 @@
 										<video name="inventory" width="100%" loop>
 											<source src="css/media/inventory.webm" type="video/webm">
 											<source src="css/media/inventory.mp4" type="video/mp4">
-											<img src="{{environment.root}}/css/media/inventory.png" />
+											<img src="{{environment.root}}/css/media/inventory.png">
 										</video>
 									</div>
 								</feature>
@@ -127,7 +134,7 @@
 										<video name="margin" width="100%" loop>
 											<source src="css/media/margin.webm" type="video/webm">
 											<source src="css/media/margin.mp4" type="video/mp4">
-											<img src="{{environment.root}}/css/media/margin.png" />
+											<img src="{{environment.root}}/css/media/margin.png">
 										</video>
 									</div>
 								</feature>
@@ -141,7 +148,6 @@
 			<div class="width">
 				<div class="main">
 					<div class="centered">
-						{% if environment.user_registration %}
 						<div class="wrap" style="display: inline-block;">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
@@ -158,74 +164,44 @@
 							<span style="font-size: 11px;">Note: Prices exclude GST.</span>
 						</div>
 						<div class="main">
-							<button class="facade button large central" onclick="window.location='{{environment.root}}/register'">SIGN UP</button>
+							<button data-type="sign-up-button" class="facade button large central">
+								SIGN UP
+							</button>
 						</div>
-						{% else %}
-						<span class="main_title">We're Not Public Yet</span>
-						<div>Pop your email in below and we'll let you know when Paperwork is available.</div>
-						<form method="post" action="{{environment.root}}/post/email-register">
-						<div class="wrap form">
-							<input type="email" name="email" class="form_input facade large pull-left" placeholder="hello@domain.com" required>
-							<div class="form_button wrap pull-left">
-								<button class="facade button large" style="width: 100%;">SIGN UP</button>
-							</div>
-						</div>
-						</form>
-						{% endif %}
 					</div>
 				</div>
 			</div>
 		</section>
 		<footer>
 			<div class="centered">
-				<a href="https://www.facebook.com/paperworkapp" target="_blank">
-					<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
-				</a>
-				<div style="padding:15px 0px;">
+				<div>
+					<a href="https://www.facebook.com/paperworkapp" target="_blank" title="Our Facebook Page">
+						<img class="fb" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png">
+					</a>
+				</div>
+				<div style="padding: 15px 0px;">
 					<a href="{{environment.root}}/privacy-policy">Privacy Policy</a>
 				</div>
 			</div>
 		</footer>
-		<script>
-		var environment = {
-			root: '{{environment.root}}',
-			page: '{{path.page}}',
-		};
-		</script>
-		{% include path.html.js %}
+		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
+		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 		<script>
 			$(function(){
-				
-				// Nav
-				$('[features]').on('click', function(){
-					$('html, body').animate({
-						scrollTop: $('[1]').offset().top,
-					}, 'slow');
+				{% if state == 'prod' %}
+				// Facebook Pixel log the try now button
+				$('body').on('click', '[data-type="try-now-button"]', function(){
+					fbq('track', 'Lead');
 				});
-				$('[pricing]').on('click', function(){
-					$('html, body').animate({
-						scrollTop: $('[2]').offset().top,
-					}, 'slow');
-				});
+				{% endif %}
 				
-				$('[guest-login]').on('click', function(){
-					$.post('{{environment.root}}/post/temporary-user')
-					.done(function(data){
-						data = JSON.parse(data);
-						
-						if(data.type == 'error') return Paperwork.goto('reload');
-						
-						{% if state == 'prod' %}fbq('track', 'Lead');{% endif %}
-					
-						Paperwork.goto(data.location);
-					}).fail(function(){
-						
-						Paperwork.goto('reload');
-					});
+				// Sign up button
+				$('body').on('click', '[data-type="sign-up-button"]', function(){
+					window.location = '{{environment.root}}/register';
 				});
 				
-				// Interaction
-				$('.video_overlay').on('click', function(){
+				// Play/pause videos
+				$('body').on('click', '.video_overlay', function(){
 					var video = $(this).find('video'),
 						box = $(this).find('.video_padding'),
 						icon = $(this).find('.video_padding div');

@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Account Recovery - Paperwork</title>
 		{% include path.html.head_public %}
 		{% include path.html.pixel %}
 	</head>
 	<body>
 		<header>
 			<div class="wrap width">
-				<div class="nav">
-					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{environment.root}}'">Paperwork</div>
-					<ul class="nav_list_less wrap">
+				<div class="nav wrap">
+					<div class="major_title logo">
+						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
+					</div>
+					<ul class="nav_list wrap">
 						<li>
-							<span class="color_hint" home>Home</span>
+							<a href="{{environment.root}}" home>Home</a>
 						</li>
 						<li>
-							<span login>Log In</span>
+							<a href="{{environment.root}}/login" title="Log In">Log In</a>
 						</li>
-						<li>
-							<span class="special" register>Sign Up</span>
+						<li class="special">
+							<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
 						</li>
 					</ul>
 				</div>
@@ -27,7 +30,7 @@
 			<div class="width">
 				<div class="main top centered">
 					<div style="display:inline-block;width:30%;min-width:280px">
-						<form method="post" action="{{environment.root}}/post/recover-request">
+						<form accept-charset="UTF-8" method="post" action="{{environment.root}}/post/recover-request">
 							<div class="login user-information">
 								<div class="container">
 									<input type="text" name="email" placeholder="Email">
@@ -44,34 +47,17 @@
 		</section>
 		<footer>
 			<div class="centered">
-				<a href="https://www.facebook.com/paperworkapp" target="_blank">
-					<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
-				</a>
-				<div style="padding:15px 0px;"><a href="{{environment.root}}/privacy-policy">Privacy Policy</a></div>
+				<div>
+					<a href="https://www.facebook.com/paperworkapp" target="_blank" title="Our Facebook Page">
+						<img class="fb" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png">
+					</a>
+				</div>
+				<div style="padding: 15px 0px;">
+					<a href="{{environment.root}}/privacy-policy">Privacy Policy</a>
+				</div>
 			</div>
 		</footer>
-		<script>
-		var environment = {
-			root: '{{environment.root}}',
-			page: '{{path.page}}',
-		};
-		</script>
-		{% include path.html.js %}
-		<script>
-			$(function(){
-				// Nav
-				$('[home]').on('click', function(){
-					window.location = '{{environment.root}}';
-				});
-				$('[login]').on('click', function(){
-					window.location = '{{environment.root}}/login';
-				});
-				$('[register]').on('click', function(){
-					window.location = '{{environment.root}}/register';
-				});
-				
-				$('input[name="username"]').focus();
-			});
-		</script>
+		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
+		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 	</body>
 </html>

@@ -97,15 +97,23 @@ footer {
 	}
 }
 
-.nav_list span, .nav_list_less span {
+.nav_list span, .nav_list_less span,
+.nav_list a, .nav_list_less a,
+ {
 	@include select(none);
 	background-color:white;
+}
+
+.nav_list, .nav_list_less {
+	a, a:hover, a:active, a:focus, a:visited {
+		color: inherit;
+	}
 }
 
 video, feature img, .video_tint {
 	min-width: 400px;
 	
-	@include size(500px){
+	@include size(500px) {
 		min-width: 300px;
 	}
 }
@@ -218,6 +226,11 @@ video, feature img, .video_tint {
 .logo {
 	display: block;
 	float: left;
+	
+	a, a:hover, a:active, a:focus, a:visited {
+		color: inherit;
+		text-decoration: none;
+	}
 	
 	@include size(700px){
 		float: none;
@@ -403,7 +416,7 @@ video::-webkit-media-controls {
 		padding: 8px;
 		width: 100%;
 		
-		@include size(500px){
+		@include size(500px) {
 			font-size: 16px;
 		}
 	}

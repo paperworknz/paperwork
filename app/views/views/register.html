@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		{% include head_public %}
+		<title>Register For Paperwork & Free Trial - Paperwork</title>
+		<meta name="description" 
+		content="Register for Paperwork and get a 14 day free trial, no credit card required.">
+		{% include path.html.head_public %}
 		{% include path.html.pixel %}
 	</head>
 	<body>
 		<header>
 			<div class="wrap width">
 				<div class="nav">
-					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{environment.root}}'">Paperwork</div>
+					<div class="major_title logo">
+						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
+					</div>
 					<ul class="nav_list_less wrap">
 						<li>
-							<span class="color_hint" home>Home</span>
+							<a href="{{environment.root}}" home>Home</a>
 						</li>
 						<li>
-							<span login>Log In</span>
+							<a href="{{environment.root}}/login" title="Log In">Log In</a>
 						</li>
 						<li class="disable no-click">
 							<span>Sign Up</span>
@@ -101,27 +106,23 @@
 		</section>
 		<footer>
 			<div class="centered">
-				<a href="https://www.facebook.com/paperworkapp" target="_blank">
-					<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
-				</a>
-				<div style="padding:15px 0px;">
+				<div>
+					<a href="https://www.facebook.com/paperworkapp" target="_blank" title="Our Facebook Page">
+						<img class="fb" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png">
+					</a>
+				</div>
+				<div style="padding: 15px 0px;">
 					<a href="{{environment.root}}/privacy-policy">Privacy Policy</a>
 				</div>
 			</div>
 		</footer>
-		{% include js %}
+		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
+		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 		<script>
 			$(function(){
-				// Nav
-				$('[home]').on('click', function(){
-					window.location = '{{environment.root}}';
-				});
-				$('[login]').on('click', function(){
-					window.location = '{{environment.root}}/login';
-				});
 				
 				// Helpers
-				$('input[name=first]').on('blur', function(){
+				$('input[name=first]').on('keyup', function(){
 					$('input[name=username]').val($(this).val().toLowerCase());
 				});
 				

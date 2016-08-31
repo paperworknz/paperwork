@@ -40,7 +40,5 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 	$app->event->log('New Guest user logged in with IP: '.$app->ip);
 	
 	// Return
-	echo $app->build->success([
-		'location' => $app->root.'/app',
-	]);
+	$app->redirect($app->root.'/app');
 });
