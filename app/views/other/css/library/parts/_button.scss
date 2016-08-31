@@ -10,28 +10,35 @@
 	cursor: pointer;
 	min-width: 68px; // button-wait is 54px, + 7px padding left/right
 	@include select(none);
+	
+	&:hover {
+		background-color: #40d47e;
+	}
+	
+	&:active {
+		border: none;
+		margin-top: 4px;
+		outline: 0;
+	}
+	
+	&.delete {
+		background-color:#e74c3c;
+		border-bottom: 4px solid #c0392b;
+		
+		&:hover {
+			background-color: #eb6d60;
+		}
+	}
+	
+	&.blue {
+		background-color: #3a9bdc;
+		border-bottom: 4px solid #2d8ac8;
+		
+		&:hover {
+			background-color: #67b2e4;
+		}
+	}
 }
-
-.button:hover { background-color: #40d47e; }
-
-.button:active {
-	border: none;
-	margin-top: 4px;
-	outline: 0;
-}
-
-.delete {
-	background-color:#e74c3c;
-	border-bottom: 4px solid #c0392b;
-}
-
-.blue {
-	background-color: #3a9bdc;
-	border-bottom: 4px solid #2d8ac8;
-}
-
-.delete:hover { background-color: #eb6d60; }
-.blue:hover { background-color: #67b2e4; }
 
 .button-wait {
 	padding: 7px;

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Login - Paperwork</title>
 		{% include path.html.head_public %}
 		{% include path.html.pixel %}
 	</head>
@@ -8,16 +9,18 @@
 		<header>
 			<div class="wrap width">
 				<div class="nav">
-					<div class="major_title logo" style="cursor:pointer" onclick="window.location= '{{environment.root}}'">Paperwork</div>
+					<div class="major_title logo">
+						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
+					</div>
 					<ul class="nav_list_less wrap">
 						<li>
-							<span class="color_hint" home>Home</span>
+							<a href="{{environment.root}}" home>Home</a>
 						</li>
 						<li class="disable no-click">
 							<span login>Log In</span>
 						</li>
-						<li>
-							<span class="special" register>Sign Up</span>
+						<li class="special">
+							<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
 						</li>
 					</ul>
 				</div>
@@ -26,7 +29,7 @@
 		<section>
 			<div class="width">
 				<div class="main top centered">
-					<div style="display:inline-block;width:30%;min-width:280px">
+					<div style="display: inline-block;width: 30%;min-width: 280px;">
 						<div class="login user-information">
 							<div class="container">
 								<input type="text" name="username" placeholder="Email / Username">
@@ -43,7 +46,7 @@
 								<button class="button next-step {% if maintenance %}no-click button-wait{% endif %}">LOG IN</button>
 							</div>
 							<div class="container">
-								<a href="{{environment.root}}/recover-account">
+								<a href="{{environment.root}}/recover-account" title="Account Recovery">
 									Forgot password?
 								</a>
 							</div>
@@ -54,33 +57,25 @@
 		</section>
 		<footer>
 			<div class="centered">
-				<a href="https://www.facebook.com/paperworkapp" target="_blank">
-					<img class="fb" title="Our Facebook Page" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png" />
-				</a>
-				<div style="padding:15px 0px;"><a href="{{environment.root}}/privacy-policy">Privacy Policy</a></div>
+				<div>
+					<a href="https://www.facebook.com/paperworkapp" target="_blank" title="Our Facebook Page">
+						<img class="fb" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png">
+					</a>
+				</div>
+				<div style="padding: 15px 0px;">
+					<a href="{{environment.root}}/privacy-policy">Privacy Policy</a>
+				</div>
 			</div>
 		</footer>
-		<script>
-		var environment = {
-			root: '{{environment.root}}',
-			page: '{{path.page}}',
-		};
-		</script>
-		{% include path.html.js %}
+		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
+		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 		<script>
 			$(function(){
-				// Nav
-				$('[home]').on('click', function(){
-					window.location = '{{environment.root}}';
-				});
-				$('[login]').on('click', function(){
-					window.location = '{{environment.root}}/login';
-				});
-				$('[register]').on('click', function(){
-					window.location = '{{environment.root}}/register';
-				});
 				
-				var login = function(){
+				// Login on click (inputFlow triggers this)
+				$('body').on('click', '.next-step', login);
+				
+				function login(){
 					$('.next-step').focus();
 					
 					$.post('{{environment.root}}/post/login', {
@@ -112,12 +107,7 @@
 							Paperwork.ready($('.next-step'), 'LOG IN');
 						}
 					});
-				};
-				
-				// Login on click (inputFlow triggers this)
-				$('.next-step').on('click', function(){
-					login();
-				});
+				}
 				
 				$('input[name="username"]').focus();
 			});
