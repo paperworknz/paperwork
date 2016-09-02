@@ -21,26 +21,27 @@
 				
 				function dump(obj) {
 					var out = '';
-					for(var i in obj) out += i + ": " + obj[i] + "\n";
+					var id;
+					for(var i in obj){
+						out += i + ": " + obj[i] + "\n";
+						
+						if(i == 'user_id') id = obj[i];
+					}
 					
-					if(out.indexOf('landing page') !== -1){
-						landing++;
-					}else if(out.indexOf('registration page') !== -1){
-						regist++;
+					if(out.indexOf('Guest user logged in') !== -1){
+						guestcount++;
 					}else if(out.indexOf('Welcome email') !== -1){
 						newuser++;
-					}else if(out.indexOf('Guest user logged in') !== -1){
-						guestcount++;
 					}
 					
 					$('[insights]').html(
-						'Landing Page: '+landing+
-						'<br>Guest User logins: '+guestcount+
-						'<br>Registration Page: '+regist+
+						'Guest User logins: '+guestcount+
 						'<br>New Users: '+newuser
 					);
 					
-					if(out.indexOf('landing') == -1){
+					out = out.replace('user_id: '+id, 'user_id: <a href="{{environment.root}}/user/'+id+'">'+id+'</a>');
+					
+					if(out.indexOf('page with IP') == -1){
 						$('[console]').append(
 							'<pre>'+
 								out+
