@@ -25,7 +25,8 @@
 		"document-copy": "document-copy.js?KbBFsB",
 		"document-margin": "document-margin.js?jRTCWC",
 		"document-email": "document-email.js?uzN46L",
-		"email": "email.js?uraMbn"
+		"email": "email.js?uraMbn",
+		"account-editor": "account-editor.js?t5kqOZ"
 	},
 	"behaviors": {
 		"tab": "tab.js?bgKtly",
