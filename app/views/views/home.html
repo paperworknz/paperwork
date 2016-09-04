@@ -158,29 +158,21 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 		<section 2 itemscope itemtype="http://schema.org/Offer">
 			<div class="width">
 				<div class="main">
-					<div class="centered">
-						{% if remaining > 0 %}
-						<div class="alert alert-success central" style="max-width: 500px;cursor: default;">
-							We've <b>slashed</b> our price by nearly <b>50%</b> for early birds. 
-							There's only <span style="font-weight: 600;white-space: nowrap;" data-type="remaining"></span> remaining until this deal is gone forever!<br>
-							<a href="{{environment.root}}/register">Sign Up</a>
-						</div>
-						{% endif %}
+					<div class="centered" style="padding: 15px;">
 						<div class="wrap" style="display: inline-block;">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
 								<div class="major_title" style="padding: 10px 0px 15px;" itemprop="price">
-									<span style="font-size: 14px;">NZD</span>$29<span style="font-size: 14px;">/MO</span>
+									<span>$20</span><span style="font-size: 11px;"> /MO</span>
 								</div>
 							</price>
 						</div>
 						<p>
-							All new users get a <b>14 day free trial</b><br>
-							Create your own account today - it takes less than a minute.
+							Straightforward pricing. No hidden costs.<br>
+							All new users have a <b>14 day free trial</b> so you can evaluate if Paperwork is right for your business.
 						</p>
 						<div>
-							<span style="font-size: 11px;">Note: Prices exclude New Zealand GST. (15%)<br>
-							Paperwork is available in all countries.</span>
+							<span style="font-size: 11px;">Prices in New Zealand Dollar.<br>Paperwork is available in all countries.</span>
 						</div>
 						<div class="main">
 							<button data-type="sign-up-button" class="facade button large central">
@@ -194,27 +186,7 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 		<meta itemprop="url" content="https://paperwork.nz/">
 		<span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
 		<meta itemprop="name" content="Paperwork"></span></span>
-		<footer>
-			<div class="centered">
-				<div>
-					<a href="https://www.facebook.com/paperworkapp" target="_blank" title="Our Facebook Page">
-						<img class="fb" src="{{environment.root}}/css/media/icon/facebook/png/FB-f-Logo__blue_29.png">
-					</a>
-				</div>
-				<div style="padding: 15px 0px;">
-					<a href="{{environment.root}}/privacy-policy">Privacy Policy</a>
-					<div style="padding-top: 15px;font-size: 12px;">
-						<p>
-							Paperwork New Zealand Limited<br>
-							<a href="{{environment.root}}">{{environment.root}}</a><br>
-							105 Swamp Road, Kapiti Coast<br>
-							hello@paperwork.nz<br>
-							+642040268988<br>
-						</p>
-					</div>
-				</div>
-			</div>
-		</footer>
+		{% include path.html.footer %}
 		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
 		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 		<script>
