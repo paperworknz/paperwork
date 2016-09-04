@@ -94,6 +94,7 @@ return [
 'default' => '/other/html/default.html',
 'document' => '/other/html/document.html',
 'flash' => '/other/html/flash.html',
+'footer' => '/other/html/footer.html',
 'head' => '/other/html/head.html',
 'head_public' => '/other/html/head_public.html',
 'js' => '/other/html/js.html',
