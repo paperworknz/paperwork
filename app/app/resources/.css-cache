@@ -1,21 +1,21 @@
 {
 	"library": {
-		"Paperwork": "Paperwork.css?8V5TWo",
-		"Public": "Public.css?aQ2o8U",
+		"Paperwork": "Paperwork.css?1wIP73",
+		"Public": "Public.css?0G6Lsf",
 		"Document": "Document.css?OLbPm9"
 	},
 	"views": {
 		"login": "login.css?JiGeeo"
 	},
 	"modules": {
-		"admin": "admin.css?kOdBIC",
+		"admin": "admin.css?xsyDGe",
 		"client": "client.css?AXyEpW",
-		"clients": "clients.css?PuzstE",
+		"clients": "clients.css?1lb8sS",
 		"inventory": "inventory.css?VbWBFW",
 		"job": "job.css?jXsXZO",
-		"jobs": "jobs.css?I3ktku",
+		"jobs": "jobs.css?s8sZVI",
 		"settings": "settings.css?icKlHI",
-		"template": "template.css?SFr9Oy",
+		"template": "template.css?uvdHhk",
 		"user": "user.css?E1ktyM",
 		"welcome-guest": "welcome-guest.css?MhUIDW",
 		"document-copy": "document-copy.css?9RB5xn",

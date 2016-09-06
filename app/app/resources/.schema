@@ -60,6 +60,7 @@ return [
 '/put/restore' => '../app/routes/other/put/restore.php',
 '/put/settings' => '../app/routes/other/put/settings.php',
 '/put/template' => '../app/routes/other/put/template.php',
+'/_module/account-editor' => '../app/routes/other/_module/account-editor.php',
 '/_module/admin-template-editor' => '../app/routes/other/_module/admin-template-editor.php',
 '/_module/admin' => '../app/routes/other/_module/admin.php',
 '/_module/app' => '../app/routes/other/_module/app.php',

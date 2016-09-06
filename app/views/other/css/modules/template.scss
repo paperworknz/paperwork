@@ -136,30 +136,6 @@
 		}
 	}
 	
-	.template-icon {
-		display: inline-block;
-		
-		img {
-			cursor: pointer;
-			border: 1px solid #ccc;
-			border-radius: 10px;
-			height: 200px;
-			width: 160px;
-			@include transition(all 0.1s ease-in-out);
-			
-			&:hover, &.img-active {
-				margin-left: -5px;
-				margin-top: -5px;
-				height: 210px;
-				width: 170px;
-			}
-			
-			&.img-active {
-				border: 1px solid #3a9bdc;
-			}
-		}
-	}
-	
 	.new-template {
 		width: 100%;
 		max-width: 210mm;
@@ -207,7 +183,7 @@
 				background-color: #000;
 				opacity: .25;
 				padding: 20px;
-				cursor: pointer;
+				cursor: default;
 				
 				.play-right {
 					border-top: 16px solid transparent;

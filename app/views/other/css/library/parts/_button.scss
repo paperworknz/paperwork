@@ -7,7 +7,7 @@
 	border: none;
 	border-bottom: 4px solid #27ae60;
 	outline: none;
-	cursor: pointer;
+	cursor: default;
 	min-width: 68px; // button-wait is 54px, + 7px padding left/right
 	@include select(none);
 	
@@ -16,9 +16,9 @@
 	}
 	
 	&:active {
-		border: none;
-		margin-top: 4px;
-		outline: 0;
+		border-bottom: 0!important;
+		margin-top: 4px!important;
+		outline: 0!important;
 	}
 	
 	&.delete {

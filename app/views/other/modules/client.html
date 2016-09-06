@@ -14,7 +14,7 @@
 					<input type="text" data-type="name" value="{{modules.client.data.client.name}}" placeholder="{{modules.client.data.client.name}}" autocomplete="off">
 				</part>
 				<part class="new-job">
-					<button data-type="new-job" class="button">
+					<button data-type="new-job" class="button" style="cursor: pointer;" data-title="Start a new job for {{modules.client.data.client.name}}">
 						New Job
 					</button>
 				</part>
@@ -49,7 +49,7 @@
 		<part class="container">
 			<part class="footer">
 				<part class="email-link">
-					<a style="padding-left: 4px" data-type="email-button">
+					<a style="padding-left: 4px" data-type="email-button" data-title="Open a new email">
 						Email {{modules.client.data.client.name}}
 					</a>
 				</part>

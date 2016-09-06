@@ -75,7 +75,7 @@ Core.addModule('email', function(context){
 		for(let i in attachments){
 			
 			$body.find('[data-type="attachments"]').append(`
-				<part class="attachment wrap" data-type="attachment" data-name="${i}">
+				<part class="attachment wrap" data-type="attachment" data-name="${i}" data-title="Attachment ${i}">
 					<part>
 						${i}
 					</part>

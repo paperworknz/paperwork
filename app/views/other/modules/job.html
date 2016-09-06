@@ -21,7 +21,7 @@
 							<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name" autocomplete="off">
 						</part>
 						<part class="status-block">
-							<select class="status right" data-type="status" title="Status">
+							<select class="status right" data-type="status">
 								{% for status in modules.job.data.status %}
 									{% if modules.job.data.job.job_status.name == status.name %}
 									<option value="{{status.name}}" selected="selected">{{status.name}}</option>
@@ -39,46 +39,46 @@
 						<tbody>
 							<tr>
 								<td>Job</td>
-								<td title="Job #{{modules.job.data.job.job_number}}">#{{modules.job.data.job.job_number}}</td>
+								<td>#{{modules.job.data.job.job_number}}</td>
 							</tr>
 							<tr>
 								<td>Client</td>
-								<td><a data-type="client" title="{{modules.job.data.client.name}}'s Page">{{modules.job.data.client.name}}</a></td>
+								<td><a data-type="client" data-title="Open {{modules.job.data.client.name}}'s page">{{modules.job.data.client.name}}</a></td>
 							</tr>
 							{% if modules.job.data.client.email %}
 							<tr>
 								<td>Email</td>
-								<td><a data-type="email" title="Send Email" target="_blank">{{modules.job.data.client.email}}</a></td>
+								<td><a data-type="email" data-title="Open a new email" target="_blank">{{modules.job.data.client.email}}</a></td>
 							</tr>
 							{% endif %}
 							{% if client.address %}
 							<tr>
 								<td>Address</td>
-								<td><a href="http://maps.google.com/?q={{client.address}}" title="Google Maps" target="_blank">{{client.address}}</a></td>
+								<td><a href="http://maps.google.com/?q={{client.address}}" data-title="Google Maps" target="_blank">{{client.address}}</a></td>
 							</tr>
 							{% endif %}
 							{% if client.phone %}
 							<tr>
 								<td>Phone</td>
-								<td><a href="tel:{{client.phone}}" title="Call {{modules.job.data.client.name}}">{{client.phone}}</a></td>
+								<td><a href="tel:{{client.phone}}" data-title="Call {{modules.job.data.client.name}}">{{client.phone}}</a></td>
 							</tr>
 							{% endif %}
 							{% if modules.job.data.job.date_created %}
 							<tr>
 								<td>Started</td>
-								<td title="{{modules.job.data.job.date_created}}">{{modules.job.data.job.date_created_pretty}}</td>
+								<td><span data-title="Job started at {{modules.job.data.job.date_created}}">{{modules.job.data.job.date_created_pretty}}</span></td>
 							</tr>
 							{% endif %}
 							{% if modules.job.data.job.date_invoiced %}
 							<tr>
 								<td>Invoiced</td>
-								<td title="{{modules.job.data.job.date_invoiced}}">{{modules.job.data.job.date_invoiced_pretty}}</td>
+								<td><span data-title="Invoiced at {{modules.job.data.job.date_invoiced}}">{{modules.job.data.job.date_invoiced_pretty}}</span></td>
 							</tr>
 							{% endif %}
 							{% if modules.job.data.job.date_completed %}
 							<tr>
 								<td>Closed</td>
-								<td title="{{modules.job.data.job.date_completed}}">{{modules.job.data.job.date_completed_pretty}}</td>
+								<td><span data-title="Closed at {{modules.job.data.job.date_completed}}">{{modules.job.data.job.date_completed_pretty}}</span></td>
 							</tr>
 							{% endif %}
 							<tr>
