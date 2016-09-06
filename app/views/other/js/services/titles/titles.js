@@ -2,12 +2,11 @@ Core.addService('titles', function(){
 	
 	var $body = Paperwork.body;
 	
-	$body.on('mouseover', '[data-title]', function(){
+	$body.on('touchstart mouseenter', '[data-title]', function(){
 		render($(this));
 	});
 	
-	$body.on('mouseout', '[data-title]', remove);
-	$body.on('click touchend', remove);
+	$body.on('mouseleave touchmove click', '[data-title]', remove);
 	
 	function render(request){
 		
