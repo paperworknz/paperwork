@@ -197,9 +197,33 @@ Core.addBehavior('document', function(context, opt){
 			}
 			
 			// Set prop value in templates
-			if(i == 'background_colour') $prop.css('background-color', (value || 'white'));
-			if(i == 'text_colour') $prop.css('color', (value || 'white'));
-			if(i.indexOf('colour') == -1) $prop.html(value);
+			if(i == 'background_colour'){
+				$prop.css('background-color', (value || 'white'));
+				continue;
+			}
+			
+			if(i == 'text_colour'){
+				$prop.css('color', (value || 'white'));
+				continue;
+			}
+			
+			if(i == 'image'){
+				
+				if(!$body.find(`${$doc} [data-property="image"]`).length){
+					if(value) $body.find(`${$doc} [data-property="user-company"]`).html(`<img class="template-logo" src="${value}">`);
+					continue;
+				}
+				
+				if(value) $prop.html(`<img class="template-logo" src="${value}">`);
+				continue;
+			}
+			
+			if(i == 'image_size'){
+				$body.find(`${$doc} .template-logo`).css('width', `${value}px`);
+				continue;
+			}
+			
+			$prop.html(value);
 		}
 	}
 	

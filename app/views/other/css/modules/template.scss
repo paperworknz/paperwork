@@ -102,6 +102,21 @@
 					display: inline-block;
 				}
 			}
+			
+			input[type="file"] {
+				width: 100%;
+			}
+			
+			.image-size {
+				display: flex;
+				min-height: 30px;
+				width: 100%;
+				
+				.prop {
+					flex: 0 0 75px;
+					margin-right: 10px;
+				}
+			}
 		}
 	}
 	

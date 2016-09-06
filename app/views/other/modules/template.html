@@ -26,11 +26,11 @@
 							</div>
 							<div data-type="template-hud" class="template-hud">
 								<div class="play-container" style="padding-right: 50mm;">
-									<!--<div data-type="previous" class="play-padding">
+									<div data-type="previous" class="play-padding">
 										<div class="play-left"></div>
-									</div>-->
+									</div>
 								</div>
-								<div class="play-container" style="padding-left: 90mm;">
+								<div class="play-container" style="padding-left: 50mm;">
 									<div data-type="next" class="play-padding">
 										<div class="play-right"></div>
 									</div>
@@ -65,26 +65,26 @@
 						{{a}}
 					</column>
 					<column data-type="{{a}}">
-						<div class="prop" contenteditable>
-							{{b | raw}}
-						</div>
-						{% if 'colour' in a %}
-						<div class="color-palette">
-						</div>
+						{% if a == 'image' %}
+							<input type="file">
+						{% elseif a == 'image_size' %}
+							<div class="image-size">
+								<div class="prop" contenteditable>
+									{{b | raw}}
+								</div>
+								<input type="range" value="{{b}}">
+							</div>
+						{% else %}
+							<div class="prop" contenteditable>
+								{{b | raw}}
+							</div>
+							{% if 'colour' in a %}
+								<div class="color-palette"></div>
+							{% endif %}
 						{% endif %}
 					</column>
 				</row>
 				{% endfor %}
-				<row>
-					<column>
-						logo
-					</column>
-					<column>
-						<div style="height: 30px;line-height: 30px;">
-							<a style="cursor: default;" data-type="vote">Vote for this</a>
-						</div>
-					</column>
-				</row>
 			</div>
 		</box>
 	</part>

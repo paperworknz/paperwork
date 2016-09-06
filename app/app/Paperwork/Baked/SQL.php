@@ -557,7 +557,7 @@ class SQL {
 				$index = $key; // cache root key
 				
 				foreach($pair as $a => $b){ // Iterate through each array of data
-					if(strpos($a, 'id') // column name contains 'id'
+					if(strpos($a, '_id') // column name contains 'id'
 						&& $a != 'id' // Ignore 'id' (primary key)
 						&& $a != 'user_id' // Ignore 'user_id'
 						&& $a != $this->query['table'].'_id' // ignore ::self_id

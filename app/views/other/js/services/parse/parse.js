@@ -42,7 +42,7 @@ Core.addService('parse', function(){
 		
 		i = Number(i);
 		
-		if(decimal) i = Number(i.toFixed(decimal));
+		if(decimal != undefined) i = Number(i.toFixed(decimal));
 		if(natural) {
 			i = i.toFixed(decimal);
 			i = i.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');

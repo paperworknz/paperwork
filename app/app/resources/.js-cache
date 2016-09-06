@@ -19,7 +19,7 @@
 		"notification": "notification.js?hChk2H",
 		"settings": "settings.js?JUuz1a",
 		"tab": "tab.js?LVBgld",
-		"template": "template.js?VaQgtx",
+		"template": "template.js?tDSCb7",
 		"user": "user.js?Xsu4GW",
 		"welcome-guest": "welcome-guest.js?5AIXkX",
 		"document-copy": "document-copy.js?KbBFsB",
@@ -31,12 +31,12 @@
 	"behaviors": {
 		"tab": "tab.js?bgKtly",
 		"table": "table.js?D9Co6H",
-		"document": "document.js?BUdC2Z"
+		"document": "document.js?iOSB1o"
 	},
 	"services": {
 		"annyang": "annyang.js?alNK33",
 		"dark": "dark.js?YHkPXI",
-		"parse": "parse.js?YUIzXG",
+		"parse": "parse.js?L0S5c9",
 		"pdf": "pdf.js?zk5Em1",
 		"caret": "caret.js?2FmZin"
 	},
