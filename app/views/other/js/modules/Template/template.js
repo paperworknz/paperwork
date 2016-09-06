@@ -282,7 +282,7 @@ Core.addModule('template', function(context){
 			}
 			
 			reader.readAsDataURL(file);
-			reader.onload = function(response){
+			reader.addEventListener('load', function(response){
 				
 				// Clear image_max_size, image_size
 				image_max_size = null;
@@ -298,7 +298,7 @@ Core.addModule('template', function(context){
 					$body.find('[data-type="image_size"] .prop').html(image_max_size);
 					$body.find('[data-type="properties"] [type="range"]').get(0).value = image_max_size;
 				}
-			}
+			});
 		});
 		
 		// Remove image
