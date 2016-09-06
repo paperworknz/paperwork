@@ -7,6 +7,8 @@ Core.addService('titles', function(){
 	});
 	
 	$body.on('mouseout', '[data-title]', remove);
+	$body.on('click', remove);
+	$body.on('mousedown', remove);
 	
 	function render(request){
 		
