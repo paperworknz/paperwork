@@ -19,6 +19,7 @@ $app->post('/post/register', 'app', function() use ($app){
 		$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 		$confirm = filter_var($_POST['confirm'], FILTER_SANITIZE_STRING);
 		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+		$referrer = isset($_POST['referrer']) ? $_POST['referrer'] : false;
 		
 		$action = $app->auth->register([
 			'first' => $first,
@@ -43,9 +44,21 @@ $app->post('/post/register', 'app', function() use ($app){
 				break;
 			case 'Registered Successfully':
 				
+				$user_id = $action['id'];
+				
+				// Referrer
+				$app->event->log([
+					'text' => "Referred by {$referrer}",
+					'user_id' => $user_id,
+				]);
+				
 				// Don't email if mode is dev
 				if($_ENV['MODE'] == 'dev'){
-					$app->event->log('Welcome email sent to '.$first.' '.$last);
+					
+					$app->event->log([
+						'text' => "Welcome email sent to {$first} {$last}",
+						'user_id' => $user_id,
+					]);
 					echo $app->build->success([
 						'message' => 'Registered Successfully'
 					]);
@@ -83,7 +96,11 @@ $app->post('/post/register', 'app', function() use ($app){
 				
 				if($result['result_code'] != 1) $app->event->log('ActiveCampaign error: '.$result['result_code'].PHP_EOL.'Message: '.$result['result_message']);
 				
-				$app->event->log('Welcome email sent to '.$first.' '.$last);
+				$app->event->log([
+					'text' => "Welcome email sent to {$first} {$last}",
+					'user_id' => $user_id,
+				]);
+				
 				echo $app->build->success([
 					'message' => 'Registered Successfully'
 				]);

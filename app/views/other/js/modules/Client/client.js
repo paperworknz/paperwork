@@ -15,6 +15,7 @@ Core.addModule('client', function(context){
 	
 	context.use('tab');
 	clientDetails();
+	newJob();
 	clientDelete();
 	bindNotes();
 	email();
@@ -23,6 +24,14 @@ Core.addModule('client', function(context){
 		
 		$body.on('change', '.client-details input, [data-type="name"], [data-type="address"]', saveClientDetails);
 		$body.on('blur', '[data-type="address"]', saveClientDetails);
+	}
+	
+	function newJob(){
+		
+		$body.on('click', '[data-type="new-job"]', function(){
+			
+			Paperwork.goto(`${environment.root}/jobs?id=${client_id}`);
+		});
 	}
 	
 	function saveClientDetails(){ 

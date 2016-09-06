@@ -3,17 +3,18 @@ Core.addModule('template', function(context){
 	var $body = context.element;
 	
 	var properties = {};
-	var top = 0;
 	var background_colour;
+	var image_max_size;
 	var timer;
+	var top = 0;
 	
 	var request = {
 		get: `${environment.root}/get/template-properties`,
-		update: `${environment.root}/post/update-template`,
 		post: `${environment.root}/post/template`,
 		delete: `${environment.root}/delete/template`,
 		putProp: `${environment.root}/put/properties`,
 		putTemplate: `${environment.root}/put/template`,
+		update: `${environment.root}/post/update-template`,
 	};
 	
 	var parse = context.require('parse');
@@ -31,14 +32,11 @@ Core.addModule('template', function(context){
 	
 	function construct(){
 		
+		// Populate color palettes
 		for(let i in colors){
 			const value = colors[i];
 			
 			$body.find('.color-palette').append(`<div class="color" data-color="${value}" style="background-color: ${value}"></div>`);
-		}
-		
-		if(localStorage.vote != undefined){
-			$body.find('[data-type="vote"]').replaceWith('<div style="display: inline;">&#10003;</div>').addClass('no-click').css('opacity', '0.5');
 		}
 	}
 	
@@ -141,17 +139,6 @@ Core.addModule('template', function(context){
 		
 		// Save properties
 		propertiesUpdate();
-		
-		// Vote button
-		$body.on('click', '[data-type="vote"]', function(){
-			
-			$.post(`${environment.root}/post/vote`)
-			.done(function(response){
-				
-				localStorage.vote = true;
-				$body.find('[data-type="vote"]').replaceWith('<div style="display: inline;">&#10003;</div>').addClass('no-click').css('opacity', '0.5');
-			});
-		});
 	}
 	
 	function append(request){
@@ -256,6 +243,7 @@ Core.addModule('template', function(context){
 	
 	function propertiesUpdate(){
 		
+		// Render on keyup
 		$body.on('keyup', '[data-type="properties"] .prop', function(){
 			var property = $(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim(),
 				value;
@@ -266,17 +254,73 @@ Core.addModule('template', function(context){
 			render();
 		});
 		
+		// Render on blur
 		$body.on('blur', '[data-type="properties"] .prop', function(){
 			var property = $(this).closest('[data-type="row"]').find('[data-type="key"]').text().trim();
 			
 			$(this).html(properties[property]);
 			render();
 		});
+		
+		// Image upload
+		$body.on('change', '[data-type="properties"] [type="file"]', function(){
+			
+			// Read image to get BASE64 string
+			let reader = new FileReader();
+			let image = $(this).get(0).files[0];
+			
+			if(!image) return;
+			
+			reader.readAsDataURL(image);
+			reader.onload = function(response){
+				
+				// Clear image_max_size, image_size
+				image_max_size = null;
+				properties.image_size = null;
+				
+				// Update image property
+				properties.image = response.target.result;
+				saveProperties();
+				render();
+				
+				if(image_max_size){
+					properties.image_size = image_max_size;
+					$body.find('[data-type="image_size"] .prop').html(image_max_size);
+					$body.find('[data-type="properties"] [type="range"]').get(0).value = image_max_size;
+				}
+			}
+		});
+		
+		// Image size change
+		$body.on('input', '[data-type="properties"] [type="range"]', function(){
+			
+			var size;
+			
+			// Get scaled image size
+			size = $(this).val();
+			size = parse.toNumber(size, {
+				decimal: 0,
+			});
+			
+			// Update image_size property
+			$(this).parent().find('.prop').html(size);
+			properties.image_size = size;
+			
+			saveProperties();
+			render();
+		});
 	}
 	
 	function render(){
 		
+		// Re-render document behavior
 		Paperwork.send(`document.template.reload`, properties);
+		
+		// Update image_max_size
+		if($body.find('.template-logo').length) image_max_size = $body.find('.template-logo').get(0).naturalWidth;
+		
+		// Update image_size range max
+		if(image_max_size) $body.find('[data-type="properties"] [type="range"]').get(0).max = image_max_size;
 	}
 	
 	function saveProperties(){

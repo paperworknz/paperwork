@@ -90,12 +90,20 @@
 								<input type="password" name="password" required>
 							</part>
 						</section>
-						<section style="padding-bottom: 35px;">
+						<section>
 							<label>
 								Confirm password
 							</label>
 							<part>
 								<input type="password" name="confirm" required>
+							</part>
+						</section>
+						<section style="padding-bottom: 35px;">
+							<label>
+								Referrer <span style="color: #999">(optional)</span>
+							</label>
+							<part>
+								<input type="text" name="referrer">
 							</part>
 						</section>
 						<section style="display: inline-block;">
@@ -129,7 +137,8 @@
 							email: $('input[name=email]').val(),
 							username: $('input[name=username]').val(),
 							password: $('input[name=password]').val(),
-							confirm: $('input[name=confirm]').val(), 
+							confirm: $('input[name=confirm]').val(),
+							referrer: $('input[name=referrer]').val(),
 						}).done(function(a){
 							a = JSON.parse(a);
 							
