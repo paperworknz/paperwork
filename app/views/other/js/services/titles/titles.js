@@ -2,7 +2,7 @@ Core.addService('titles', function(){
 	
 	var $body = Paperwork.body;
 	
-	$body.on('mouseenter', '[data-title]', function(){
+	$body.on('touchstart mouseenter', '[data-title]', function(){
 		render($(this));
 	});
 	
