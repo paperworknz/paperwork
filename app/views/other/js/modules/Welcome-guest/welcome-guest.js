@@ -8,9 +8,8 @@ Core.addModule('welcome-guest', function(context){
 	var messages = {
 		0: {
 			title: 'Welcome to Paperwork',
-			body: `<p>You're logged in as a guest and your data is temporary. This is a care-free way of taking Paperwork for
-			a test drive. You can set up your settings if you want to, but we recommend you start by going to <b>Jobs</b> and 
-			opening up the default Job we've made for you.</p>`,
+			body: `<div>You're logged in as a guest and your data is temporary.</div>
+			<div>You're looking at a <b>job</b> right now. Check out <b>Templates</b> in the menu to design your templates!</div>`,
 		},
 		// 1: {
 		// 	title: 'Guest Session',

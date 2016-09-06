@@ -59,6 +59,19 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 		'job_status_id' => $status_id,
 	])->run();
 	
+	$user_template_id = $app->sql->get('user_template')->select('id')->one();
+	
+	$job_id = $app->sql->post('document')->with([
+		'name' => 'QUOTE',
+		'date' => date("d/m/Y"),
+		'reference' => 100,
+		'description' => '<div>This is a quote.</div><div>Add some items using the input and hitting enter, and check out the tools below!</div>',
+		'items' => "[]",
+		'user_template_id' => $user_template_id,
+		'client_id' => $client_id,
+		'job_id' => $job_id,
+	])->run();
+	
 	// Return
-	$app->redirect($app->root.'/app');
+	$app->redirect($app->root.'/job/100?activate=1');
 });
