@@ -21,7 +21,7 @@
 							<input type="text" class="job-name" name="job-name" value="{{modules.job.data.job.name}}" placeholder="Job name" autocomplete="off">
 						</part>
 						<part class="status-block">
-							<select class="status right" data-type="status">
+							<select class="status right" data-type="status" data-title="Update status">
 								{% for status in modules.job.data.status %}
 									{% if modules.job.data.job.job_status.name == status.name %}
 									<option value="{{status.name}}" selected="selected">{{status.name}}</option>
@@ -48,7 +48,7 @@
 							{% if modules.job.data.client.email %}
 							<tr>
 								<td>Email</td>
-								<td><a data-type="email" data-title="Open a new email" target="_blank">{{modules.job.data.client.email}}</a></td>
+								<td><a data-type="email" data-title="Open email" target="_blank">{{modules.job.data.client.email}}</a></td>
 							</tr>
 							{% endif %}
 							{% if client.address %}
