@@ -12,5 +12,10 @@
 			</module>
 		</div>
 		{% include js %}
+		{% if user.privilege == 'guest' %}
+		<script>
+			if(sessionStorage) if(sessionStorage.introduction != 'true') Core.loadModule('welcome-guest');
+		</script>
+		{% endif %}
 	</body>
 </html>
