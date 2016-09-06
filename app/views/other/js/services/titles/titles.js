@@ -6,7 +6,8 @@ Core.addService('titles', function(){
 		render($(this));
 	});
 	
-	$body.on('mouseleave touchmove click', '[data-title]', remove);
+	$body.on('touchmove mouseleave click', '[data-title]', remove);
+	$body.on('touchend mousedown click', remove);
 	
 	function render(request){
 		
