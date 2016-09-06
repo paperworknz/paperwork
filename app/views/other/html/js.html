@@ -67,6 +67,7 @@ var environment = {
 
 <script>
 $(function(){
+	Core.require('titles');
 	Core.require('annyang');
 	Core.startAll();
 	{% if environment.trial_expired %}Core.loadModule('checkout');{% endif %}

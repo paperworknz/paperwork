@@ -17,7 +17,7 @@
 				<box data-type="obj" data-id="{{i}}" data-template-id="{{template.id}}" class="tabobj">
 					<div class="template-container">
 						<div class="container">
-							<input type="text" class="template-name" data-type="template-name" placeholder="Template name" value="{{template.name}}" required>
+							<input type="text" class="template-name" data-type="template-name" data-title="Rename template" placeholder="Template name" value="{{template.name}}" required>
 						</div>
 						<hr>
 						<div class="document-owner">
@@ -60,7 +60,7 @@
 		<box class="template-properties container">
 			<div data-type="properties">
 				{% for a, b in modules.template.data.properties %}
-				<row data-type="row">
+				<row data-type="row" data-title="{{a}}">
 					<column data-type="key">
 						{{a}}
 					</column>

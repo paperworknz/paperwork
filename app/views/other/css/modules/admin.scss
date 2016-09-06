@@ -36,7 +36,11 @@
 	}
 
 	.toggle-table img {
-		cursor: pointer;
+		cursor: default;
+		
+		&:hover {
+			opacity: 0.75;
+		}
 	}
 
 	.fade {opacity:0.25}
