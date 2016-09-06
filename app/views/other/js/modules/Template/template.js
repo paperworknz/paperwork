@@ -267,12 +267,22 @@ Core.addModule('template', function(context){
 			
 			// Read image to get BASE64 string
 			let reader = new FileReader();
-			let image = $(this).get(0).files[0];
+			let file = $(this).get(0).files[0];
 			
-			if(!image) return;
+			if(!file) return;
 			
-			reader.readAsDataURL(image);
-			reader.onload = function(response){
+			// Return if image is too large
+			if(file.size > 257000) {
+				console.log(file.size);
+				return swal({
+					type: 'error',
+					title: 'File size larger than 250KB',
+					text: `Sorry, that image is too big for Paperwork. We like small images to keep Paperwork fast!`,
+				});
+			}
+			
+			reader.readAsDataURL(file);
+			reader.addEventListener('load', function(response){
 				
 				// Clear image_max_size, image_size
 				image_max_size = null;
@@ -288,7 +298,16 @@ Core.addModule('template', function(context){
 					$body.find('[data-type="image_size"] .prop').html(image_max_size);
 					$body.find('[data-type="properties"] [type="range"]').get(0).value = image_max_size;
 				}
-			}
+			});
+		});
+		
+		// Remove image
+		$body.on('click', '[data-type="properties"] [data-type="image"] .remove-btn', function(){
+			
+			properties.image = null
+			properties.image_size = null
+			saveProperties();
+			render();
 		});
 		
 		// Image size change
