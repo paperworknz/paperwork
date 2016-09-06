@@ -301,6 +301,15 @@ Core.addModule('template', function(context){
 			}
 		});
 		
+		// Remove image
+		$body.on('click', '[data-type="properties"] [data-type="image"] .remove-btn', function(){
+			
+			properties.image = null
+			properties.image_size = null
+			saveProperties();
+			render();
+		});
+		
 		// Image size change
 		$body.on('input', '[data-type="properties"] [type="range"]', function(){
 			

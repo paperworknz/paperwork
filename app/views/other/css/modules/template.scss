@@ -107,6 +107,22 @@
 				width: 100%;
 			}
 			
+			.image {
+				display: flex;
+				align-items: center;
+				min-height: 30px;
+				width: 100%;
+				
+				input {
+					flex: 1;
+				}
+				
+				div {
+					flex: 0 0 25px;
+					height: 25px;
+				}
+			}
+			
 			.image-size {
 				display: flex;
 				min-height: 30px;

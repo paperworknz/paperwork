@@ -66,7 +66,10 @@
 					</column>
 					<column data-type="{{a}}">
 						{% if a == 'image' %}
-							<input type="file">
+							<div class="image">
+								<input type="file">
+								<div class="remove-btn"></div>
+							</div>
 						{% elseif a == 'image_size' %}
 							<div class="image-size">
 								<div class="prop" contenteditable>
