@@ -267,11 +267,21 @@ Core.addModule('template', function(context){
 			
 			// Read image to get BASE64 string
 			let reader = new FileReader();
-			let image = $(this).get(0).files[0];
+			let file = $(this).get(0).files[0];
 			
-			if(!image) return;
+			if(!file) return;
 			
-			reader.readAsDataURL(image);
+			// Return if image is too large
+			if(file.size > 257000) {
+				console.log(file.size);
+				return swal({
+					type: 'error',
+					title: 'File size larger than 250KB',
+					text: `Sorry, that image is too big for Paperwork. We like small images to keep Paperwork fast!`,
+				});
+			}
+			
+			reader.readAsDataURL(file);
 			reader.onload = function(response){
 				
 				// Clear image_max_size, image_size
