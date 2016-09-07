@@ -17,10 +17,10 @@
 		"settings": "settings.css?icKlHI",
 		"template": "template.css?uvdHhk",
 		"user": "user.css?E1ktyM",
-		"welcome-guest": "welcome-guest.css?MhUIDW",
 		"document-copy": "document-copy.css?9RB5xn",
 		"document-margin": "document-margin.css?BMam9w",
 		"document-email": "document-email.css?mDNWsX",
-		"email": "email.css?Ehl8qG"
+		"email": "email.css?Ehl8qG",
+		"hello": "hello.css?4m8FRV"
 	}
 }

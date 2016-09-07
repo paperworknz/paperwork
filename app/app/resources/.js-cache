@@ -21,12 +21,11 @@
 		"tab": "tab.js?LVBgld",
 		"template": "template.js?tDKwju",
 		"user": "user.js?Xsu4GW",
-		"welcome-guest": "welcome-guest.js?QZwRUC",
 		"document-copy": "document-copy.js?KbBFsB",
 		"document-margin": "document-margin.js?jRTCWC",
 		"document-email": "document-email.js?uzN46L",
 		"email": "email.js?jCmGiT",
-		"account-editor": "account-editor.js?t5kqOZ"
+		"hello": "hello.js?LVfJeT"
 	},
 	"behaviors": {
 		"tab": "tab.js?bgKtly",

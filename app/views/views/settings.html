@@ -1,1 +1,21 @@
-{% include '/other/html/default.html' %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+   		{% include head %}
+	</head>
+    <body>
+        {% include menu %}
+        <div id="content">
+			<flash data-module="flash" class="box-std">{% include path.html.flash %}</flash>
+			<module data-module="settings">
+				{% include 'other/modules/settings.html' %}
+			</module>
+        </div>
+		{% include js %}
+		{% if user.privilege == 'guest' %}
+		<script>
+			if(sessionStorage) if(sessionStorage.introduction != 'true') Core.loadModule('welcome-guest');
+		</script>
+		{% endif %}
+    </body>
+</html>
