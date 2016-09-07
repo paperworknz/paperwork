@@ -35,6 +35,11 @@ $app->post('/put/settings', 'uac', function() use ($app){
 	
 	$app->event->log('updated their details');
 	
+	if(isset($_POST['hello'])){
+		$app->flash('success', "Hi {$first}! This is your list of jobs, you can get here using the <b>menu</b>. Click the default job below and use the <b>tabs</b> to navigate!");
+		$app->redirect($app->root.'/jobs');
+	}
+	
 	$app->flash('success', 'Updated');
 	$app->redirect($app->root.'/settings');
 });

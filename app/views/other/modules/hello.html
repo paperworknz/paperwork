@@ -1,50 +1,61 @@
 <box class="box-std">
 	<part data-type="parent" class="wrap centered">
-		<part class="container-top wrap">
-			<div class="h3 title" data-type="title"></div>
-		</part>
-		<part class="container view-parent">
-			<div data-type="view" class="wrap">
-				<table>
-				<tbody>
-					<tr>
-						<td>First name</td>
-						<td><input type="text" name="first" autocomplete="off" required></td>
-					</tr>
-					<tr>
-						<td>Last name</td>
-						<td><input type="text" name="last" autocomplete="off"></td>
-					</tr>
-					<tr>
-						<td>Company</td>
-						<td><input type="text" name="company" autocomplete="off" required></td>
-					</tr>
-					<tr>
-						<td>Timezone</td>
-						<td>
-							<select name="timezone">
-								{% for key, value in modules.hello.data.timezone %}
-								{% if value == user.timezone %}
-								<option value="{{value}}" selected="selected">{{key | raw}}</option>
-								{% else %}
-								<option value="{{value}}">{{key | raw}}</option>
-								{% endif %}
-								{% endfor %}
-							</select>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			</div>
-		</part>
-		<part class="container">
-			<div class="central">
-				<ul class="list-inline" style="display: inline-block;">
-					<li>
-						<button class="button blue" data-type="next-step">GOT IT</button>
-					</li>
-				</ul>
-			</div>
-		</part>
+		<form method="post" action="{{environment.root}}/put/settings">
+			<part class="container-top wrap">
+				<div class="h3 title" data-type="title">
+					Welcome to Paperwork
+				</div>
+				<div>
+					This is a simplified setup to get you started, all guest data is temporary and will be removed 
+					upon logout.
+				</div>
+			</part>
+			<part class="container view-parent">
+				<div data-type="view" class="wrap">
+					<div data-type="one">
+						<table>
+							<tbody>
+								<tr>
+									<td>First name</td>
+									<td><input type="text" name="first" autocomplete="off" required></td>
+								</tr>
+								<tr>
+									<td>Last name</td>
+									<td><input type="text" name="last" autocomplete="off"></td>
+								</tr>
+								<tr>
+									<td>Company</td>
+									<td><input type="text" name="company" autocomplete="off" required></td>
+								</tr>
+								<tr>
+									<td>Timezone</td>
+									<td>
+										<select name="timezone">
+											{% for key, value in modules.hello.data.timezone %}
+											{% if value == user.timezone %}
+											<option value="{{value}}" selected="selected">{{key | raw}}</option>
+											{% else %}
+											<option value="{{value}}">{{key | raw}}</option>
+											{% endif %}
+											{% endfor %}
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</part>
+			<part class="container">
+				<div class="central">
+					<ul class="list-inline" style="display: inline-block;">
+						<li>
+							<input type="hidden" name="hello">
+							<button class="button blue" data-type="next-step" data-button-state="off">LET'S GO</button>
+						</li>
+					</ul>
+				</div>
+			</part>
+		</form>
 	</part>
 </box>

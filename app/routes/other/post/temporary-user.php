@@ -73,5 +73,5 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 	])->run();
 	
 	// Return
-	$app->redirect($app->root.'/job/100');
+	$app->redirect($app->root.'/hello');
 });
