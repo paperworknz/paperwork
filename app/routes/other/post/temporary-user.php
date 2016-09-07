@@ -65,13 +65,13 @@ $app->post('/post/temporary-user', 'app', function() use ($app){
 		'name' => 'QUOTE',
 		'date' => date("d/m/Y"),
 		'reference' => 100,
-		'description' => '<div>This is a quote.</div><div>Add some items using the input and hitting enter, and check out the tools below!</div>',
-		'items' => "[]",
+		'description' => '<div>This is a quote.</div><div>Add some items using the input and hitting enter. Edit the item name, quantity, and price below.</div><div><br></div><div>Generate a PDF with the PDF button, and have a play with the Quote tools!</div>',
+		'items' => '[{"name":"Door","quantity":"1","price":"50","margin":"1","total":"50"}]',
 		'user_template_id' => $user_template_id,
 		'client_id' => $client_id,
 		'job_id' => $job_id,
 	])->run();
 	
 	// Return
-	$app->redirect($app->root.'/job/100?activate=1');
+	$app->redirect($app->root.'/job/100');
 });

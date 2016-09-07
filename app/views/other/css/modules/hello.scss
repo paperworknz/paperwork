@@ -1,0 +1,31 @@
+@import '../library/mixins/mixins';
+
+[data-module="hello"] {
+	td input, .input, select {
+		margin: 3px 0;
+		width: 100%;
+		max-width: 225px;
+		border: 1px solid #ccc;
+		padding: 5px;
+	}
+	
+	table {
+		margin: auto;
+	}
+	
+	select {
+		height: 30px;
+	}
+
+	table td:nth-child(2n+1) {
+		text-align: right;
+		font-size: 9pt;
+		color: #ccc;
+		padding: 0px 6px;
+		width: 80px;
+	}
+	
+	[data-type="view"] {
+		@include transition(height 5s ease-in-out);
+	}
+}

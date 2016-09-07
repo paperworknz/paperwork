@@ -1,1 +1,0 @@
-"use strict";Core.addModule("account-editor",function(e){e.element});
