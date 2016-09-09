@@ -163,7 +163,7 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 							<price>
 								<div style="letter-spacing: 1.5px;">Paperwork</div>
 								<div class="major_title" style="padding: 10px 0px 15px;" itemprop="price">
-									<span>$10</span><span style="font-size: 11px;"> /MO</span>
+									<span>$5</span><span style="font-size: 11px;"> /MO</span>
 								</div>
 							</price>
 						</div>
@@ -199,30 +199,6 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 				$('body').on('click', '[data-type="sign-up-button"]', function(){
 					window.location = '{{environment.root}}/register';
 				});
-				
-				{% if remaining > 0 %}
-				var seconds = {{remaining}};
-				var countdownTimer = setInterval(timer, 1000);
-				
-				function timer() {
-					var days        = Math.floor(seconds/24/60/60);
-					var hoursLeft   = Math.floor((seconds) - (days*86400));
-					var hours       = Math.floor(hoursLeft/3600);
-					var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
-					var minutes     = Math.floor(minutesLeft/60);
-					var remainingSeconds = seconds % 60;
-					if (remainingSeconds < 10) {
-						remainingSeconds = "0" + remainingSeconds; 
-					}
-					$('[data-type="remaining"]').html(days + " days " + hours + ":" + minutes + ":" + remainingSeconds);
-					if (seconds == 0) {
-						clearInterval(countdownTimer);
-						$('[data-type="remaining"]').html("Completed");
-					} else {
-						seconds--;
-					}
-				}
-				{% endif %}
 				
 				// Play/pause videos
 				$('body').on('click', '.video_overlay', function(){
