@@ -16,8 +16,13 @@
 			{% for template in modules.template.data.templates %}
 				<box data-type="obj" data-id="{{i}}" data-template-id="{{template.id}}" class="tabobj">
 					<div class="template-container">
-						<div class="container">
-							<input type="text" class="template-name" data-type="template-name" data-title="Rename template" placeholder="Template name" value="{{template.name}}" required>
+						<div class="document-top container">
+							<div class="template-name">
+								<input type="text" class="template-name" data-type="template-name" data-title="Rename template" placeholder="Template name" value="{{template.name}}" required>
+							</div>
+							<div class="delete-button">
+								<button class="button delete" data-type="delete-button">DELETE</button>
+							</div>
 						</div>
 						<hr>
 						<div class="document-owner">

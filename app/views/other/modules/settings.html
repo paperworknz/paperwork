@@ -3,7 +3,7 @@
 		<li data-type="tab" data-id="0" class="tab">My Account</li>
 		<li data-type="tab" data-id="1" class="tab">Jobs</li>
 		<li data-type="tab" data-id="2" class="tab">Email</li>
-		<!--<li data-type="tab" data-id="3" class="tab">Voice</li>-->
+		<!--<li data-type="tab" data-id="3" class="tab">Billing</li>-->
 		<li data-type="tab" data-id="4" class="tab">Trash</li>
 	</ul>
 </part>
@@ -105,17 +105,6 @@
 					</table>
 				</form>
 			</part>
-			{% if user.privilege != 'guest' %}
-			<hr>
-			<part class="container-top">
-				<div class="h4 title">
-					Payment Options
-				</div>
-			</part>
-			<part class="uac container-bottom">
-				Please send an email to hello@paperwork.nz for enquiries regarding your subscription.
-			</part>
-			{% endif %}
 		</part>
 	</box>
 	<box data-type="obj" data-id="1" class="tabobj box-std">
@@ -256,10 +245,18 @@
 			</part>
 		</part>
 	</box>
-	<!--<box data-type="obj" data-id="3" class="tabobj box-std">
-		<part data-type="annyang">
+	<box data-type="obj" data-id="3" class="tabobj box-std">
+		<part class="container-top">
+			<div class="h4 title">
+				Cancel my subscription
+			</div>
 		</part>
-	</box>-->
+		<part class="container-bottom">
+			<p>Cancelling your subscription will <b>remove your payment information and disable your account.</b> 
+			This means you be unable to log into Paperwork.</p>
+			<button class="button delete" data-type="cancel-subscription">CANCEL SUBSCRIPTION</button>
+		</part>
+	</box>
 	<box data-type="obj" data-id="4" class="tabobj box-std">
 		<part data-type="trash-container">
 			{% if (modules.settings.data.jobs is not empty) or 

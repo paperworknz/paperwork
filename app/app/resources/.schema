@@ -28,6 +28,7 @@ return [
 '/get/register' => '../app/routes/other/get/register.php',
 '/get/template-properties' => '../app/routes/other/get/template-properties.php',
 '/get/tour' => '../app/routes/other/get/tour.php',
+'/post/cancel' => '../app/routes/other/post/cancel.php',
 '/post/client' => '../app/routes/other/post/client.php',
 '/post/document' => '../app/routes/other/post/document.php',
 '/post/email' => '../app/routes/other/post/email.php',

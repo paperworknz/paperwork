@@ -73,7 +73,7 @@ Core.addModule('job', function(context){
 				const value = response[i];
 				
 				$body.find('.pdf-list').append(`
-					<div style="height:24px;line-height:24px">
+					<div style="height: 24px; line-height: 24px;">
 						<a target="_blank" href="${environment.root}/get/pdf/${job.job_number}/${value}" onclick="event.stopPropagation();">${value}</a>
 					</div>
 				`);
