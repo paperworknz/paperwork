@@ -46,16 +46,34 @@
 		padding: 0;
 	}
 	
-	.template-name {
-		font-size: 24px;
-		line-height: 26px;
-		border: 1px solid white;
-		width: 100%;
+	.document-top {
+		display: table-row;
 		
-		&:hover {
-			border: 1px solid #ccc;
+		.template-name {
+			display: table-cell;
+			vertical-align: top;
+			width: 100%;
+			padding-right: 15px;
+			
+			input {
+				width: 100%;
+				font-size: 24px;
+				line-height: 26px;
+				border: 1px solid white;
+				
+				&:hover {
+					border: 1px solid #ccc;
+				}
+			}
+		}
+		
+		.delete-button {
+			display: table-cell;
+			vertical-align: top;
 		}
 	}
+	
+	
 	
 	.template-properties {
 		display: flex;

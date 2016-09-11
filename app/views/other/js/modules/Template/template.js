@@ -139,6 +139,8 @@ Core.addModule('template', function(context){
 		
 		// Save properties
 		propertiesUpdate();
+		
+		deleteTemplate();
 	}
 	
 	function append(request){
@@ -163,8 +165,13 @@ Core.addModule('template', function(context){
 		$obj.children().last().before(`
 			<box data-type="obj" data-id="${id}" data-template-id="${request.id}" class="tabobj">
 				<div class="template-container">
-					<div class="container">
-						<input type="text" class="template-name" data-type="template-name" placeholder="Template name" value="${request.name}" required>
+					<div class="document-top container">
+						<div class="template-name">
+							<input type="text" class="template-name" data-type="template-name" data-title="Rename template" placeholder="Template name" value="${request.name}" required>
+						</div>
+						<div class="delete-button">
+							<button class="button delete" data-type="delete-button">DELETE</button>
+						</div>
 					</div>
 					<hr>
 					<div style="position: relative;overflow: hidden;">
@@ -354,5 +361,44 @@ Core.addModule('template', function(context){
 				properties: properties,
 			});
 		}, 500);
+	}
+	
+	function deleteTemplate(){
+		
+		$body.on('click', '[data-type="delete-button"]', function(){
+			
+			var template_id = $(this).closest('[data-template-id]').data('template-id');
+			var button = {
+				element: $(this),
+				name: $(this).text(),
+			};
+			
+			swal({
+				title: 'Are you sure you want to delete this template?',
+				text: 'All documents using this template will be updated to use the next-best template. These documents will retain their name and data.',
+				showCancelButton: true,
+				closeOnConfirm: false,
+				showLoaderOnConfirm: true,
+			}, function(response){
+				if(!response) return Paperwork.ready(button.element, button.name);
+				
+				$.post(request.delete, {
+					id: template_id,
+				}).done(function(response){
+					response = JSON.parse(response);
+					
+					if(response.type == 'error'){
+						Paperwork.ready(button.element, button.name);
+						return swal({
+							type: 'error',
+							title: 'We ran into a problem',
+							text: response.message,
+						});
+					}
+					
+					return Paperwork.goto('reload');
+				});
+			});
+		});
 	}
 });

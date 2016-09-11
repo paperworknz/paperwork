@@ -16,8 +16,11 @@ Core.addModule('settings', function(context){
 		trash: {
 			put: `${environment.root}/put/restore`,
 			post: `${environment.root}/post/empty-trash`,
-		}
-	}
+		},
+		account: {
+			cancel: `${environment.root}/post/cancel`,
+		},
+	};
 	
 	var parse = context.require('parse');
 	
@@ -28,6 +31,7 @@ Core.addModule('settings', function(context){
 	bindEmail();
 	bindTrash();
 	speechRender();
+	cancelSubscription();
 	
 	function bindAddress(){
 		
@@ -213,6 +217,46 @@ Core.addModule('settings', function(context){
 		$body.on('click', '[data-type="annyang-switch"]', function(){
 			localStorage.annyang = $(this).hasClass('delete') ? 'false' : 'true';
 			Paperwork.goto(`${environment.root}/${environment.page}`);
+		});
+	}
+	
+	function cancelSubscription(){
+		
+		$body.on('click', '[data-type="cancel-subscription"]', function(){
+			
+			var button = {
+				element: $(this),
+				name: $(this).text(),
+			};
+			
+			swal({
+				type: 'warning',
+				title: 'Are you sure you want to cancel your subscription?',
+				text: `We're sorry to see you go, but we understand businesses move on. Please make sure you have 
+				read and understood what happens to your account when you cancel your subscription. We wish you 
+				nothing but the best with your future endeavours!`,
+				showCancelButton: true,
+				closeOnConfirm: false,
+				showLoaderOnConfirm: true,
+			}, function(response){
+				if(!response) return Paperwork.ready(button.element, button.name);
+				
+				$.post(request.account.cancel)
+				.done(function(response){
+					response = JSON.parse(response);
+					console.log(response);
+					if(response.type == 'error'){
+						Paperwork.ready(button.element, button.name);
+						return swal({
+							type: 'error',
+							title: 'We ran into a problem',
+							text: response.message,
+						});
+					}
+					
+					return Paperwork.goto(`${environment.root}/get/logout`);
+				});
+			});
 		});
 	}
 	

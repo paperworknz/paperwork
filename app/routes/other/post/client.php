@@ -31,5 +31,4 @@ $app->post('/post/client', 'uac', function() use ($app){
 	echo $app->build->success([
 		'client' => $client
 	]);
-		
 });
