@@ -222,7 +222,7 @@ Core.addModule('settings', function(context){
 	
 	function cancelSubscription(){
 		
-		$body.on('click', '[data-type="cancel-subscription"]', function(){
+		$body.on('click', '[data-type="cancel-account"]', function(){
 			
 			var button = {
 				element: $(this),
@@ -231,7 +231,7 @@ Core.addModule('settings', function(context){
 			
 			swal({
 				type: 'warning',
-				title: 'Are you sure you want to cancel your subscription?',
+				title: 'Are you sure you want to cancel your account?',
 				text: `We're sorry to see you go, but we understand businesses move on. Please make sure you have 
 				read and understood what happens to your account when you cancel your subscription. We wish you 
 				nothing but the best with your future endeavours!`,

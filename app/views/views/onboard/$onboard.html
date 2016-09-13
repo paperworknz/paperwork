@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+   		{% include head %}
+	</head>
+    <body>
+        {% include menu %}
+        <div id="content">
+			<module data-module="onboard">
+				{% include 'other/modules/onboard.html' %}
+			</module>
+        </div>
+		{% include js %}
+    </body>
+</html>

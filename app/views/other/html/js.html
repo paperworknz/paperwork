@@ -11,6 +11,7 @@ window.onerror = function(message, url, line, column, error){
 var environment = {
 	root: '{{environment.root}}',
 	page: '{{environment.page}}',
+	currency: '{{user.currency | raw}}',
 };
 </script>
 

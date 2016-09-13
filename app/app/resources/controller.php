@@ -37,13 +37,13 @@ function uac(){ // User controlled pages (in the app)
 	
 	// If a baby user's trial has expired
 	if($app->user['privilege'] == 'baby') {
-		// $today = new DateTime();
-		// $created = new DateTime($app->user['date_created']);
-		// $difference = $today->diff($created);
+		$today = new DateTime();
+		$created = new DateTime($app->user['date_created']);
+		$difference = $today->diff($created);
 		
-		// if($difference->d >= 14){
+		if($difference->d >= 14){
 			$_SESSION['trial_expired'] = true;
-		// }
+		}
 	}
 	
 	// If a guest user has been logged in for more than 24 hours

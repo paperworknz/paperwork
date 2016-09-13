@@ -58,7 +58,7 @@ Core.addService('parse', function(){
 			natural: true,
 		});
 		
-		if(i) i = '$' + i;
+		if(i) i = environment.currency + i;
 		
 		return i;
 	}
