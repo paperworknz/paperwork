@@ -37,7 +37,7 @@ style="width:25px;text-align:center;"
 					{% else %}
 					{% set item = item|capitalize %}
 					<li val="{{item}}" href="{{environment.root}}/{{location}}" 
-					{% if path.page in location %}
+					{% if environment.page in location %}
 					class="nav_active"
 					{% endif %}>
 						{{item}}
@@ -45,7 +45,7 @@ style="width:25px;text-align:center;"
 					{% endif %}
 				{% else %}
 					<li val="{{item|capitalize}}" href="{{environment.root}}/{{location}}" 
-					{% if path.page in location %}
+					{% if environment.page in location %}
 					class="nav_active"
 					{% endif %}>
 						{% set item = item|first|capitalize %}

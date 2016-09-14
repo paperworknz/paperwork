@@ -5,13 +5,15 @@ $app->post('/put/settings', 'uac', function() use ($app){
 	
 	/* Construction */
 	$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) : $app->user['email'];
-	$first = isset($_POST['first']) ? filter_var($_POST['first'], FILTER_SANITIZE_STRING) : $app->user['first'];
-	$last = isset($_POST['last']) ? filter_var($_POST['last'], FILTER_SANITIZE_STRING) : $app->user['last'];
-	$company = isset($_POST['company']) ? filter_var($_POST['company'], FILTER_SANITIZE_STRING) : $app->user['company'];
-	$phone = isset($_POST['phone']) ? filter_var($_POST['phone'], FILTER_SANITIZE_STRING) : $app->user['phone'];
+	$first = isset($_POST['first']) ? $_POST['first'] : $app->user['first'];
+	$last = isset($_POST['last']) ? $_POST['last'] : $app->user['last'];
+	$company = isset($_POST['company']) ? $_POST['company'] : $app->user['company'];
+	$phone = isset($_POST['phone']) ? $_POST['phone'] : $app->user['phone'];
 	$address = isset($_POST['address']) ? $_POST['address'] : $app->user['address'];
 	$timezone = isset($_POST['timezone']) ? $_POST['timezone'] : $app->user['timezone'];
+	$currency = isset($_POST['currency']) ? $_POST['currency'] : $app->user['currency'];
 	$tax = isset($_POST['tax']) ? $_POST['tax'] : $app->user['tax'];
+	$onboard = isset($_POST['onboard']) ? $_POST['onboard'] : false;
 	
 	$user = $app->sql->get('user')->where('email', '=', $email)->and('id', '<>', $app->user['id'])->root()->one();
 	
@@ -22,6 +24,7 @@ $app->post('/put/settings', 'uac', function() use ($app){
 		$app->redirect($app->root.'/settings');
 	}
 	
+	// Update details in Paperwork
 	$app->sql->put('user')->with([
 		'email'		=> $email,
 		'first'		=> $first,
@@ -30,16 +33,46 @@ $app->post('/put/settings', 'uac', function() use ($app){
 		'phone'		=> $phone,
 		'address'	=> $address,
 		'timezone'	=> $timezone,
+		'currency'	=> $currency,
 		'tax'		=> $tax,
 	])->where('id', '=', $app->user['id'])->root()->run();
 	
-	$app->event->log('updated their details');
+	// Update details in Braintree
+	$user = $app->sql->get('user')->where('id', '=', $app->user['id'])->root()->one();
 	
-	if(isset($_POST['hello'])){
-		$app->flash('success', "Hi {$first}! This is your list of jobs, you can get here using the <b>menu</b>. Click the default job below and use the <b>tabs</b> to navigate!");
-		$app->redirect($app->root.'/jobs');
+	try {
+		$braintree = Braintree_Customer::find($app->user['id']);
+		$success = true;
+	}catch(Exception $e){
+		$app->event->log('Braintree user '.$app->user['id'].' does not exist');
+		$success = false;
 	}
 	
-	$app->flash('success', 'Updated');
-	$app->redirect($app->root.'/settings');
+	if($success){
+		$result = Braintree_Customer::update(
+			$user['id'],
+			[
+				'firstName' => $user['first'],
+				'lastName' => $user['last'],
+				'company' => $user['company'],
+				'email' => $user['email'],
+				'phone' => $user['phone'],
+			]
+		);
+	}
+	
+	$app->event->log('updated their details');
+	
+	if(!$onboard){
+		$app->flash('success', 'Updated');
+		$app->redirect($app->root.'/settings');
+	}
+	
+	switch($onboard){
+		case 'region': $app->redirect($app->root.'/onboard/user');
+		case 'user': $app->redirect($app->root.'/onboard/jobs');
+		case 'jobs': 
+			$app->flash('success', 'Settings updated. This <b>Templates</b> page is where you design your templates.');
+			$app->redirect($app->root.'/templates');
+	}
 });

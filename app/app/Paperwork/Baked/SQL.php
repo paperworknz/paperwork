@@ -140,14 +140,14 @@ class SQL {
 			$string = '('.trim($string, ',').')';
 		}else{
 			
-			$par = substr_count($values, ')');
-			$values = str_replace(')', '', $values);
+			// $par = substr_count($values, ')');
+			// $values = str_replace(')', '', $values);
 			
 			if(is_string($values)) $values = '"'.$values.'"';
 			
-			for($i=0;$i<$par;$i++){
-				$values .= ')';
-			}
+			// for($i = 0; $i < $par; $i++){
+			// 	$values .= ')';
+			// }
 			
 			$string = $values;
 			

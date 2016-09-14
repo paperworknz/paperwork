@@ -1,0 +1,107 @@
+<box class="box-std">
+	<part data-type="parent" class="wrap centered">
+		<form method="post" action="{{environment.root}}/put/settings">
+			<part class="container-top wrap">
+				<div class="h3 title" data-type="title">
+					Onboarding: {{ environment.page | replace({'onboard/': ''}) | capitalize }}
+				</div>
+				<div>
+					If you're unsure about any of the values, leave them as they are and press next.
+				</div>
+			</part>
+			<part class="container view-parent">
+				<div data-type="view" class="wrap">
+					<div data-type="one">
+						<table>
+							<tbody>
+								{% if environment.page == 'onboard/region' %}
+								<tr>
+									<td>Currency</td>
+									<td>
+										<select name="currency">
+											{% for key, value in modules.onboard.data.currency %}
+											<option value="{{value | raw}}">{{value | raw}}</option>
+											{% endfor %}
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Timezone</td>
+									<td>
+										<select name="timezone">
+											{% for key, value in modules.onboard.data.timezone %}
+											{% if value == user.timezone %}
+											<option value="{{value}}" selected="selected">{{key | raw}}</option>
+											{% else %}
+											<option value="{{value}}">{{key | raw}}</option>
+											{% endif %}
+											{% endfor %}
+										</select>
+									</td>
+								</tr>
+								<input type="hidden" name="onboard" value="region">
+								{% elseif environment.page == 'onboard/user' %}
+								<tr>
+									<td>First name</td>
+									<td>
+										<input type="text" name="first" autocomplete="off" value="{{user.first}}" required>
+									</td>
+								</tr>
+								<tr>
+									<td>Last name</td>
+									<td>
+										<input type="text" name="last" autocomplete="off" value="{{user.last}}" required>
+									</td>
+								</tr>
+								<tr>
+									<td>Email</td>
+									<td>
+										<input type="text" name="email" autocomplete="on" value="{{user.email}}" required>
+									</td>
+								</tr>
+								<tr>
+									<td>Company</td>
+									<td>
+										<input type="text" name="company" autocomplete="off" value="{{user.company}}" required>
+									</td>
+								</tr>
+								<tr>
+									<td>Phone</td>
+									<td>
+										<input type="text" name="phone" autocomplete="off" value="{{user.phone}}" required>
+									</td>
+								</tr>
+								<tr>
+									<td>Address</td>
+									<td>
+										<input type="text" name="address" autocomplete="off" value="{{user.address}}" required>
+									</td>
+								</tr>
+								<input type="hidden" name="onboard" value="user">
+								{% elseif environment.page == 'onboard/jobs' %}
+								<tr data-title="Applied to the sub-total of a document">
+									<td>Tax percentage</td>
+									<td>
+										<input type="text" name="tax" autocomplete="off" value="{{user.tax}}" required>
+									</td>
+								</tr>
+								<input type="hidden" name="onboard" value="jobs">
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</part>
+			<part class="container">
+				<div class="central">
+					<ul class="list-inline" style="display: inline-block;">
+						<li>
+							<input type="hidden" name="hello">
+							<button class="button blue" data-type="next-step">NEXT</button>
+						</li>
+					</ul>
+				</div>
+			</part>
+		</form>
+	</part>
+</box>

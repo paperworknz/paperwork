@@ -30,7 +30,7 @@ Core.addModule('client', function(context){
 		
 		$body.on('click', '[data-type="new-job"]', function(){
 			
-			Paperwork.goto(`${environment.root}/jobs?id=${client_id}`);
+			Paperwork.goto(`${environment.root}/jobs?id=${client_number}`);
 		});
 	}
 	

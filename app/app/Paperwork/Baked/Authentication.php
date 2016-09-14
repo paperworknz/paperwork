@@ -2,8 +2,6 @@
 
 namespace Paperwork\Baked;
 
-use \PHPMailer;
-
 class Authentication {
 	
 	public function __construct(){
@@ -173,53 +171,49 @@ class Authentication {
 		);
 	}
 	
-	public function register($user){
+	public function register($request){
 		$app = \Slim\Slim::getInstance();
 		
-		if(!isset($user['username']) && $user['privilege'] == 'guest') $user['username'] = '';
-		if(!isset($user['password']) && $user['privilege'] == 'guest') $user['password'] = '';
-		if(!isset($user['confirm']) && $user['privilege'] == 'guest') $user['confirm'] = '';
+		// Get user
+		$user = $app->sql->get('user')->where('email', '=', $request['email'])->root()->one();
 		
-		if($app->sql->get('user')->where('email', '=', $user['email'])->root()->one() && $user['privilege'] != 'guest'){
+		if($user){
 			return [
-				'id' => false,
-				'message' => 'Email Exists',
+				'success' => false,
+				'message' => "{$request['email']} is already registered! Please contact support if you can't access your account.",
 			];
 		}
 		
-		if($app->sql->get('user')->where('username', '=', $user['username'])->root()->one() && $user['privilege'] != 'guest'){
+		if(($request['password'] != $request['confirm'])){
 			return [
-				'id' => false,
-				'message' => 'Username Exists',
+				'success' => false,
+				'message' => "Sorry, the passwords you entered did not match.",
 			];
 		}
 		
-		if(($user['password'] != $user['confirm']) && $user['privilege'] != 'guest'){
+		if((strlen($request['password']) < 8)){
 			return [
-				'id' => false,
-				'message' => 'Password Mismatch',
+				'success' => false,
+				'message' => "Sorry, your password needs to be longer than 8 characters.",
 			];
 		}
 		
 		// Hash password
-		if($user['privilege'] != 'guest') $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+		$request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
 		
 		// Generate cookie
 		$cookie = bin2hex(random_bytes(32));
 		
 		// Add user to user table
 		$id = $app->sql->post('user')->with([
-			'username'	=> $user['username'] ?: '',
-			'first'		=> $user['first'],
-			'last'		=> $user['last'],
-			'company'	=> $user['company'],
-			'email'		=> $user['email'],
-			'privilege'	=> $user['privilege'],
+			'email'		=> $request['email'],
+			'privilege'	=> $request['privilege'],
 			'disabled'	=> 0,
 			'timezone'	=> 'Pacific/Auckland',
+			'currency'	=> '$',
 			'tax'		=> 15,
 			'active'	=> 1,
-			'password'	=> $user['password'] ?: '',
+			'password'	=> $request['password'],
 			'cookie'	=> $cookie,
 		])->root()->run();
 		
@@ -286,12 +280,9 @@ class Authentication {
 			'background_colour' => '#3498db',
 		])->root()->run();
 		
-		if($user['privilege'] != 'guest') $app->event->log('registered with username: '.$user['username']);
-		
 		return [
+			'success' => true,
 			'id' => $id,
-			'message' => 'Registered Successfully',
 		];
 	}
-	
 }

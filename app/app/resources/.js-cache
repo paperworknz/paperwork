@@ -10,14 +10,14 @@
 		"admin-template-editor": "admin-template-editor.js?FuZlKb",
 		"app": "app.js?SuC6AL",
 		"checkout": "checkout.js?g1Pgfz",
-		"client": "client.js?F8OuzH",
+		"client": "client.js?5YrGZQ",
 		"clients": "clients.js?1KDWan",
 		"flash": "flash.js?2PcK1G",
-		"inventory": "inventory.js?EVS9cq",
-		"job": "job.js?YSnamz",
+		"inventory": "inventory.js?byfjOR",
+		"job": "job.js?KUOX2t",
 		"jobs": "jobs.js?9ujEnX",
 		"notification": "notification.js?hChk2H",
-		"settings": "settings.js?1Unx3B",
+		"settings": "settings.js?rGZcIT",
 		"tab": "tab.js?LVBgld",
 		"template": "template.js?sQYent",
 		"user": "user.js?Xsu4GW",
@@ -25,7 +25,7 @@
 		"document-margin": "document-margin.js?jRTCWC",
 		"document-email": "document-email.js?uzN46L",
 		"email": "email.js?jCmGiT",
-		"hello": "hello.js?rrN2Gy"
+		"onboard": "onboard.js?hIzKn2"
 	},
 	"behaviors": {
 		"tab": "tab.js?bgKtly",
@@ -35,7 +35,7 @@
 	"services": {
 		"annyang": "annyang.js?alNK33",
 		"dark": "dark.js?YHkPXI",
-		"parse": "parse.js?L0S5c9",
+		"parse": "parse.js?Njaw6H",
 		"pdf": "pdf.js?zk5Em1",
 		"caret": "caret.js?2FmZin",
 		"titles": "titles.js?s2wVTv"

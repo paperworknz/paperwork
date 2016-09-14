@@ -44,30 +44,6 @@
 					<part class="register-information" data-validate="on">
 						<section>
 							<label>
-								First name
-							</label>
-							<part>
-								<input type="text" name="first" required>
-							</part>
-						</section>
-						<section>
-							<label>
-								Last name
-							</label>
-							<part>
-								<input type="text" name="last" required>
-							</part>
-						</section>
-						<section>
-							<label>
-								Company name
-							</label>
-							<part>
-								<input type="text" name="company" required>
-							</part>
-						</section>
-						<section>
-							<label>
 								Email address
 							</label>
 							<part>
@@ -76,18 +52,10 @@
 						</section>
 						<section>
 							<label>
-								Username
+								Password (Min 8 characters)
 							</label>
 							<part>
-								<input type="text" name="username" required>
-							</part>
-						</section>
-						<section>
-							<label>
-								Password
-							</label>
-							<part>
-								<input type="password" name="password" required>
+								<input type="password" name="password" autocomplete="off" required>
 							</part>
 						</section>
 						<section>
@@ -95,19 +63,11 @@
 								Confirm password
 							</label>
 							<part>
-								<input type="password" name="confirm" required>
-							</part>
-						</section>
-						<section style="padding-bottom: 35px;">
-							<label>
-								Referrer <span style="color: #999">(optional)</span>
-							</label>
-							<part>
-								<input type="text" name="referrer">
+								<input type="password" name="confirm" autocomplete="off" required>
 							</part>
 						</section>
 						<section style="display: inline-block;">
-							<button class="button next-step left" style="width: 100px">NEXT</button>
+							<button class="button next-step left" style="width: 100px">LOG IN</button>
 						</section>
 					</part>
 				</section>
@@ -119,55 +79,41 @@
 		<script>
 			$(function(){
 				
-				// Helpers
-				$('input[name=first]').on('keyup', function(){
-					$('input[name=username]').val($(this).val().toLowerCase());
-				});
-				
-				// Login on click (focusing also triggers this)
+				// Login on click
 				$('.next-step').on('click', register);
 				
 				function register(){
-					if(!$('.next-step').hasClass('button-wait')){
+					
+					$.post('{{environment.root}}/post/register', {
+						email: $('input[name=email]').val(),
+						password: $('input[name=password]').val(),
+						confirm: $('input[name=confirm]').val(),
+					}).done(function(response){
+						response = JSON.parse(response);
 						
-						$.post('{{environment.root}}/post/register', {
-							first: $('input[name=first]').val(),
-							last: $('input[name=last]').val(),
-							company: $('input[name=company]').val(),
-							email: $('input[name=email]').val(),
-							username: $('input[name=username]').val(),
-							password: $('input[name=password]').val(),
-							confirm: $('input[name=confirm]').val(),
-							referrer: $('input[name=referrer]').val(),
-						}).done(function(a){
-							a = JSON.parse(a);
-							
-							if(a.type == 'success'){
-								{% if state == 'prod' %}
-								fbq('track', 'CompleteRegistration');
-								{% endif %}
-								$.post('{{environment.root}}/post/login', {
-									username: $('input[name=username]').val(),
-									password: $('input[name=password]').val(),
-								}).done(function(data){
-									data = JSON.parse(data);
-									
-									if(data.type == 'success'){
-										window.location = '{{environment.root}}/app';
-									}else{
-										$('table').before('<div class="alert alert-danger">'+data.message+'</div>');
-									}
-								});
+						if(response.type == 'error'){
+							if($('.alert').length > 0){
+								$('.alert').html(response.message);
 							}else{
-								if($('.alert').length > 0){
-									$('.alert').html(a.message);
-								}else{
-									$('table').before('<div class="alert alert-danger">'+a.message+'</div>');
-								}
-								Paperwork.ready($('.next-step'), 'LOG IN');
+								$('.register-information').before('<div class="alert alert-danger">'+response.message+'</div>');
 							}
+							return Paperwork.ready($('.next-step'), 'LOG IN');
+						}
+						
+						{% if state == 'prod' %}
+						fbq('track', 'CompleteRegistration');
+						{% endif %}
+						$.post('{{environment.root}}/post/login', {
+							username: $('input[name=email]').val(),
+							password: $('input[name=password]').val(),
+						}).done(function(response){
+							response = JSON.parse(response);
+							
+							if(response.type == 'error') return $('.register-information').before('<div class="alert alert-danger">'+response.message+'</div>');
+							
+							window.location = '{{environment.root}}/onboard/region';
 						});
-					}
+					});
 				}
 			});
 		</script>

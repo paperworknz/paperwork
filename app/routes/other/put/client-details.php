@@ -3,11 +3,13 @@
 $app->post('/put/client-details', 'uac', function() use($app){
 	/* Methods */
 	$id = isset($_POST['id']) ? $_POST['id'] : false;
-	$notes = isset($_POST['notes']) ? $_POST['notes'] : false;
 	$name = isset($_POST['name']) ? $_POST['name'] : false;
+	$email = isset($_POST['email']) ? $_POST['email'] : false;
+	$phone = isset($_POST['phone']) ? $_POST['phone'] : false;
+	$address = isset($_POST['address']) ? $_POST['address'] : false;
+	$notes = isset($_POST['notes']) ? $_POST['notes'] : false;
 	
 	/* Construction */
-	
 	if($id && isset($_POST['notes'])){
 		$app->sql->put('client')->with([
 			'notes' => $notes
@@ -15,10 +17,6 @@ $app->post('/put/client-details', 'uac', function() use($app){
 	}
 	
 	if($id && $name){
-		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-		$address = $_POST['address'];
-		$email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-		$phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
 		$app->sql->put('client')->with([
 			'name'		=> $name,
 			'address'	=> $address,
@@ -26,5 +24,4 @@ $app->post('/put/client-details', 'uac', function() use($app){
 			'phone'		=> $phone
 		])->where('id', '=', $id)->run();
 	}
-	
 });

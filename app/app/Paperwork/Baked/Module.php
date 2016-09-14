@@ -10,7 +10,7 @@ class Module {
 		'admin' => 0,
 		'user' => 1,
 		'guest' => 1,
-		'baby' => 1,
+		'trial' => 1,
 	];
 	
 	public function add($name, $privilege, $fn){

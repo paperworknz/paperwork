@@ -12,11 +12,11 @@
 			</module>
         </div>
 		{% include js %}
-		{% if cname|length > 1 %}
+		{% if name %}
 		<script>
 			$(function(){
 				$('#new-content').slideToggle(100);
-				$('.typeahead').val('{{cname | raw}}');
+				$('.typeahead').val('{{name}}');
 				$("input[name='name']").focus();
 			});
 		</script>

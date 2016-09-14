@@ -3,7 +3,9 @@
 		<li data-type="tab" data-id="0" class="tab">My Account</li>
 		<li data-type="tab" data-id="1" class="tab">Jobs</li>
 		<li data-type="tab" data-id="2" class="tab">Email</li>
-		<!--<li data-type="tab" data-id="3" class="tab">Billing</li>-->
+		{% if user.privilege != 'baby' %}
+		<li data-type="tab" data-id="3" class="tab">Billing</li>
+		{% endif %}
 		<li data-type="tab" data-id="4" class="tab">Trash</li>
 	</ul>
 </part>
@@ -58,6 +60,16 @@
 										{% else %}
 										<option value="{{value}}">{{key | raw}}</option>
 										{% endif %}
+										{% endfor %}
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Currency</td>
+								<td>
+									<select name="currency">
+										{% for key, value in modules.settings.data.currency %}
+										<option value="{{value|raw}}">{{value|raw}}</option>
 										{% endfor %}
 									</select>
 								</td>
@@ -188,7 +200,6 @@
 				{% endif %}
 			</part>
 			{% if email != true %}
-			<hr>
 			{% endif %}
 			<part class="container email-settings">
 				<form method="post" action="{{environment.root}}/put/email-settings">
@@ -248,13 +259,13 @@
 	<box data-type="obj" data-id="3" class="tabobj box-std">
 		<part class="container-top">
 			<div class="h4 title">
-				Cancel my subscription
+				Cancel my account
 			</div>
 		</part>
 		<part class="container-bottom">
-			<p>Cancelling your subscription will <b>remove your payment information and disable your account.</b> 
+			<p>Cancelling your account will <b>cancel your subscription, remove your payment information, and demote your account to a trial user.</b> 
 			This means you be unable to log into Paperwork.</p>
-			<button class="button delete" data-type="cancel-subscription">CANCEL SUBSCRIPTION</button>
+			<button class="button delete" data-type="cancel-account">CANCEL ACCOUNT</button>
 		</part>
 	</box>
 	<box data-type="obj" data-id="4" class="tabobj box-std">
