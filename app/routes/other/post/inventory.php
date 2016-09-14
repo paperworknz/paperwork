@@ -2,8 +2,8 @@
 
 $app->post('/post/inventory', 'uac', function() use ($app){
 	/* Methods */
-	$name = isset($_POST['name']) ? trim($_POST['name']) : false;
-	$price = isset($_POST['price']) ? trim($_POST['price']): false;
+	$name = isset($_POST['name']) ? $_POST['name'] : false;
+	$price = isset($_POST['price']) ? $_POST['price'] : false;
 	
 	/* Construction */
 	if(!$name){
@@ -14,7 +14,9 @@ $app->post('/post/inventory', 'uac', function() use ($app){
 		$price = 0;
 	}
 	
-	if($app->sql->get('inventory')->where('name', '=', $name)->one()){
+	$item = $app->sql->get('inventory')->where('name', '=', $name)->one();
+	
+	if($item){
 		
 		$app->sql->put('inventory')->with([
 			'name' => $name,
@@ -22,7 +24,6 @@ $app->post('/post/inventory', 'uac', function() use ($app){
 		])->where('name', '=', $name)->run();
 		
 		$app->event->log('updated inventory item: '.$name);
-		
 	}else{
 		
 		$app->sql->post('inventory')->with([
@@ -31,7 +32,6 @@ $app->post('/post/inventory', 'uac', function() use ($app){
 		])->run();
 		
 		$app->event->log('created inventory item: '.$name);
-		
 	}
 	
 	$item = $app->sql->get('inventory')->where('name', '=', $name)->one();
