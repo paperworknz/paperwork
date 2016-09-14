@@ -65,6 +65,16 @@
 								</td>
 							</tr>
 							<tr>
+								<td>Currency</td>
+								<td>
+									<select name="currency">
+										{% for key, value in modules.settings.data.currency %}
+										<option value="{{value | raw}}">{{value | raw}}</option>
+										{% endfor %}
+									</select>
+								</td>
+							</tr>
+							<tr>
 								<td></td>
 								<td style="height:40px">
 									<button class="button">UPDATE</button>
@@ -190,7 +200,6 @@
 				{% endif %}
 			</part>
 			{% if email != true %}
-			<hr>
 			{% endif %}
 			<part class="container email-settings">
 				<form method="post" action="{{environment.root}}/put/email-settings">

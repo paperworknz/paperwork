@@ -210,6 +210,7 @@ class Authentication {
 			'privilege'	=> $request['privilege'],
 			'disabled'	=> 0,
 			'timezone'	=> 'Pacific/Auckland',
+			'currency'	=> '$',
 			'tax'		=> 15,
 			'active'	=> 1,
 			'password'	=> $request['password'],

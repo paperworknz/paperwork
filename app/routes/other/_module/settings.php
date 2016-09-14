@@ -9,6 +9,7 @@ $app->module->add('settings', 'user', function($request) use ($app){
 	$status	= $app->sql->get('job_status')->also('ORDER BY job_status_number')->all();
 	$email = $app->sql->get('user_email')->one();
 	$timezone = include '../app/app/resources/timezone.php';
+	$currency = include '../app/app/resources/currency.php';
 	
 	// Trash
 	$job	= $app->sql->get('job')->select(['id', 'job_number', 'name', 'client_id'])->softOnly()->all();
@@ -30,6 +31,7 @@ $app->module->add('settings', 'user', function($request) use ($app){
 			'job_number'=> $job_number,
 			'email'		=> $email,
 			'timezone'	=> $timezone,
+			'currency'	=> $currency,
 		],
 	];
 });

@@ -35,7 +35,7 @@ $app->post('/post/pay', function() use ($app){
 	// -> successfully updated users payment method and applied new subscription
 	
 	// Promote user's privilege to 'user'
-	if($app->user['privilege'] == 'baby'){
+	if($app->user['privilege'] == 'trial'){
 		$app->sql->put('user')->where('id', '=', $app->user['id'])->with([
 			'privilege' => 'user'
 		])->root()->run();

@@ -35,8 +35,8 @@ function uac(){ // User controlled pages (in the app)
 	
 	$_SESSION['trial_expired'] = false;
 	
-	// If a baby user's trial has expired
-	if($app->user['privilege'] == 'baby') {
+	// If a trial user's trial has expired
+	if($app->user['privilege'] == 'trial') {
 		$today = new DateTime();
 		$created = new DateTime($app->user['date_created']);
 		$difference = $today->diff($created);

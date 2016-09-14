@@ -17,11 +17,7 @@ $app->post('/put/document', 'uac', function() use ($app){
 	
 	foreach($document as $key => $value){
 		
-		$key = str_replace('-', '_', $key);
-		
-		if(in_array($key, $format)){
-			$request[$key] = $value;
-		}
+		if(in_array($key, $format)) $request[$key] = $value;
 	}
 	
 	$request['items'] = $app->parse->arrayToJson($request['items']);

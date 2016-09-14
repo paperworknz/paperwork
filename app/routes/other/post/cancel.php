@@ -16,7 +16,7 @@ $app->post('/post/cancel', 'uac', function() use ($app){
 	
 	// Demote user
 	$app->sql->put('user')->with([
-		'privilege' => 'baby',
+		'privilege' => 'trial',
 	])->where('id', '=', $app->user['id'])->root()->run();
 	
 	// Email with recovery string
@@ -51,7 +51,7 @@ $app->post('/post/cancel', 'uac', function() use ($app){
 	
 	$response = $mail->send();
 	
-	$app->event->log('cancelled their subscription, account demoted to baby');
+	$app->event->log('cancelled their subscription, account demoted to trial');
 	
 	echo $app->build->success([
 		'message' => 'Client subscription removed'

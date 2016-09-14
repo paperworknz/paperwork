@@ -37,19 +37,29 @@ $app->post('/put/settings', 'uac', function() use ($app){
 		'tax'		=> $tax,
 	])->where('id', '=', $app->user['id'])->root()->run();
 	
+	// Update details in Braintree
 	$user = $app->sql->get('user')->where('id', '=', $app->user['id'])->root()->one();
 	
-	// Update details in Braintree
-	$result = Braintree_Customer::update(
-		$app->user['id'],
-		[
-			'firstName' => $user['first'],
-			'lastName' => $user['last'],
-			'company' => $user['company'],
-			'email' => $user['email'],
-			'phone' => $user['phone'],
-		]
-	);
+	try {
+		$braintree = Braintree_Customer::find($app->user['id']);
+		$success = true;
+	}catch(Exception $e){
+		$app->event->log('Braintree user '.$app->user['id'].' does not exist');
+		$success = false;
+	}
+	
+	if($success){
+		$result = Braintree_Customer::update(
+			$user['id'],
+			[
+				'firstName' => $user['first'],
+				'lastName' => $user['last'],
+				'company' => $user['company'],
+				'email' => $user['email'],
+				'phone' => $user['phone'],
+			]
+		);
+	}
 	
 	$app->event->log('updated their details');
 	
