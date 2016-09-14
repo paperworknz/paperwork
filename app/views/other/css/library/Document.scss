@@ -42,6 +42,10 @@ doc-body {
 		&:hover {
 			background-color: #D6EDFF;
 		}
+		
+		&:active, &:focus {
+			background-color: transparent!important;
+		}
 	}
 	
 	[data-type="inventory-content"] {
