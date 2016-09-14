@@ -5,10 +5,10 @@ $app->post('/put/settings', 'uac', function() use ($app){
 	
 	/* Construction */
 	$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) : $app->user['email'];
-	$first = isset($_POST['first']) ? filter_var($_POST['first'], FILTER_SANITIZE_STRING) : $app->user['first'];
-	$last = isset($_POST['last']) ? filter_var($_POST['last'], FILTER_SANITIZE_STRING) : $app->user['last'];
-	$company = isset($_POST['company']) ? filter_var($_POST['company'], FILTER_SANITIZE_STRING) : $app->user['company'];
-	$phone = isset($_POST['phone']) ? filter_var($_POST['phone'], FILTER_SANITIZE_STRING) : $app->user['phone'];
+	$first = isset($_POST['first']) ? $_POST['first'] : $app->user['first'];
+	$last = isset($_POST['last']) ? $_POST['last'] : $app->user['last'];
+	$company = isset($_POST['company']) ? $_POST['company'] : $app->user['company'];
+	$phone = isset($_POST['phone']) ? $_POST['phone'] : $app->user['phone'];
 	$address = isset($_POST['address']) ? $_POST['address'] : $app->user['address'];
 	$timezone = isset($_POST['timezone']) ? $_POST['timezone'] : $app->user['timezone'];
 	$currency = isset($_POST['currency']) ? $_POST['currency'] : $app->user['currency'];
