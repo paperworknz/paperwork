@@ -18,6 +18,8 @@ $app->post('/put/template', 'uac', function() use ($app){
 		'name' => $name
 	])->where('id', '=', $id)->run();
 	
+	$app->event->log('updated their template settings');
+	
 	echo $app->build->success([
 		'message' => 'name updated',
 	]);
