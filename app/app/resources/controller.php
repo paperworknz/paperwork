@@ -41,7 +41,7 @@ function uac(){ // User controlled pages (in the app)
 		$created = new DateTime($app->user['date_created']);
 		$difference = $today->diff($created);
 		
-		if($difference->d >= 14){
+		if($difference-> y >= 1 || $difference->m >= 1 || $difference->d >= 14){
 			$_SESSION['trial_expired'] = true;
 		}
 	}
