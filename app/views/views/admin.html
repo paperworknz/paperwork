@@ -17,7 +17,6 @@
 				var landing = 0;
 				var regist = 0;
 				var newuser = 0;
-				var guestcount = 0;
 				
 				function dump(obj) {
 					var out = '';
@@ -28,15 +27,12 @@
 						if(i == 'user_id') id = obj[i];
 					}
 					
-					if(out.indexOf('Guest user logged in') !== -1){
-						guestcount++;
-					}else if(out.indexOf('Welcome email') !== -1){
+					if(out.indexOf('Welcome email') !== -1){
 						newuser++;
 					}
 					
 					$('[insights]').html(
-						'Guest User logins: '+guestcount+
-						'<br>New Users: '+newuser
+						'New Users: '+newuser
 					);
 					
 					out = out.replace('user_id: '+id, 'user_id: <a href="{{environment.root}}/user/'+id+'">'+id+'</a>');
