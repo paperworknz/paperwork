@@ -40,82 +40,36 @@
 						All new users get a <b>14 day free trial</b>
 					</div>
 				</section>
-				<section class="user-information centered central">
-					<part class="register-information" data-validate="on">
-						<section>
-							<label>
-								Email address
-							</label>
-							<part>
-								<input type="email" name="email" required>
-							</part>
-						</section>
-						<section>
-							<label>
-								Password (Min 8 characters)
-							</label>
-							<part>
-								<input type="password" name="password" autocomplete="off" required>
-							</part>
-						</section>
-						<section>
-							<label>
-								Confirm password
-							</label>
-							<part>
-								<input type="password" name="confirm" autocomplete="off" required>
-							</part>
-						</section>
-						<section style="display: inline-block;">
-							<button class="button next-step left" style="width: 100px">LOG IN</button>
-						</section>
-					</part>
+				<section class="user-information centered central" style="max-width: 500px;">
+					{% include path.html.flash %}
+					<form action="{{environment.root}}/post/register" accept-charset="UTF-8" method="post" novalidate>
+						<part class="user-information register-information" data-validate="on">
+							<section class="register-name">
+								<part>
+									<input type="text" name="first" placeholder="First name" required>
+								</part>
+								<part>
+									<input type="text" name="last" placeholder="Last name" required>
+								</part>
+							</section>
+							<section>
+								<part>
+									<input type="email" name="email" placeholder="Email" required>
+								</part>
+							</section>
+							<section>
+								<part>
+									<input type="password" name="password" autocomplete="off" placeholder="Password" required>
+								</part>
+							</section>
+							<section>
+								<button class="button next-step">LET'S GET STARTED</button>
+							</section>
+						</part>
+					</form>
 				</section>
 			</div>
 		</section>
 		{% include path.html.footer %}
-		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
-		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
-		<script>
-			$(function(){
-				
-				// Login on click
-				$('.next-step').on('click', register);
-				
-				function register(){
-					
-					$.post('{{environment.root}}/post/register', {
-						email: $('input[name=email]').val(),
-						password: $('input[name=password]').val(),
-						confirm: $('input[name=confirm]').val(),
-					}).done(function(response){
-						response = JSON.parse(response);
-						
-						if(response.type == 'error'){
-							if($('.alert').length > 0){
-								$('.alert').html(response.message);
-							}else{
-								$('.register-information').before('<div class="alert alert-danger">'+response.message+'</div>');
-							}
-							return Paperwork.ready($('.next-step'), 'LOG IN');
-						}
-						
-						{% if state == 'prod' %}
-						fbq('track', 'CompleteRegistration');
-						{% endif %}
-						$.post('{{environment.root}}/post/login', {
-							username: $('input[name=email]').val(),
-							password: $('input[name=password]').val(),
-						}).done(function(response){
-							response = JSON.parse(response);
-							
-							if(response.type == 'error') return $('.register-information').before('<div class="alert alert-danger">'+response.message+'</div>');
-							
-							window.location = '{{environment.root}}/onboard/region';
-						});
-					});
-				}
-			});
-		</script>
 	</body>
 </html>

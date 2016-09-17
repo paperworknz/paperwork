@@ -184,13 +184,6 @@ class Authentication {
 			];
 		}
 		
-		if(($request['password'] != $request['confirm'])){
-			return [
-				'success' => false,
-				'message' => "Sorry, the passwords you entered did not match.",
-			];
-		}
-		
 		if((strlen($request['password']) < 8)){
 			return [
 				'success' => false,
@@ -206,6 +199,8 @@ class Authentication {
 		
 		// Add user to user table
 		$id = $app->sql->post('user')->with([
+			'first'		=> $request['first'],
+			'last'		=> $request['last'],
 			'email'		=> $request['email'],
 			'privilege'	=> $request['privilege'],
 			'disabled'	=> 0,

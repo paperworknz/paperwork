@@ -22,22 +22,38 @@ $app->post('/post/register', 'app', function() use ($app){
 	$query = rtrim($query, '& ');
 	
 	$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) : false;
+	$first = isset($_POST['first']) ? $_POST['first'] : false;
+	$last = isset($_POST['last']) ? $_POST['last'] : false;
 	$password = isset($_POST['password']) ? $_POST['password'] : false;
-	$confirm = isset($_POST['confirm']) ? $_POST['confirm'] : false;
 	
 	/* Construction */
-	if(!$email) die($app->build->error('Please enter a valid email address!'));
-	if(!$password) die($app->build->error('Please enter a password!'));
-	if(!$confirm) die($app->build->error('Please confirm your password!'));
+	if(!$first){
+		$app->flash('error', 'Please enter your name.');
+		$app->redirect($app->root.'/register');
+	}
+	
+	if(!$email){
+		$app->flash('error', 'Please enter a valid email address.');
+		$app->redirect($app->root.'/register');
+	}
+	
+	if(!$password){
+		$app->flash('error', 'Please enter a password.');
+		$app->redirect($app->root.'/register');
+	}
 	
 	$action = $app->auth->register([
+		'first' => $first,
+		'last' => $last,
 		'email' => $email,
 		'password' => $password,
-		'confirm' => $confirm,
 		'privilege' => 'trial',
 	]);
 	
-	if(!$action['success']) die($app->build->error($action['message']));
+	if(!$action['success']){
+		$app->flash('error', $action['message']);
+		$app->redirect($app->root.'/register');
+	}
 	
 	// Post registration
 	$user_id = $action['id'];
@@ -45,6 +61,8 @@ $app->post('/post/register', 'app', function() use ($app){
 	// Add user to Braintree
 	$result = Braintree_Customer::create([
 		'id' => $user_id,
+		'firstName' => $first,
+		'lastName' => $last,
 		'email' => $email,
 	]);
 	
@@ -56,15 +74,10 @@ $app->post('/post/register', 'app', function() use ($app){
 		]);
 	}
 	
-	// Don't email if mode is dev
-	if($_ENV['MODE'] == 'dev'){
-		die($app->build->success([
-			'message' => 'Registered Successfully'
-		]));
-	}
-	
 	// ActiveCampaign add contact
 	$post = [
+		'first_name' => $first,
+		'last_name' => $last,
 		'email' => $email,
 		'p[1]' => 1,
 		'ip4' => $app->ip,
@@ -79,14 +92,38 @@ $app->post('/post/register', 'app', function() use ($app){
 	$json = (string) $body;
 	$result = $app->parse->jsonToArray($json);
 	
-	if($result['result_code'] != 1) $app->event->log("ActiveCampaign error: {$result['result_code']}{PHP_EOL}Message: {$result['result_message']}");
+	if($result['result_code'] != 1){
+		$app->event->log("ActiveCampaign error: {$result['result_code']}, Message: {$result['result_message']}");
+	}
 	
 	$app->event->log([
-		'text' => "Welcome email sent to {$email}",
+		'text' => "New user: {$first} {$last}, {$email}",
 		'user_id' => $user_id,
 	]);
 	
-	echo $app->build->success([
-		'message' => 'Registered Successfully'
-	]);
+	$action = $app->auth->login($email, $password);
+	
+	switch($action){
+		case 'Invalid Password':
+			$app->event->log('entered a wrong password with username: '.$username.'. IP: '.$app->ip);
+			$app->flash('error', 'Your username or password was incorrect');
+			$app->redirect($app->root.'/login');
+			break;
+		
+		case 'User Disabled':
+			$app->event->log('tried to log on to a disabled account, username: '.$username.'. IP: '.$app->ip);
+			$app->flash('error', 'This account is currently disabled. Please contact us if you think this is in error.');
+			$app->redirect($app->root.'/login');
+			break;
+		
+		case 'User Does Not Exist':
+			$app->event->log('tried to log into a non-existant account with username: '.$username.'. IP: '.$app->ip);
+			$app->flash('error', 'Your username or password was incorrect');
+			$app->redirect($app->root.'/login');
+			break;
+		
+		case 'Authenticated Successfully':
+			$app->redirect($app->root.'/onboard/region');
+			break;
+	}
 });
