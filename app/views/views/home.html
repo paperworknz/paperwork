@@ -30,137 +30,65 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 				</div>
 			</header>
 			<section>
-				<div class="width">
+				<div class="width top">
 					{% include path.html.flash %}
-					<div class="centered main atf" style="padding-bottom: 0;">
-						<section style="padding-left: 15px;padding-right: 15px;padding-bottom: 0;">
-							<span class="minor_title" itemprop="description">
-								Paperwork is an app to help you order, simplify and minimise your Quote and Invoicing.<br>
-								Our mission is to make your day-to-day paperwork as <span style="font-weight: 400">painless</span> as possible.
-							</span>
-						</section>
-						<div class="main">
-							<!--<form accept-charset="UTF-8" action="{{environment.root}}/post/temporary-user" method="post">
-								<button data-type="try-now-button" class="facade button large central">TRY NOW</button>
-							</form>-->
-							<button data-type="sign-up-button" class="facade button large central">
-								TRY NOW
-							</button>
+					<div class="top-part">
+						<div class="top-left">
+							<section itemprop="description">
+								<h1 class="main_title">
+									Lightweight Quote and Invoicing. Anywhere, any device.
+								</h1>
+								<span class="minor_title">
+									A plug 'n play system to manage jobs.
+								</span>
+							</section>
+							<section>
+								<form action="{{environment.root}}/post/register" accept-charset="UTF-8" method="post" novalidate>
+									<part class="user-information register-information" data-validate="on">
+										<section class="register-name">
+											<part>
+												<input type="text" name="first" placeholder="First name" required>
+											</part>
+											<part>
+												<input type="text" name="last" placeholder="Last name" required>
+											</part>
+										</section>
+										<section>
+											<part>
+												<input type="email" name="email" placeholder="Email" required>
+											</part>
+										</section>
+										<section>
+											<part>
+												<input type="password" name="password" autocomplete="off" placeholder="Password" required>
+											</part>
+										</section>
+										<section>
+											<button class="button next-step">LET'S GET STARTED</button>
+										</section>
+									</part>
+								</form>
+							</section>
 						</div>
-					</div>
-					<div class="centered">
-						<div class="minor_title" style="padding-left: 15px;padding-right: 15px;padding-bottom: 50px;">
-							We like to learn things hands-on. Try Paperwork right now for free. No credit card required.
+						<div class="top-right">
+							<div class="browser">
+								<div class="browser-header">
+									<div></div>
+									<div></div>
+									<div></div>
+								</div>
+								<div class="browser-content">
+									<img src="{{environment.root}}/css/media/home.gif" class="no-click">
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</section>
-			<section>
-				<hr>
-				<div class="main top">
-					<div class="width centered wrap" style="font-weight: 200;font-size: 16px;">
-						<feature></feature>
-						<feature style="text-align: right;padding: 15px;">
-						After finding Paperwork I'll never look back. Paperwork is so simple it let's you 
-						get everything done in the time it took to get Excel working. 
-						<span style="font-weight: 400;">I don't see how a business like mine could compete without something like Paperwork.</span>
-						<div style="color: #999"><i>- Logan Rear, Nailed It Construction</i></div>
-						</feature>
 					</div>
 				</div>
 			</section>
 		</part>
-		<section 1>
-			<div class="feature main">
-				<div class="width">
-					<div class="content_white">
-						<section>
-							<div class="wrap">
-								<feature>
-									<span class="minor_title">Quotes and Invoices</span>
-									<span>
-										Paperwork provides a natural work flow, which means client details and job numbers are loaded automatically. 
-										Quotes are made inside Paperwork and can be converted to a PDF with the click of a button.
-									</span>
-								</feature>
-								<feature>
-									<img src="{{environment.root}}/css/media/new-invoice.png" width="100%">
-								</feature>
-							</div>
-						</section>
-						<section>
-							<div class="wrap">
-								<feature>
-									<span class="minor_title">Inventory</span>
-									<span>
-										Quotes and Invoices are powered by <b>Inventory</b>.<br>
-										Your inventory is a simple list of names and prices. Inventory is used to add items to a Quote.
-									</span>
-								</feature>
-								<feature>
-									<img src="css/media/inventory.png" width="100%">
-								</feature>
-							</div>
-						</section>
-						<section>
-							<div class="wrap">
-								<feature>
-									<span class="minor_title">Inventory in Action</span>
-									<span>
-										Just start typing an item name into a Quote, and Paperwork will suggest items from your inventory. 
-										If you use a new material, and you'd like to use it again, you can add it to your inventory with a single tap. 
-										Watch this video to see a quick demonstration. 
-									</span>
-								</feature>
-								<feature>
-									<div class="video_overlay">
-										<div class="video_tint">
-											<div class="video_padding">
-												<div class="play"></div>
-											</div>
-										</div>
-										<video name="inventory" width="100%" loop>
-											<source src="css/media/inventory.webm" type="video/webm">
-											<source src="css/media/inventory.mp4" type="video/mp4">
-											<img src="{{environment.root}}/css/media/inventory.png">
-										</video>
-									</div>
-								</feature>
-							</div>
-						</section>
-						<section>
-							<div class="wrap">
-								<feature>
-									<span class="minor_title">And Much More</span>
-									<span>
-										We listen closely to our users and build anything that helps you get in and out as fast as possible. 
-										An example of this is the <b>Margin interface</b>. Tap the margin button to apply a margin to one, 
-										some, or all of the items in a Quote or Invoice.
-									</span>
-								</feature>
-								<feature>
-									<div class="video_overlay">
-										<div class="video_tint">
-											<div class="video_padding">
-												<div class="play"></div>
-											</div>
-										</div>
-										<video name="margin" width="100%" loop>
-											<source src="css/media/margin.webm" type="video/webm">
-											<source src="css/media/margin.mp4" type="video/mp4">
-											<img src="{{environment.root}}/css/media/margin.png">
-										</video>
-									</div>
-								</feature>
-							</div>
-						</section>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section 2 itemscope itemtype="http://schema.org/Offer">
+		<section itemscope itemtype="http://schema.org/Offer">
 			<div class="width">
-				<div class="main">
+				<div>
 					<div class="centered" style="padding: 15px;">
 						<div class="wrap" style="display: inline-block;">
 							<price>

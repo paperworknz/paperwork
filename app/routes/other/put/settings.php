@@ -72,7 +72,7 @@ $app->post('/put/settings', 'uac', function() use ($app){
 		case 'region': $app->redirect($app->root.'/onboard/user');
 		case 'user': $app->redirect($app->root.'/onboard/jobs');
 		case 'jobs': 
-			$app->flash('success', 'Welcome to Paperwork! Get started by making your first job!');
+			$app->flash('success', 'Welcome to Paperwork! You can get started by making a job!');
 			$app->redirect($app->root.'/jobs');
 	}
 });

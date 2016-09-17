@@ -53,28 +53,31 @@
 										<input type="text" name="last" autocomplete="off" value="{{user.last}}">
 									</td>
 								</tr>
-								<tr>
+								<!--<tr>
 									<td>Email</td>
 									<td>
 										<input type="text" name="email" autocomplete="on" value="{{user.email}}" required>
 									</td>
-								</tr>
+								</tr>-->
 								<tr>
 									<td>Company</td>
 									<td>
 										<input type="text" name="company" autocomplete="off" value="{{user.company}}" required>
 									</td>
 								</tr>
-								<tr>
+								<!--<tr>
 									<td>Phone</td>
 									<td>
 										<input type="text" name="phone" autocomplete="off" value="{{user.phone}}">
 									</td>
-								</tr>
-								<tr>
-									<td>Address</td>
-									<td>
-										<input type="text" name="address" autocomplete="off" value="{{user.address}}">
+								</tr>-->
+								<tr data-title="Appears on documents">
+									<td style="vertical-align: top;padding-top: 9px;">Address</td>
+									<td style="text-align: left;">
+										<div class="input" contenteditable="true" data-type="address">
+											{{user.address | raw}}
+										</div>
+										<input type="hidden" name="address" value="{{user.address | raw}}">
 									</td>
 								</tr>
 								<input type="hidden" name="onboard" value="user">
