@@ -27,9 +27,8 @@
 						if(i == 'user_id') id = obj[i];
 					}
 					
-					if(out.indexOf('Welcome email') !== -1){
-						newuser++;
-					}
+					if(out.indexOf('Welcome email') !== -1) newuser++;
+					if(out.indexOf('New user:') !== -1) newuser++;
 					
 					$('[insights]').html(
 						'New Users: '+newuser
