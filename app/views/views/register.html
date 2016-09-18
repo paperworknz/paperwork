@@ -9,30 +9,11 @@
 		{% include path.html.pixel %}
 	</head>
 	<body>
-		<header>
-			<div class="wrap width">
-				<div class="nav">
-					<div class="major_title logo">
-						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
-					</div>
-					<ul class="nav_list_less wrap">
-						<li>
-							<a href="{{environment.root}}" home>Home</a>
-						</li>
-						<li>
-							<a href="{{environment.root}}/login" title="Log In">Log In</a>
-						</li>
-						<li class="disable no-click">
-							<span>Sign Up</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</header>
+		{% include path.html.header %}
 		<section>
 			<div class="width">
 				<section class="main centered">
-					<div class="main_title">Welcome to Paperwork</div>
+					<h2 class="main_title">Welcome to Paperwork</h2>
 					<div class="title">
 						Please fill in the boxes below. You can always change these later.
 					</div>
@@ -40,10 +21,10 @@
 						All new users get a <b>14 day free trial</b>
 					</div>
 				</section>
-				<section class="user-information centered central" style="max-width: 500px;">
+				<section class="user-information centered central top" style="max-width: 500px;">
 					{% include path.html.flash %}
 					<form action="{{environment.root}}/post/register" accept-charset="UTF-8" method="post" novalidate>
-						<part class="user-information register-information" data-validate="on">
+						<part class="user-information register-information">
 							<section class="register-name">
 								<part>
 									<input type="text" name="first" placeholder="First name" required>
@@ -71,5 +52,7 @@
 			</div>
 		</section>
 		{% include path.html.footer %}
+		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
+		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 	</body>
 </html>

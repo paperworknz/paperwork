@@ -7,29 +7,10 @@
 		{% include path.html.pixel %}
 	</head>
 	<body>
-		<header>
-			<div class="wrap width">
-				<div class="nav">
-					<div class="major_title logo">
-						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
-					</div>
-					<ul class="nav_list_less wrap">
-						<li>
-							<a href="{{environment.root}}" home>Home</a>
-						</li>
-						<li class="disable no-click">
-							<span login>Log In</span>
-						</li>
-						<li class="special">
-							<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</header>
+		{% include path.html.header %}
 		<section>
 			<div class="width">
-				<div class="main top centered">
+				<div class="top centered" style="padding-top: 50px;">
 					<div style="display: inline-block;width: 30%;min-width: 280px;">
 						<div class="login user-information">
 							{% include path.html.flash %}

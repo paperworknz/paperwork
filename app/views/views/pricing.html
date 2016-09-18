@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Pricing - Paperwork</title>
+		<link rel="canonical" href="{{environment.root}}/{{environment.page}}">
+		{% include path.html.head_public %}
+		{% include path.html.pixel %}
+	</head>
+	<body>
+		{% include path.html.header %}
+		<section class="price-head">
+			<div class="width">
+				<part class="centered">
+					<h1 class="main_title">Straightforward pricing</h1>
+					<span class="minor_title">One payment. Unlimited access.</span>
+					<div class="price">
+						<price>
+							<div class="price-body">
+								<span style="font-size: 60px;font-weight: 200;">$5</span><div style="font-size: 13px; font-weight: 200;">NZD / MONTH</div>
+							</div>
+							<div class="price-footer">
+								<a href="{{environment.root}}/register"><button class="button blue">GET STARTED</button></a>
+							</div>
+						</price>
+					</div>
+				</part>
+			</div>
+			<div class="width main">
+				<h2 class="main_title">Paperwork</h2>
+				<p>Paperwork is currently one product and one subscription. Pay $5 monthly, and have unlimited access to all features. Nothing is locked, and there are no monthly limits. (Within reason!)</p>
+				<p>See the <a href="{{environment.root}}/features">list of features</a> for more information.</p>
+			</div>
+			<div class="width main">
+				<h2 class="main_title">Coming soon - add as you grow</h2>
+				<span>
+					<p>As our users are growing, we're seeing the need for certain features that we want to build, 
+					but don't want to add to the core Paperwork product in order to keep it uncomplicated. 
+					As such, we're planning on building and growing a selection of <strong>add-ons</strong>. 
+					These add-ons will do one thing, add-on to your monthly payment, and can be turned on and off 
+					at your convenience. This means Paperwork will provide a <strong>pay as you grow</strong> service, and keep thing 
+					simple from start to finish.</p>
+					<p>Don't worry, the core Paperwork product will continue to be improved, we just don't want to bump the price up and complicate things!</p>
+				</span>
+			</div>
+		</section>
+		{% include path.html.footer %}
+	</body>
+</html>

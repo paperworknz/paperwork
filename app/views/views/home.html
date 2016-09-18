@@ -11,35 +11,19 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 		{% include path.html.pixel %}
 	</head>
 	<body>
-		<part itemscope itemtype="http://schema.org/Product">
-			<header>
-				<div class="wrap width">
-					<div class="nav wrap">
-						<div class="major_title logo">
-							<a href="{{environment.root}}" title="Paperwork" itemprop="name">Paperwork</a>
-						</div>
-						<ul class="nav_list wrap">
-							<li>
-								<a href="{{environment.root}}/login" title="Log In">Log In</a>
-							</li>
-							<li class="special">
-								<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</header>
+		<section itemscope itemtype="http://schema.org/Product">
+			{% include path.html.header %}
 			<section>
-				<div class="width top">
+				<div class="width main" style="padding-top: 0;">
 					{% include path.html.flash %}
 					<div class="top-part">
 						<div class="top-left">
 							<section itemprop="description">
 								<h1 class="main_title">
-									Lightweight quote and invoicing. Anywhere, any device.
+									Lightweight job management. Anywhere, any device.
 								</h1>
 								<span class="minor_title">
-									A plug 'n play system to manage jobs.
+									A plug 'n play system to keep on top of quotes and invoices.
 								</span>
 							</section>
 							<section>
@@ -85,34 +69,26 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 					</div>
 				</div>
 			</section>
-		</part>
-		<section itemscope itemtype="http://schema.org/Offer">
+		</section>
+		<section class="price-head">
 			<div class="width">
-				<div class="centered" style="padding: 15px;">
-					<div class="minor_title">
-						Straightforward pricing. Unlimited Paperwork.
-					</div>
-					<div class="wrap" style="display: inline-block;">
+				<part class="centered">
+					<h1 class="main_title">Straightforward pricing</h1>
+					<span class="minor_title">One payment. Unlimited access.</span>
+					<div class="price">
 						<price>
-							<div style="padding: 30px;padding-top: 0;" itemprop="price">
+							<div class="price-body">
 								<span style="font-size: 60px;font-weight: 200;">$5</span><div style="font-size: 13px; font-weight: 200;">NZD / MONTH</div>
+							</div>
+							<div class="price-footer">
+								<a href="{{environment.root}}/register"><button class="button blue">GET STARTED</button></a>
 							</div>
 						</price>
 					</div>
-					<div class="top">
-						<button data-type="sign-up-button" class="facade button large central">
-							SIGN UP
-						</button>
-					</div>
-				</div>
+					<a href="{{environment.root}}/pricing">Learn more</a>
+				</part>
 			</div>
 		</section>
-		<section>
-			
-		</section>
-		<meta itemprop="url" content="https://paperwork.nz/">
-		<span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
-		<meta itemprop="name" content="Paperwork">
 		{% include path.html.footer %}
 		<script src="{{environment.root}}/js/3rd/jquery.2.1.4.js"></script>
 		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
