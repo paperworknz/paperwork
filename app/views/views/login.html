@@ -49,6 +49,10 @@
 		<script>
 			$(function(){
 				
+				$('body').on('click', '.thumb', function(){
+					$('body').find('.nav_list').slideToggle('fast');
+				});
+				
 				// Login on click (inputFlow triggers this)
 				$('body').on('click', '.next-step', login);
 				
