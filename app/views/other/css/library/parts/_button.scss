@@ -38,6 +38,16 @@
 			background-color: #67b2e4;
 		}
 	}
+	
+	&.white {
+		background-color: white;
+		border-bottom: 4px solid #bbb;
+		color: #333;
+		
+		&:hover {
+			background-color: hsla(0,0%,100%,.9);
+		}
+	}
 }
 
 .button-wait {

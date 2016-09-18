@@ -7,26 +7,7 @@
 		{% include path.html.pixel %}
 	</head>
 	<body>
-		<header>
-			<div class="wrap width">
-				<div class="nav wrap">
-					<div class="major_title logo">
-						<a href="{{environment.root}}" title="Paperwork">Paperwork</a>
-					</div>
-					<ul class="nav_list wrap">
-						<li>
-							<a href="{{environment.root}}" home>Home</a>
-						</li>
-						<li>
-							<a href="{{environment.root}}/login" title="Log In">Log In</a>
-						</li>
-						<li class="special">
-							<a href="{{environment.root}}/register" title="Sign Up">Sign Up</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</header>
+		{% include path.html.header %}
 		<section>
 			<div class="width">
 				<div class="main top centered">
