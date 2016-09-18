@@ -94,6 +94,11 @@ We think great tools are beautiful tools. Try it right now without signing up!">
 		<script src="{{environment.root}}/js/library/{{path.js.library.Paperwork}}"></script>
 		<script>
 			$(function(){
+				
+				$('body').on('click', '.thumb', function(){
+					$('body').find('.nav_list').slideToggle('fast');
+				});
+				
 				{% if environment.mode == 'prod' %}
 				// Facebook Pixel log the try now button
 				$('body').on('click', '[data-type="try-now-button"]', function(){
