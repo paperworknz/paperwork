@@ -2,13 +2,12 @@ Core.addModule('client', function(context){
 	
 	var $body = context.element;
 	
-	var client_id = $body.data('id');
+	var client_id = $body.data('id') || context.data;
 	
 	var api = {
 		get: `${environment.root}/jobs`,
 		put: `${environment.root}/put/client-details`,
 	};
-	
 	var timer;
 	var notes;
 	var parse = context.require('parse');
@@ -76,7 +75,6 @@ Core.addModule('client', function(context){
 			var value;
 			
 			value = parse.toText($(this));
-			console.log(value.html().trim());
 			saveNotes(value.html().trim());
 		});
 	}
