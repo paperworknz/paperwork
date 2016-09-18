@@ -3,7 +3,7 @@
 		<form method="post" action="{{environment.root}}/put/settings">
 			<part class="container-top wrap">
 				<div class="h3 title" data-type="title">
-					Onboarding: {{ environment.page | replace({'onboard/': ''}) | capitalize }}
+					Getting started: {{ environment.page | replace({'onboard/': ''}) | capitalize }}
 				</div>
 				<div>
 					If you're unsure about any of the values, leave them as they are and press next.
@@ -60,7 +60,7 @@
 									</td>
 								</tr>-->
 								<tr>
-									<td>Company</td>
+									<td>Company name</td>
 									<td>
 										<input type="text" name="company" autocomplete="off" value="{{user.company}}" required>
 									</td>
@@ -71,7 +71,7 @@
 										<input type="text" name="phone" autocomplete="off" value="{{user.phone}}">
 									</td>
 								</tr>-->
-								<tr data-title="Appears on documents">
+								<!--<tr data-title="Appears on documents">
 									<td style="vertical-align: top;padding-top: 9px;">Address</td>
 									<td style="text-align: left;">
 										<div class="input" contenteditable="true" data-type="address">
@@ -79,7 +79,7 @@
 										</div>
 										<input type="hidden" name="address" value="{{user.address | raw}}">
 									</td>
-								</tr>
+								</tr>-->
 								<input type="hidden" name="onboard" value="user">
 								{% elseif environment.page == 'onboard/jobs' %}
 								<tr data-title="Applied to the sub-total of a document">
