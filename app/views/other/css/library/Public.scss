@@ -656,7 +656,7 @@ video, feature img, .video_tint {
 .quote {
 	text-align: right;
 	width: 100%;
-	max-width: 50%;
+	max-width: 800px;
 	
 	strong {
 		font-weight: 400;
@@ -665,6 +665,10 @@ video, feature img, .video_tint {
 	.quote-body {
 		font-weight: 100;
 		font-size: 26px;
+		
+		@include size (500px) {
+			font-size: 16px;
+		}
 	}
 	
 	.quote-label {
