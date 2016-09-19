@@ -652,3 +652,22 @@ video, feature img, .video_tint {
 		}
 	}
 }
+
+.quote {
+	text-align: right;
+	width: 100%;
+	max-width: 50%;
+	
+	strong {
+		font-weight: 400;
+	}
+	
+	.quote-body {
+		font-weight: 100;
+		font-size: 26px;
+	}
+	
+	.quote-label {
+		color: #ccc;
+	}
+}
