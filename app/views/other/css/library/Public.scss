@@ -590,3 +590,65 @@ video, feature img, .video_tint {
 .button {
 	cursor: pointer;
 }
+
+.three-features {
+	display: flex;
+	justify-content: space-between;
+	
+	@include size(800px) {
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	feature {
+		display: block;
+		flex: 1 1 33%;
+		max-width: 330px;
+		padding: 15px;
+		text-align: center;
+		
+		.feature-image {
+			border-radius: 50%;
+			border: 1px solid #ccc;
+			width: 100%;
+			padding-bottom: 100%;
+			overflow: hidden;
+			
+			&.one {
+				background-image: url("../media/one.png");
+				background-position: bottom center;
+				background-size: cover;
+			}
+			
+			&.two {
+				background-image: url("../media/two.png");
+				background-position: center left;
+				background-size: cover;
+			}
+			
+			&.three {
+				background-image: url("../media/three.png");
+				background-position: center;
+				background-size: 100%;
+			}
+		}
+		
+		.feature-title {
+			font-size: 30px;
+			padding-top: 10px;
+		}
+		
+		.feature-body {
+			font-size: 16px;
+			font-weight: 100;
+			padding-top: 10px;
+		}
+		
+		@include size(800px){
+			max-width: 450px;
+			flex-basis: 100%;
+			width: 100%;
+			padding: 50px;
+		}
+	}
+}
