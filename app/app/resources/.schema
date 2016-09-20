@@ -33,6 +33,7 @@ return [
 '/post/document' => '../app/routes/other/post/document.php',
 '/post/email' => '../app/routes/other/post/email.php',
 '/post/empty-trash' => '../app/routes/other/post/empty-trash.php',
+'/post/enquire' => '../app/routes/other/post/enquire.php',
 '/post/error' => '../app/routes/other/post/error.php',
 '/post/inv-bulk' => '../app/routes/other/post/inv-bulk.php',
 '/post/inventory' => '../app/routes/other/post/inventory.php',
@@ -97,6 +98,7 @@ return [
 'patharray' => [
 'default' => '/other/html/default.html',
 'document' => '/other/html/document.html',
+'enquire' => '/other/html/enquire.html',
 'flash' => '/other/html/flash.html',
 'footer' => '/other/html/footer.html',
 'head' => '/other/html/head.html',

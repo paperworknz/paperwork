@@ -1,0 +1,22 @@
+<section style="background-color: #D6EDFF;">
+	<div class="width centered" style="padding-top: 90px;padding-bottom: 90px;">
+		<h2 class="main_title" style="font-weight: 400;">Enquire</h2>
+		<span class="minor_title" style="margin-bottom: 15px;">Leave us a message and we'll get back to you as soon as possible</span>
+		<form method="post" accept-charset="UTF-8" action="{{environment.root}}/post/enquire" novalidate>
+			<part class="enquiry">
+				<part>
+					<input type="text" name="name" placeholder="Your name">
+				</part>
+				<part>
+					<input type="email" name="email" placeholder="Your email">
+				</part>
+				<part>
+					<textarea name="body"></textarea>
+				</part>
+				<part>
+					<button class="button blue">SUBMIT</button>
+				</part>
+			</part>
+		</form>
+	</div>
+</section>
