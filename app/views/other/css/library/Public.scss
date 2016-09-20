@@ -675,3 +675,17 @@ video, feature img, .video_tint {
 		color: #ccc;
 	}
 }
+
+.enquiry {
+	max-width: 500px;
+	margin: auto;
+	
+	input, textarea {
+		margin-bottom: 5px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		padding: 10px;
+		width: 100%;
+		max-width: 100%;
+	}
+}
