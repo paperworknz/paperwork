@@ -329,34 +329,21 @@ Core.addBehavior('document', function(context, opt){
 		
 		// Detect a new inventory item, depends on SweetAlert
 		if(!itemInInventory && name.length){
-			swal({
-				html: true,
-				title: `Add ${name} to your inventory?`,
-				text: 'If you save this item you can use it again in future.',
-				showCancelButton: true,
-				closeOnConfirm: true,
-				cancelButtonText: 'No',
-				confirmButtonText: 'Yes',
-			}, function(response){
+			$.post(request.postInventory, {
+				name: name,
+				price: '0.00',
+			}).done(function(response){
 				
-				if(!response) return;
+				response = JSON.parse(response);
 				
-				$.post(request.postInventory, {
+				inventory.origin.push({
 					name: name,
 					price: '0.00',
-				}).done(function(response){
-					
-					response = JSON.parse(response);
-					
-					inventory.origin.push({
-						name: name,
-						price: '0.00',
-					});
-					
-					inventory.flat.push(name);
-					
-					bindTypeahead();
 				});
+				
+				inventory.flat.push(name);
+				
+				bindTypeahead();
 			});
 		}
 		
