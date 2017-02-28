@@ -16,14 +16,34 @@ $app->post('/post/document', 'uac', function() use ($app){
 	$user_template = $app->sql->get('user_template')->retain(['template_id'])->where('id', '=', $template_id)->one();
 	$template = $app->sql->get('template')->where('id', '=', $user_template['template_id'])->root()->one();
 	$email = $app->sql->get('user_email')->one();
+	$reference = $job['job_number'];
 	
+	// Increment reference number for Invoices
+	if(strtolower($user_template['name']) == 'invoice'){
+		
+		$prev_reference = $app->sql->get('document')->select(['reference'])->where('job_id', '=', $job_id)->and('name', '=', 'invoice')->also("ORDER BY id DESC LIMIT 1")->one();
+		
+		if(!empty($prev_reference)){
+			
+			// Increment decimal
+			if(strpos($prev_reference, '.') !== false){
+				list($int, $dec) = explode('.', $prev_reference);
+				
+				if(ctype_digit($dec)) $dec = $dec + 1;
+				$reference = $int.'.'.$dec;
+			}else{
+				$reference = $job['job_number'].'.1';
+			}
+		}
+	}
+		
 	$data = [
 		'job_id' => $job_id,
 		'client_id' => $client['id'],
 		'user_template_id' => $template_id,
 		'name' => $user_template['name'], // Inherit from user_template
 		'date' => isset($document['date']) ? $document['date'] : date("d/m/Y"),
-		'reference' => $job['job_number'], // Inherit from job
+		'reference' => $reference, // Inherit from job
 		'description' => isset($document['description']) ? $document['description'] : '',
 		'items' => isset($document['items']) ? $app->parse->arrayToJson($document['items']) : '[]',
 	];
