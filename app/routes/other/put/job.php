@@ -38,7 +38,9 @@ $app->post('/put/job', 'uac', function() use ($app){
 			])->where('id', '=', $data['id'])->run();
 		}else{
 			$app->sql->put('job')->with([
-				'job_status_id' => $status['id']
+				'job_status_id' => $status['id'],
+				'date_invoiced' => '0000-00-00 00:00:00',
+				'date_completed' => '0000-00-00 00:00:00',
 			])->where('id', '=', $data['id'])->run();
 		}
 		
