@@ -36,6 +36,8 @@ $app->module->add('app', 'user', function($request) use ($app){
 				}else{
 					$jobs[$key]['date_invoiced_pretty'] = $diff->i.'m ago';
 				}
+			}else{
+				$jobs[$key]['date_invoiced_pretty'] = $diff->h.'h ago';
 			}
 		}else{
 			$jobs[$key]['date_invoiced_pretty'] = $diff->format("%a").' days ago';
