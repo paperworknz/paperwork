@@ -1,1 +1,1 @@
-"use strict";Core.addModule("app",function(o){var t=o.element;t.on("click",'[data-type="logout"]',function(){Paperwork["goto"](environment.root+"/get/logout",!1)})});
+"use strict";Core.addModule("app",function(t){function o(){e.on("click",'[data-type="email-button"]',function(){var o=$(this).data("value");t.load("email",{address:o,subject:"Invoice reminder"})})}var e=t.element;o(),e.on("click",'[data-type="logout"]',function(){Paperwork["goto"](environment.root+"/get/logout",!1)})});

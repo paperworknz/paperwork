@@ -1,7 +1,35 @@
 <box class="box-std">
-	<part class="container wrap">
+	<part class="container-top wrap">
 		<div class="h3 title">Hi {{user.first}}</div>
 	</part>
+	<hr>
+	{% if modules.app.data.jobs %}
+		<part class="container-top">
+			<div class="h4 title" style="padding: 10px 0 7px;">Outstanding invoices</div>
+			<div style="padding: 15px 15px 22px;">
+				<table>
+				{% for job in modules.app.data.jobs %}
+					<tr>
+						<td><b>{{job.job_number}}</b></td>
+						<td><div style="padding: 0 10px;">|</div></td>
+						<td>sent {{job.date_invoiced}}</td>
+						<td><div style="padding: 0 10px;">|</div></td>
+						<td>{{job.date_invoiced_pretty}}</td>
+						<td><div style="padding: 0 10px;">|</div></td>
+						{% if job.client.email %}
+						<td><a data-type="email-button" data-value="{{job.client.email}}">Email {{job.client.name}}</a></td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+				</table>
+			</div>
+		</part>
+	{% else %}
+		<part class="container-top">
+			<div class="h4 title centered">No outstanding invoices - nice!</div>
+		</part>
+	{% endif %}
+	<hr>
 	<part class="container">
 		<button class="button blue" data-type="logout">LOGOUT</button>
 	</part>
