@@ -19,9 +19,9 @@ $app->post('/post/document', 'uac', function() use ($app){
 	$reference = $job['job_number'];
 	
 	// Increment reference number for Invoices
-	if(strtolower($user_template['name']) == 'invoice'){
+	if(strpos(strtolower($user_template['name']), 'invoice') !== false){
 		
-		$prev_reference = $app->sql->get('document')->select(['reference'])->where('job_id', '=', $job_id)->and('name', '=', 'invoice')->also("ORDER BY id DESC LIMIT 1")->one();
+		$prev_reference = $app->sql->get('document')->select(['reference'])->where('job_id', '=', $job_id)->and('name', 'LIKE', '%invoice%')->also("ORDER BY id DESC LIMIT 1")->one();
 		
 		if(!empty($prev_reference)){
 			
@@ -36,7 +36,7 @@ $app->post('/post/document', 'uac', function() use ($app){
 			}
 		}
 	}
-		
+	
 	$data = [
 		'job_id' => $job_id,
 		'client_id' => $client['id'],
