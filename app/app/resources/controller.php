@@ -33,16 +33,14 @@ function uac(){ // User controlled pages (in the app)
 		die();
 	}
 	
-	$_SESSION['trial_expired'] = false;
-	
 	// If a trial user's trial has expired
-	if($app->user['privilege'] == 'trial') {
+	if($app->user['privilege'] == 'trial' && ltrim($app->request->getResourceUri(), '/') != 'checkout') {
 		$today = new DateTime();
 		$created = new DateTime($app->user['date_created']);
 		$difference = $today->diff($created);
 		
 		if($difference-> y >= 1 || $difference->m >= 1 || $difference->d >= 14){
-			$_SESSION['trial_expired'] = true;
+			$app->redirect($app->root.'/checkout');
 		}
 	}
 	

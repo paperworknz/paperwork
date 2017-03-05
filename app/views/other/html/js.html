@@ -71,7 +71,7 @@ $(function(){
 	Core.require('titles');
 	Core.require('annyang');
 	Core.startAll();
-	{% if environment.trial_expired %}Core.loadModule('checkout');{% endif %}
+	/* {% if environment.trial_expired %}Core.loadModule('checkout');{% endif %} */
 	$('#content').css('display', 'block');
 	$('#content').animate({ opacity: 1 }, 'fast');
 });

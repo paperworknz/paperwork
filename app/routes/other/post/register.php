@@ -1,25 +1,25 @@
 <?php
 
-use GuzzleHttp\Client;
+// use GuzzleHttp\Client;
 
 $app->post('/post/register', 'app', function() use ($app){
 	/* Methods */
-	$client = new Client([
-		'base_uri' => 'https://paperwork.api-us1.com/admin/api.php',
-		'verify' => false,
-	]);
+	// $client = new Client([
+	// 	'base_uri' => 'https://paperwork.api-us1.com/admin/api.php',
+	// 	'verify' => false,
+	// ]);
 	
 	// ActiveCampaign query parameter
-	$params = [
-		'api_key' => '117903f749dc1fd8d6f6d317c10e22bb4d7deadf085c2920826dd197177055f6bf35b891',
-		'api_action' => 'contact_add',
-		'api_output' => 'json',
-	];
+	// $params = [
+	// 	'api_key' => '117903f749dc1fd8d6f6d317c10e22bb4d7deadf085c2920826dd197177055f6bf35b891',
+	// 	'api_action' => 'contact_add',
+	// 	'api_output' => 'json',
+	// ];
 	
 	// Formatted
-	$query = '?';
-	foreach($params as $key => $value) $query .= $key.'='.urlencode($value).'&';
-	$query = rtrim($query, '& ');
+	// $query = '?';
+	// foreach($params as $key => $value) $query .= $key.'='.urlencode($value).'&';
+	// $query = rtrim($query, '& ');
 	
 	$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) : false;
 	$first = isset($_POST['first']) ? $_POST['first'] : false;
@@ -75,26 +75,26 @@ $app->post('/post/register', 'app', function() use ($app){
 	}
 	
 	// ActiveCampaign add contact
-	$post = [
-		'first_name' => $first,
-		'last_name' => $last,
-		'email' => $email,
-		'p[1]' => 1,
-		'ip4' => $app->ip,
-	];
+	// $post = [
+	// 	'first_name' => $first,
+	// 	'last_name' => $last,
+	// 	'email' => $email,
+	// 	'p[1]' => 1,
+	// 	'ip4' => $app->ip,
+	// ];
 	
 	// Send ActiveCampaign API request
-	$response = $client->request('POST', $query, [
-		'form_params' => $post
-	]);
+	// $response = $client->request('POST', $query, [
+	// 	'form_params' => $post
+	// ]);
 	
-	$body = $response->getBody();
-	$json = (string) $body;
-	$result = $app->parse->jsonToArray($json);
+	// $body = $response->getBody();
+	// $json = (string) $body;
+	// $result = $app->parse->jsonToArray($json);
 	
-	if($result['result_code'] != 1){
-		$app->event->log("ActiveCampaign error: {$result['result_code']}, Message: {$result['result_message']}");
-	}
+	// if($result['result_code'] != 1){
+	// 	$app->event->log("ActiveCampaign error: {$result['result_code']}, Message: {$result['result_message']}");
+	// }
 	
 	$app->event->log([
 		'text' => "New user: {$first} {$last}, {$email}",
